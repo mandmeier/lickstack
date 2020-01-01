@@ -12,6 +12,9 @@ def about(request):
 class LickListView(generic.ListView):
     model = Lick
     template_name = 'repo/home.html'
+    context_object_name = 'licks'
+    ordering = ['-date_posted']  # minus reverses order
+    #paginate_by = 5
 
 
 """

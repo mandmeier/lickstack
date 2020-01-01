@@ -1,5 +1,7 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
+from django.urls import reverse
 
 
 class Genre(models.Model):
@@ -16,7 +18,11 @@ class Lick(models.Model):
     genre = models.ForeignKey(Genre, on_delete=models.PROTECT, null=True)
     date_posted = models.DateTimeField(default=timezone.now)
     last_updated = models.DateTimeField(auto_now=True)
+    author = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
 
     def __str__(self):
         name = str(self.genre) + "_" + "username" + "_" + str(self.date_posted)
         return name
+
+    def get_absolute_url(self):
+        return reverse('lick-detail', kwargs={'pk': self.pk})

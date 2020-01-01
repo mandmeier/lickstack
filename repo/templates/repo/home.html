@@ -3,15 +3,26 @@
 {% block content %}
 
 <h1>Home</h1>
-<ul>
-  {% for lick in object_list %}
-    <h2>{{ lick.id }} – {{ lick.genre }} – {{ lick.date_posted }}</h2>
-    <audio id="myAudio" controls preload="none" style="width:480px;">
-    <source src="{{ lick.file.url }}" type="audio/mp4" />
-    <p>Your browser does not support HTML5 audio. Try Chrome 6+</p>
-    </audio>
-    </h2>
-  {% endfor %}
-</ul>
+
+{% for lick in licks %}
+    <article class="media content-section">
+      <img class="rounded-circle article-img" src="{{ lick.author.profile.image.url }}">
+      <div class="media-body">
+        <div class="article-metadata">
+            {{ lick.genre }} – <a class="mr-2" href="#">{{ lick.author }}</a>
+          <small class="text-muted">{{ lick.date_posted|date:"F d, Y" }}</small>
+        </div>
+        <p class="article-content">
+            <audio id="myAudio" controls preload="none" style="width:480px;">
+            <source src="{{ lick.file.url }}" type="audio/mp4" >
+            Your browser does not support HTML5 audio. Try Chrome 6+
+            </audio>
+        </p>
+      </div>
+    </article>
+{% endfor %}
 
 {% endblock content %}
+
+
+
