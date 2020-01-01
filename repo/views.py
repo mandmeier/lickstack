@@ -1,8 +1,12 @@
-#from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect
 from repo.models import Lick
 from django.views import generic
 #from .forms import LickForm
 #from django.utils import timezone
+
+
+def about(request):
+    return render(request, 'repo/about.html', {'title': 'About'})
 
 
 class LickListView(generic.ListView):

@@ -4,6 +4,7 @@ from . import views
 
 urlpatterns = [
     path('', views.LickListView.as_view(), name='home'),
+    path('about/', views.about, name='about'),
     #path('lick/<int:pk>/', views.LickDetailView.as_view(), name='lick-detail'),
     #path('lick/new/', views.lick_new, name='lick_new'),
     #path('', views.LickListView.as_view(), name='licks'),
