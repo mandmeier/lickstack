@@ -10,8 +10,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}main.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 
     {% if title %}
     <title>LickStack - {{ title }}</title>
@@ -34,6 +33,7 @@
               <a class="nav-item nav-link" href="#">Home</a>
               <a class="nav-item nav-link" href="#">Blog</a>
             </div>
+            {% comment %}
             <!-- Navbar Right Side
             <div class="navbar-nav">
                 {% if user.is_authenticated %}
@@ -43,8 +43,8 @@
                     <a class="nav-item nav-link" href="{% url 'login'%}">Login</a>
                     <a class="nav-item nav-link" href="{% url 'register'%}">Register</a>
                 {% endif %}
-            </div>
-            -->
+            </div> -->
+            {% endcomment %}
           </div>
         </div>
       </nav>
@@ -53,18 +53,20 @@
     <main role="main" class="container">
       <div class="row">
         <div class="col-md-8">
-            <!--
-            {% if messages %}
+            {% comment %}
+            <!--{% if messages %}
                 {% for message in messages %}
                     <div class="alert alert-{{ message.tags }}">
                         {{ message}}
                     </div>
                 {% endfor %}
-            {% endif %}
-            -->
+            {% endif %}-->
+            {% endcomment %}
+
             {% block content %}{% endblock %}
         </div>
 
+        {% comment %}
         <!-- Sidebar
         <div class="col-md-4">
           <div class="content-section">
@@ -78,8 +80,8 @@
               </ul>
             </p>
           </div>
-        </div>
-        -->
+        </div> -->
+        {% endcomment %}
       </div>
     </main>
 

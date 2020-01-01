@@ -3,6 +3,16 @@
 
 {% block content %}
 
-<h3>home page displayed here</h3>
+<h1>Home</h1>
+<ul>
+  {% for lick in object_list %}
+    <h2>{{ lick.id }} – {{ lick.genre }} – {{ lick.date_posted }}</h2>
+    <audio id="myAudio" controls preload="none" style="width:480px;">
+    <source src="{{ lick.file.url }}" type="audio/mp4" />
+    <p>Your browser does not support HTML5 audio. Try Chrome 6+</p>
+    </audio>
+    </h2>
+  {% endfor %}
+</ul>
 
 {% endblock content %}
