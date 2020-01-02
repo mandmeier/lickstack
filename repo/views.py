@@ -46,6 +46,12 @@ class LickCreateView(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView
     template_name = 'repo/lick_form.html'
 
     def form_valid(self, form):
+        if Lick.objects.filter(author=self.request.user).count() == 0:
+            form.instance.counter = 1
+        else:
+            form.instance.counter = Lick.objects.filter(author=self.request.user).order_by(
+                '-date_posted').first().counter + 1  # Lick number for each author
+
         form.instance.author = self.request.user
         return super().form_valid(form)
 

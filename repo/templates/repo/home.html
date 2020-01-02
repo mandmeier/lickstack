@@ -11,7 +11,7 @@
       <div class="media-body">
         <div class="article-metadata">
             {{ lick.genre }}
-            – <a class="mr-2" href="{% url 'user-licks' lick.author.username %}">{{ lick.author }}</a>
+            – <a class="mr-2" href="{% url 'user-licks' lick.author.username %}">{{ lick.author }} #{{ lick.counter }}</a>
           <small class="text-muted">{{ lick.date_posted|date:"F d, Y" }}    </small>
           – <a class="mr-2" href="{% url 'lick-detail' lick.id %}">View</a>
         </div>

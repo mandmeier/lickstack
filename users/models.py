@@ -12,8 +12,8 @@ class Profile(models.Model):
     def __str__(self):
         return f'{self.user.username} Profile'
 
-    def save(self):  # override save method to resize profile pic if too large
-        super().save()  # save method of class above
+    def save(self, *args, **kwargs):  # override save method to resize profile pic if too large
+        super().save(*args, **kwargs)  # save method of class above
 
         img = Image.open(self.image.path)
 

@@ -1,14 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h2>Upload Lick</h2>
-
 <div class="content-section">
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">Delete Lick</legend>
-            <h2>Are you sure you want to delete the lick?</h2>
+            <h3>Are you sure you want to delete<br/> {{ object.author }} #{{ object.counter }}?</h3>
         </fieldset>
         <div class="form-group">
             <button class="btn btn-outline-danger" type="submit">Yes, Delete</button>

@@ -19,9 +19,11 @@ class Lick(models.Model):
     date_posted = models.DateTimeField(default=timezone.now)
     last_updated = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
+    counter = models.IntegerField(default=1)
 
     def __str__(self):
-        name = str(self.genre) + "_" + "username" + "_" + str(self.date_posted)
+        name = str(self.genre) + "_" + str(self.author) + \
+            "_" + str(self.date_posted)
         return name
 
     def get_absolute_url(self):
