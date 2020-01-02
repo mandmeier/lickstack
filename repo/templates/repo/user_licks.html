@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<h1>Home</h1>
+<h1 class="mb-3">Licks by {{ view.kwargs.username }} ({{ page_obj.paginator.count }})</h1>
 
 {% for lick in licks %}
     <article class="media content-section">
