@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+
 {% block content %}
 
 <h1>Home</h1>
@@ -9,8 +10,10 @@
       <img class="rounded-circle article-img" src="{{ lick.author.profile.image.url }}">
       <div class="media-body">
         <div class="article-metadata">
-            {{ lick.genre }} – <a class="mr-2" href="#">{{ lick.author }}</a>
-          <small class="text-muted">{{ lick.date_posted|date:"F d, Y" }}</small>
+            {{ lick.genre }}
+            – <a class="mr-2" href="#">{{ lick.author }}</a>
+          <small class="text-muted">{{ lick.date_posted|date:"F d, Y" }}    </small>
+          – <a class="mr-2" href="{% url 'lick-detail' lick.id %}">View</a>
         </div>
         <p class="article-content">
             <audio id="myAudio" controls preload="none" style="width:480px;">
@@ -23,6 +26,8 @@
 {% endfor %}
 
 {% endblock content %}
+
+
 
 
 

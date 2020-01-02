@@ -1,0 +1,14 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Create new lick</h1>
+
+
+<h2>New Lick</h2>
+<form enctype="multipart/form-data" method="POST" class="lick-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="save btn btn-default">Save</button>
+</form>
+{% endblock content %}
