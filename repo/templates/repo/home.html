@@ -6,7 +6,7 @@
 <h1>Home</h1>
 
 {% for lick in licks %}
-    <article class="media content-section">
+    <article class="media lick-section">
       <img class="rounded-circle article-img" src="{{ lick.author.profile.image.url }}">
       <div class="media-body">
         <div class="article-metadata">
@@ -15,8 +15,8 @@
           <small class="text-muted">{{ lick.date_posted|date:"F d, Y" }}    </small>
           – <a class="mr-2" href="{% url 'lick-detail' lick.id %}">View</a>
         </div>
-        <p class="article-content">
-            <audio id="myAudio" controls preload="none" style="width:480px;">
+        <p class="lick-content">
+            <audio controls preload="none">
             <source src="{{ lick.file.url }}" type="audio/mp4" >
             Your browser does not support HTML5 audio. Try Chrome 6+
             </audio>

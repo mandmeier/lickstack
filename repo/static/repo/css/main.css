@@ -1,6 +1,6 @@
 body {
   /*background: #fafafa;*/
-  background: #ff0000;
+  background: #fad099;
   color: #333333;
   margin-top: 5rem;
 }
@@ -12,6 +12,14 @@ h1, h2, h3, h4, h5, h6 {
 ul {
   margin: 0;
 }
+
+audio {
+  height: 30px;
+  width: 600px;
+}
+
+
+
 
 .bg-steel {
   background-color: #5f788a;
@@ -28,6 +36,29 @@ ul {
 .site-header .navbar-nav .nav-link.active {
   font-weight: 500;
 }
+
+.lick-section {
+  background: #ffffff;
+  width: 680px;
+  padding: 5px;
+  border: 2px solid #5f788a;
+  border-radius: 15px;
+  margin-bottom: 5px;
+}
+
+.media-body {
+  background: #ffffff;
+  margin: 5px;
+}
+
+
+.lick-content {
+  background: #ffffff;
+  margin: 0px;
+  height: 30px;
+}
+
+
 
 .content-section {
   background: #ffffff;
@@ -51,12 +82,14 @@ a.article-title:hover {
 }
 
 .article-img {
-  height: 65px;
-  width: 65px;
-  margin-right: 16px;
+  height: 20px;
+  width: 20px;
+  margin-right: 5px;
+  margin-left: 5px;
+  margin-top: 5px;
 }
 
-.article-metadata {
+.lick-metadata {
   padding-bottom: 1px;
   margin-bottom: 4px;
   border-bottom: 1px solid #e3e3e3
