@@ -21,11 +21,13 @@
       <p class="article-content">
           <audio id="myAudio" controls preload="none" style="width:480px;">
           <source src="{{ object.file.url }}" type="audio/mp4" >
+          <source src="{{ object.file.url }}" type="audio/wav" >
           Your browser does not support HTML5 audio. Try Chrome 6+
           </audio>
       </p>
     </div>
   </article>
+
 
 {% endblock content %}
 

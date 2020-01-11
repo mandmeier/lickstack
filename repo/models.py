@@ -20,6 +20,18 @@ class Lick(models.Model):
     last_updated = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
     counter = models.IntegerField(default=1)
+    KEY_CHOICES = [
+        ('F', 'F'),
+        ('Fm', 'Fm'),
+        ('C', 'C'),
+        ('Cm', 'Cm'),
+        ('Bb', 'Bb'),
+    ]
+    key = models.CharField(
+        max_length=4,
+        choices=KEY_CHOICES,
+        default='-',
+    )
 
     def __str__(self):
         name = str(self.genre) + "_" + str(self.author) + \

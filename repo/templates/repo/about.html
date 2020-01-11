@@ -1,7 +1,13 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
 
 <h3>About page</h3>
+
+<button id="myBtn">play</button>
+
+<script src="https://unpkg.com/tone@next/build/Tone.js"></script>
+<script src="{% static 'repo/js/main.js' %}"></script>
 
 {% endblock content %}
