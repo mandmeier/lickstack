@@ -6,10 +6,39 @@ class LickForm(forms.ModelForm):
 
     class Meta:
         model = Lick
-        fields = ('file', 'genre',)
+        fields = ('file', 'instrument', 'genre',
+                  'beat1', 'beat2', 'beat3', 'beat4',
+                  'beat5', 'beat6', 'beat7', 'beat8',
+                  'beat9', 'beat10', 'beat11', 'beat12',
+                  'beat13', 'beat14', 'beat15', 'beat16',
+                  )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['file'].widget.attrs['id'] = 'inpFile'
 
 
 """
+
+class LickForm(forms.ModelForm):
+
+    class Meta:
+        model = Lick
+        fields = ('file', 'key1_1', 'key1_2', 'key1_3', 'key1_4', 'genre',)
+
+
+class LickForm(forms.ModelForm):
+
+    class Meta:
+        model = Lick
+        fields = ('file', 'instrument', 'key1_1',
+                  'key1_2', 'key1_3', 'key1_4', 'genre',)
+        widgets = {
+            'genre': forms.TextInput(attrs={'class': 'form-control'})
+        }
+
+
+
     # Add some custom validation to check audio files
      def clean_audio_file(self):
          file = self.cleaned_data.get('file',False):

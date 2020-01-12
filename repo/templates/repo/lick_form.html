@@ -4,18 +4,175 @@
 
 <h2>Upload Lick</h2>
 
+<style type="text/css">
+
+#measure {
+    margin: 10px 0px 10px 0px;
+}
+
+#chords {
+        background: #ff0000;
+        padding: 0px;
+        font-size: 0;
+
+    }
+
+.file-preview {
+    width: 700px;
+    height: 50px;
+    border: 2px solid #ddd;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+}
+
+.file-preview__file {
+    display: none;
+    margin: 8px 0;
+    width: 100%;
+}
+
+
+.file-preview__default-text {
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    color: #ccc;
+}
+
+</style>
+
+
 <div class="content-section">
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Create/edit Lick</legend>
-            {{ form|crispy }}
-        </fieldset>
-        <div class="form-group">
-            <button class="btn btn-outline-info" type="submit">Submit</button>
-        </div>
-    </form>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {{ form.file|as_crispy_field }}
+
+            <div class="file-preview" id="filePreview">
+                <audio class="file-preview__file" controls preload="none">
+                    <source src="" type="audio/mp4" >
+                    Your browser does not support HTML5 audio. Try Chrome 6+
+                </audio>
+                <br>
+                <span class="file-preview__default-text"> File Preview </span>
+
+            </div>
+
+<script type="text/javascript">
+    /* https://www.youtube.com/watch?v=VElnT8EoEEM */
+    const inpFile = document.getElementById("inpFile");
+    const previewContainer = document.getElementById("filePreview");
+    const previewAudio = previewContainer.querySelector(".file-preview__file");
+    const previewDefaultText = previewContainer.querySelector(".file-preview__default-text");
+
+    inpFile.addEventListener("change", function() {
+        const file = this.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+
+            /* hide preview default text */
+            previewDefaultText.style.display = "none";
+            previewAudio.style.display = "block";
+
+            reader.addEventListener("load", function() {
+                previewAudio.setAttribute("src", this.result);
+            });
+
+            reader.readAsDataURL(file);
+        } else {
+            previewDefaultText.style.display = null;
+            previewAudio.style.display = null;
+            previewImage.setAttribute("src", "");
+        }
+    });
+</script>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="row" id="measure">
+                        <div id="chords" class="col-lg-3">
+                            {{ form.beat1|as_crispy_field }}
+                        </div>
+                        <div id="chords" class="col-lg-3">
+                            {{ form.beat2|as_crispy_field }}
+                        </div>
+                        <div id="chords" class="col-lg-3">
+                            {{ form.beat3|as_crispy_field }}
+                        </div>
+                        <div id="chords" class="col-lg-3">
+                            {{ form.beat4|as_crispy_field }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="row" id="measure">
+                        <div id="chords" class="col-lg-3">
+                            {{ form.beat5|as_crispy_field }}
+                        </div>
+                        <div id="chords" class="col-lg-3">
+                            {{ form.beat6|as_crispy_field }}
+                        </div>
+                        <div id="chords" class="col-lg-3">
+                            {{ form.beat7|as_crispy_field }}
+                        </div>
+                        <div id="chords" class="col-lg-3">
+                            {{ form.beat8|as_crispy_field }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="row" id="measure">
+                        <div id="chords" class="col-lg-3">
+                            {{ form.beat9|as_crispy_field }}
+                        </div>
+                        <div id="chords" class="col-lg-3">
+                            {{ form.beat10|as_crispy_field }}
+                        </div>
+                        <div id="chords" class="col-lg-3">
+                            {{ form.beat11|as_crispy_field }}
+                        </div>
+                        <div id="chords" class="col-lg-3">
+                            {{ form.beat12|as_crispy_field }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="row" id="measure">
+                        <div id="chords" class="col-lg-3">
+                            {{ form.beat13|as_crispy_field }}
+                        </div>
+                        <div id="chords" class="col-lg-3">
+                            {{ form.beat14|as_crispy_field }}
+                        </div>
+                        <div id="chords" class="col-lg-3">
+                            {{ form.beat15|as_crispy_field }}
+                        </div>
+                        <div id="chords" class="col-lg-3">
+                            {{ form.beat16|as_crispy_field }}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="row">
+                <div class="col-lg-6">
+                    {{ form.genre|as_crispy_field }}
+                </div>
+                <div class="col-lg-6">
+                    {{ form.instrument|as_crispy_field }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-primary btn-block btn-lg" type="submit">Submit</button>
+            </div>
+        </form>
 </div>
+
 
 
 {% endblock content %}
@@ -23,3 +180,17 @@
 
 
 
+<div class="content-section">
+    <div class="col-md-6">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Create/edit Lick</legend>
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
