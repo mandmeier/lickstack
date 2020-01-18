@@ -1,20 +1,29 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
+{% load static %}
+
 {% block content %}
 
 <h2>Upload Lick</h2>
 
 <style type="text/css">
 
+
+img {
+width: 700px;
+height: auto;
+}
+
+
 #measure {
-    margin: 10px 0px 10px 0px;
+    /*background: red;*/
+    height: 50px;
+    margin: 10px 0px 0px 10px;
 }
 
 #chords {
-        background: #ff0000;
         padding: 0px;
         font-size: 0;
-
     }
 
 .file-preview {
@@ -122,6 +131,9 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <img src="{% static 'img/stave.png' %}">
+            <div class="row">
                 <div class="col-lg-6">
                     <div class="row" id="measure">
                         <div id="chords" class="col-lg-3">
@@ -154,8 +166,8 @@
                         </div>
                     </div>
                 </div>
-
             </div>
+            <img src="{% static 'img/stave.png' %}">
 
 
             <div class="row">
