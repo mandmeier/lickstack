@@ -1,28 +1,32 @@
 {% extends "base.html" %}
-
+{% load static %}
 
 {% block content %}
-
-<h1>Home</h1>
+<button class="search-btn col-lg-6" data-toggle="collapse" data-target="#search">Search <i class="fas fa-search"></i></button>
+<div id="search" class="collapse">
+    Search form here
+</div>
 
 {% for lick in licks %}
-    <article class="media lick-section">
-      <img class="rounded-circle article-img" src="{{ lick.author.profile.image.url }}">
-      <div class="media-body">
-        <div class="article-metadata">
-            {{ lick.genre }}
-            – <a class="mr-2" href="{% url 'user-licks' lick.author.username %}">{{ lick.author }} #{{ lick.counter }}</a>
-          <small class="text-muted">{{ lick.date_posted|date:"F d, Y" }}    </small>
-          – <a class="mr-2" href="{% url 'lick-detail' lick.id %}">View</a>
-        </div>
-        <p class="lick-content">
-            <audio controls preload="none">
-            <source src="{{ lick.file.url }}" type="audio/mp4" >
-            Your browser does not support HTML5 audio. Try Chrome 6+
-            </audio>
-        </p>
+<article class="row lick lick-section col-lg-6">
+    <div class="lick-metadata">
+        {{ lick.genre }}
+        – <a class="mr-2" href="{% url 'user-licks' lick.author.username %}">{{ lick.author }} #{{ lick.counter }}</a>
+      <small class="text-muted">{{ lick.date_posted|date:"F d, Y" }}    </small>
+      – <a class="mr-2" href="{% url 'lick-detail' lick.id %}">View</a>
+    </div>
+    <div class="row lick-display">
+      <div class="col-2">
+        <img src="#" alt="instr">
       </div>
-    </article>
+      <div class="col-10">
+        <audio controls preload="none">
+        <source src="{{ lick.file.url }}" type="audio/mp4" >
+        Your browser does not support HTML5 audio. Try Chrome 6+
+        </audio>
+      </div>
+    </div>
+</article>
 {% endfor %}
 
 {% if is_paginated %}

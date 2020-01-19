@@ -7,82 +7,220 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="{% static 'repo/css/main.css' %}">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
     {% if title %}
     <title>LickStack - {{ title }}</title>
     {% else %}
     <title>LickStack</title>
     {% endif %}
+
+    <!-- add icon link -->
+    <link rel = "icon" href="{% static 'img/LS_Icon.png' %}" type = "image/x-icon">
+
+<style type="text/css">
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
+
+  html, body {
+  height: 100%;
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+  color: #222;
+}
+.navbar-custom {
+  /*background-color: #234444;*/
+  background-color: #e5e5e5;
+}
+.navbar {
+  padding: .8rem;
+}
+.navbar-nav li {
+  padding-right: 20px;
+}
+.nav-link {
+  font-size: 1.1em !important;
+}
+.padding {
+  padding-bottom: 2rem;
+}
+.lick-section {
+  background: #ffffff;
+  width: 100%;
+  padding: 5px;
+  border: 2px solid #234444;
+  border-radius: 15px;
+  margin-bottom: 5px;
+}
+
+.lick-metadata {
+  width: 100%;
+  height: 50px;
+}
+.lick-display {
+  width: 100%;
+  height: 50px;
+}
+.lick-display audio {
+  width: 100%;
+  height: 30px;
+}
+.search-btn {
+  width: 100%;
+}
+
+.img-responsive {
+  max-width: 100%;
+  height: 50px;
+}
+
+
+
+
+
+
+
+footer {
+  background-color: #3f3f3f;
+  color: #d5d5d5;
+  padding-top: 2rem;
+}
+hr.light {
+  border-top: 1px solid #d5d5d5;
+  width: 75%;
+  margin-top: .8rem;
+  margin-bottom: 1rem;
+}
+footer a {
+  color: #d5d5d5;
+}
+hr.light-100 {
+  border-top: 1px solid #d5d5d5;
+  width: 100%;
+  margin-top: .8rem;
+  margin-bottom: 1rem;
+}
+
+
+
+
+
+</style>
+
+
+
+
 </head>
+
 <body>
-    <header class="site-header">
-      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
-        <div class="container">
-          <a class="navbar-brand mr-4" href="{% url 'home' %}">LickStack</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarToggle">
-            <!-- Navbar Left Side -->
-            <div class="navbar-nav mr-auto">
-              <a class="nav-item nav-link" href="{% url 'home' %}">Home</a>
-              <a class="nav-item nav-link" href="{% url 'about' %}">About</a>
-            </div>
-            <!-- Navbar Right Side -->
-            <div class="navbar-nav">
-                {% if user.is_authenticated %}
-                    <a class="nav-item nav-link" href="{% url 'lick-create' %}">New Lick</a>
-                    <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
-                    <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
-                    {% if user.is_staff %}
-                      <a class="nav-item nav-link" href="{% url 'admin:index' %}">Admin</a>
-                    {% endif %}
-                {% else %}
-                    <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-                    <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+<!-- Navigation -->
+<nav class="navbar navbar-custom navbar-expand-md navbar-light sticky-top">
+<div class="container-fluid">
+    <a class="navbar-brand" href="#"><img src="{% static 'img/Logo.png' %}" class="img-responsive" alt="Logo"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link active" href="{% url 'home' %}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'about' %}">About</a>
+            </li>
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'lick-create' %}">New Lick</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+            </li>
+                {% if user.is_staff %}
+            <li class="nav-item">
+                  <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
+            </li>
                 {% endif %}
-            </div>
-          </div>
-        </div>
-      </nav>
-    </header>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'register' %}">Register</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+</nav>
 
-    <main role="main" class="container">
+<!-- main content -->
+<div class="container-fluid">
+  <div class="row">
+    <div id= "ads-left" class="col-md-0 col-lg-3"></div>
+    <div id= "main_content" class="col-md-9 col-lg-9">
 
-      <div class="row">
+          {% if messages %}
+              {% for message in messages %}
+                  <div class="alert alert-{{ message.tags }}">
+                      {{ message}}
+                  </div>
+              {% endfor %}
+          {% endif %}
 
-        <div id= "ads-left" class="col-lg-2"></div>
+          {% block content %}{% endblock content %}
+    </div>
+    <div id= "ads-right" class="col-md-3 col-lg-3"></div>
+  </div>
+</div>
 
-        <div id= "main_content" class="col-lg-8">
+<!-- footer -->
+<footer>
+<div class="container-fluid padding">
+<div class="row text-center">
+    <div class="col-md-4">
+        <img src="#" alt="Logo">
+        <hr class="light">
+        <p>555-555-5555</p>
+        <p>email@myemail.com</p>
+        <p>100 Street Name</p>
+        <p>City, State, 64555</p>
+    </div>
+    <div class="col-md-4">
+        <hr class="light">
+        <h5>Our Hours</h5>
+        <hr class="light">
+        <p>Monday: 9am - 5pm</p>
+        <p>Saturday: 10am - 4pm</p>
+        <p>Sunday: closed</p>
+    </div>
+    <div class="col-md-4">
+        <hr class="light">
+        <h5>Service Area</h5>
+        <hr class="light">
+        <p>City, State, 64555</p>
+        <p>City, State, 64555</p>
+        <p>City, State, 64555</p>
+        <p>City, State, 64555</p>
+    </div>
+    <div class="col-12">
+        <hr class="light-100">
+        <h5>&copy; LickStack.com</h5>
+    </div>
+</div>
+</div>
+</footer>
 
-              {% if messages %}
-                  {% for message in messages %}
-                      <div class="alert alert-{{ message.tags }}">
-                          {{ message}}
-                      </div>
-                  {% endfor %}
-              {% endif %}
-
-              {% block content %}{% endblock content %}
-        </div>
 
 
-        <div id= "ads-right" class="col-lg-2"></div>
 
-      </div>
 
-    </main>
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 
 
 </body>
