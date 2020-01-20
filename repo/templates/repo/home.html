@@ -8,7 +8,7 @@
 </div>
 
 {% for lick in licks %}
-<article class="row lick lick-section col-lg-6">
+<article class="row lick lick-section">
     <div class="lick-metadata">
         {{ lick.genre }}
         – <a class="mr-2" href="{% url 'user-licks' lick.author.username %}">{{ lick.author }} #{{ lick.counter }}</a>
@@ -27,10 +27,36 @@
       </div>
     </div>
     <div class="lick-chords">
-        <span class="avoidwrap"> | {{ lick.beat1 }} {{ lick.beat2 }} {{ lick.beat3 }} {{ lick.beat4 }} | </span>
-        <span class="avoidwrap"> {{ lick.beat5 }} {{ lick.beat6 }} {{ lick.beat7 }} {{ lick.beat8 }} | </span>
-        <span class="avoidwrap"> {{ lick.beat9 }} {{ lick.beat10 }} {{ lick.beat11 }} {{ lick.beat12 }} | </span>
-        <span class="avoidwrap"> {{ lick.beat13 }} {{ lick.beat14 }} {{ lick.beat15 }} {{ lick.beat16 }} | </span>
+      <span class="avoidwrap">
+        <span class="avoidwrap">
+        <img class="bar" src="{% static 'img/chords/bar.png' %}">
+        {% with 'img/chords/'|add:lick.beat1|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.beat1 }}"/>{% endwith %}
+        {% with 'img/chords/'|add:lick.beat2|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.beat2 }}"/>{% endwith %}
+        {% with 'img/chords/'|add:lick.beat3|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.beat3 }}"/>{% endwith %}
+        {% with 'img/chords/'|add:lick.beat4|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.beat4 }}"/>{% endwith %}
+        <img class="bar" src="{% static 'img/chords/bar.png' %}">
+        {% with 'img/chords/'|add:lick.beat5|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.beat5 }}"/>{% endwith %}
+        {% with 'img/chords/'|add:lick.beat6|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.beat6 }}"/>{% endwith %}
+        {% with 'img/chords/'|add:lick.beat7|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.beat7 }}"/>{% endwith %}
+        {% with 'img/chords/'|add:lick.beat8|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.beat8 }}"/>{% endwith %}
+        <img class="bar" src="{% static 'img/chords/bar.png' %}">
+        </span>
+      </span>
+      <span class="avoidwrap">
+        <span class="avoidwrap">
+        <img class="bar" src="{% static 'img/chords/bar.png' %}">
+        {% with 'img/chords/'|add:lick.beat9|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.beat9 }}"/>{% endwith %}
+        {% with 'img/chords/'|add:lick.beat10|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.beat10 }}"/>{% endwith %}
+        {% with 'img/chords/'|add:lick.beat11|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.beat11 }}"/>{% endwith %}
+        {% with 'img/chords/'|add:lick.beat12|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.beat12 }}"/>{% endwith %}
+        <img class="bar" src="{% static 'img/chords/bar.png' %}">
+        {% with 'img/chords/'|add:lick.beat13|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.beat13 }}"/>{% endwith %}
+        {% with 'img/chords/'|add:lick.beat14|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.beat14 }}"/>{% endwith %}
+        {% with 'img/chords/'|add:lick.beat15|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.beat15 }}"/>{% endwith %}
+        {% with 'img/chords/'|add:lick.beat16|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.beat16 }}"/>{% endwith %}
+        <img class="bar" src="{% static 'img/chords/bar.png' %}">
+        </span>
+      </span>
     </div>
 </article>
 {% endfor %}
