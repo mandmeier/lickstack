@@ -72,18 +72,25 @@
             <span class="file-preview__default-text"> File Preview </span>
         </div>
 
+        <div class="time-signature row">
+            <div class="col-2">
+                {{ form.time_signature|as_crispy_field }}
+            </div>
+        </div>
+
+        <!-- 4/4 form-->
         <div class="chords-input col-12">
         <div class="row chords-row">
             <img class="bar" src="{% static 'img/chords/bar.png' %}">
                 <div id="chords">{{ form.beat1|as_crispy_field }} </div>
                 <div id="chords">{{ form.beat2|as_crispy_field }} </div>
                 <div id="chords">{{ form.beat3|as_crispy_field }} </div>
-                <div id="chords">{{ form.beat4|as_crispy_field }} </div>
+                <div class="ts44" id="chords">{{ form.beat4|as_crispy_field }} </div>
             <img class="bar" src="{% static 'img/chords/bar.png' %}">
                 <div id="chords">{{ form.beat5|as_crispy_field }} </div>
                 <div id="chords">{{ form.beat6|as_crispy_field }} </div>
                 <div id="chords">{{ form.beat7|as_crispy_field }} </div>
-                <div id="chords">{{ form.beat8|as_crispy_field }} </div>
+                <div class="ts44" id="chords">{{ form.beat8|as_crispy_field }} </div>
             <img class="bar" src="{% static 'img/chords/bar.png' %}">
         </div>
         <div class="row">
@@ -91,12 +98,12 @@
                 <div id="chords">{{ form.beat9|as_crispy_field }} </div>
                 <div id="chords">{{ form.beat10|as_crispy_field }} </div>
                 <div id="chords">{{ form.beat11|as_crispy_field }} </div>
-                <div id="chords">{{ form.beat12|as_crispy_field }} </div>
+                <div class="ts44" id="chords">{{ form.beat12|as_crispy_field }} </div>
             <img class="bar" src="{% static 'img/chords/bar.png' %}">
                 <div id="chords">{{ form.beat13|as_crispy_field }} </div>
                 <div id="chords">{{ form.beat14|as_crispy_field }} </div>
                 <div id="chords">{{ form.beat15|as_crispy_field }} </div>
-                <div id="chords">{{ form.beat16|as_crispy_field }} </div>
+                <div class="ts44" id="chords">{{ form.beat16|as_crispy_field }} </div>
             <img class="bar" src="{% static 'img/chords/bar.png' %}">
         </div>
         </div>
@@ -115,6 +122,8 @@
         </div>
     </form>
 </div>
+
+
 
 
 
@@ -149,7 +158,19 @@
     });
 </script>
 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
+<script type="text/javascript">
+
+$('#id_time_signature').on('change', function () {
+    if(this.value === "4/4"){
+        $(".ts44").show();
+    } else {
+        $(".ts44").hide();
+    }
+});
+
+</script>
 
 {% endblock content %}
 

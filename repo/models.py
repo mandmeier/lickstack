@@ -30,6 +30,12 @@ class Lick(models.Model):
     last_updated = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
     counter = models.IntegerField(default=1)
+
+    TS_CHOICES = [('4/4', '4/4'), ('3/4', '3/4')]
+
+    time_signature = models.CharField(
+        max_length=5, choices=TS_CHOICES, default='4/4')
+
     KEY_CHOICES = [
         ('dash', '-'),
         (('C'), (
