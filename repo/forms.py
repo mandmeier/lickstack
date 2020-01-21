@@ -4,18 +4,18 @@ from .models import Lick
 
 class LickForm(forms.ModelForm):
 
-    class Meta:
-        model = Lick
-        fields = ('file', 'instrument', 'genre',
-                  'beat1', 'beat2', 'beat3', 'beat4',
-                  'beat5', 'beat6', 'beat7', 'beat8',
-                  'beat9', 'beat10', 'beat11', 'beat12',
-                  'beat13', 'beat14', 'beat15', 'beat16',
-                  )
+  class Meta:
+    model = Lick
+    fields = ('file', 'instrument', 'genre',
+              'beat1', 'beat2', 'beat3', 'beat4',
+              'beat5', 'beat6', 'beat7', 'beat8',
+              'beat9', 'beat10', 'beat11', 'beat12',
+              'beat13', 'beat14', 'beat15', 'beat16',
+              )
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['file'].widget.attrs['id'] = 'inpFile'
+  def __init__(self, *args, **kwargs):
+    super().__init__(*args, **kwargs)
+    self.fields['file'].widget.attrs['id'] = 'inpFile'
 
 
 """
