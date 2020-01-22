@@ -7,10 +7,10 @@ class LickForm(forms.ModelForm):
   class Meta:
     model = Lick
     fields = ('file', 'instrument', 'genre', 'time_signature',
-              'beat1', 'beat2', 'beat3', 'beat4',
-              'beat5', 'beat6', 'beat7', 'beat8',
-              'beat9', 'beat10', 'beat11', 'beat12',
-              'beat13', 'beat14', 'beat15', 'beat16',
+              'm1_b1', 'm1_b2', 'm1_b3', 'm1_b4',
+              'm2_b1', 'm2_b2', 'm2_b3', 'm2_b4',
+              'm3_b1', 'm3_b2', 'm3_b3', 'm3_b4',
+              'm4_b1', 'm4_b2', 'm4_b3', 'm4_b4',
               )
 
   def __init__(self, *args, **kwargs):

@@ -159,82 +159,82 @@ class Lick(models.Model):
             ('Dbdim', 'Dbo'),
         )),
     ]
-    beat1 = models.CharField(
+    m1_b1 = models.CharField(
         max_length=10,
         choices=KEY_CHOICES,
         default='-',
     )
-    beat2 = models.CharField(
+    m1_b2 = models.CharField(
         max_length=10,
         choices=KEY_CHOICES,
         default='-',
     )
-    beat3 = models.CharField(
+    m1_b3 = models.CharField(
         max_length=10,
         choices=KEY_CHOICES,
         default='-',
     )
-    beat4 = models.CharField(
+    m1_b4 = models.CharField(
         max_length=10,
         choices=KEY_CHOICES,
         default='-',
     )
-    beat5 = models.CharField(
+    m2_b1 = models.CharField(
         max_length=10,
         choices=KEY_CHOICES,
         default='-',
     )
-    beat6 = models.CharField(
+    m2_b2 = models.CharField(
         max_length=10,
         choices=KEY_CHOICES,
         default='-',
     )
-    beat7 = models.CharField(
+    m2_b3 = models.CharField(
         max_length=10,
         choices=KEY_CHOICES,
         default='-',
     )
-    beat8 = models.CharField(
+    m2_b4 = models.CharField(
         max_length=10,
         choices=KEY_CHOICES,
         default='-',
     )
-    beat9 = models.CharField(
+    m3_b1 = models.CharField(
         max_length=10,
         choices=KEY_CHOICES,
         default='-',
     )
-    beat10 = models.CharField(
+    m3_b2 = models.CharField(
         max_length=10,
         choices=KEY_CHOICES,
         default='-',
     )
-    beat11 = models.CharField(
+    m3_b3 = models.CharField(
         max_length=10,
         choices=KEY_CHOICES,
         default='-',
     )
-    beat12 = models.CharField(
+    m3_b4 = models.CharField(
         max_length=10,
         choices=KEY_CHOICES,
         default='-',
     )
-    beat13 = models.CharField(
+    m4_b1 = models.CharField(
         max_length=10,
         choices=KEY_CHOICES,
         default='-',
     )
-    beat14 = models.CharField(
+    m4_b2 = models.CharField(
         max_length=10,
         choices=KEY_CHOICES,
         default='-',
     )
-    beat15 = models.CharField(
+    m4_b3 = models.CharField(
         max_length=10,
         choices=KEY_CHOICES,
         default='-',
     )
-    beat16 = models.CharField(
+    m4_b4 = models.CharField(
         max_length=10,
         choices=KEY_CHOICES,
         default='-',
@@ -247,3 +247,8 @@ class Lick(models.Model):
 
     def get_absolute_url(self):
         return reverse('lick-detail', kwargs={'pk': self.pk})
+
+    # delete audio file from file system when delete lick model instance
+    def delete(self, *args, **kwargs):
+        self.file.delete()
+        super().delete(*args, **kwargs)
