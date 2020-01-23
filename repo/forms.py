@@ -18,6 +18,10 @@ class LickForm(forms.ModelForm):
   def __init__(self, *args, **kwargs):
     super().__init__(*args, **kwargs)
     self.fields['file'].widget.attrs['id'] = 'inpFile'
+    self.fields['m1_b4'].widget.attrs['class'] = 'ts44'
+    self.fields['m2_b4'].widget.attrs['class'] = 'ts44'
+    self.fields['m3_b4'].widget.attrs['class'] = 'ts44'
+    self.fields['m4_b4'].widget.attrs['class'] = 'ts44'
 
   # validate uploaded file for extension and file size
   def clean_file(self):

@@ -110,6 +110,29 @@ hr.light-100 {
   margin-top: .8rem;
   margin-bottom: 1rem;
 }
+.social a {
+    font-size: 2em;
+    padding: 0.7rem;
+  }
+.fa-facebook {
+  color: #3b5998;
+}
+.fa-twitter {
+  color: #00aced;
+}
+.fa-instagram {
+  color: #517fa4;
+}
+.fa-google-plus-g {
+  color: #dd4b39;
+}
+.fa-youtube {
+  color: #bb0000;
+}
+.footer-logo {
+  height: 60px;
+  margin-bottom: 10px;
+}
 
 
 
@@ -190,33 +213,25 @@ hr.light-100 {
 <footer>
 <div class="container-fluid padding">
 <div class="row text-center">
-    <div class="col-md-4">
-        <img src="#" alt="Logo">
+    <div class="col-md-6">
         <hr class="light">
-        <p>555-555-5555</p>
-        <p>email@myemail.com</p>
-        <p>100 Street Name</p>
-        <p>City, State, 64555</p>
+        <h5>Contact</h5>
+        <hr class="light">
+        <p>info@lickstack.com</p>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-6 social padding">
         <hr class="light">
-        <h5>Our Hours</h5>
+        <h5>Follow us</h5>
         <hr class="light">
-        <p>Monday: 9am - 5pm</p>
-        <p>Saturday: 10am - 4pm</p>
-        <p>Sunday: closed</p>
-    </div>
-    <div class="col-md-4">
-        <hr class="light">
-        <h5>Service Area</h5>
-        <hr class="light">
-        <p>City, State, 64555</p>
-        <p>City, State, 64555</p>
-        <p>City, State, 64555</p>
-        <p>City, State, 64555</p>
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-google-plus-g"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
     </div>
     <div class="col-12">
         <hr class="light-100">
+        <img class="footer-logo" src="{% static 'img/Logo.png' %}" alt="Logo">
         <h5>&copy; LickStack.com</h5>
     </div>
 </div>
