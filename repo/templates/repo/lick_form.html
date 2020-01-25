@@ -4,11 +4,6 @@
 
 {% block content %}
 
-
-
-
-
-
 <style>
     .lick-form {
         margin-top: 50px;
@@ -19,11 +14,20 @@
         border: 2px solid #234444;
         border-radius: 15px;
     }
-    .chords-row, .form-input {
-        margin-top: 20px;
-        margin-bottom: 20px;
+    .chords-row .form-group {
+        width: 11.5%;
     }
-
+    .chords-row {
+        height: 50px;
+        background-image: url("{% static 'img/staff.png' %}");
+        background-size: 100% 100%;
+    }
+    .separator-mid{
+        width: 4%;
+    }
+    .separator-lr{
+        width: 2%;
+    }
     .file-preview {
         width: 100%;
         height: 50px;
@@ -42,119 +46,45 @@
         font-weight: bold;
         color: #888888;
     }
-    .file-input, .file-preview, .chords-input {
-        /*background-color: #00ff00;
-        width: 100%;*/
+    .form-check {
+        display: inline-block;
+        margin-right: 10px;
+    }
+    .chords-input .form-group {
+        font-size: 0;
+        padding: 0px;
+        margin: 0px;
+        max-width: 100%;
+    }
+    .chords-input .form-group label{
+        position: none;
+    }
+
+
+    .chords-input .form-control {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        font-size: 1rem;
+        font-weight: 400;
+        color: #495057;
+        padding: 0rem;
+        margin: 0rem;
+        background-color: #fff;
+        border: 1px solid #ced4da;
+        border-radius: .25rem;
+        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
     }
     .form-submit {
         margin-bottom: 10px
     }
-    /*select, option {
-        border: none;
-        background: none;
-        -webkit-border-radius: 0;
-        -moz-border-radius: 0;
-        border-radius: 0;
-        padding: 0;
-        margin: 0;
-    }
-    select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    text-indent: 0px;
-    text-overflow: '';
-
-}
-
-form {
-    position: relative;
-    top: 50px;
-}
-
-form * {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background: transparent;
-    behavior: url(PIE.htc);
-}
-
-select, option {
-    border: none;
-    background: none;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    border-radius: 0;
-    padding: 0;
-    margin: 0;
-}
-
-form {
-    position: relative;
-    width: 340px;
-    margin: 0 auto;
-    font-weight: bold;
-    color: #DDD;
-}
-
-select {
-    background: #555;
-    border-radius: 4px;
-    width: 240px;
-    height: 35px;
-    background: url('select.png') no-repeat;
-    color: #DDD;
-    padding: 8px;
-    outline: solid transparent;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    text-indent: 1px;
-    text-overflow: '';
-
-}
-
-select:focus {
-    background: url('select.png') no-repeat 0 -35px;
-}
-
-option {
-    background: #666;
-    color: #DDD;
-    padding: 5px;
-    text-align: center;
-} */
-
-.chords-input .form-group {
-    font-size: 0;
-    padding: 0px;
-    margin: 0px;
-    max-width: calc(90% / 8);
-}
-.chords-input .form-group label{
-    position: none;
-}
-
-
-
-.chords-input .form-control {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    font-size: 1rem;
-    font-weight: 400;
-    color: #495057;
-    /*color: #222;*/
-    padding: 0rem;
-    margin: 0rem;
-    background-color: #fff;
-    border: 1px solid #ced4da;
-    border-radius: .25rem;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-}
 
 
 </style>
 
+
+
 <div class="container-fluid col-12">
-    <form class="lick-form" method="POST" enctype="multipart/form-data">
+    <form class="lick-form" method="POST" enctype="multipart/form-data" onchange="changeLayout()">
         <h2>Upload Lick</h2>
         {% csrf_token %}
         <div class="file-input">
@@ -171,38 +101,44 @@ option {
         </div>
 
         <div class="time-signature row">
-            <div class="col-2">
+            <div class="col-4">
                 {{ form.time_signature|as_crispy_field }}
             </div>
         </div>
 
-        <!-- 4/4 form-->
+        <div class="reset-btn">
+            <button onclick="resetChords()">Reset Chords</button>
+        </div>
+
+        <div id="reset">reset</div>
+
+
         <div class="chords-input col-12">
         <div class="row chords-row">
-            <img class="bar" src="{% static 'img/chords/bar.png' %}">
+                <div class="separator-lr"></div>
                 {{ form.m1_b1|as_crispy_field }}
                 {{ form.m1_b2|as_crispy_field }}
                 {{ form.m1_b3|as_crispy_field }}
                 {{ form.m1_b4|as_crispy_field }}
-            <img class="bar" src="{% static 'img/chords/bar.png' %}">
+                <div class="separator-mid"></div>
                 {{ form.m2_b1|as_crispy_field }}
                 {{ form.m2_b2|as_crispy_field }}
                 {{ form.m2_b3|as_crispy_field }}
                 {{ form.m2_b4|as_crispy_field }}
-            <img class="bar" src="{% static 'img/chords/bar.png' %}">
+                <div class="separator-lr"></div>
         </div>
-        <div class="row">
-            <img class="bar" src="{% static 'img/chords/bar.png' %}">
+        <div class="row chords-row">
+                <div class="separator-lr"></div>
                 {{ form.m3_b1|as_crispy_field }}
                 {{ form.m3_b2|as_crispy_field }}
                 {{ form.m3_b3|as_crispy_field }}
                 {{ form.m3_b4|as_crispy_field }}
-            <img class="bar" src="{% static 'img/chords/bar.png' %}">
+                <div class="separator-mid"></div>
                 {{ form.m4_b1|as_crispy_field }}
                 {{ form.m4_b2|as_crispy_field }}
                 {{ form.m4_b3|as_crispy_field }}
                 {{ form.m4_b4|as_crispy_field }}
-            <img class="bar" src="{% static 'img/chords/bar.png' %}">
+                <div class="separator-lr"></div>
         </div>
         </div>
 
@@ -257,21 +193,60 @@ option {
     });
 </script>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
 <script type="text/javascript">
 
-$('#id_time_signature').on('change', function () {
-    if(this.value === "4/4"){
-        $(".ts44").show();
-    } else {
-        $(".ts44").hide();
-    }
-});
+    function changeLayout() {
+        if (document.getElementById("id_time_signature_1").checked){
+            $(".ts44").show();
+            $(".chords-row .form-group").css("width","11.5%");
+        } else if (document.getElementById("id_time_signature_2").checked){
+            $(".ts44").hide();
+            $(".chords-row .form-group").css("width","15.33%");
+            $("#div_id_m1_b4, #div_id_m2_b4, #div_id_m3_b4, #div_id_m4_b4").css("width","0px");
+            document.getElementById("id_m1_b4").selectedIndex = "-";
+            document.getElementById("id_m2_b4").selectedIndex = "-";
+            document.getElementById("id_m3_b4").selectedIndex = "-";
+            document.getElementById("id_m4_b4").selectedIndex = "-";
+        }
+    };
 
 </script>
 
 
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+
+<script type="text/javascript">
+
+/*$("#reset").on("click", function () {
+    $('#id_m1_b1 option').prop('selected', function() {
+        return this.defaultSelected;
+    });
+});*/
+
+
+$("#reset").on("click", function () {
+    $(innerDivId).prop('selected', function() {
+        return this.defaultSelected;
+    });
+});
+
+
+/*loop? https://stackoverflow.com/questions/11291300/how-to-loop-over-the-child-divs-of-a-div-and-get-the-ids-of-the-child-divs */
+$('.chords-input').find('div').each(function(){
+    var innerDivId = $(this).attr('id');
+    console.log(innerDivId);
+});
+
+
+</script>
+
 {% endblock content %}
 
-
+var slides = document.getElementsByClassName("slide");
+    for(var i = 0; i < slides.length; i++){
+        Distribute(slides.item(i));
+    }

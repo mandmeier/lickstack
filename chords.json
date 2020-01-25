@@ -1,0 +1,19 @@
+[
+    {
+        "string" : "Gm7",
+        "thumbnail" : "/img/model_chords/Gm7.png"
+    },
+    {
+        "string" : "C7",
+        "thumbnail" : "/img/model_chords/C7.png"
+    },
+    {
+        "string" : "Fmaj7",
+        "thumbnail" : "/img/model_chords/Fmaj7.png"
+    },
+    {
+        "string" : "dash",
+        "thumbnail" : "/img/model_chords/dash.png"
+    }
+
+]

@@ -1,10 +1,14 @@
 from django import forms
+from django.db import models
 from .models import Lick
 from django.core.exceptions import ValidationError
 import os
 
 
 class LickForm(forms.ModelForm):
+  TS_CHOICES = [('4/4', '4/4'), ('3/4', '3/4')]
+  time_signature = forms.ChoiceField(
+      choices=TS_CHOICES, widget=forms.RadioSelect)
 
   class Meta:
     model = Lick
