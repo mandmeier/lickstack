@@ -1,3 +1,4 @@
+{% load staticfiles %}
 {% load static %}
 <!DOCTYPE html>
 <html>
@@ -7,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
 
     {% if title %}
     <title>LickStack - {{ title }}</title>
@@ -15,137 +17,12 @@
     {% endif %}
 
     <!-- add icon link -->
-    <link rel = "icon" href="{% static 'img/LS_Icon.png' %}" type = "image/x-icon">
-
-<style type="text/css">
-@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
-
-  html, body {
-  height: 100%;
-  width: 100%;
-  font-family: 'Poppins', sans-serif;
-  color: #222;
-}
-.navbar-custom {
-  /*background-color: #234444;*/
-  background-color: #e5e5e5;
-}
-.navbar {
-  padding: .8rem;
-}
-.navbar-nav li {
-  padding-right: 20px;
-}
-.nav-link {
-  font-size: 1.1em !important;
-}
-.padding {
-  padding-bottom: 2rem;
-}
-.lick-section {
-  background: #f9f9f9;
-  width: 100%;
-  padding: 5px;
-  border: 2px solid #234444;
-  border-radius: 15px;
-  margin: 0px 10px 10px 5px;
-}
-
-.lick-metadata {
-  width: 100%;
-  height: 50px;
-}
-.lick-display {
-  width: 100%;
-  height: 50px;
-}
-.lick-display audio {
-  width: 100%;
-  height: 30px;
-}
-.search-btn {
-  width: 100%;
-}
-
-.img-responsive { /* Logo image */
-  max-width: 100%;
-  height: 50px;
-}
-
-span.avoidwrap {
-  display:inline-block;
-}
-
-.lick-chords img {
-  /*width: 4rem;*/
-  /*height: 30px;*/
-  box-sizing: border-box;
-  max-width: calc(75% / 8);
-}
-
-img.bar {
-  width: 1rem;
-  height: 30px;
-}
-
-
-
-footer {
-  background-color: #3f3f3f;
-  color: #d5d5d5;
-  padding-top: 2rem;
-}
-hr.light {
-  border-top: 1px solid #d5d5d5;
-  width: 75%;
-  margin-top: .8rem;
-  margin-bottom: 1rem;
-}
-footer a {
-  color: #d5d5d5;
-}
-hr.light-100 {
-  border-top: 1px solid #d5d5d5;
-  width: 100%;
-  margin-top: .8rem;
-  margin-bottom: 1rem;
-}
-.social a {
-    font-size: 2em;
-    padding: 0.7rem;
-  }
-.fa-facebook {
-  color: #3b5998;
-}
-.fa-twitter {
-  color: #00aced;
-}
-.fa-instagram {
-  color: #517fa4;
-}
-.fa-google-plus-g {
-  color: #dd4b39;
-}
-.fa-youtube {
-  color: #bb0000;
-}
-.footer-logo {
-  height: 60px;
-  margin-bottom: 10px;
-}
-
-
-
-
-
-</style>
-
-
-
+    <link rel="shortcut icon" href="{% static 'favicon/favicon.ico' %}"/>
 
 </head>
 
 <body>
+  <link rel="icon" type="img/png" href="{% static 'img/Logo.png' %}">
 <!-- Navigation -->
 <nav class="navbar navbar-custom navbar-expand-md navbar-light sticky-top">
 <div class="container-fluid">
@@ -159,7 +36,7 @@ hr.light-100 {
                 <a class="nav-link active" href="{% url 'home' %}">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'about' %}">About</a>
+                <a class="nav-link" href="{% url 'all-licks' %}">All Licks</a>
             </li>
             {% if user.is_authenticated %}
             <li class="nav-item">

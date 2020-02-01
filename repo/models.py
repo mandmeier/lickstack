@@ -239,6 +239,11 @@ class Lick(models.Model):
         choices=KEY_CHOICES,
         default='-',
     )
+    #chord_seq = models.CharField(max_length=100, default = '-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-')
+
+    #def save(self, *args, **kwargs):
+        #self.chord_seq = self.m1_b1 + "_" + self.m1_b2
+        #super().save(*args, **kwargs)
 
     def __str__(self):
         name = str(self.genre) + "_" + str(self.author) + \

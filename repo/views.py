@@ -10,16 +10,61 @@ from django.utils import timezone
 from django.urls import reverse_lazy
 
 
-def about(request):
-    return render(request, 'repo/about.html', {'title': 'About'})
+def home(request):
+    return render(request, 'repo/home.html', {'title': 'Home'})
+
+
+"""
+def BrowseLicksView(request):
+    qs = Lick.objects.all()
+    genre_exact_query = request.GET.get('genre_exact')
+    username_contains = request.GET.get('username_contains')
+    m1_b1 = request.GET.get('m1_b1')
+
+    if username_contains != '' and username_contains is not None:
+        qs = qs.filter(author__username__icontains=username_contains)
+
+    if genre_exact_query != '' and genre_exact_query is not None:
+        qs = qs.filter(genre__name=genre_exact_query)
+
+    if is_valid_queryparam(m1_b1) and m1_b1 != '-':
+        qs = qs.filter(m1_b1=m1_b1)
+
+    context = {
+        'licks': qs,
+        'm1_b1': m1_b1,
+        'key_choices': key_choices,
+        'key_range': range(0, len(key_choices)),
+        'chord_choices': chord_choices,
+        'chord_range': range(0, len(chord_choices[1])),
+    }
+    return render(request, "repo/browse_licks.html", context)
+"""
+
+
+def is_valid_queryparam(param):
+    return param != '' and param is not None
 
 
 class LickListView(generic.ListView):
     model = Lick
-    template_name = 'repo/home.html'
+    template_name = 'repo/all_licks.html'
     context_object_name = 'licks'
     ordering = ['-date_posted']  # minus reverses order
     paginate_by = 10
+
+    def get_queryset(self):  # new
+        qs = Lick.objects.all()
+        genre_exact_query = self.request.GET.get('genre_exact')
+        username_contains = self.request.GET.get('username_contains')
+
+        if is_valid_queryparam(username_contains):
+            qs = qs.filter(author__username__icontains=username_contains)
+
+        if is_valid_queryparam(genre_exact_query):
+            qs = qs.filter(genre__name=genre_exact_query)
+
+        return qs
 
 
 class UserLickListView(generic.ListView):

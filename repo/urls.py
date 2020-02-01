@@ -1,19 +1,19 @@
 from django.urls import path
 #from . import views
 from .views import (
-    about,
+    home,
     LickListView,
     UserLickListView,
     LickDetailView,
     LickCreateView,
     LickUpdateView,
-    LickDeleteView
+    LickDeleteView,
 )
 
 urlpatterns = [
-    path('', LickListView.as_view(), name='home'),
+    path('', home, name='home'),
+    path('all/', LickListView.as_view(), name='all-licks'),
     path('user/<str:username>/', UserLickListView.as_view(), name='user-licks'),
-    path('about/', about, name='about'),
     path('lick/<int:pk>/', LickDetailView.as_view(), name='lick-detail'),
     path('lick/new/', LickCreateView.as_view(), name='lick-create'),
     path('lick/<int:pk>/update/', LickUpdateView.as_view(), name='lick-update'),

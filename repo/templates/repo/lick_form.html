@@ -4,83 +4,13 @@
 
 {% block content %}
 
-<style>
-    .lick-form {
-        margin-top: 50px;
-        margin-bottom: 100px;
-        background: #f9f9f9;
-        width: 100%;
-        padding: 5px;
-        border: 2px solid #234444;
-        border-radius: 15px;
-    }
-    .chords-row .form-group {
-        width: 11.5%;
-    }
+<style type="text/css">
     .chords-row {
-        height: 50px;
-        background-image: url("{% static 'img/staff.png' %}");
-        background-size: 100% 100%;
-    }
-    .separator-mid{
-        width: 4%;
-    }
-    .separator-lr{
-        width: 2%;
-    }
-    .file-preview {
-        width: 100%;
-        height: 50px;
-        border: 2px solid #ddd;
-        margin-top: 20px;
-        margin-bottom: 20px;
-    }
-    .file-preview__file {
-        display: none;
-        margin: 8px 0;
-        width: 100%;
-    }
-    .file-preview__default-text {
-        display: flex;
-        justify-content: center;
-        font-weight: bold;
-        color: #888888;
-    }
-    .form-check {
-        display: inline-block;
-        margin-right: 10px;
-    }
-    .chords-input .form-group {
-        font-size: 0;
-        padding: 0px;
-        margin: 0px;
-        max-width: 100%;
-    }
-    .chords-input .form-group label{
-        position: none;
-    }
-
-
-    .chords-input .form-control {
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        font-size: 1rem;
-        font-weight: 400;
-        color: #495057;
-        padding: 0rem;
-        margin: 0rem;
-        background-color: #fff;
-        border: 1px solid #ced4da;
-        border-radius: .25rem;
-        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-    }
-    .form-submit {
-        margin-bottom: 10px
-    }
-
-
+    height: 50px;
+    background-image: url("{% static 'img/staff.png' %}");
+    background-size: 100% 100%;
+}
 </style>
-
 
 
 <div class="container-fluid col-12">
@@ -160,8 +90,6 @@
 
 
 
-
-
 <!-- preview script -->
 <script type="text/javascript">
     /* https://www.youtube.com/watch?v=VElnT8EoEEM */
@@ -215,12 +143,10 @@
 
 
 
-
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
-
 <script type="text/javascript">
-
+/* reset form script */
 /*$("#reset").on("click", function () {
     $('#id_m1_b1 option').prop('selected', function() {
         return this.defaultSelected;
@@ -246,7 +172,4 @@ $('.chords-input').find('div').each(function(){
 
 {% endblock content %}
 
-var slides = document.getElementsByClassName("slide");
-    for(var i = 0; i < slides.length; i++){
-        Distribute(slides.item(i));
-    }
+
