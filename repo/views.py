@@ -14,55 +14,76 @@ def home(request):
     return render(request, 'repo/home.html', {'title': 'Home'})
 
 
-"""
-def BrowseLicksView(request):
-    qs = Lick.objects.all()
-    genre_exact_query = request.GET.get('genre_exact')
-    username_contains = request.GET.get('username_contains')
-    m1_b1 = request.GET.get('m1_b1')
-
-    if username_contains != '' and username_contains is not None:
-        qs = qs.filter(author__username__icontains=username_contains)
-
-    if genre_exact_query != '' and genre_exact_query is not None:
-        qs = qs.filter(genre__name=genre_exact_query)
-
-    if is_valid_queryparam(m1_b1) and m1_b1 != '-':
-        qs = qs.filter(m1_b1=m1_b1)
-
-    context = {
-        'licks': qs,
-        'm1_b1': m1_b1,
-        'key_choices': key_choices,
-        'key_range': range(0, len(key_choices)),
-        'chord_choices': chord_choices,
-        'chord_range': range(0, len(chord_choices[1])),
-    }
-    return render(request, "repo/browse_licks.html", context)
-"""
-
-
 def is_valid_queryparam(param):
     return param != '' and param is not None
 
 
 class LickListView(generic.ListView):
     model = Lick
+    form_class = LickForm
     template_name = 'repo/all_licks.html'
     context_object_name = 'licks'
-    ordering = ['-date_posted']  # minus reverses order
     paginate_by = 10
 
-    def get_queryset(self):  # new
+    def get_context_data(self, **kwargs):
+        # some other stuff — where you create `context`
+        context = super().get_context_data(**kwargs)
+        context["form"] = LickForm()
+        return context
+
+    def get_queryset(self):
+
+        # search
         qs = Lick.objects.all()
         genre_exact_query = self.request.GET.get('genre_exact')
         username_contains = self.request.GET.get('username_contains')
+
+        m1_b1 = self.request.GET.get('m1_b1')
+        m1_b2 = self.request.GET.get('m1_b2')
+        m1_b3 = self.request.GET.get('m1_b3')
+        m1_b4 = self.request.GET.get('m1_b4')
+        m2_b1 = self.request.GET.get('m2_b1')
+        m2_b2 = self.request.GET.get('m2_b2')
+        m2_b3 = self.request.GET.get('m2_b3')
+        m2_b4 = self.request.GET.get('m2_b4')
+        m3_b1 = self.request.GET.get('m3_b1')
+        m3_b2 = self.request.GET.get('m3_b2')
+        m3_b3 = self.request.GET.get('m3_b3')
+        m3_b4 = self.request.GET.get('m3_b4')
+        m4_b1 = self.request.GET.get('m4_b1')
+        m4_b2 = self.request.GET.get('m4_b2')
+        m4_b3 = self.request.GET.get('m4_b3')
+        m4_b4 = self.request.GET.get('m4_b4')
+
+        chord_seq = [
+            m1_b1, m1_b2, m1_b3, m1_b4,
+            m2_b1, m2_b2, m2_b3, m2_b4,
+            m3_b1, m3_b2, m3_b3, m3_b4,
+            m4_b1, m4_b2, m4_b3, m4_b4,
+        ]
+
+        # make regex query seq
+        query = ""
+        for chord in chord_seq:
+            if chord != ".":
+                print(chord)
+                query = query + "[x.]*" + str(chord)
+
+        query = query + "x"
+
+        print(query)
 
         if is_valid_queryparam(username_contains):
             qs = qs.filter(author__username__icontains=username_contains)
 
         if is_valid_queryparam(genre_exact_query):
             qs = qs.filter(genre__name=genre_exact_query)
+
+        # filter by chord selection
+        qs = qs.filter(chord_seq__regex=query)
+
+        # order
+        qs = qs.order_by('-date_posted')
 
         return qs
 
