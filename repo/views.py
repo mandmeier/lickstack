@@ -2,40 +2,84 @@ from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
+from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
-from repo.models import Lick
+from repo.models import Lick, Genre, Instrument
 from django.views import generic
 from .forms import LickForm
 from django.utils import timezone
 from django.urls import reverse_lazy
 
+from itertools import cycle
+import re
 
-def home(request):
-    return render(request, 'repo/home.html', {'title': 'Home'})
+
+def transpose_note(start, half_steps):
+    if half_steps > 0:
+        # transpose up
+        chords = ["C", "Db", "D", "Eb", "E",
+                  "F", "Gb", "G", "Ab", "A", "Bb", "B"]
+    else:
+        # transpose down
+        chords = ["C", "B", "Bb", "A", "Ab",
+                  "G", "Gb", "F", "E", "Eb", "D", "Db"]
+
+    def custom_slice(lst, start):
+        return(cycle(lst[start:] + lst[:start + 1]))
+    position = custom_slice(chords, chords.index(start))
+    for i in range(0, abs(half_steps) + 1):
+        nxt = next(position)
+    return(nxt)
+
+
+def transpose_seq(chord_seq, half_steps):
+    note_regex = r'_([a-gA-g]{1,2})_'
+    # find all notes in chord seq
+    old_notes = re.findall(note_regex, chord_seq)
+    # transpose notes
+    new_notes = list(
+        map(lambda x: "_" + transpose_note(x, half_steps) + "_", old_notes))
+    # replace chord seq with transposed notes
+
+    def callback(match):
+        return next(callback.v)
+    callback.v = iter(new_notes)
+    chord_seq_T = re.sub(note_regex, callback, chord_seq)
+    return(chord_seq_T)
 
 
 def is_valid_queryparam(param):
     return param != '' and param is not None
 
 
+def home(request):
+    return render(request, 'repo/home.html', {'title': 'Home'})
+
+
 class LickListView(generic.ListView):
     model = Lick
-    form_class = LickForm
     template_name = 'repo/all_licks.html'
     context_object_name = 'licks'
     paginate_by = 10
+    ordering = ['-date_posted']
 
     def get_context_data(self, **kwargs):
         # some other stuff — where you create `context`
         context = super().get_context_data(**kwargs)
         context["form"] = LickForm()
+        #gen = ["Any"]
+        # for g in Genre.objects.all():
+        # gen.append(g)
+        context["genres"] = Genre.objects.all()
+        context["instrument"] = Instrument.objects.all().order_by('name')
         return context
 
     def get_queryset(self):
-
         # search
         qs = Lick.objects.all()
-        genre_exact_query = self.request.GET.get('genre_exact')
+        include_transposed = False
+        genre_query = self.request.GET.get('genre')
+        instrument_query = self.request.GET.get('instrument')
         username_contains = self.request.GET.get('username_contains')
 
         m1_b1 = self.request.GET.get('m1_b1')
@@ -63,24 +107,50 @@ class LickListView(generic.ListView):
         ]
 
         # make regex query seq
-        query = ""
-        for chord in chord_seq:
-            if chord != ".":
-                print(chord)
-                query = query + "[x.]*" + str(chord)
+        def get_query(chord_seq, half_steps=0):
+            query = ""
+            for chord in chord_seq:
+                if chord != ".":
+                    chord_T = transpose_seq(str(chord), half_steps)
+                    query = query + "[x.]*" + chord_T
+            query = query + "x"
+            return(query)
 
-        query = query + "x"
+        if is_valid_queryparam(genre_query) and genre_query != 'Any':
+            qs = qs.filter(genre__name=genre_query)
 
-        print(query)
+        if is_valid_queryparam(instrument_query) and instrument_query != 'Any':
+            qs = qs.filter(instrument__name=instrument_query)
 
         if is_valid_queryparam(username_contains):
+            print(username_contains)
             qs = qs.filter(author__username__icontains=username_contains)
 
-        if is_valid_queryparam(genre_exact_query):
-            qs = qs.filter(genre__name=genre_exact_query)
-
         # filter by chord selection
-        qs = qs.filter(chord_seq__regex=query)
+        if include_transposed == False:
+            query = get_query(chord_seq, 0)
+            print(query)
+            qs = qs.filter(chord_seq__regex=query)
+        else:
+            query_set_T = []
+            for half_step in range(0, 12):
+                query_set_T.append(get_query(chord_seq, half_step))
+            print(query_set_T)
+            Q(first_name__startswith='R') | Q(last_name__startswith='D')
+            qs = qs.filter(
+                Q(chord_seq__regex=query_set_T[0]) |
+                Q(chord_seq__regex=query_set_T[1]) |
+                Q(chord_seq__regex=query_set_T[2]) |
+                Q(chord_seq__regex=query_set_T[3]) |
+                Q(chord_seq__regex=query_set_T[4]) |
+                Q(chord_seq__regex=query_set_T[5]) |
+                Q(chord_seq__regex=query_set_T[6]) |
+                Q(chord_seq__regex=query_set_T[7]) |
+                Q(chord_seq__regex=query_set_T[8]) |
+                Q(chord_seq__regex=query_set_T[9]) |
+                Q(chord_seq__regex=query_set_T[10]) |
+                Q(chord_seq__regex=query_set_T[11])
+            )
 
         # order
         qs = qs.order_by('-date_posted')
