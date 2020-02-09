@@ -8,7 +8,7 @@ import os
 class LickForm(forms.ModelForm):
   TS_CHOICES = [('4/4', '4/4'), ('3/4', '3/4')]
   time_signature = forms.ChoiceField(
-      choices=TS_CHOICES, widget=forms.RadioSelect)
+      choices=TS_CHOICES, initial= '4/4', widget=forms.RadioSelect)
 
   class Meta:
     model = Lick
@@ -26,6 +26,7 @@ class LickForm(forms.ModelForm):
     self.fields['m2_b4'].widget.attrs['class'] = 'ts44'
     self.fields['m3_b4'].widget.attrs['class'] = 'ts44'
     self.fields['m4_b4'].widget.attrs['class'] = 'ts44'
+    self.fields['genre'].widget.attrs['value'] = "{{ form.genre.value|default_if_none:'' }}"
 
   # validate uploaded file for extension and file size
   def clean_file(self):

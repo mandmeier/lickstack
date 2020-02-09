@@ -114,7 +114,7 @@ class LickListView(generic.ListView):
                     chord_T = transpose_seq(str(chord), half_steps)
                     query = query + "[x.]*" + chord_T
             query = query + "x"
-            return(query)
+            return query
 
         if is_valid_queryparam(genre_query) and genre_query != 'Any':
             qs = qs.filter(genre__name=genre_query)
