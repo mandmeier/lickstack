@@ -1,0 +1,123 @@
+{% load static %}
+
+<article class="lick lick-section">
+
+    <div class="lick-icons col-12">
+      <div class="row">
+        <div class="icon col-3">{{ lick.genre }}</div>
+        <div class="icon col-3">{{ lick.instrument }}</div>
+        <div class="icon col-3">Like</div>
+        <div class="icon col-3">Likes</div>
+      </div>
+
+      <div class="row">
+        <div class="icon col-3">Lick #{{ lick.id }}</div>
+        <div class="icon col-3"><small class="text-muted">{{ lick.author }} #{{ lick.counter }}</small></div>
+        <div class="icon col-3"><small class="text-muted">{{ lick.date_posted|date:"Y b d" }}</small></div>
+        <div class="icon col-3"><small class="text-muted">15 Likes</small></div>
+      </div>
+    </div>
+
+
+    <div class=".lick-display col-12">
+      <div class="row">
+        <div class="icon col-11">
+        <audio controls preload="none">
+        <source src="{{ lick.file.url }}" type="audio/mp4" >
+        Your browser does not support HTML5 audio. Try Chrome 6+
+        </audio>
+        </div>
+        <div class="icon col-1">
+          <select id="transpose" name="transpose">
+            <option value="12">+12</option>
+            <option value="11">+11</option>
+            <option value="10">+10</option>
+            <option value="9">+9</option>
+            <option value="8">+8</option>
+            <option value="7">+7</option>
+            <option value="6">+6</option>
+            <option value="5">+5</option>
+            <option value="4">+4</option>
+            <option value="3">+3</option>
+            <option value="2">+2</option>
+            <option value="1">+1</option>
+            <option value="0" selected="selected">T</option>
+            <option value="-1">-1</option>
+            <option value="-2">-2</option>
+            <option value="-3">-3</option>
+            <option value="-4">-4</option>
+            <option value="-5">-5</option>
+            <option value="-6">-6</option>
+            <option value="-7">-7</option>
+            <option value="-8">-8</option>
+            <option value="-9">-9</option>
+            <option value="-10">-10</option>
+            <option value="-11">-11</option>
+            <option value="-12">-12</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    {% if lick.time_signature == '3/4' %}
+
+    <div class="lick-chords col-12">
+        <div class="row chords-row">
+          <div class="separator-lr"></div>
+            <div class="chord3">{% with 'img/chords/'|add:lick.m1_b1|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m1_b1 }}"/>{% endwith %}</div>
+            <div class="chord3">{% with 'img/chords/'|add:lick.m1_b2|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m1_b2 }}"/>{% endwith %}</div>
+            <div class="chord3">{% with 'img/chords/'|add:lick.m1_b3|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m1_b3 }}"/>{% endwith %}</div>
+          <div class="separator-mid"></div>
+            <div class="chord3">{% with 'img/chords/'|add:lick.m2_b1|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m2_b1 }}"/>{% endwith %}</div>
+            <div class="chord3">{% with 'img/chords/'|add:lick.m2_b2|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m2_b2 }}"/>{% endwith %}</div>
+            <div class="chord3">{% with 'img/chords/'|add:lick.m2_b3|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m2_b3 }}"/>{% endwith %}</div>
+          <div class="separator-lr"></div>
+        </div>
+        <div class="row chords-row">
+          <div class="separator-lr"></div>
+            <div class="chord3">{% with 'img/chords/'|add:lick.m3_b1|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m3_b1 }}"/>{% endwith %}</div>
+            <div class="chord3">{% with 'img/chords/'|add:lick.m3_b2|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m3_b2 }}"/>{% endwith %}</div>
+            <div class="chord3">{% with 'img/chords/'|add:lick.m3_b3|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m3_b3 }}"/>{% endwith %}</div>
+          <div class="separator-mid"></div>
+            <div class="chord3">{% with 'img/chords/'|add:lick.m4_b1|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m4_b1 }}"/>{% endwith %}</div>
+            <div class="chord3">{% with 'img/chords/'|add:lick.m4_b2|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m4_b2 }}"/>{% endwith %}</div>
+            <div class="chord3">{% with 'img/chords/'|add:lick.m4_b3|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m4_b3 }}"/>{% endwith %}</div>
+          <div class="separator-lr"></div>
+        </div>
+    </div>
+
+
+    {% else %}
+
+    <div class="lick-chords col-12">
+        <div class="row chords-row">
+          <div class="separator-lr"></div>
+            <div class="chord">{% with 'img/chords/'|add:lick.m1_b1|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m1_b1 }}"/>{% endwith %}</div>
+            <div class="chord">{% with 'img/chords/'|add:lick.m1_b2|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m1_b2 }}"/>{% endwith %}</div>
+            <div class="chord">{% with 'img/chords/'|add:lick.m1_b3|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m1_b3 }}"/>{% endwith %}</div>
+            <div class="chord">{% with 'img/chords/'|add:lick.m1_b4|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m1_b4 }}"/>{% endwith %}</div>
+          <div class="separator-mid"></div>
+            <div class="chord">{% with 'img/chords/'|add:lick.m2_b1|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m2_b1 }}"/>{% endwith %}</div>
+            <div class="chord">{% with 'img/chords/'|add:lick.m2_b2|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m2_b2 }}"/>{% endwith %}</div>
+            <div class="chord">{% with 'img/chords/'|add:lick.m2_b3|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m2_b3 }}"/>{% endwith %}</div>
+            <div class="chord">{% with 'img/chords/'|add:lick.m2_b4|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m2_b4 }}"/>{% endwith %}</div>
+          <div class="separator-lr"></div>
+        </div>
+        <div class="row chords-row">
+          <div class="separator-lr"></div>
+            <div class="chord">{% with 'img/chords/'|add:lick.m3_b1|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m3_b1 }}"/>{% endwith %}</div>
+            <div class="chord">{% with 'img/chords/'|add:lick.m3_b2|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m3_b2 }}"/>{% endwith %}</div>
+            <div class="chord">{% with 'img/chords/'|add:lick.m3_b3|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m3_b3 }}"/>{% endwith %}</div>
+            <div class="chord">{% with 'img/chords/'|add:lick.m3_b4|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m3_b4 }}"/>{% endwith %}</div>
+          <div class="separator-mid"></div>
+            <div class="chord">{% with 'img/chords/'|add:lick.m4_b1|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m4_b1 }}"/>{% endwith %}</div>
+            <div class="chord">{% with 'img/chords/'|add:lick.m4_b2|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m4_b2 }}"/>{% endwith %}</div>
+            <div class="chord">{% with 'img/chords/'|add:lick.m4_b3|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m4_b3 }}"/>{% endwith %}</div>
+            <div class="chord">{% with 'img/chords/'|add:lick.m4_b4|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m4_b4 }}"/>{% endwith %}</div>
+          <div class="separator-lr"></div>
+        </div>
+    </div>
+
+    {% endif %}
+
+</article>

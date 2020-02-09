@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from repo.models import Lick, Genre, Instrument
+from operator import attrgetter
 from django.views import generic
 from .forms import LickForm
 from django.utils import timezone
@@ -54,6 +55,37 @@ def is_valid_queryparam(param):
 
 def home(request):
     return render(request, 'repo/home.html', {'title': 'Home'})
+
+
+def get_lick_queryset(query=None):
+    queryset = []
+    queries = query.split(" ")
+    for q in queries:
+        licks = Lick.objects.filter(
+            Q(author__username__icontains=q) |
+            Q(genre__name__icontains=q) |
+            Q(instrument__name__icontains=q)
+        ).distinct()
+        for lick in licks:
+            queryset.append(lick)
+    return list(set(queryset))
+
+
+def browse_licks_view(request):
+
+    context = {}
+
+    query = ""
+    if request.GET:
+        query = request.GET['q']
+        context['query'] = str(query)
+
+    #licks = get_lick_queryset(query).order_by('-date_posted')
+    licks = sorted(get_lick_queryset(query),
+                   key=attrgetter('date_posted'), reverse=True)
+    context['licks'] = licks
+
+    return render(request, "repo/browse_licks.html", context)
 
 
 class LickListView(generic.ListView):
@@ -136,7 +168,8 @@ class LickListView(generic.ListView):
             for half_step in range(0, 12):
                 query_set_T.append(get_query(chord_seq, half_step))
             print(query_set_T)
-            Q(first_name__startswith='R') | Q(last_name__startswith='D')
+            Q(first_name__startswith='R') | Q(
+                last_name__startswith='D').distinct()
             qs = qs.filter(
                 Q(chord_seq__regex=query_set_T[0]) |
                 Q(chord_seq__regex=query_set_T[1]) |

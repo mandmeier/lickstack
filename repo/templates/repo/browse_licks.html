@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block content %}
+
+{% include 'repo/snippets/lick_snippet_style.html' %}
+
+
+
+<style type="text/css">
+    .search-bar {
+        max-width: 500px;
+        width: 100%;
+    }
+</style>
+
+<div class="search-bar">
+    <form method="get">
+        <input type="text" class="form-control" name="q" id="id_q" placeholder="Search..." value="{{query}}">
+    </form>
+</div>
+
+
+
+{% if licks %}
+
+    {% for lick in licks %}
+
+    {% include 'repo/snippets/lick_snippet.html' with lick=lick %}
+
+    {% endfor %}
+
+{% else %}
+    <div class="alert alert-primary" role="alert">
+       No licks found... Try searching for something else.
+    </div>
+
+{% endif %}
+
+{% endblock content %}

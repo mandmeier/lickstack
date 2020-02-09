@@ -21,7 +21,11 @@
 </head>
 
 <body>
+
+    {% include 'repo/snippets/base_css.html' %}
+
   <link rel="icon" type="img/png" href="{% static 'img/Logo.png' %}">
+
 <!-- Navigation -->
 <nav class="navbar navbar-custom navbar-expand-md navbar-light sticky-top">
 <div class="container-fluid">
@@ -33,6 +37,9 @@
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
                 <a class="nav-link active" href="{% url 'home' %}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'browse-licks' %}">Browse Licks</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'all-licks' %}">All Licks</a>
