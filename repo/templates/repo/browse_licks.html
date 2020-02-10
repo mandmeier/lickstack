@@ -7,19 +7,78 @@
 
 {% include 'repo/snippets/lick_snippet_style.html' %}
 
+<button class="search-btn col-lg-12" data-toggle="collapse" data-target="#search">Search <i class="fas fa-search"></i></button>
+<div id="search" class="collapse">
+
+<form method="GET" action=".">
 
 
-<style type="text/css">
-    .search-bar {
-        max-width: 500px;
-        width: 100%;
-    }
-</style>
+    <div class="time-signature row">
+        <div class="col-4">
+            {{ form.time_signature|as_crispy_field }}
+        </div>
+    </div>
 
-<div class="search-bar">
-    <form method="get">
-        <input type="text" class="form-control" name="q" id="id_q" placeholder="Search..." value="{{query}}">
-    </form>
+    <div class="form-row">
+        <div class="row chords-row">
+                <div class="separator-lr"></div>
+                {{ form.m1_b1|as_crispy_field }}
+                {{ form.m1_b2|as_crispy_field }}
+                {{ form.m1_b3|as_crispy_field }}
+                {{ form.m1_b4|as_crispy_field }}
+                <div class="separator-mid"></div>
+                {{ form.m2_b1|as_crispy_field }}
+                {{ form.m2_b2|as_crispy_field }}
+                {{ form.m2_b3|as_crispy_field }}
+                {{ form.m2_b4|as_crispy_field }}
+                <div class="separator-lr"></div>
+        </div>
+        <div class="row chords-row">
+                <div class="separator-lr"></div>
+                {{ form.m3_b1|as_crispy_field }}
+                {{ form.m3_b2|as_crispy_field }}
+                {{ form.m3_b3|as_crispy_field }}
+                {{ form.m3_b4|as_crispy_field }}
+                <div class="separator-mid"></div>
+                {{ form.m4_b1|as_crispy_field }}
+                {{ form.m4_b2|as_crispy_field }}
+                {{ form.m4_b3|as_crispy_field }}
+                {{ form.m4_b4|as_crispy_field }}
+                <div class="separator-lr"></div>
+        </div>
+    </div>
+
+
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="category">Genre</label>
+            <select id="genre" class="form-control" name="genre">
+                <option value="" selected>Any</option>
+                {% for gen in genres %}
+                <option value="{{ gen }}">{{ gen }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="category">Instrument</label>
+            <select id="instrument" class="form-control" name="instrument">
+                <option value="" selected>Any</option>
+                {% for ins in instrument %}
+                <option value="{{ ins }}">{{ ins }}</option>
+              {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="category">Author</label>
+            <input class="form-control py-2 border-right-0 border" type="search" name="username_contains" placeholder="username contains..." value="{{ username_contains_query }}">
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
 </div>
 
 

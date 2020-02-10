@@ -57,33 +57,127 @@ def home(request):
     return render(request, 'repo/home.html', {'title': 'Home'})
 
 
-def get_lick_queryset(query=None):
+"""
+def get_lick_queryset(genre_query=None, instrument_query=None):
     queryset = []
-    queries = query.split(" ")
-    for q in queries:
-        licks = Lick.objects.filter(
-            Q(author__username__icontains=q) |
-            Q(genre__name__icontains=q) |
-            Q(instrument__name__icontains=q)
-        ).distinct()
-        for lick in licks:
-            queryset.append(lick)
+
+    licks = Lick.objects.filter(
+        Q(genre__name__icontains=genre_query) &
+        Q(instrument__name__icontains=instrument_query)
+    ).distinct()
+    for lick in licks:
+        queryset.append(lick)
+
     return list(set(queryset))
+"""
 
 
 def browse_licks_view(request):
 
-    context = {}
+    # default no search parameters
+    include_transposed = False
+    genre_query = ""
+    instrument_query = ""
+    username_contains_query = ""
+    chord_seq_query = ""
+    # dummy for transpose before form submit
+    chord_seq_queries_T = ["" for i in range(12)]
 
-    query = ""
+    # if search submitted get parameters from URL
     if request.GET:
-        query = request.GET['q']
-        context['query'] = str(query)
+
+        genre_query = request.GET['genre']
+        instrument_query = request.GET['instrument']
+        username_contains_query = request.GET['username_contains']
+
+        m1_b1 = request.GET['m1_b1']
+        m1_b2 = request.GET['m1_b2']
+        m1_b3 = request.GET['m1_b3']
+        m1_b4 = request.GET['m1_b4']
+        m2_b1 = request.GET['m2_b1']
+        m2_b2 = request.GET['m2_b2']
+        m2_b3 = request.GET['m2_b3']
+        m2_b4 = request.GET['m2_b4']
+        m3_b1 = request.GET['m3_b1']
+        m3_b2 = request.GET['m3_b2']
+        m3_b3 = request.GET['m3_b3']
+        m3_b4 = request.GET['m3_b4']
+        m4_b1 = request.GET['m4_b1']
+        m4_b2 = request.GET['m4_b2']
+        m4_b3 = request.GET['m4_b3']
+        m4_b4 = request.GET['m4_b4']
+
+        chord_seq = [
+            m1_b1, m1_b2, m1_b3, m1_b4,
+            m2_b1, m2_b2, m2_b3, m2_b4,
+            m3_b1, m3_b2, m3_b3, m3_b4,
+            m4_b1, m4_b2, m4_b3, m4_b4,
+        ]
+
+        # make regex query seq
+        def get_chord_seq_query(chord_seq, half_steps=0):
+            query = ""
+            for chord in chord_seq:
+                if chord != ".":
+                    chord_T = transpose_seq(str(chord), half_steps)
+                    query = query + "[x.]*" + chord_T
+            query = query + "x"
+            return query
+
+        chord_seq_query = get_chord_seq_query(chord_seq, 0)
+
+        if include_transposed == True:
+            chord_seq_queries_T = []
+            for half_step in range(0, 12):
+                chord_seq_queries_T.append(
+                    get_chord_seq_query(chord_seq, half_step))
+            print(chord_seq_queries_T)
+
+    # filter queryset with search parameters
+    queryset = []
+
+    licks = Lick.objects.filter(
+        Q(genre__name__icontains=genre_query) &
+        Q(instrument__name__icontains=instrument_query) &
+        Q(author__username__icontains=username_contains_query)
+    )
+
+    if include_transposed == False:
+        licks = licks.filter(
+            Q(chord_seq__regex=chord_seq_query)
+        )
+    else:
+        licks = licks.filter(
+            Q(chord_seq__regex=chord_seq_queries_T[0]) |
+            Q(chord_seq__regex=chord_seq_queries_T[1]) |
+            Q(chord_seq__regex=chord_seq_queries_T[2]) |
+            Q(chord_seq__regex=chord_seq_queries_T[3]) |
+            Q(chord_seq__regex=chord_seq_queries_T[4]) |
+            Q(chord_seq__regex=chord_seq_queries_T[5]) |
+            Q(chord_seq__regex=chord_seq_queries_T[6]) |
+            Q(chord_seq__regex=chord_seq_queries_T[7]) |
+            Q(chord_seq__regex=chord_seq_queries_T[8]) |
+            Q(chord_seq__regex=chord_seq_queries_T[9]) |
+            Q(chord_seq__regex=chord_seq_queries_T[10]) |
+            Q(chord_seq__regex=chord_seq_queries_T[11])
+        )
+
+    licks = licks.distinct()
+
+    for lick in licks:
+        queryset.append(lick)
+
+    queryset = list(set(queryset))
 
     #licks = get_lick_queryset(query).order_by('-date_posted')
-    licks = sorted(get_lick_queryset(query),
-                   key=attrgetter('date_posted'), reverse=True)
+    licks = sorted(queryset, key=attrgetter('date_posted'), reverse=True)
+
+    # pass values to context
+    context = {}
+    context["form"] = LickForm()
     context['licks'] = licks
+    context["genres"] = Genre.objects.all()
+    context["instrument"] = Instrument.objects.all().order_by('name')
 
     return render(request, "repo/browse_licks.html", context)
 
