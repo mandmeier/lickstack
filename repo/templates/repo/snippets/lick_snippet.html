@@ -1,6 +1,8 @@
 {% load static %}
+{% load repo_extras %}
 
-<article class="lick lick-section">
+<article class="lick lick-section" id="lick_{{ lick.id }}">
+    {{ lick.chord_seq | chord_seq_T:chord_seq_query }}
 
     <div class="lick-icons col-12">
       <div class="row">
@@ -28,7 +30,7 @@
         </audio>
         </div>
         <div class="icon col-1">
-          <select id="transpose" name="transpose">
+          <select id="transpose_lick_{{ lick.id }}" name="transpose" onchange="get_chd_url(this.id);">
             <option value="12">+12</option>
             <option value="11">+11</option>
             <option value="10">+10</option>
@@ -59,12 +61,43 @@
       </div>
     </div>
 
+    <script type="text/javascript">
+
+        /* Transpose writtenchords*/
+
+        function transpose(input,transpose_by) {
+            if (transpose_by >= 0) {
+                var chds = ["_C_", "_Db_", "_D_", "_Eb_", "_E_", "_F_", "_Gb_", "_G_", "_Ab_", "_A_", "_Bb_", "_B_"]
+            } else {
+                var chds = ["_C_", "_B_", "_Bb_", "_A_", "_Ab_", "_G_", "_Gb_", "_F_", "_E_", "_Eb_", "_D_", "_Db_"]
+            }
+            var start = chds.indexOf(input)
+            return chds[(start + Math.abs(transpose_by)) % chds.length];
+        }
+
+        function get_chd_url(clicked_id) {
+            id = clicked_id.split("_")[2];
+            var transpose_by = document.getElementById("transpose_lick_"+id).value;
+            var getDivId = document.getElementById("lick_"+id);
+            var allImages = getDivId.getElementsByTagName("img");
+
+            for (i = 0; i < allImages.length; i++) {
+                if (/(_[a-gA-g]{1,2}_)/.test(allImages[i].src)) {
+                    var chd = allImages[i];
+                    var input = chd.alt.match(/(_[a-gA-g]{1,2}_)/)[0]; /* alt is always the original chord */
+                    chd.src = chd.src.replace(/(_[a-gA-g]{1,2}_)/, transpose(input, transpose_by))
+                }
+            }
+        }
+
+    </script>
+
     {% if lick.time_signature == '3/4' %}
 
     <div class="lick-chords col-12">
         <div class="row chords-row">
           <div class="separator-lr"></div>
-            <div class="chord3">{% with 'img/chords/'|add:lick.m1_b1|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m1_b1 }}"/>{% endwith %}</div>
+            <div class="chord3">{% with 'img/chords/'|add:lick.m1_b1|add:'.png' as image_static %}<img id="m1_b1" src="{% static image_static %}" alt="{{ lick.m1_b1 }}"/>{% endwith %}</div>
             <div class="chord3">{% with 'img/chords/'|add:lick.m1_b2|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m1_b2 }}"/>{% endwith %}</div>
             <div class="chord3">{% with 'img/chords/'|add:lick.m1_b3|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m1_b3 }}"/>{% endwith %}</div>
           <div class="separator-mid"></div>
@@ -117,6 +150,7 @@
           <div class="separator-lr"></div>
         </div>
     </div>
+
 
     {% endif %}
 

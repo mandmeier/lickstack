@@ -87,7 +87,7 @@
 
     {% for lick in licks %}
 
-    {% include 'repo/snippets/lick_snippet.html' with lick=lick %}
+    {% include 'repo/snippets/lick_snippet.html' with lick=lick chord_seq_query=chord_seq_query %}
 
     {% endfor %}
 

@@ -83,6 +83,10 @@ def browse_licks_view(request):
     # dummy for transpose before form submit
     chord_seq_queries_T = ["" for i in range(12)]
 
+    if request.method == ["POST"]:
+        a = request.POST['transpose']
+        print(a)
+
     # if search submitted get parameters from URL
     if request.GET:
 
@@ -178,8 +182,28 @@ def browse_licks_view(request):
     context['licks'] = licks
     context["genres"] = Genre.objects.all()
     context["instrument"] = Instrument.objects.all().order_by('name')
+    context["chord_seq_query"] = chord_seq_query ### used for template tags
 
     return render(request, "repo/browse_licks.html", context)
+
+
+"""
+m1_b1 = '_A_7'
+m1_b2 = '_Dm_7'
+m1_b3 = '_G_7'
+m1_b4 = '_C_maj7'
+
+
+chord_seq = [m1_b1, m1_b2, m1_b3, m1_b4]
+
+
+chord_urls = list(map(lambda x: f'static/img/chords/{x}.png', chord_seq))
+
+    context["chord_urls"] = ['static/img/chords/_A_7.png',
+    'static/img/chords/_Dm_7.png',
+    'static/img/chords/_G_7.png',
+    'static/img/chords/_C_maj7.png']
+"""
 
 
 class LickListView(generic.ListView):
