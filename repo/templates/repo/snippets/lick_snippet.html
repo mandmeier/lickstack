@@ -8,7 +8,9 @@
       <div class="row">
         <div class="icon col-3">{{ lick.genre }}</div>
         <div class="icon col-3">{{ lick.instrument }}</div>
-        <div class="icon col-3">Like</div>
+        <div class="icon col-3">
+            <button onclick="play()">Alter Pitch</button>
+        </div>
         <div class="icon col-3">Likes</div>
       </div>
 
@@ -62,6 +64,23 @@
     </div>
 
     <script type="text/javascript">
+
+
+
+
+        var player = new Tone.Player("{{ lick.file.url }}").sync().start(0);
+
+
+        var pitchShift = new Tone.PitchShift({
+            pitch: -5
+        }).toMaster();
+
+        player.connect(pitchShift);
+        window.play = function() {
+            Tone.Transport.start();
+        }
+
+
 
         /* Transpose writtenchords*/
 

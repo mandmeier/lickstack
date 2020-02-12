@@ -3,10 +3,286 @@
 
 {% block content %}
 
+<h1>AudioContext Test</h1>
+
+<link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
+
+<style type="text/css">
+
+
+.audio-player {
+    display: flex;
+    align-items: center;
+    background-color: black;
+
+}
+
+.audio-player button.play {
+        display: block;
+        width: 40px;
+        height: 40px;
+        border: 0;
+        background-color: #00aaff;
+        color: white;
+        font-size: 20px;
+        border-radius: 100000px;
+        margin-right: 10px;
+        cursor: pointer;
+}
+
+
+.seek-bar {
+    margin: 10px;
+    width: 400px;
+    background-color: #fda50f;
+    display: flex;
+    align-items: center;
+    border-radius: 100000px;
+    cursor: pointer;
+}
+
+.seek-bar .fill {
+  height: 20px;
+  background-color: #00aaff;
+  border-radius: 100000px;
+}
+
+.seek-bar .handle {
+  width: 8px;
+  height: 20px;
+  background-color: #00ffff;
+  border-radius: 100000px;
+  margin-left: -5px;
+  transform: scale(2);
+  transition: all 0.1s;
+  pointer-events: none;
+}
+
+
+</style>
+
+
+  <div class="row audio-player">
+      <button class="play"><i class="ion-play"></i></button>
+      <div class="seek-bar">
+          <div class="fill"></div>
+          <div class="handle"></div>
+      </div>
+  </div>
+
+
+<script type="text/javascript">
+
+
+let audio = new Audio("/media/lick_uploads/076_THTGa9b.m4a");
+
+let seekBar = document.querySelector('.seek-bar');
+let playButton = document.querySelector('button.play');
+let playButtonIcon = playButton.querySelector('i');
+let fillBar = seekBar.querySelector('.fill');
+
+let mouseDown = false;
+
+playButton.addEventListener('click', function () {
+  if (audio.paused) {
+    audio.play();
+  } else {
+    audio.pause();
+  }
+});
+
+audio.addEventListener('play', function () {
+  playButtonIcon.className = 'ion-pause';
+});
+
+audio.addEventListener('pause', function () {
+  playButtonIcon.className = 'ion-play';
+});
+
+audio.addEventListener('timeupdate', function () {
+  if (mouseDown) return;
+  let p = audio.currentTime / audio.duration;
+  fillBar.style.width = p * 100 + "%";
+});
+
+
+seekBar.addEventListener('mousedown', function (e) {
+  mouseDown = true;
+  window.rect = e.target.getBoundingClientRect();
+  let x = e.clientX - rect.left;
+  let p = x / seekBar.clientWidth;
+  fillBar.style.width = p * 100 + "%";
+});
+
+window.addEventListener('mousemove', function (e) {
+  if (!mouseDown) return;
+  let x = e.clientX - rect.left;
+  let p = x / seekBar.clientWidth;
+  fillBar.style.width = p * 100 + "%";
+});
+
+window.addEventListener('mouseup', function (e) {
+  if (!mouseDown) return;
+  mouseDown = false;
+  let x = e.clientX - rect.left;
+  let p = x / seekBar.clientWidth;
+  fillBar.style.width = p * 100 + "%";
+  audio.currentTime = p * audio.duration;
+});
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+<div>
+  CLICK HERE TO START
+  <button onclick="play()">Play</button>
+
+  <button onclick="playback()">Play2</button>
+</div>
+
+
+
+
+
+
+<script src="https://unpkg.com/tone@next/build/Tone.js"></script>
+<script type="text/javascript">
+//"/media/lick_uploads/076_THTGa9b.m4a"
+
+/*
+
+
+
+
+    var player = new Tone.Player("/media/lick_uploads/076_THTGa9b.m4a").sync().start(0);
+
+    var pitchShift = new Tone.PitchShift({
+        pitch: 12
+    }).toMaster();
+
+    player.connect(pitchShift);
+
+    function playback() {
+        Tone.Transport.start();
+    }
+
+
+
+/*
+  var play, oscillator
+
+  var oscProp = {
+    playing: false
+  }
+
+  var audioContext = new AudioContext();
+
+  let audio;
+
+  fetch("/media/lick_uploads/076_THTGa9b.m4a")
+    .then(data => data.arrayBuffer())
+    .then(arrayBuffer => audioContext.decodeAudioData(arrayBuffer))
+    .then(decodedAudio => {
+      audio = decodedAudio;
+    });
+
+  function playback() {
+      const playSound = audioContext.createBufferSource();
+      playSound.buffer = audio;
+      playSound.connect(audioContext.destination);
+      playSound.playbackRate.value = 0.5;
+      playSound.detune.setValueAtTime(1200, audioContext.currentTime);
+      playSound.start(audioContext.currentTime);
+  }
+
+
+*/
+
+
+
+
+/// figure out how to slow down
+
+
+  // window.addEventListener("mousedown", playback);
+
+/*
+// anything in here will start working once window is loaded
+  window.onload = function(){
+
+    play = function(){
+      if(oscProp.playing){
+        oscillator.stop();
+        oscProp.playing = false;
+
+      } else {
+        oscillator = audioContext.createOscillator();
+        oscillator.connect(audioContext.destination);
+        oscillator.start();
+        oscProp.playing = true;
+      }
+
+    }
+
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+  oscillator.connect(audioContext.destination);
+
+  oscillator.type = "square";
+
+  oscillator.frequency.setValueAtTime(130.4, audioContext.currentTime);
+  oscillator.detune.setValueAtTime(200, audioContext.currentTime + 1);
+  oscillator.detune.setValueAtTime(400, audioContext.currentTime + 2);
+  oscillator.detune.setValueAtTime(500, audioContext.currentTime + 3);
+  oscillator.detune.setValueAtTime(700, audioContext.currentTime + 4);
+  oscillator.detune.setValueAtTime(900, audioContext.currentTime + 5);
+  oscillator.detune.setValueAtTime(1100, audioContext.currentTime + 6);
+  oscillator.detune.setValueAtTime(1200, audioContext.currentTime + 7);
+
+  oscillator.start(audioContext.currentTime);
+  oscillator.stop(audioContext.currentTime + 8);
+
+*/
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
 <h2>Lick detail view</h2>
 
   <article class="media content-section">
-    <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}">
     <div class="media-body">
       <div class="article-metadata">
           {{ object.genre }} – <a class="mr-2" href="{% url 'user-licks' object.author.username %}">{{ object.author }}</a>
@@ -27,6 +303,12 @@
       </p>
     </div>
   </article>
+-->
+<!--
+<label for="pitchIn">Set pitch</label>
+<input type="number" min="-1200" max="1200" step="200" value="0" id="pitchIn">
+-->
+
 
 
 {% endblock content %}
