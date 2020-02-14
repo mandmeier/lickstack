@@ -66,23 +66,7 @@
     <script type="text/javascript">
 
 
-
-
-        var player = new Tone.Player("{{ lick.file.url }}").sync().start(0);
-
-
-        var pitchShift = new Tone.PitchShift({
-            pitch: -5
-        }).toMaster();
-
-        player.connect(pitchShift);
-        window.play = function() {
-            Tone.Transport.start();
-        }
-
-
-
-        /* Transpose writtenchords*/
+        /* Transpose written chords*/
 
         function transpose(input,transpose_by) {
             if (transpose_by >= 0) {

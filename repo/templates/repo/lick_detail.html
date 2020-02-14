@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<h1>AudioContext Test</h1>
+<h1>Test</h1>
 
 <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
 
@@ -61,7 +61,6 @@
 
 </style>
 
-
   <div class="row audio-player">
       <button class="play"><i class="ion-play"></i></button>
       <div class="seek-bar">
@@ -71,10 +70,30 @@
   </div>
 
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.5.35/Tone.js"></script>
 <script type="text/javascript">
 
+let file_URL = "/media/lick_uploads/056_qnYNWN3.m4a"
+let pitch_setting = 0
+let playback_rate = 1
 
-let audio = new Audio("/media/lick_uploads/076_THTGa9b.m4a");
+var player = new Tone.Player(file_URL)
+let audio = new Audio(file_URL); //this needed to get audio.currentTime and audio.duration
+audio.volume = 0;
+
+// transpose
+
+if (playback_rate == 1){
+  var pitchShift = new Tone.PitchShift({
+  pitch: pitch_setting
+  }).toDestination();
+} else {
+  var pitchShift = new Tone.PitchShift({
+  pitch: pitch_setting + 12 //if playbackrate == 0.5 add +12 to pitch to correct
+  }).toDestination();
+}
+
+player.connect(pitchShift);
 
 let seekBar = document.querySelector('.seek-bar');
 let playButton = document.querySelector('button.play');
@@ -83,11 +102,20 @@ let fillBar = seekBar.querySelector('.fill');
 
 let mouseDown = false;
 
+
 playButton.addEventListener('click', function () {
   if (audio.paused) {
+    let ctx = new(window.AudioContext || window.webkitAudioContext)();
+    audio.playbackRate = playback_rate;
+    player.playbackRate = playback_rate;
     audio.play();
+    ofs = audio.currentTime
+    player.start();
+    player.seek(offset = ofs);
   } else {
     audio.pause();
+    player.stop(0);
+    //ofs = audio.currentTime;
   }
 });
 
@@ -101,8 +129,8 @@ audio.addEventListener('pause', function () {
 
 audio.addEventListener('timeupdate', function () {
   if (mouseDown) return;
-  let p = audio.currentTime / audio.duration;
-  fillBar.style.width = p * 100 + "%";
+    let p = audio.currentTime / audio.duration;
+    fillBar.style.width = p * 100 + "%";
 });
 
 
@@ -116,198 +144,27 @@ seekBar.addEventListener('mousedown', function (e) {
 
 window.addEventListener('mousemove', function (e) {
   if (!mouseDown) return;
-  let x = e.clientX - rect.left;
-  let p = x / seekBar.clientWidth;
-  fillBar.style.width = p * 100 + "%";
+    let x = e.clientX - rect.left;
+    let p = x / seekBar.clientWidth;
+    fillBar.style.width = p * 100 + "%";
 });
 
 window.addEventListener('mouseup', function (e) {
   if (!mouseDown) return;
-  mouseDown = false;
-  let x = e.clientX - rect.left;
-  let p = x / seekBar.clientWidth;
-  fillBar.style.width = p * 100 + "%";
-  audio.currentTime = p * audio.duration;
+    mouseDown = false;
+    let x = e.clientX - rect.left;
+    let p = x / seekBar.clientWidth;
+    fillBar.style.width = p * 100 + "%";
+    audio.currentTime = p * audio.duration;
+    ofs = audio.currentTime;
+  if (!audio.paused) {
+    player.start();
+    player.seek(offset = ofs);
+  }
 });
 
 
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-<!--
-<div>
-  CLICK HERE TO START
-  <button onclick="play()">Play</button>
-
-  <button onclick="playback()">Play2</button>
-</div>
-
-
-
-
-
-
-<script src="https://unpkg.com/tone@next/build/Tone.js"></script>
-<script type="text/javascript">
-//"/media/lick_uploads/076_THTGa9b.m4a"
-
-/*
-
-
-
-
-    var player = new Tone.Player("/media/lick_uploads/076_THTGa9b.m4a").sync().start(0);
-
-    var pitchShift = new Tone.PitchShift({
-        pitch: 12
-    }).toMaster();
-
-    player.connect(pitchShift);
-
-    function playback() {
-        Tone.Transport.start();
-    }
-
-
-
-/*
-  var play, oscillator
-
-  var oscProp = {
-    playing: false
-  }
-
-  var audioContext = new AudioContext();
-
-  let audio;
-
-  fetch("/media/lick_uploads/076_THTGa9b.m4a")
-    .then(data => data.arrayBuffer())
-    .then(arrayBuffer => audioContext.decodeAudioData(arrayBuffer))
-    .then(decodedAudio => {
-      audio = decodedAudio;
-    });
-
-  function playback() {
-      const playSound = audioContext.createBufferSource();
-      playSound.buffer = audio;
-      playSound.connect(audioContext.destination);
-      playSound.playbackRate.value = 0.5;
-      playSound.detune.setValueAtTime(1200, audioContext.currentTime);
-      playSound.start(audioContext.currentTime);
-  }
-
-
-*/
-
-
-
-
-/// figure out how to slow down
-
-
-  // window.addEventListener("mousedown", playback);
-
-/*
-// anything in here will start working once window is loaded
-  window.onload = function(){
-
-    play = function(){
-      if(oscProp.playing){
-        oscillator.stop();
-        oscProp.playing = false;
-
-      } else {
-        oscillator = audioContext.createOscillator();
-        oscillator.connect(audioContext.destination);
-        oscillator.start();
-        oscProp.playing = true;
-      }
-
-    }
-
-
-  }
-
-
-
-
-
-
-
-
-
-
-
-  oscillator.connect(audioContext.destination);
-
-  oscillator.type = "square";
-
-  oscillator.frequency.setValueAtTime(130.4, audioContext.currentTime);
-  oscillator.detune.setValueAtTime(200, audioContext.currentTime + 1);
-  oscillator.detune.setValueAtTime(400, audioContext.currentTime + 2);
-  oscillator.detune.setValueAtTime(500, audioContext.currentTime + 3);
-  oscillator.detune.setValueAtTime(700, audioContext.currentTime + 4);
-  oscillator.detune.setValueAtTime(900, audioContext.currentTime + 5);
-  oscillator.detune.setValueAtTime(1100, audioContext.currentTime + 6);
-  oscillator.detune.setValueAtTime(1200, audioContext.currentTime + 7);
-
-  oscillator.start(audioContext.currentTime);
-  oscillator.stop(audioContext.currentTime + 8);
-
-*/
-
-
-</script>
-
-
-
-
-
-
-
-
-
-
-
-<h2>Lick detail view</h2>
-
-  <article class="media content-section">
-    <div class="media-body">
-      <div class="article-metadata">
-          {{ object.genre }} – <a class="mr-2" href="{% url 'user-licks' object.author.username %}">{{ object.author }}</a>
-        <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
-        {% if object.author == user %}
-          <div>
-            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'lick-update' object.id %}">Update</a>
-            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'lick-delete' object.id %}">Delete</a>
-          </div>
-        {% endif %}
-      </div>
-      <p class="article-content">
-          <audio id="myAudio" controls preload="none" style="width:480px;">
-          <source src="{{ object.file.url }}" type="audio/mp4" >
-          <source src="{{ object.file.url }}" type="audio/wav" >
-          Your browser does not support HTML5 audio. Try Chrome 6+
-          </audio>
-      </p>
-    </div>
-  </article>
--->
-<!--
-<label for="pitchIn">Set pitch</label>
-<input type="number" min="-1200" max="1200" step="200" value="0" id="pitchIn">
--->
 
 
 
