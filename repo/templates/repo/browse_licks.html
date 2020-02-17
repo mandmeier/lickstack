@@ -1,9 +1,12 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 {% load static %}
+{% load repo_extras %}
 
 
 {% block content %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.5.35/Tone.js"></script>
 
 {% include 'repo/snippets/lick_snippet_style.html' %}
 
@@ -81,6 +84,27 @@
 
 </div>
 
+{% if licks.has_other_pages %}
+
+    {% if licks.has_previous %}
+      <a class = "btn btn-outline-info mb-4" href="?{% url_replace request 'page' 1 %}">First</a>
+      <a class = "btn btn-outline-info mb-4" href="?{% url_replace request 'page' licks.previous_page_number %}">Prev</a>
+    {% endif %}
+
+    {% for num in licks.paginator.page_range %}
+      {% if licks.number == num %}
+        <a class = "btn btn-info mb-4" href="?{% url_replace request 'page' num %}">{{ num }}</a>
+      {% elif num > licks.number|add:'-5' and num < licks.number|add:'5'%}
+        <a class = "btn btn-outline-info mb-4" href="?{% url_replace request 'page' num %}">{{ num }}</a>
+      {% endif %}
+    {% endfor %}
+
+    {% if licks.has_next %}
+      <a class = "btn btn-outline-info mb-4" href="?{% url_replace request 'page' licks.next_page_number %}">Next</a>
+      <a class = "btn btn-outline-info mb-4" href="?{% url_replace request 'page' licks.paginator.num_pages %}">Last</a>
+    {% endif %}
+
+{% endif %}
 
 
 {% if licks %}
@@ -97,5 +121,29 @@
     </div>
 
 {% endif %}
+
+
+{% if licks.has_other_pages %}
+
+    {% if licks.has_previous %}
+      <a class = "btn btn-outline-info mb-4" href="?{% url_replace request 'page' 1 %}">First</a>
+      <a class = "btn btn-outline-info mb-4" href="?{% url_replace request 'page' licks.previous_page_number %}">Prev</a>
+    {% endif %}
+
+    {% for num in licks.paginator.page_range %}
+      {% if licks.number == num %}
+        <a class = "btn btn-info mb-4" href="?{% url_replace request 'page' num %}">{{ num }}</a>
+      {% elif num > licks.number|add:'-5' and num < licks.number|add:'5'%}
+        <a class = "btn btn-outline-info mb-4" href="?{% url_replace request 'page' num %}">{{ num }}</a>
+      {% endif %}
+    {% endfor %}
+
+    {% if licks.has_next %}
+      <a class = "btn btn-outline-info mb-4" href="?{% url_replace request 'page' licks.next_page_number %}">Next</a>
+      <a class = "btn btn-outline-info mb-4" href="?{% url_replace request 'page' licks.paginator.num_pages %}">Last</a>
+    {% endif %}
+
+{% endif %}
+
 
 {% endblock content %}

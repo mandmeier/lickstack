@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from repo.models import Lick, Genre, Instrument
@@ -90,26 +91,26 @@ def browse_licks_view(request):
     # if search submitted get parameters from URL
     if request.GET:
 
-        genre_query = request.GET['genre']
-        instrument_query = request.GET['instrument']
-        username_contains_query = request.GET['username_contains']
+        genre_query = request.GET.get('genre', "")
+        instrument_query = request.GET.get('instrument', "")
+        username_contains_query = request.GET.get('username_contains', "")
 
-        m1_b1 = request.GET['m1_b1']
-        m1_b2 = request.GET['m1_b2']
-        m1_b3 = request.GET['m1_b3']
-        m1_b4 = request.GET['m1_b4']
-        m2_b1 = request.GET['m2_b1']
-        m2_b2 = request.GET['m2_b2']
-        m2_b3 = request.GET['m2_b3']
-        m2_b4 = request.GET['m2_b4']
-        m3_b1 = request.GET['m3_b1']
-        m3_b2 = request.GET['m3_b2']
-        m3_b3 = request.GET['m3_b3']
-        m3_b4 = request.GET['m3_b4']
-        m4_b1 = request.GET['m4_b1']
-        m4_b2 = request.GET['m4_b2']
-        m4_b3 = request.GET['m4_b3']
-        m4_b4 = request.GET['m4_b4']
+        m1_b1 = request.GET.get('m1_b1', "")
+        m1_b2 = request.GET.get('m1_b2', "")
+        m1_b3 = request.GET.get('m1_b3', "")
+        m1_b4 = request.GET.get('m1_b4', "")
+        m2_b1 = request.GET.get('m2_b1', "")
+        m2_b2 = request.GET.get('m2_b2', "")
+        m2_b3 = request.GET.get('m2_b3', "")
+        m2_b4 = request.GET.get('m2_b4', "")
+        m3_b1 = request.GET.get('m3_b1', "")
+        m3_b2 = request.GET.get('m3_b2', "")
+        m3_b3 = request.GET.get('m3_b3', "")
+        m3_b4 = request.GET.get('m3_b4', "")
+        m4_b1 = request.GET.get('m4_b1', "")
+        m4_b2 = request.GET.get('m4_b2', "")
+        m4_b3 = request.GET.get('m4_b3', "")
+        m4_b4 = request.GET.get('m4_b4', "")
 
         chord_seq = [
             m1_b1, m1_b2, m1_b3, m1_b4,
@@ -176,13 +177,18 @@ def browse_licks_view(request):
     #licks = get_lick_queryset(query).order_by('-date_posted')
     licks = sorted(queryset, key=attrgetter('date_posted'), reverse=True)
 
+    # paginate
+    page = request.GET.get('page', 1)
+    paginator = Paginator(licks, 3)
+    licks = paginator.page(page)
+
     # pass values to context
     context = {}
     context["form"] = LickForm()
     context['licks'] = licks
     context["genres"] = Genre.objects.all()
     context["instrument"] = Instrument.objects.all().order_by('name')
-    context["chord_seq_query"] = chord_seq_query ### used for template tags
+    context["chord_seq_query"] = chord_seq_query  # used for template tags
 
     return render(request, "repo/browse_licks.html", context)
 
