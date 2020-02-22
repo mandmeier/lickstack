@@ -6,7 +6,7 @@ import os
 
 
 class LickForm(forms.ModelForm):
-  TS_CHOICES = [('4/4', '4/4'), ('3/4', '3/4')]
+  TS_CHOICES = [('44', '4/4'), ('34', '3/4')]
   time_signature = forms.ChoiceField(
       choices=TS_CHOICES, initial= '4/4', widget=forms.RadioSelect)
 

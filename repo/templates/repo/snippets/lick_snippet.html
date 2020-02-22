@@ -134,7 +134,7 @@
 
 
 
-    {% if lick.time_signature == '3/4' %}
+    {% if lick.time_signature == '34' %}
 
     <div class="lick-chords col-12">
         <div class="row chords-row">
@@ -210,6 +210,16 @@ seekBar = document.getElementById("seekbar_{{ lick.id }}");
 mouseDown = false;
 last_transpose_by = 0
 transpose_by = 0
+
+// set initial transpose value according to query
+selectElement('transpose_lick_{{ lick.id }}', {{ lick.chord_seq | chord_seq_T:chord_seq_query }})
+
+function selectElement(id, valueToSelect) {
+    let element = document.getElementById(id);
+    element.value = valueToSelect;
+    transpose_lick(id);
+}
+
 
 // create all tone players to choose from
 // (because can't create them in function for some reason)

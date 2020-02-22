@@ -83,14 +83,12 @@ def browse_licks_view(request):
     chord_seq_query = ""
     # dummy for transpose before form submit
     chord_seq_queries_T = ["" for i in range(12)]
-
-    if request.method == ["POST"]:
-        a = request.POST['transpose']
-        print(a)
+    time_signature = ""
 
     # if search submitted get parameters from URL
     if request.GET:
-
+        include_transposed = bool(request.GET.get('include_transposed', ""))
+        time_signature = request.GET.get('time_signature', "")
         genre_query = request.GET.get('genre', "")
         instrument_query = request.GET.get('instrument', "")
         username_contains_query = request.GET.get('username_contains', "")
@@ -142,6 +140,7 @@ def browse_licks_view(request):
     queryset = []
 
     licks = Lick.objects.filter(
+        Q(time_signature__icontains=time_signature) &
         Q(genre__name__icontains=genre_query) &
         Q(instrument__name__icontains=instrument_query) &
         Q(author__username__icontains=username_contains_query)

@@ -17,8 +17,21 @@
 
 
     <div class="time-signature row">
-        <div class="col-4">
-            {{ form.time_signature|as_crispy_field }}
+        <div class="form-group col-md-4">
+            <label for="category">Time signature</label>
+            <select id="time_signature" class="form-control" name="time_signature">
+                <option value="" selected>Any</option>
+                <option value="44">4/4</option>
+                <option value="34">3/4</option>
+            </select>
+        </div>
+        <div class="form-group col-md-4">
+            <input type="checkbox" id="include_transposed" name="include_transposed" value="True">
+            <label for="vehicle1"> Include transposed</label><br>
+        </div>
+        <div class="form-group col-md-4">
+            <input type="checkbox" id="exact_search" name="exact_search" value="True">
+            <label for="vehicle1">Exact search</label><br>
         </div>
     </div>
 
