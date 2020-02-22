@@ -76,6 +76,7 @@ def get_lick_queryset(genre_query=None, instrument_query=None):
 def browse_licks_view(request):
 
     # default no search parameters
+    exact_search = False
     include_transposed = False
     genre_query = ""
     instrument_query = ""
@@ -87,6 +88,7 @@ def browse_licks_view(request):
 
     # if search submitted get parameters from URL
     if request.GET:
+        exact_search = bool(request.GET.get('exact_search', ""))
         include_transposed = bool(request.GET.get('include_transposed', ""))
         time_signature = request.GET.get('time_signature', "")
         genre_query = request.GET.get('genre', "")
@@ -120,11 +122,25 @@ def browse_licks_view(request):
         # make regex query seq
         def get_chord_seq_query(chord_seq, half_steps=0):
             query = ""
-            for chord in chord_seq:
-                if chord != ".":
-                    chord_T = transpose_seq(str(chord), half_steps)
-                    query = query + "[x.]*" + chord_T
-            query = query + "x"
+            if exact_search == False:
+                for chord in chord_seq:
+                    if chord != ".":
+                        chord_T = transpose_seq(str(chord), half_steps)
+                        query = query + "[x.]*" + chord_T
+                query = query + "x"
+
+            else:
+                while chord_seq[len(chord_seq) - 1] == ".":
+                    chord_seq.pop()
+                chord_seq.reverse()
+                while chord_seq[len(chord_seq) - 1] == ".":
+                    chord_seq.pop()
+                chord_seq.reverse()
+                for chord in chord_seq:
+                    if chord != ".":
+                        chord = transpose_seq(str(chord), half_steps)
+                    query = query + chord + "x"
+
             return query
 
         chord_seq_query = get_chord_seq_query(chord_seq, 0)
@@ -134,7 +150,7 @@ def browse_licks_view(request):
             for half_step in range(0, 12):
                 chord_seq_queries_T.append(
                     get_chord_seq_query(chord_seq, half_step))
-            print(chord_seq_queries_T)
+            #print(chord_seq_queries_T)
 
     # filter queryset with search parameters
     queryset = []
