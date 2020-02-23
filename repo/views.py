@@ -78,10 +78,12 @@ def browse_licks_view(request):
     # default no search parameters
     exact_search = False
     include_transposed = False
+    ignore_extensions = False
     genre_query = ""
     instrument_query = ""
     username_contains_query = ""
     chord_seq_query = ""
+    lick_id_query = 0
     # dummy for transpose before form submit
     chord_seq_queries_T = ["" for i in range(12)]
     time_signature = ""
@@ -90,10 +92,16 @@ def browse_licks_view(request):
     if request.GET:
         exact_search = bool(request.GET.get('exact_search', ""))
         include_transposed = bool(request.GET.get('include_transposed', ""))
+        ignore_extensions = bool(request.GET.get('ignore_extensions', ""))
         time_signature = request.GET.get('time_signature', "")
         genre_query = request.GET.get('genre', "")
         instrument_query = request.GET.get('instrument', "")
         username_contains_query = request.GET.get('username_contains', "")
+        lick_id_query = request.GET.get('lick_id', "")
+        if not lick_id_query.isdigit():
+            lick_id_query = 0
+        else:
+            lick_id_query = int(lick_id_query.strip())
 
         m1_b1 = request.GET.get('m1_b1', "")
         m1_b2 = request.GET.get('m1_b2', "")
@@ -140,6 +148,15 @@ def browse_licks_view(request):
                     if chord != ".":
                         chord = transpose_seq(str(chord), half_steps)
                     query = query + chord + "x"
+            print(query)
+
+            if ignore_extensions == True:
+                m = "(_m7b5|_m7|_m(?!a))"
+                notm = "(_|_7|_maj7|_6|_dim|_sus4)"
+                query = re.sub(r'((_m7b5)|(_m7)|(_m(?!a)))', m, query)
+                query = re.sub(
+                    r'((_maj7)|(_7)|(_6)|(_dim)|(_sus4)|(_(?=[\[x])))', notm, query)
+            print(query)
 
             return query
 
@@ -150,7 +167,7 @@ def browse_licks_view(request):
             for half_step in range(0, 12):
                 chord_seq_queries_T.append(
                     get_chord_seq_query(chord_seq, half_step))
-            #print(chord_seq_queries_T)
+            # print(chord_seq_queries_T)
 
     # filter queryset with search parameters
     queryset = []
@@ -182,6 +199,9 @@ def browse_licks_view(request):
             Q(chord_seq__regex=chord_seq_queries_T[11])
         )
 
+    if lick_id_query > 0:
+        licks = licks.filter(id=lick_id_query)
+
     licks = licks.distinct()
 
     for lick in licks:
@@ -205,6 +225,33 @@ def browse_licks_view(request):
     context["instrument"] = Instrument.objects.all().order_by('name')
     context["chord_seq_query"] = chord_seq_query  # used for template tags
 
+    # remember form input
+    """
+    context["exact_search"] = exact_search
+    context["include_transposed"] = include_transposed
+    context["ignore_extensions"] = ignore_extensions
+    context["time_signature"] = time_signature
+    context["genre_query"] = genre_query
+    context["instrument_query"] = instrument_query
+    context["username_contains_query"] = username_contains_query
+    context["lick_id_query"] = lick_id_query
+    context["m1_b1"] = m1_b1
+    context["m1_b2"] = m1_b2
+    context["m1_b3"] = m1_b3
+    context["m1_b4"] = m1_b4
+    context["m2_b1"] = m2_b1
+    context["m2_b2"] = m2_b2
+    context["m2_b3"] = m2_b3
+    context["m2_b4"] = m2_b4
+    context["m3_b1"] = m3_b1
+    context["m3_b2"] = m3_b2
+    context["m3_b3"] = m3_b3
+    context["m3_b4"] = m3_b4
+    context["m4_b1"] = m4_b1
+    context["m4_b2"] = m4_b2
+    context["m4_b3"] = m4_b3
+    context["m4_b4"] = m4_b4
+    """
     return render(request, "repo/browse_licks.html", context)
 
 
