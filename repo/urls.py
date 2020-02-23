@@ -3,7 +3,7 @@ from django.urls import path
 from .views import (
     home,
     browse_licks_view,
-    LickListView,
+    my_licks_view,
     UserLickListView,
     LickDetailView,
     LickCreateView,
@@ -14,7 +14,7 @@ from .views import (
 urlpatterns = [
     path('', home, name='home'),
     path('licks/', browse_licks_view, name='browse-licks'),
-    path('all/', LickListView.as_view(), name='all-licks'),
+    path('mylicks/', my_licks_view, name='my-licks'),
     path('user/<str:username>/', UserLickListView.as_view(), name='user-licks'),
     path('lick/<int:pk>/', LickDetailView.as_view(), name='lick-detail'),
     path('lick/new/', LickCreateView.as_view(), name='lick-create'),

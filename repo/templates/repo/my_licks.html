@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% load repo_extras %}
+
+
+{% block content %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.5.35/Tone.js"></script>
+
+{% include 'repo/snippets/lick_snippet_style.html' %}
+
+
+{% if licks.has_other_pages %}
+
+    {% if licks.has_previous %}
+      <a class = "btn btn-outline-info mb-4" href="?{% url_replace request 'page' 1 %}">First</a>
+      <a class = "btn btn-outline-info mb-4" href="?{% url_replace request 'page' licks.previous_page_number %}">Prev</a>
+    {% endif %}
+
+    {% for num in licks.paginator.page_range %}
+      {% if licks.number == num %}
+        <a class = "btn btn-info mb-4" href="?{% url_replace request 'page' num %}">{{ num }}</a>
+      {% elif num > licks.number|add:'-5' and num < licks.number|add:'5'%}
+        <a class = "btn btn-outline-info mb-4" href="?{% url_replace request 'page' num %}">{{ num }}</a>
+      {% endif %}
+    {% endfor %}
+
+    {% if licks.has_next %}
+      <a class = "btn btn-outline-info mb-4" href="?{% url_replace request 'page' licks.next_page_number %}">Next</a>
+      <a class = "btn btn-outline-info mb-4" href="?{% url_replace request 'page' licks.paginator.num_pages %}">Last</a>
+    {% endif %}
+
+{% endif %}
+
+
+{% if licks %}
+
+    {% for lick in licks %}
+
+    {% if lick.author == user %}
+        <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'lick-update' lick.id %}">Edit</a>
+            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'lick-delete' lick.id %}">Delete</a>
+        </div>
+    {% endif %}
+
+    {% include 'repo/snippets/lick_snippet.html' with lick=lick chord_seq_query=chord_seq_query %}
+
+    {% endfor %}
+
+{% else %}
+    <div class="alert alert-primary" role="alert">
+       No licks found... Try searching for something else.
+    </div>
+
+{% endif %}
+
+
+{% if licks.has_other_pages %}
+
+    {% if licks.has_previous %}
+      <a class = "btn btn-outline-info mb-4" href="?{% url_replace request 'page' 1 %}">First</a>
+      <a class = "btn btn-outline-info mb-4" href="?{% url_replace request 'page' licks.previous_page_number %}">Prev</a>
+    {% endif %}
+
+    {% for num in licks.paginator.page_range %}
+      {% if licks.number == num %}
+        <a class = "btn btn-info mb-4" href="?{% url_replace request 'page' num %}">{{ num }}</a>
+      {% elif num > licks.number|add:'-5' and num < licks.number|add:'5'%}
+        <a class = "btn btn-outline-info mb-4" href="?{% url_replace request 'page' num %}">{{ num }}</a>
+      {% endif %}
+    {% endfor %}
+
+    {% if licks.has_next %}
+      <a class = "btn btn-outline-info mb-4" href="?{% url_replace request 'page' licks.next_page_number %}">Next</a>
+      <a class = "btn btn-outline-info mb-4" href="?{% url_replace request 'page' licks.paginator.num_pages %}">Last</a>
+    {% endif %}
+
+{% endif %}
+
+
+{% endblock content %}

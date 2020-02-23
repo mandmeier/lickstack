@@ -11,6 +11,7 @@ from django.views import generic
 from .forms import LickForm
 from django.utils import timezone
 from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
 
 from itertools import cycle
 import re
@@ -214,7 +215,7 @@ def browse_licks_view(request):
 
     # paginate
     page = request.GET.get('page', 1)
-    paginator = Paginator(licks, 3)
+    paginator = Paginator(licks, 6)
     licks = paginator.page(page)
 
     # pass values to context
@@ -226,155 +227,48 @@ def browse_licks_view(request):
     context["chord_seq_query"] = chord_seq_query  # used for template tags
 
     # remember form input
-    """
-    context["exact_search"] = exact_search
-    context["include_transposed"] = include_transposed
-    context["ignore_extensions"] = ignore_extensions
-    context["time_signature"] = time_signature
-    context["genre_query"] = genre_query
-    context["instrument_query"] = instrument_query
-    context["username_contains_query"] = username_contains_query
-    context["lick_id_query"] = lick_id_query
-    context["m1_b1"] = m1_b1
-    context["m1_b2"] = m1_b2
-    context["m1_b3"] = m1_b3
-    context["m1_b4"] = m1_b4
-    context["m2_b1"] = m2_b1
-    context["m2_b2"] = m2_b2
-    context["m2_b3"] = m2_b3
-    context["m2_b4"] = m2_b4
-    context["m3_b1"] = m3_b1
-    context["m3_b2"] = m3_b2
-    context["m3_b3"] = m3_b3
-    context["m3_b4"] = m3_b4
-    context["m4_b1"] = m4_b1
-    context["m4_b2"] = m4_b2
-    context["m4_b3"] = m4_b3
-    context["m4_b4"] = m4_b4
-    """
+    # context["username_contains_query"] = username_contains_query
+
     return render(request, "repo/browse_licks.html", context)
 
 
 """
-m1_b1 = '_A_7'
-m1_b2 = '_Dm_7'
-m1_b3 = '_G_7'
-m1_b4 = '_C_maj7'
+@login_required
+def my_licks(request):
 
+    user = get_object_or_404(User, username=self.kwargs.get('username'))
 
-chord_seq = [m1_b1, m1_b2, m1_b3, m1_b4]
+    licks = Lick.objects.filter(user=request.user).order_by('-date_posted')
 
+    #licks = get_lick_queryset(query).order_by('-date_posted')
+    licks = sorted(queryset, key=attrgetter('date_posted'), reverse=True)
 
-chord_urls = list(map(lambda x: f'static/img/chords/{x}.png', chord_seq))
-
-    context["chord_urls"] = ['static/img/chords/_A_7.png',
-    'static/img/chords/_Dm_7.png',
-    'static/img/chords/_G_7.png',
-    'static/img/chords/_C_maj7.png']
+    # paginate
+    page = request.GET.get('page', 1)
+    paginator = Paginator(licks, 3)
+    licks = paginator.page(page)
 """
 
 
-class LickListView(generic.ListView):
-    model = Lick
-    template_name = 'repo/all_licks.html'
-    context_object_name = 'licks'
-    paginate_by = 10
-    ordering = ['-date_posted']
+@login_required
+def my_licks_view(request):
+    chord_seq_query = ""
+    licks = Lick.objects.all()
+    licks = licks.filter(author=request.user)  # get current user id
 
-    def get_context_data(self, **kwargs):
-        # some other stuff — where you create `context`
-        context = super().get_context_data(**kwargs)
-        context["form"] = LickForm()
-        #gen = ["Any"]
-        # for g in Genre.objects.all():
-        # gen.append(g)
-        context["genres"] = Genre.objects.all()
-        context["instrument"] = Instrument.objects.all().order_by('name')
-        return context
+    #licks = get_lick_queryset(query).order_by('-date_posted')
+    licks = sorted(licks, key=attrgetter('date_posted'), reverse=True)
 
-    def get_queryset(self):
-        # search
-        qs = Lick.objects.all()
-        include_transposed = False
-        genre_query = self.request.GET.get('genre')
-        instrument_query = self.request.GET.get('instrument')
-        username_contains = self.request.GET.get('username_contains')
+    # paginate
+    page = request.GET.get('page', 1)
+    paginator = Paginator(licks, 6)
+    licks = paginator.page(page)
 
-        m1_b1 = self.request.GET.get('m1_b1')
-        m1_b2 = self.request.GET.get('m1_b2')
-        m1_b3 = self.request.GET.get('m1_b3')
-        m1_b4 = self.request.GET.get('m1_b4')
-        m2_b1 = self.request.GET.get('m2_b1')
-        m2_b2 = self.request.GET.get('m2_b2')
-        m2_b3 = self.request.GET.get('m2_b3')
-        m2_b4 = self.request.GET.get('m2_b4')
-        m3_b1 = self.request.GET.get('m3_b1')
-        m3_b2 = self.request.GET.get('m3_b2')
-        m3_b3 = self.request.GET.get('m3_b3')
-        m3_b4 = self.request.GET.get('m3_b4')
-        m4_b1 = self.request.GET.get('m4_b1')
-        m4_b2 = self.request.GET.get('m4_b2')
-        m4_b3 = self.request.GET.get('m4_b3')
-        m4_b4 = self.request.GET.get('m4_b4')
+    context = {}
+    context['licks'] = licks
+    context["chord_seq_query"] = chord_seq_query  # used for template tags
 
-        chord_seq = [
-            m1_b1, m1_b2, m1_b3, m1_b4,
-            m2_b1, m2_b2, m2_b3, m2_b4,
-            m3_b1, m3_b2, m3_b3, m3_b4,
-            m4_b1, m4_b2, m4_b3, m4_b4,
-        ]
-
-        # make regex query seq
-        def get_query(chord_seq, half_steps=0):
-            query = ""
-            for chord in chord_seq:
-                if chord != ".":
-                    chord_T = transpose_seq(str(chord), half_steps)
-                    query = query + "[x.]*" + chord_T
-            query = query + "x"
-            return query
-
-        if is_valid_queryparam(genre_query) and genre_query != 'Any':
-            qs = qs.filter(genre__name=genre_query)
-
-        if is_valid_queryparam(instrument_query) and instrument_query != 'Any':
-            qs = qs.filter(instrument__name=instrument_query)
-
-        if is_valid_queryparam(username_contains):
-            print(username_contains)
-            qs = qs.filter(author__username__icontains=username_contains)
-
-        # filter by chord selection
-        if include_transposed == False:
-            query = get_query(chord_seq, 0)
-            print(query)
-            qs = qs.filter(chord_seq__regex=query)
-        else:
-            query_set_T = []
-            for half_step in range(0, 12):
-                query_set_T.append(get_query(chord_seq, half_step))
-            print(query_set_T)
-            Q(first_name__startswith='R') | Q(
-                last_name__startswith='D').distinct()
-            qs = qs.filter(
-                Q(chord_seq__regex=query_set_T[0]) |
-                Q(chord_seq__regex=query_set_T[1]) |
-                Q(chord_seq__regex=query_set_T[2]) |
-                Q(chord_seq__regex=query_set_T[3]) |
-                Q(chord_seq__regex=query_set_T[4]) |
-                Q(chord_seq__regex=query_set_T[5]) |
-                Q(chord_seq__regex=query_set_T[6]) |
-                Q(chord_seq__regex=query_set_T[7]) |
-                Q(chord_seq__regex=query_set_T[8]) |
-                Q(chord_seq__regex=query_set_T[9]) |
-                Q(chord_seq__regex=query_set_T[10]) |
-                Q(chord_seq__regex=query_set_T[11])
-            )
-
-        # order
-        qs = qs.order_by('-date_posted')
-
-        return qs
+    return render(request, "repo/my_licks.html", context)
 
 
 class UserLickListView(generic.ListView):
@@ -432,7 +326,7 @@ class LickUpdateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixi
 class LickDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
     model = Lick
     template_name = 'repo/lick_confirm_delete.html'
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('my-licks')
     success_message = f'Lick has been deleted!'
 
     def delete(self, request, *args, **kwargs):  # this replaces SuccessMessageMixin
