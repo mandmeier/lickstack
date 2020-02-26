@@ -83,7 +83,7 @@
         <div class="icon col-3">Lick #{{ lick.id }}</div>
         <div class="icon col-3"><small class="text-muted">{{ lick.author }} #{{ lick.counter }}</small></div>
         <div class="icon col-3"><small class="text-muted">{{ lick.date_posted|date:"Y b d" }}</small></div>
-        <div class="icon col-3"><small class="text-muted">15 Likes</small></div>
+        <div class="icon col-3"><small class="text-muted">{{ lick.total_likes }} Like{{ lick.total_likes|pluralize }}</small></div>
       </div>
     </div>
 

@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from repo.models import Lick, Genre, Instrument
 from operator import attrgetter
@@ -225,6 +226,7 @@ def browse_licks_view(request):
     context["genres"] = Genre.objects.all()
     context["instrument"] = Instrument.objects.all().order_by('name')
     context["chord_seq_query"] = chord_seq_query  # used for template tags
+    #context['total_likes'] = licks.total_likes()
 
     # remember form input
     # context["username_contains_query"] = username_contains_query
@@ -282,9 +284,48 @@ class UserLickListView(generic.ListView):
         return Lick.objects.filter(author=user).order_by('-date_posted')
 
 
+"""
 class LickDetailView(generic.DetailView):
     model = Lick
     template_name = 'repo/lick_detail.html'
+    context_object_name = 'licks'
+    print(model)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        is_liked = False
+        if lick.likes.filter(id=self.request.user.id).exists():
+            is_liked = True
+        context['is_liked'] = is_liked
+        return context
+"""
+
+
+def lick_detail(request, pk):
+    lick = get_object_or_404(Lick, id=pk)
+    is_liked = False
+    if lick.likes.filter(id=request.user.id).exists():
+        is_liked = True
+
+    context = {}
+    context['lick'] = lick
+    context['is_liked'] = is_liked
+    context['total_likes'] = lick.total_likes()
+
+    return render(request, 'repo/lick_detail.html', context)
+
+
+def like_lick(request):
+    lick = get_object_or_404(Lick, id=request.POST.get('lick_id'))
+    is_liked = False
+    if lick.likes.filter(id=request.user.id).exists():
+        lick.likes.remove(request.user)
+        is_liked = False
+    else:
+        lick.likes.add(request.user)
+        is_liked = True
+
+    return HttpResponseRedirect(lick.get_absolute_url())
 
 
 class LickCreateView(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView):

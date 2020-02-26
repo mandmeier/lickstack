@@ -1,171 +1,39 @@
 
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% load repo_extras %}
 
 {% block content %}
 
-<h1>Test</h1>
-
-<link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
-
-<style type="text/css">
-
-
-.audio-player {
-    display: flex;
-    align-items: center;
-    background-color: black;
-
-}
-
-.audio-player button.play {
-        display: block;
-        width: 40px;
-        height: 40px;
-        border: 0;
-        background-color: #00aaff;
-        color: white;
-        font-size: 20px;
-        border-radius: 100000px;
-        margin-right: 10px;
-        cursor: pointer;
-}
-
-
-.seek-bar {
-    margin: 10px;
-    width: 400px;
-    background-color: #fda50f;
-    display: flex;
-    align-items: center;
-    border-radius: 100000px;
-    cursor: pointer;
-}
-
-.seek-bar .fill {
-  height: 20px;
-  background-color: #00aaff;
-  border-radius: 100000px;
-}
-
-.seek-bar .handle {
-  width: 8px;
-  height: 20px;
-  background-color: #00ffff;
-  border-radius: 100000px;
-  margin-left: -5px;
-  transform: scale(2);
-  transition: all 0.1s;
-  pointer-events: none;
-}
-
-
-</style>
-
-  <div class="row audio-player">
-      <button class="play"><i class="ion-play"></i></button>
-      <div class="seek-bar">
-          <div class="fill"></div>
-          <div class="handle"></div>
-      </div>
-  </div>
-
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.5.35/Tone.js"></script>
-<script type="text/javascript">
-
-let file_URL = "/media/lick_uploads/056_qnYNWN3.m4a"
-let pitch_setting = 0
-let playback_rate = 1
-
-var player = new Tone.Player(file_URL)
-let audio = new Audio(file_URL); //this needed to get audio.currentTime and audio.duration
-audio.volume = 0;
-
-// transpose
-
-if (playback_rate == 1){
-  var pitchShift = new Tone.PitchShift({
-  pitch: pitch_setting
-  }).toDestination();
-} else {
-  var pitchShift = new Tone.PitchShift({
-  pitch: pitch_setting + 12 //if playbackrate == 0.5 add +12 to pitch to correct
-  }).toDestination();
-}
-
-player.connect(pitchShift);
-
-let seekBar = document.querySelector('.seek-bar');
-let playButton = document.querySelector('button.play');
-let playButtonIcon = playButton.querySelector('i');
-let fillBar = seekBar.querySelector('.fill');
-
-let mouseDown = false;
 
 
-playButton.addEventListener('click', function () {
-  if (audio.paused) {
-    let ctx = new(window.AudioContext || window.webkitAudioContext)();
-    audio.playbackRate = playback_rate;
-    player.playbackRate = playback_rate;
-    audio.play();
-    ofs = audio.currentTime
-    player.start();
-    player.seek(offset = ofs);
-  } else {
-    audio.pause();
-    player.stop(0);
-    //ofs = audio.currentTime;
-  }
-});
+{% include 'repo/snippets/lick_snippet_style.html' %}
 
-audio.addEventListener('play', function () {
-  playButtonIcon.className = 'ion-pause';
-});
+<h1>lick # {{ lick.id }}</h1>
 
-audio.addEventListener('pause', function () {
-  playButtonIcon.className = 'ion-play';
-});
+{% if request.user.is_authenticated %}
+  <form action="{% url 'like_lick' %}" method="post">
+    {% csrf_token %}
+    {% if is_liked %}
+    <button type="submit" name="lick_id" value="{{ lick.id }}" class="btn btn-danger">Dislike</button>
+    {% else %}
+    <button type="submit" name="lick_id" value="{{ lick.id }}" class="btn btn-primary">Like</button>
+    {% endif %}
+  </form>
+{% endif %}
 
-audio.addEventListener('timeupdate', function () {
-  if (mouseDown) return;
-    let p = audio.currentTime / audio.duration;
-    fillBar.style.width = p * 100 + "%";
-});
+  {{ total_likes }} Like{{ total_likes|pluralize }}
 
+    {% if lick.author == user %}
+        <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'lick-update' lick.id %}">Edit</a>
+            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'lick-delete' lick.id %}">Delete</a>
+        </div>
+    {% endif %}
 
-seekBar.addEventListener('mousedown', function (e) {
-  mouseDown = true;
-  window.rect = e.target.getBoundingClientRect();
-  let x = e.clientX - rect.left;
-  let p = x / seekBar.clientWidth;
-  fillBar.style.width = p * 100 + "%";
-});
-
-window.addEventListener('mousemove', function (e) {
-  if (!mouseDown) return;
-    let x = e.clientX - rect.left;
-    let p = x / seekBar.clientWidth;
-    fillBar.style.width = p * 100 + "%";
-});
-
-window.addEventListener('mouseup', function (e) {
-  if (!mouseDown) return;
-    mouseDown = false;
-    let x = e.clientX - rect.left;
-    let p = x / seekBar.clientWidth;
-    fillBar.style.width = p * 100 + "%";
-    audio.currentTime = p * audio.duration;
-    ofs = audio.currentTime;
-  if (!audio.paused) {
-    player.start();
-    player.seek(offset = ofs);
-  }
-});
-
-
-</script>
-
+    {% include 'repo/snippets/lick_snippet.html' with lick=lick chord_seq_query=chord_seq_query %}
 
 
 {% endblock content %}

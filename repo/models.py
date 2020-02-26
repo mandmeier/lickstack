@@ -30,6 +30,7 @@ class Lick(models.Model):
     last_updated = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
     counter = models.IntegerField(default=1)
+    likes = models.ManyToManyField(User, related_name='likes', blank=True)
 
     TS_CHOICES = [('44', '4/4'), ('34', '3/4')]
 
@@ -275,3 +276,6 @@ class Lick(models.Model):
     def delete(self, *args, **kwargs):
         self.file.delete()
         super().delete(*args, **kwargs)
+
+    def total_likes(self):
+        return self.likes.count()
