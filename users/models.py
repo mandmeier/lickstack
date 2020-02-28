@@ -1,10 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
+from repo.models import Lick
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name='profile_user')
+    liked_licks = models.ManyToManyField(
+        Lick, related_name='liked_licks', blank=True)
     # instrument?
     # current city?
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')

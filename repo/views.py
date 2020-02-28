@@ -214,6 +214,12 @@ def browse_licks_view(request):
     #licks = get_lick_queryset(query).order_by('-date_posted')
     licks = sorted(queryset, key=attrgetter('date_posted'), reverse=True)
 
+    # find if user liked any of those licks
+    user_liked = []
+    for lick in licks:
+        if lick in request.user.profile_user.liked_licks.all():
+            user_liked.append(lick)
+
     # paginate
     page = request.GET.get('page', 1)
     paginator = Paginator(licks, 6)
@@ -226,8 +232,7 @@ def browse_licks_view(request):
     context["genres"] = Genre.objects.all()
     context["instrument"] = Instrument.objects.all().order_by('name')
     context["chord_seq_query"] = chord_seq_query  # used for template tags
-    #context['total_likes'] = licks.total_likes()
-
+    context["user_liked"] = user_liked
     # remember form input
     # context["username_contains_query"] = username_contains_query
 
@@ -303,6 +308,8 @@ class LickDetailView(generic.DetailView):
 
 def lick_detail(request, pk):
     lick = get_object_or_404(Lick, id=pk)
+    print(lick)
+    print(request.user.profile_user.liked_licks.all())
     is_liked = False
     if lick.likes.filter(id=request.user.id).exists():
         is_liked = True
@@ -317,15 +324,22 @@ def lick_detail(request, pk):
 
 def like_lick(request):
     lick = get_object_or_404(Lick, id=request.POST.get('lick_id'))
+    print('TEST')
+    print(request.get_full_path)
+    print('TEST')
     is_liked = False
     if lick.likes.filter(id=request.user.id).exists():
         lick.likes.remove(request.user)
+        request.user.profile_user.liked_licks.remove(lick)
         is_liked = False
     else:
         lick.likes.add(request.user)
+        request.user.profile_user.liked_licks.add(
+            lick)  # add to liked licks in profile
         is_liked = True
 
-    return HttpResponseRedirect(lick.get_absolute_url())
+    next = request.POST.get('next', '/')
+    return HttpResponseRedirect(next)
 
 
 class LickCreateView(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView):

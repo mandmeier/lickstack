@@ -265,7 +265,7 @@ class Lick(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        name = str(self.genre) + "_" + str(self.author) + \
+        name = str(self.id) + "_" + str(self.genre) + "_" + str(self.author) + \
             "_" + str(self.date_posted)
         return name
 
