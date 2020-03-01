@@ -212,17 +212,21 @@ def browse_licks_view(request):
     # licks = get_lick_queryset(query).order_by('-date_posted')
     licks = sorted(queryset, key=attrgetter('date_posted'), reverse=True)
 
-    # find if user liked any of those licks
-    user_liked = []
-    for lick in licks:
-        if lick in request.user.profile.liked_licks.all():
-            user_liked.append(lick)
+    if request.user.is_authenticated:
+        # find if user liked any of those licks
+        user_liked = []
+        for lick in licks:
+            if lick in request.user.profile.liked_licks.all():
+                user_liked.append(lick)
 
-    # find if user faved any of those licks
-    user_faved = []
-    for lick in licks:
-        if lick in request.user.profile.faved_licks.all():
-            user_faved.append(lick)
+        # find if user faved any of those licks
+        user_faved = []
+        for lick in licks:
+            if lick in request.user.profile.faved_licks.all():
+                user_faved.append(lick)
+    else:
+        user_liked = []
+        user_faved = []
 
     # paginate
     page = request.GET.get('page', 1)
@@ -267,6 +271,21 @@ def my_licks_view(request):
     chord_seq_query = ""
     licks = Lick.objects.all()
     licks = licks.filter(author=request.user)  # get current user id
+    display = ""
+
+    if request.GET:
+        display = request.GET.get('display', "")
+        if display == "mylicks":
+            print("TEST")
+            print("mylicks")
+            print("TEST")
+            licks = licks.filter(author=request.user)
+
+        if display == "favorites":
+            print("TEST")
+            print("favorites")
+            print("TEST")
+            licks = request.user.profile.faved_licks.all()
 
     # licks = get_lick_queryset(query).order_by('-date_posted')
     licks = sorted(licks, key=attrgetter('date_posted'), reverse=True)
@@ -293,6 +312,7 @@ def my_licks_view(request):
     context["chord_seq_query"] = chord_seq_query  # used for template tags
     context["user_liked"] = user_liked
     context["user_faved"] = user_faved
+    context["display"] = display
 
     return render(request, "repo/my_licks.html", context)
 

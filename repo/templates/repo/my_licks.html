@@ -12,6 +12,28 @@
 
 {% include 'repo/snippets/lick_snippet_style.html' %}
 
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-6">
+      <form method="GET" action=".">
+        <input type="hidden" name="display" value="mylicks">
+        <button type="submit" class="btn btn-warning">
+          <i class="fas fa-music fa-lg"></i>
+          My Licks
+        </button>
+      </form>
+    </div>
+    <div class="col-6">
+      <form method="GET" action=".">
+        <input type="hidden" name="display" value="favorites">
+        <button type="submit" class="btn btn-danger">
+          <i class="fas fa-star fa-lg"></i>
+          Favorites
+        </button>
+      </form>
+     </div>
+  </div>
+</div>
 
 {% if licks.has_other_pages %}
 
@@ -42,8 +64,14 @@
 
     {% if lick.author == user %}
         <div>
-            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'lick-update' lick.id %}">Edit</a>
-            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'lick-delete' lick.id %}">Delete</a>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'lick-update' lick.id %}">
+              <i class="fas fa-edit"></i>
+              Edit
+            </a>
+            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'lick-delete' lick.id %}">
+              <i class="fas fa-trash-alt"></i>
+               Delete
+            </a>
         </div>
     {% endif %}
 
@@ -52,9 +80,20 @@
     {% endfor %}
 
 {% else %}
+
+  {% if display == 'favorites' %}
     <div class="alert alert-primary" role="alert">
-       No licks found... Try searching for something else.
+       You have no favorites selected...
+       <br>
+       <a href="{% url 'browse-licks' %}" class="btn btn-info" role="button">Browse Licks</a>
     </div>
+  {% else %}
+    <div class="alert alert-primary" role="alert">
+       You have no licks yet...
+       <br>
+       <a href="{% url 'lick-create' %}" class="btn btn-info" role="button">Create Lick</a>
+    </div>
+  {% endif %}
 
 {% endif %}
 

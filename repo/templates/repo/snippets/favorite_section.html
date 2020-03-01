@@ -1,21 +1,23 @@
 {% load static %}
 
-{{ lick.total_faves }} Favorite{{ lick.total_faves|pluralize }}
 
 {% if request.user.is_authenticated %}
       <form action="{% url 'favorite_lick' %}" method="post">
         {% csrf_token %}
         {% if lick in user_faved %}
-        <button type="submit" id="favorite_{{ lick.id }}" name="lick_id" value="{{ lick.id }}" class="btn btn-danger">undo favorite</button>
+        <button type="submit" id="favorite_{{ lick.id }}" name="lick_id" value="{{ lick.id }}" class="btn btn-danger">
+            <i class="fas fa-star fa-lg"></i>
+        </button>
         {% else %}
-        <button type="submit" id="favorite_{{ lick.id }}" name="lick_id" value="{{ lick.id }}" class="btn btn-primary">make favorite</button>
+        <button type="submit" id="favorite_{{ lick.id }}" name="lick_id" value="{{ lick.id }}" class="btn btn-danger">
+            <i class="far fa-star fa-lg"></i>
+        </button>
         {% endif %}
       </form>
       <script type="text/javascript">
             $(document).on('click', '#favorite_{{ lick.id }}', function(event){
                 event.preventDefault();
                 var pk = $(this).attr('value');
-                console.log(pk)
                 $.ajax({
                     type: 'POST',
                     url: '{% url "favorite_lick" %}',
@@ -23,12 +25,8 @@
                     dataType: 'json',
                     success: function(response){
                         $('#favorite-section_{{ lick.id }}').html(response['form'])
-                        console.log($('#favorite-section_{{ lick.id }}').html(response['form']))
-                        console.log("success")
                     },
                     error: function(rs, e){
-                        console.log(rs.responseText)
-                        console.log("FAIL")
                     }
                 });
                 $(document).off('click');
