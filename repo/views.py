@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from repo.models import Lick, Genre, Instrument
 from operator import attrgetter
@@ -13,6 +13,7 @@ from .forms import LickForm
 from django.utils import timezone
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
+from django.template.loader import render_to_string
 
 from itertools import cycle
 import re
@@ -211,13 +212,13 @@ def browse_licks_view(request):
 
     queryset = list(set(queryset))
 
-    #licks = get_lick_queryset(query).order_by('-date_posted')
+    # licks = get_lick_queryset(query).order_by('-date_posted')
     licks = sorted(queryset, key=attrgetter('date_posted'), reverse=True)
 
     # find if user liked any of those licks
     user_liked = []
     for lick in licks:
-        if lick in request.user.profile_user.liked_licks.all():
+        if lick in request.user.profile.liked_licks.all():
             user_liked.append(lick)
 
     # paginate
@@ -247,7 +248,7 @@ def my_licks(request):
 
     licks = Lick.objects.filter(user=request.user).order_by('-date_posted')
 
-    #licks = get_lick_queryset(query).order_by('-date_posted')
+    # licks = get_lick_queryset(query).order_by('-date_posted')
     licks = sorted(queryset, key=attrgetter('date_posted'), reverse=True)
 
     # paginate
@@ -263,7 +264,7 @@ def my_licks_view(request):
     licks = Lick.objects.all()
     licks = licks.filter(author=request.user)  # get current user id
 
-    #licks = get_lick_queryset(query).order_by('-date_posted')
+    # licks = get_lick_queryset(query).order_by('-date_posted')
     licks = sorted(licks, key=attrgetter('date_posted'), reverse=True)
 
     # paginate
@@ -309,7 +310,7 @@ class LickDetailView(generic.DetailView):
 def lick_detail(request, pk):
     lick = get_object_or_404(Lick, id=pk)
     print(lick)
-    print(request.user.profile_user.liked_licks.all())
+    print(request.user.profile.liked_licks.all())
     is_liked = False
     if lick.likes.filter(id=request.user.id).exists():
         is_liked = True
@@ -323,23 +324,38 @@ def lick_detail(request, pk):
 
 
 def like_lick(request):
-    lick = get_object_or_404(Lick, id=request.POST.get('lick_id'))
+    #lick = get_object_or_404(Lick, id=request.POST.get('lick_id'))
+    lick = get_object_or_404(Lick, id=request.POST.get('id'))
     print('TEST')
-    print(request.get_full_path)
+    print(lick)
     print('TEST')
     is_liked = False
     if lick.likes.filter(id=request.user.id).exists():
         lick.likes.remove(request.user)
-        request.user.profile_user.liked_licks.remove(lick)
+        request.user.profile.liked_licks.remove(lick)
         is_liked = False
     else:
         lick.likes.add(request.user)
-        request.user.profile_user.liked_licks.add(
+        request.user.profile.liked_licks.add(
             lick)  # add to liked licks in profile
         is_liked = True
 
-    next = request.POST.get('next', '/')
-    return HttpResponseRedirect(next)
+    user_liked = request.user.profile.liked_licks.all()
+    print(user_liked)
+
+    context = {}
+    context['lick'] = lick
+    context['is_liked'] = is_liked
+    context['total_likes'] = lick.total_likes()
+    context["user_liked"] = user_liked
+
+    if request.is_ajax():
+        html = render_to_string(
+            'repo/snippets/like_section.html', context, request=request)
+        return JsonResponse({'form': html})
+    #next = request.POST.get('next', '/')
+    # print(next)
+    # return HttpResponseRedirect(next)
 
 
 class LickCreateView(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView):

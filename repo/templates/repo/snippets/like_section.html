@@ -1,0 +1,39 @@
+{% load static %}
+
+
+{{ lick.total_likes }} Like{{ lick.total_likes|pluralize }}
+
+{% if request.user.is_authenticated %}
+      <form action="{% url 'like_lick' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+        {% if lick in user_liked %}
+        <button type="submit" id="like_{{ lick.id }}" name="lick_id" value="{{ lick.id }}" class="btn btn-danger">Dislike</button>
+        {% else %}
+        <button type="submit" id="like_{{ lick.id }}" name="lick_id" value="{{ lick.id }}" class="btn btn-primary">Like</button>
+        {% endif %}
+      </form>
+      <script type="text/javascript">
+            $(document).on('click', '#like_{{ lick.id }}', function(event){
+                event.preventDefault();
+                var pk = $(this).attr('value');
+                console.log(pk)
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "like_lick" %}',
+                    data: {'id':pk, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                    dataType: 'json',
+                    success: function(response){
+                        $('#like-section_{{ lick.id }}').html(response['form'])
+                        console.log($('#like-section_{{ lick.id }}').html(response['form']))
+                        console.log("success")
+                    },
+                    error: function(rs, e){
+                        console.log(rs.responseText)
+                        console.log("FAIL")
+                    }
+                });
+                $(document).off('click');
+            });
+        </script>
+{% endif %}

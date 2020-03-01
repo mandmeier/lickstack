@@ -4,6 +4,7 @@
 
 <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
 
+
 <style type="text/css">
 
 
@@ -68,6 +69,9 @@
 
 
 <article class="lick lick-section" id="lick_{{ lick.id }}">
+         <div class="col-6" id="like-section_{{ lick.id }}">
+            {% include 'repo/snippets/like_section.html' %}
+        </div>
     <div class="lick-icons col-12">
       <div class="row">
         <div class="icon col-3">{{ lick.genre }}</div>
@@ -75,26 +79,13 @@
         <div class="icon slowdown col-3">
         <input type="image" id="slowdown_{{ lick.id }}" onclick="slowdown(this.id);" value="1" src="{% static 'img/tortoise_default.png' %}" alt="slowdown">
         </div>
-        <div class="icon col-3">
-        {% if request.user.is_authenticated %}
-          <form action="{% url 'like_lick' %}" method="post">
-            {% csrf_token %}
-            <input type="hidden" name="next" value="{{ request.get_full_path }}">
-            {% if lick in user_liked %}
-            <button type="submit" name="lick_id" value="{{ lick.id }}" class="btn btn-danger">Dislike</button>
-            {% else %}
-            <button type="submit" name="lick_id" value="{{ lick.id }}" class="btn btn-primary">Like</button>
-            {% endif %}
-          </form>
-        {% endif %}
-        </div>
       </div>
 
       <div class="row">
         <div class="icon col-3">Lick #{{ lick.id }}</div>
         <div class="icon col-3"><small class="text-muted">{{ lick.author }} #{{ lick.counter }}</small></div>
         <div class="icon col-3"><small class="text-muted">{{ lick.date_posted|date:"Y b d" }}</small></div>
-        <div class="icon col-3"><small class="text-muted">{{ lick.total_likes }} Like{{ lick.total_likes|pluralize }}</small></div>
+        <div class="icon col-3"><small class="text-muted"></small></div>
       </div>
     </div>
 

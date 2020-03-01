@@ -6,7 +6,7 @@ from repo.models import Lick
 
 class Profile(models.Model):
     user = models.OneToOneField(
-        User, on_delete=models.CASCADE, related_name='profile_user')
+        User, on_delete=models.CASCADE, related_name='profile')
     liked_licks = models.ManyToManyField(
         Lick, related_name='liked_licks', blank=True)
     # instrument?
