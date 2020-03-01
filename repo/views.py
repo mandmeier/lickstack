@@ -151,7 +151,6 @@ def browse_licks_view(request):
                     if chord != ".":
                         chord = transpose_seq(str(chord), half_steps)
                     query = query + chord + "x"
-            print(query)
 
             if ignore_extensions == True:
                 m = "(_m7b5|_m7|_m(?!a))"
@@ -159,7 +158,6 @@ def browse_licks_view(request):
                 query = re.sub(r'((_m7b5)|(_m7)|(_m(?!a)))', m, query)
                 query = re.sub(
                     r'((_maj7)|(_7)|(_6)|(_dim)|(_sus4)|(_(?=[\[x])))', notm, query)
-            print(query)
 
             return query
 
@@ -170,7 +168,6 @@ def browse_licks_view(request):
             for half_step in range(0, 12):
                 chord_seq_queries_T.append(
                     get_chord_seq_query(chord_seq, half_step))
-            # print(chord_seq_queries_T)
 
     # filter queryset with search parameters
     queryset = []
@@ -221,6 +218,12 @@ def browse_licks_view(request):
         if lick in request.user.profile.liked_licks.all():
             user_liked.append(lick)
 
+    # find if user faved any of those licks
+    user_faved = []
+    for lick in licks:
+        if lick in request.user.profile.faved_licks.all():
+            user_faved.append(lick)
+
     # paginate
     page = request.GET.get('page', 1)
     paginator = Paginator(licks, 6)
@@ -234,6 +237,7 @@ def browse_licks_view(request):
     context["instrument"] = Instrument.objects.all().order_by('name')
     context["chord_seq_query"] = chord_seq_query  # used for template tags
     context["user_liked"] = user_liked
+    context["user_faved"] = user_faved
     # remember form input
     # context["username_contains_query"] = username_contains_query
 
@@ -272,9 +276,23 @@ def my_licks_view(request):
     paginator = Paginator(licks, 6)
     licks = paginator.page(page)
 
+    # find if user liked any of those licks
+    user_liked = []
+    for lick in licks:
+        if lick in request.user.profile.liked_licks.all():
+            user_liked.append(lick)
+
+    # find if user faved any of those licks
+    user_faved = []
+    for lick in licks:
+        if lick in request.user.profile.faved_licks.all():
+            user_faved.append(lick)
+
     context = {}
     context['licks'] = licks
     context["chord_seq_query"] = chord_seq_query  # used for template tags
+    context["user_liked"] = user_liked
+    context["user_faved"] = user_faved
 
     return render(request, "repo/my_licks.html", context)
 
@@ -290,27 +308,8 @@ class UserLickListView(generic.ListView):
         return Lick.objects.filter(author=user).order_by('-date_posted')
 
 
-"""
-class LickDetailView(generic.DetailView):
-    model = Lick
-    template_name = 'repo/lick_detail.html'
-    context_object_name = 'licks'
-    print(model)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        is_liked = False
-        if lick.likes.filter(id=self.request.user.id).exists():
-            is_liked = True
-        context['is_liked'] = is_liked
-        return context
-"""
-
-
 def lick_detail(request, pk):
     lick = get_object_or_404(Lick, id=pk)
-    print(lick)
-    print(request.user.profile.liked_licks.all())
     is_liked = False
     if lick.likes.filter(id=request.user.id).exists():
         is_liked = True
@@ -324,11 +323,7 @@ def lick_detail(request, pk):
 
 
 def like_lick(request):
-    #lick = get_object_or_404(Lick, id=request.POST.get('lick_id'))
     lick = get_object_or_404(Lick, id=request.POST.get('id'))
-    print('TEST')
-    print(lick)
-    print('TEST')
     is_liked = False
     if lick.likes.filter(id=request.user.id).exists():
         lick.likes.remove(request.user)
@@ -341,7 +336,6 @@ def like_lick(request):
         is_liked = True
 
     user_liked = request.user.profile.liked_licks.all()
-    print(user_liked)
 
     context = {}
     context['lick'] = lick
@@ -353,9 +347,33 @@ def like_lick(request):
         html = render_to_string(
             'repo/snippets/like_section.html', context, request=request)
         return JsonResponse({'form': html})
-    #next = request.POST.get('next', '/')
-    # print(next)
-    # return HttpResponseRedirect(next)
+
+
+def favorite_lick(request):
+    lick = get_object_or_404(Lick, id=request.POST.get('id'))
+    is_faved = False
+    if lick.favorite.filter(id=request.user.id).exists():
+        lick.favorite.remove(request.user)
+        request.user.profile.faved_licks.remove(lick)
+        is_faved = False
+    else:
+        lick.favorite.add(request.user)
+        request.user.profile.faved_licks.add(
+            lick)  # add to faved licks in profile
+        is_faved = True
+
+    user_faved = request.user.profile.faved_licks.all()
+
+    context = {}
+    context['lick'] = lick
+    context['is_faved'] = is_faved
+    context['total_faves'] = lick.total_faves()
+    context["user_faved"] = user_faved
+
+    if request.is_ajax():
+        html = render_to_string(
+            'repo/snippets/favorite_section.html', context, request=request)
+        return JsonResponse({'form': html})
 
 
 class LickCreateView(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView):

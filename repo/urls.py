@@ -5,12 +5,13 @@ from .views import (
     browse_licks_view,
     my_licks_view,
     UserLickListView,
-    #LickDetailView,
+    # LickDetailView,
     LickCreateView,
     LickUpdateView,
     LickDeleteView,
     like_lick,
     lick_detail,
+    favorite_lick,
 )
 
 urlpatterns = [
@@ -24,4 +25,5 @@ urlpatterns = [
     path('lick/<int:pk>/update/', LickUpdateView.as_view(), name='lick-update'),
     path('lick/<int:pk>/delete/', LickDeleteView.as_view(), name='lick-delete'),
     path(r'^like/$', like_lick, name='like_lick'),
+    path(r'^favorite/$', favorite_lick, name='favorite_lick'),
 ]

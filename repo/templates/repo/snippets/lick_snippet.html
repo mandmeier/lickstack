@@ -69,9 +69,18 @@
 
 
 <article class="lick lick-section" id="lick_{{ lick.id }}">
+    <div class="row">
          <div class="col-6" id="like-section_{{ lick.id }}">
             {% include 'repo/snippets/like_section.html' %}
         </div>
+
+        <div class="col-6" id="favorite-section_{{ lick.id }}">
+            {% include 'repo/snippets/favorite_section.html' %}
+            <a href="#">
+                <i class="far fa-star fa-lg"></i>
+            </a>
+        </div>
+    </div>
     <div class="lick-icons col-12">
       <div class="row">
         <div class="icon col-3">{{ lick.genre }}</div>

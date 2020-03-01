@@ -9,6 +9,8 @@ class Profile(models.Model):
         User, on_delete=models.CASCADE, related_name='profile')
     liked_licks = models.ManyToManyField(
         Lick, related_name='liked_licks', blank=True)
+    faved_licks = models.ManyToManyField(
+        Lick, related_name='faved_licks', blank=True)
     # instrument?
     # current city?
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
