@@ -10,29 +10,34 @@
 
 .audio-player {
     display: flex;
+    flex-direction: row;
     align-items: center;
-    background-color: black;
-
+    background-color: #f9f9f9;
+    height: 40px;
+    padding: 0px 0px 0px 5px;
 }
+
 
 .audio-player button.play {
         display: block;
-        width: 40px;
-        height: 40px;
+        width: 35px;
+        height: 35px;
         border: 0;
-        background-color: #00aaff;
+        background-color: #333333;
         color: white;
         font-size: 20px;
-        border-radius: 100000px;
+        border-radius: 5px;
         margin-right: 10px;
         cursor: pointer;
 }
 
 
 .seek-bar {
-    margin: 10px;
-    width: 400px;
-    background-color: #fda50f;
+
+    margin-left: 10px;
+    margin-right: 5px;
+    width: 100%;
+    background-color: #cccccc;
     display: flex;
     align-items: center;
     border-radius: 100000px;
@@ -41,14 +46,14 @@
 
 .seek-bar .fill {
   height: 20px;
-  background-color: #00aaff;
+  background-color: #666666;
   border-radius: 100000px;
 }
 
 .seek-bar .handle {
   width: 8px;
   height: 20px;
-  background-color: #00ffff;
+  background-color: #333333;
   border-radius: 100000px;
   margin-left: -5px;
   transform: scale(2);
@@ -56,10 +61,30 @@
   pointer-events: none;
 }
 
+.transpose-btn select{
+    height: 40px;
+    width: 54px;
+    padding: 0px;
+    border: 2px solid #333333;
+    border-radius: 5px;
+}
+
+.slowdown {
+    float:left;
+    height: 40px;
+    width: 40px;
+    padding: 0px;
+    border: 2px solid #333333;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
 .slowdown input {
-    height: 30px;
-    width: 30px;
+    height: 100%;
+    width: 100%;
     background-color: white;
+    padding: 0px;
+    border-radius: 5px;
 }
 
 </style>
@@ -70,27 +95,26 @@
 
 <article class="lick lick-section" id="lick_{{ lick.id }}">
 
-    <div class="lick-icons col-12">
-        Lick #{{ lick.id }} –
+    <div class="lick-metadata col-12">
+        #{{ lick.id }} –
         <small class="text-muted">{{ lick.genre }}</small> –
         <small class="text-muted">{{ lick.instrument }}</small> –
         <small class="text-muted">{{ lick.author }}</small> –
         <small class="text-muted">{{ lick.date_posted|date:"Y b d" }}</small>
-    </div>
 
-    <div class="lick-display col-12">
-      <div class="row">
-        <div class="icon col-12">
-          <div class="row audio-player">
-              <button class="play" id="{{ lick.id }}[X]{{ lick.file.url }}" onclick="change_lick_id(this.id);"><i class="ion-play"></i></button>
-              <div class="seek-bar" id="seekbar_{{ lick.id }}">
-                  <div class="fill"></div>
-                  <div class="handle"></div>
-              </div>
-            </div>
+        <div class="favorite" id="favorite-section_{{ lick.id }}">
+            {% include 'repo/snippets/favorite_section.html' %}
         </div>
 
-      </div>
+    </div>
+
+    <div class="audio-player col-12">
+          <button class="play" id="{{ lick.id }}[X]{{ lick.file.url }}" onclick="change_lick_id(this.id);"><i class="ion-play"></i></button>
+
+          <div class="seek-bar" id="seekbar_{{ lick.id }}">
+              <div class="fill"></div>
+              <div class="handle"></div>
+          </div>
     </div>
 
 
@@ -158,9 +182,15 @@
     {% endif %}
 
     <div class="lick-controls col-12">
-        <div class="row">
+        <div class="left">
 
-            <div class="col-1" id="transpose-section_{{ lick.id }}">
+            <div id="slowdown-section_{{ lick.id }}">
+                <button class="slowdown btn-default">
+                    <input type="image" id="slowdown_{{ lick.id }}" onclick="slowdown(this.id);" value="1" src="{% static 'img/tortoise_default.png' %}" alt="slowdown">
+                </button>
+            </div>
+
+            <div class="transpose-btn" id="transpose-section_{{ lick.id }}">
                   <select id="transpose_lick_{{ lick.id }}" name="transpose" onchange="transpose_lick(this.id);">
                     <option value="12">+12</option>
                     <option value="11">+11</option>
@@ -189,22 +219,15 @@
                     <option value="-12">-12</option>
                   </select>
             </div>
-
-             <div class="col-3" id="slowdown-section_{{ lick.id }}">
-                <button class="slowdown btn-info">
-                    <input type="image" id="slowdown_{{ lick.id }}" onclick="slowdown(this.id);" value="1" src="{% static 'img/tortoise_default.png' %}" alt="slowdown">
-                </button>
-            </div>
-
-             <div class="col-4" id="like-section_{{ lick.id }}">
-                {% include 'repo/snippets/like_section.html' %}
-            </div>
-
-            <div class="col-4" id="favorite-section_{{ lick.id }}">
-                {% include 'repo/snippets/favorite_section.html' %}
-            </div>
         </div>
+
+        <div class="like" id="like-section_{{ lick.id }}">
+            {% include 'repo/snippets/like_section.html' %}
+        </div>
+
+
     </div>
+
 
 </article>
 

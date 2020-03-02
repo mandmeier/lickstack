@@ -1,17 +1,16 @@
 {% load static %}
 
 {% if request.user.is_authenticated %}
-      <form action="{% url 'like_lick' %}" method="post">
+      <form action="{% url 'like_lick' %}" method="post" style="float:right;">
         {% csrf_token %}
+        <small class="text-muted">{{ lick.total_likes }} Like{{ lick.total_likes|pluralize }}</small>
         {% if lick in user_liked %}
         <button type="submit" id="like_{{ lick.id }}" name="lick_id" value="{{ lick.id }}" class="btn btn-primary">
             <i class="fas fa-thumbs-up fa-lg"></i>
-            {{ lick.total_likes }} Like{{ lick.total_likes|pluralize }}
         </button>
         {% else %}
         <button type="submit" id="like_{{ lick.id }}" name="lick_id" value="{{ lick.id }}" class="btn btn-primary">
             <i class="far fa-thumbs-up fa-lg"></i>
-            {{ lick.total_likes }} Like{{ lick.total_likes|pluralize }}
         </button>
         {% endif %}
       </form>
