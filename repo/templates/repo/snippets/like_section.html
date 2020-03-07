@@ -1,16 +1,16 @@
 {% load static %}
 
 {% if request.user.is_authenticated %}
-      <form action="{% url 'like_lick' %}" method="post" style="float:right;">
+      <form action="{% url 'like_lick' %}" method="post" style="float: right;">
         {% csrf_token %}
         <small class="text-muted">{{ lick.total_likes }} Like{{ lick.total_likes|pluralize }}</small>
         {% if lick in user_liked %}
-        <button type="submit" id="like_{{ lick.id }}" name="lick_id" value="{{ lick.id }}" class="btn btn-primary">
-            <i class="fas fa-thumbs-up fa-lg"></i>
+        <button class="like-btn" type="submit" id="like_{{ lick.id }}" name="lick_id" value="{{ lick.id }}" class="btn btn-primary">
+            <i class="fas fa-thumbs-up fa-lg" style="color: #0000BB"></i>
         </button>
         {% else %}
-        <button type="submit" id="like_{{ lick.id }}" name="lick_id" value="{{ lick.id }}" class="btn btn-primary">
-            <i class="far fa-thumbs-up fa-lg"></i>
+        <button class="like-btn" type="submit" id="like_{{ lick.id }}" name="lick_id" value="{{ lick.id }}" class="btn btn-primary">
+            <i class="far fa-thumbs-up fa-lg" style="color: #0000BB"></i>
         </button>
         {% endif %}
       </form>
@@ -32,4 +32,14 @@
                 $(document).off('click');
             });
         </script>
+
+{% else %}
+
+    <form action="{% url 'login' %}" style="float:right;">
+        <small class="text-muted">{{ lick.total_likes }} Like{{ lick.total_likes|pluralize }}</small>
+        <button class="like-btn" type="submit" id="like_{{ lick.id }}" name="lick_id" value="{{ lick.id }}" class="btn btn-primary">
+            <i class="far fa-thumbs-up fa-lg" style="color: #0000BB"></i>
+        </button>
+    </form>
+
 {% endif %}

@@ -52,7 +52,7 @@
         <br>
     </div>
     <div class="col-lg-6">
-        <img src="img/bootstrap2.png" class="img-fluid">
+        <img src="{% static 'img/chimp.png' %}" class="img-fluid">
     </div>
 </div>
 </div>
@@ -118,8 +118,14 @@
 <div class="container-fluid padding">
 <div class="row padding">
     <div class="col-md-12 col-lg-6">
-        <h2>If you like the idea...</h2>
-        <p>Please consider pitching in! Any contributions will go towards improving your experience with LickStack.</p>
+        <h2>Like the idea? Here's how you can help: </h2>
+        <p>Contribute using the tip bucket over there by the bar => Any contributions will go towards server costs and improving your experience with LickStack.</p>
+        <br>
+        <p><a href="{% url 'lick-create' %}">Submit your own licks</a>. The more, the merrier!</p>
+        <br>
+        <p>Share on social media and tell your friends about the LickStack!</p>
+        <br>
+        <p>Let me know your thoughts and ideas under feedback@lickstack.com </p>
         <br>
     </div>
     <div class="col-lg-6">

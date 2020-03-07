@@ -4,31 +4,131 @@
 
 {% block content %}
 
+<link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
+
 <style type="text/css">
     .chords-row {
     height: 50px;
     background-image: url("{% static 'img/staff.png' %}");
     background-size: 100% 100%;
 }
+
+
+.audio-player {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #f9f9f9;
+    height: 40px;
+    padding: 0px 0px 0px 5px;
+}
+
+
+.audio-player button.play {
+        display: block;
+        width: 35px;
+        height: 35px;
+        border: 0;
+        background-color: #333333;
+        color: white;
+        font-size: 20px;
+        border-radius: 5px;
+        margin-right: 10px;
+        cursor: pointer;
+}
+
+
+.seek-bar {
+
+    margin-left: 10px;
+    margin-right: 5px;
+    width: 100%;
+    background-color: #cccccc;
+    display: flex;
+    align-items: center;
+    border-radius: 100000px;
+    cursor: pointer;
+}
+
+.seek-bar .fill {
+  height: 20px;
+  background-color: #666666;
+  border-radius: 100000px;
+}
+
+.seek-bar .handle {
+  width: 8px;
+  height: 20px;
+  background-color: #333333;
+  border-radius: 100000px;
+  margin-left: -5px;
+  transform: scale(2);
+  transition: all 0.1s;
+  pointer-events: none;
+}
+
+
+.preview-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #f9f9f9;
+    height: 100%;
+    width: 100%;
+    opacity: .8;
+}
+
+
+
 </style>
 
 
 <div class="container-fluid col-12">
-    <form class="lick-form" method="POST" enctype="multipart/form-data" onchange="changeLayout()">
-        <h2>Upload Lick</h2>
-        {% csrf_token %}
-        <div class="file-input">
-            {{ form.file|as_crispy_field }}
-        </div>
 
-        <div class="file-preview" id="filePreview">
-            <audio class="file-preview__file" controls preload="none">
-                <source src="" type="audio/mp4" >
-                Your browser does not support HTML5 audio. Try Chrome 6+
-            </audio>
-            <br>
-            <span class="file-preview__default-text"> File Preview </span>
-        </div>
+
+
+
+    <form class="lick-form" method="POST" enctype="multipart/form-data" onchange="changeLayout()">
+        {%if lick %}
+            <h2>Edit Lick {{ lick.id }}</h2>
+        {% else %}
+            <h2>New Lick</h2>
+        {% endif %}
+
+        {% csrf_token %}
+
+        {{ form.file|as_crispy_field }}
+
+
+            <div class="audio-player col-12">
+                  <button class="play" id="play" type="button"><i class="ion-play"></i></button>
+
+                  <div class="seek-bar" id="seekbar">
+                      <div class="fill"></div>
+                      <div class="handle"></div>
+                  </div>
+
+                  <div class="preview-overlay" id="preview"></div>
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         <div class="time-signature row">
             <div class="col-4">
@@ -36,11 +136,7 @@
             </div>
         </div>
 
-        <div class="reset-btn">
-            <button onclick="resetChords()">Reset Chords</button>
-        </div>
-
-        <div id="reset">reset</div>
+        <button class="reset-chords-btn btn btn-secondary" id="reset_chords" onclick="resetChords()" type="button">Reset Chords</button>
 
 
         <div class="chords-input col-12">
@@ -90,7 +186,7 @@
 
 
 
-<!-- preview script -->
+<!-- preview audio
 <script type="text/javascript">
     /* https://www.youtube.com/watch?v=VElnT8EoEEM */
     const inpFile = document.getElementById("inpFile");
@@ -103,72 +199,156 @@
 
         if (file) {
             const reader = new FileReader();
-
             /* hide preview default text */
             previewDefaultText.style.display = "none";
             previewAudio.style.display = "block";
 
             reader.addEventListener("load", function() {
                 previewAudio.setAttribute("src", this.result);
+                audio = new Audio(this.result);
             });
 
             reader.readAsDataURL(file);
         } else {
             previewDefaultText.style.display = null;
             previewAudio.style.display = null;
-            previewImage.setAttribute("src", "");
         }
     });
+
+
+
+
 </script>
+
+ -->
+
+
+
 
 
 <script type="text/javascript">
 
-    function changeLayout() {
-        if (document.getElementById("id_time_signature_1").checked){
-            $(".ts44").show();
-            $(".chords-row .form-group").css("width","11.5%");
-        } else if (document.getElementById("id_time_signature_2").checked){
-            $(".ts44").hide();
-            $(".chords-row .form-group").css("width","15.33%");
-            $("#div_id_m1_b4, #div_id_m2_b4, #div_id_m3_b4, #div_id_m4_b4").css("width","0px");
-            document.getElementById("id_m1_b4").selectedIndex = "-";
-            document.getElementById("id_m2_b4").selectedIndex = "-";
-            document.getElementById("id_m3_b4").selectedIndex = "-";
-            document.getElementById("id_m4_b4").selectedIndex = "-";
-        }
-    };
 
-</script>
+//// audio preview
 
+//initial values
+lick_URL = "{{ lick.file.url }}";
+playButton = document.getElementById("play");
+playButtonIcon = playButton.querySelector('i');
+seekBar = document.getElementById("seekbar");
+fillBar = seekBar.querySelector('.fill');
+mouseDown = false;
+preview = document.getElementById("preview");
 
-
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-
-<script type="text/javascript">
-/* reset form script */
-/*$("#reset").on("click", function () {
-    $('#id_m1_b1 option').prop('selected', function() {
-        return this.defaultSelected;
-    });
-});*/
-
-
-$("#reset").on("click", function () {
-    $(innerDivId).prop('selected', function() {
-        return this.defaultSelected;
-    });
+//play button
+playButton.addEventListener('click', function () {
+    if (audio.paused) {
+        audio.play();
+    } else {
+        audio.pause();
+    }
 });
 
 
-/*loop? https://stackoverflow.com/questions/11291300/how-to-loop-over-the-child-divs-of-a-div-and-get-the-ids-of-the-child-divs */
-$('.chords-input').find('div').each(function(){
-    var innerDivId = $(this).attr('id');
-    console.log(innerDivId);
+function update_audio_controls() {
+
+    preview.style.display = "none";
+
+    audio.addEventListener('play', function () {
+      playButtonIcon.className = 'ion-pause';
+    });
+
+    audio.addEventListener('pause', function () {
+      playButtonIcon.className = 'ion-play';
+    });
+
+    audio.addEventListener('timeupdate', function () {
+      if (mouseDown) return;
+        let p = audio.currentTime / audio.duration;
+        fillBar.style.width = p * 100 + "%";
+    });
+
+    seekBar.addEventListener('mousedown', function (e) {
+      mouseDown = true;
+      window.rect = e.target.getBoundingClientRect();
+      let x = e.clientX - rect.left;
+      let p = x / seekBar.clientWidth;
+      fillBar.style.width = p * 100 + "%";
+    });
+
+    window.addEventListener('mousemove', function (e) {
+      if (!mouseDown) return;
+        let x = e.clientX - rect.left;
+        let p = x / seekBar.clientWidth;
+        fillBar.style.width = p * 100 + "%";
+    });
+
+    window.addEventListener('mouseup', function (e) {
+      if (!mouseDown) return;
+        mouseDown = false;
+        let x = e.clientX - rect.left;
+        let p = x / seekBar.clientWidth;
+        fillBar.style.width = p * 100 + "%";
+        audio.currentTime = p * audio.duration;
+      if (!audio.paused) {
+        audio.play();
+      }
+    });
+
+};
+
+
+
+if (lick_URL) {
+    console.log(lick_URL);
+    audio = new Audio("{{ lick.file.url }}");
+    update_audio_controls();
+}
+
+// get audio file src from input field
+inpFile = document.getElementById("inpFile");
+
+inpFile.addEventListener("change", function() {
+    file = this.files[0];
+    reader = new FileReader();
+    reader.addEventListener("load", function() {
+        audio = new Audio(this.result);
+        update_audio_controls();
+    });
+    reader.readAsDataURL(file);
 });
 
 
+
+
+//// change layout when select 3/4
+
+function changeLayout() {
+    if (document.getElementById("id_time_signature_1").checked){
+        $(".ts44").show();
+        $(".chords-row .form-group").css("width","11.5%");
+    } else if (document.getElementById("id_time_signature_2").checked){
+        $(".ts44").hide();
+        $(".chords-row .form-group").css("width","15.33%");
+        $("#div_id_m1_b4, #div_id_m2_b4, #div_id_m3_b4, #div_id_m4_b4").css("width","0px");
+        document.getElementById("id_m1_b4").selectedIndex = "-";
+        document.getElementById("id_m2_b4").selectedIndex = "-";
+        document.getElementById("id_m3_b4").selectedIndex = "-";
+        document.getElementById("id_m4_b4").selectedIndex = "-";
+    }
+};
+
+
+
+//// reset chords button
+
+function resetChords() {
+    console.log("reset chords")
+}
+
+
 </script>
+
 
 {% endblock content %}
 

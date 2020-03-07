@@ -5,12 +5,12 @@
       <form action="{% url 'favorite_lick' %}" method="post">
         {% csrf_token %}
         {% if lick in user_faved %}
-        <button type="submit" id="favorite_{{ lick.id }}" name="lick_id" value="{{ lick.id }}" class="btn btn-danger">
-            <i class="fas fa-star fa-lg"></i>
+        <button class="fav-btn" type="submit" id="favorite_{{ lick.id }}" name="lick_id" value="{{ lick.id }}" class="btn btn-danger">
+            <i class="fas fa-star fa-lg" style="color: #C00001;"></i>
         </button>
         {% else %}
-        <button type="submit" id="favorite_{{ lick.id }}" name="lick_id" value="{{ lick.id }}" class="btn btn-danger">
-            <i class="far fa-star fa-lg"></i>
+        <button class="fav-btn" type="submit" id="favorite_{{ lick.id }}" name="lick_id" value="{{ lick.id }}" class="btn btn-danger">
+            <i class="far fa-star fa-lg" style="color: #C00001;"></i>
         </button>
         {% endif %}
       </form>
@@ -32,4 +32,13 @@
                 $(document).off('click');
             });
         </script>
+
+{% else %}
+
+    <form action="{% url 'login' %}">
+        <button class="fav-btn" type="submit" id="like_{{ lick.id }}" name="lick_id" value="{{ lick.id }}" class="btn btn-danger">
+            <i class="far fa-star fa-lg" style="color: #C00001;"></i>
+        </button>
+    </form>
+
 {% endif %}

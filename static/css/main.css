@@ -150,24 +150,7 @@ hr.light-100 {
 .separator-lr{
     width: 2%;
 }
-.file-preview {
-    width: 100%;
-    height: 50px;
-    border: 2px solid #ddd;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-.file-preview__file {
-    display: none;
-    margin: 8px 0;
-    width: 100%;
-}
-.file-preview__default-text {
-    display: flex;
-    justify-content: center;
-    font-weight: bold;
-    color: #888888;
-}
+
 .form-check {
     display: inline-block;
     margin-right: 10px;
