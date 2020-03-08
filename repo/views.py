@@ -417,7 +417,7 @@ class LickCreateView(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView
 class LickUpdateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     model = Lick
     form_class = LickForm
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('browse-licks')
     success_message = f'Lick has been successfully updated!'
     template_name = 'repo/lick_form.html'
 
