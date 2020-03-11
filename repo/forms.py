@@ -8,7 +8,7 @@ import os
 class LickForm(forms.ModelForm):
   TS_CHOICES = [('44', '4/4'), ('34', '3/4')]
   time_signature = forms.ChoiceField(
-      choices=TS_CHOICES, initial= '44', widget=forms.RadioSelect)
+      choices=TS_CHOICES, initial='44', widget=forms.RadioSelect)
 
   class Meta:
     model = Lick
@@ -18,6 +18,9 @@ class LickForm(forms.ModelForm):
               'm3_b1', 'm3_b2', 'm3_b3', 'm3_b4',
               'm4_b1', 'm4_b2', 'm4_b3', 'm4_b4',
               )
+    labels = {
+        'file': ''
+    }
 
   def __init__(self, *args, **kwargs):
     super().__init__(*args, **kwargs)
@@ -31,7 +34,7 @@ class LickForm(forms.ModelForm):
   # validate uploaded file for extension and file size
   def clean_file(self):
     file = self.cleaned_data['file']
-    valid_extensions = ['.m4a', '.mp3']
+    valid_extensions = ['.m4a', '.mp3', '.ogg']
     ext = os.path.splitext(file.name)[1]
     if not ext.lower() in valid_extensions:
       raise ValidationError('Please upload a .mp3 or .m4a audio file.')

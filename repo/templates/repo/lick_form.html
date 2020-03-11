@@ -88,6 +88,10 @@
     z-index: -1;
 }
 
+#file_upload_info {
+    color: #333333;
+}
+
 
 </style>
 
@@ -95,22 +99,26 @@
 <div class="container-fluid col-12">
 
 
-
-
     <form class="lick-form" method="POST" enctype="multipart/form-data" onchange="changeLayout()">
         {% csrf_token %}
         {%if lick %}
-            <input type="hidden" name="next" value="{{ request.path }}">
+            <input type="hidden" id="previous_page" name="previous_page" value="TESTVALUE">
             <h2>Edit Lick {{ lick.id }}</h2>
             <label for="inpFile" id="inpFileLabel" class="requiredField btn btn-secondary">Change file</label>
-            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'lick-delete' lick.id %}">Delete</a>
-        {% else %}
+            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'lick-delete' pk=lick.id %}">Delete</a>
+            <a id="delete_btn" href="{% url 'lick-delete' pk=lick.id %}?prev_url="><button class="btn btn-danger btn-sm mt-1 mb-1" type="button">DeleteBtn</button></a>
+
+
+
+       {% else %}
             <h2>New Lick</h2>
             <label for="inpFile" id="inpFileLabel" class="requiredField btn btn-secondary">Choose file</label>
 
         {% endif %}
 
         <input type="file" name="file" id="inpFile" class="clearablefileinput form-control" />
+
+        <p id="file_upload_info">Choose audio file of type '.mp3', '.m4a' or '.ogg'. Max size 1 MB.</p>
 
             <div class="audio-player col-12">
                   <button class="play" id="play" type="button"><i class="ion-play"></i></button>
@@ -225,11 +233,14 @@
 <script type="text/javascript">
 
 
-//fake_path=document.getElementById('inpFile').value
-//console.log(fake_path.split("\\").pop())
+// remember previous page in hidden input field
+prev = document.getElementById("previous_page");
+prev.value = document.referrer;
 
-
-
+delete_btn = document.getElementById("delete_btn");
+url = delete_btn.href.split("/?")[0]
+new_url = url + "/?prev_url=" + document.referrer;
+delete_btn.href = new_url.replace(/&/g, "@")
 
 //// audio preview
 
@@ -307,9 +318,17 @@ function audio_reset(){
     }
 }
 
+submit_btn = document.getElementById("submit");
+initial_submit_classname = submit_btn.className
+
+function disable_submit_btn(){
+    if (submit_btn.className == initial_submit_classname){
+        submit_btn.className += " btn-secondary disable";
+        submit_btn.type = "button";
+    }
+}
 
 if (lick_URL) {
-    console.log(lick_URL);
     audio = new Audio("{{ lick.file.url }}");
     update_audio_controls();
 }
@@ -317,16 +336,34 @@ if (lick_URL) {
 // get audio file src from input field
 inpFile = document.getElementById("inpFile");
 inpFileLabel = document.getElementById("inpFileLabel")
+file_upload_info = document.getElementById("file_upload_info")
+
 
 inpFile.addEventListener("change", function() {
-    file = this.files[0];
     audio_reset();
+    file = this.files[0];
+    inpFileLabel.textContent=file.name;
+    //file_upload_info.innerHTML = "Choose audio file of type .mp3 .m4a or .ogg. Max size 1 MB.";
+    preview.style.display = "hidden";
+    submit_btn.className = initial_submit_classname
+    submit_btn.type = "submit";
+
     if (file == null) {
-        console.log("NO FILE SELECTED")
         inpFileLabel.textContent="Choose File";
         preview.style.display = "block";
+        disable_submit_btn()
+    } else if (!(file.type.split("/")[0] == "audio")) {
+        file_upload_info.innerHTML = "Wrong file type. Please use audio '.mp3', '.m4a' or '.ogg'.";
+        file_upload_info.style.color = "#ff0000"
+        preview.style.display = "block";
+        disable_submit_btn()
+    } else if (file.size > 1048576) {
+        file_upload_info.innerHTML = "File too large. Consider shortening it.";
+        file_upload_info.style.color = "#ff0000"
+        preview.style.display = "block";
+        disable_submit_btn()
     } else {
-        inpFileLabel.textContent=file.name;
+        file_upload_info.innerHTML = "";
         reader = new FileReader();
         reader.addEventListener("load", function() {
             audio = new Audio(this.result);

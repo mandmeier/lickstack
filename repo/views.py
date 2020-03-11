@@ -248,24 +248,6 @@ def browse_licks_view(request):
     return render(request, "repo/browse_licks.html", context)
 
 
-"""
-@login_required
-def my_licks(request):
-
-    user = get_object_or_404(User, username=self.kwargs.get('username'))
-
-    licks = Lick.objects.filter(user=request.user).order_by('-date_posted')
-
-    # licks = get_lick_queryset(query).order_by('-date_posted')
-    licks = sorted(queryset, key=attrgetter('date_posted'), reverse=True)
-
-    # paginate
-    page = request.GET.get('page', 1)
-    paginator = Paginator(licks, 3)
-    licks = paginator.page(page)
-"""
-
-
 @login_required
 def my_licks_view(request):
     chord_seq_query = ""
@@ -400,7 +382,7 @@ class LickCreateView(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView
     model = Lick
     form_class = LickForm
     success_url = reverse_lazy('lick-create')
-    success_message = f'Lick has been created successfully, you may upload another one!'
+    success_message = 'Lick has been created successfully, you may upload another one!'
     template_name = 'repo/lick_form.html'
 
     def form_valid(self, form):
@@ -417,34 +399,74 @@ class LickCreateView(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView
 class LickUpdateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     model = Lick
     form_class = LickForm
-    success_url = reverse_lazy('browse-licks')
+    #success_url = reverse_lazy('browse-licks')
     success_message = f'Lick has been successfully updated!'
     template_name = 'repo/lick_form.html'
 
     def form_valid(self, form):
         form.instance.author = self.request.user
+        self.success_url = self.request.POST.get('previous_page')
         return super().form_valid(form)
 
     def test_func(self):
-        post = self.get_object()
-        if self.request.user == post.author:
+        lick = self.get_object()
+        if self.request.user == lick.author:
             return True
         return False
+
+
+def delete_lick(request, pk):
+    lick = get_object_or_404(Lick, pk=pk)
+    prev_url = request.GET.get('prev_url', "")
+    # lick.delete()
+    prev_url = prev_url.replace("@", "&")
+    print('TEST')
+    print(prev_url)
+    messages.success(request, f'Lick {lick.id} deleted!')
+    return redirect(prev_url)
+
+
+'''
+def delete_lick(request, pk):
+    template = 'repo/lick_form.html'
+    lick = get_object_or_404(Lick, pk=pk)
+    print('TEST')
+    print(request)
+
+    try:
+        if request.method == 'POST':
+            form = LickForm(request.POST, instance=lick)
+            lick.delete()
+            messages.success(request, 'Lick deleted!')
+        else:
+            form = LickForm(instance=lick)
+    except Exception as e:
+        messages.warning(
+            request, 'The post could not be deleted Error {}'.format(e))
+
+    context = {
+        'form': form,
+        'lick': lick,
+    }
+
+    return render(request, template, context)
+'''
 
 
 class LickDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
     model = Lick
     template_name = 'repo/lick_confirm_delete.html'
     success_url = reverse_lazy('my-licks')
-    success_message = f'Lick has been deleted!'
+    success_message = 'Lick has been deleted!'
 
     def delete(self, request, *args, **kwargs):  # this replaces SuccessMessageMixin
         messages.success(self.request, self.success_message)
+        #self.success_url = self.request.POST.get('previous_page')
         return super(LickDeleteView, self).delete(request, *args, **kwargs)
 
     def test_func(self):
-        post = self.get_object()
-        if self.request.user == post.author:
+        lick = self.get_object()
+        if self.request.user == lick.author:
             return True
         return False
 

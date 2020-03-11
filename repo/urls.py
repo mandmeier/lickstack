@@ -8,10 +8,11 @@ from .views import (
     # LickDetailView,
     LickCreateView,
     LickUpdateView,
-    LickDeleteView,
+    # LickDeleteView,
     like_lick,
     lick_detail,
     favorite_lick,
+    delete_lick,
 )
 
 urlpatterns = [
@@ -23,7 +24,8 @@ urlpatterns = [
     path('lick/<int:pk>/', lick_detail, name='lick-detail'),
     path('lick/new/', LickCreateView.as_view(), name='lick-create'),
     path('lick/<int:pk>/update/', LickUpdateView.as_view(), name='lick-update'),
-    path('lick/<int:pk>/delete/', LickDeleteView.as_view(), name='lick-delete'),
+    #path('lick/<int:pk>/delete/', LickDeleteView.as_view(), name='lick-delete'),
     path(r'^like/$', like_lick, name='like_lick'),
     path(r'^favorite/$', favorite_lick, name='favorite_lick'),
+    path('lick/<int:pk>/delete/', delete_lick, name='lick-delete'),
 ]
