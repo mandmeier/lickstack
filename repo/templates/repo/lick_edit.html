@@ -96,6 +96,23 @@
 </style>
 
 
+<!-- modal -->
+<div class="modal fade" id="delete" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Are you sure you want to delete Lick {{ lick.id}}?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <a id="delete_btn" href="{% url 'lick-delete' pk=lick.id %}?prev_url="><button type="button" class="btn btn-danger">Yes, Delete</button></a>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 
@@ -105,8 +122,10 @@
     <form class="lick-form" method="POST" enctype="multipart/form-data" onchange="changeLayout()">
         {% csrf_token %}
 
-        <h2>New Lick</h2>
-        <label for="inpFile" id="inpFileLabel" class="requiredField btn btn-secondary">Choose file</label>
+        <input type="hidden" id="previous_page" name="previous_page" value="TESTVALUE">
+        <h2>Edit Lick {{ lick.id }}</h2>
+        <label for="inpFile" id="inpFileLabel" class="requiredField btn btn-secondary">Change file</label>
+        <button class="btn btn-danger btn-sm mt-1 mb-1" type="button" data-toggle="modal" data-target="#delete"><i class="fas fa-trash-alt fa-lg"></i></button>
 
 
         <input type="file" name="file" id="inpFile" class="clearablefileinput form-control" />
@@ -185,48 +204,17 @@
 
 
 
-<!-- preview audio
-<script type="text/javascript">
-    /* https://www.youtube.com/watch?v=VElnT8EoEEM */
-    const inpFile = document.getElementById("inpFile");
-    const previewContainer = document.getElementById("filePreview");
-    const previewAudio = previewContainer.querySelector(".file-preview__file");
-    const previewDefaultText = previewContainer.querySelector(".file-preview__default-text");
-
-    inpFile.addEventListener("change", function() {
-        const file = this.files[0];
-
-        if (file) {
-            const reader = new FileReader();
-            /* hide preview default text */
-            previewDefaultText.style.display = "none";
-            previewAudio.style.display = "block";
-
-            reader.addEventListener("load", function() {
-                previewAudio.setAttribute("src", this.result);
-                audio = new Audio(this.result);
-            });
-
-            reader.readAsDataURL(file);
-        } else {
-            previewDefaultText.style.display = null;
-            previewAudio.style.display = null;
-        }
-    });
-
-
-
-
-</script>
-
- -->
-
-
-
-
-
 <script type="text/javascript">
 
+
+// remember previous page in hidden input field
+prev = document.getElementById("previous_page");
+prev.value = document.referrer;
+
+delete_btn = document.getElementById("delete_btn");
+url = delete_btn.href.split("/?")[0]
+new_url = url + "/?prev_url=" + document.referrer;
+delete_btn.href = new_url.replace(/&/g, "@")
 
 //// audio preview
 

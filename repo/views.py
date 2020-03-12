@@ -399,9 +399,7 @@ class LickCreateView(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView
 class LickUpdateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     model = Lick
     form_class = LickForm
-    #success_url = reverse_lazy('browse-licks')
-    success_message = f'Lick has been successfully updated!'
-    template_name = 'repo/lick_form.html'
+    template_name = 'repo/lick_edit.html'
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -410,6 +408,7 @@ class LickUpdateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixi
 
     def test_func(self):
         lick = self.get_object()
+        self.success_message = f'Lick {lick.id} has been successfully updated!'
         if self.request.user == lick.author:
             return True
         return False
@@ -417,12 +416,16 @@ class LickUpdateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixi
 
 def delete_lick(request, pk):
     lick = get_object_or_404(Lick, pk=pk)
-    prev_url = request.GET.get('prev_url', "")
-    # lick.delete()
-    prev_url = prev_url.replace("@", "&")
-    print('TEST')
-    print(prev_url)
+    print("TEST")
+    print("lick")
     messages.success(request, f'Lick {lick.id} deleted!')
+    lick.delete()
+    # redirect to previous url
+    prev_url = request.GET.get('prev_url', "")
+    if prev_url:
+        prev_url = prev_url.replace("@", "&")
+    else:
+        prev_url = 'my-licks'
     return redirect(prev_url)
 
 
