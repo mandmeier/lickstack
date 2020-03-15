@@ -6,6 +6,13 @@
 
 <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
 
+<script type="text/javascript">
+    //form submit when pressing Enter
+    function noenter() {
+        return !(window.event && window.event.keyCode == 13); }
+</script>
+
+
 <style type="text/css">
     .chords-row {
     height: 50px;
@@ -109,7 +116,7 @@
         <label for="inpFile" id="inpFileLabel" class="requiredField btn btn-secondary">Choose file</label>
 
 
-        <input type="file" name="file" id="inpFile" class="clearablefileinput form-control" />
+        <input type="file" name="file" id="inpFile" class="clearablefileinput form-control" required/>
 
         <div id="file_upload_info">
             <p>Choose audio file of type '.mp3', '.m4a' or '.ogg'. <br> Length maximum 4 measures.</p>
@@ -176,9 +183,189 @@
             </div>
         </div>
 
+
+<style type="text/css">
+
+    input[placeholder] { text-overflow: ellipsis; }
+    ::-moz-placeholder { text-overflow: ellipsis; } /* firefox 19+ */
+    input:-moz-placeholder { text-overflow: ellipsis; }
+
+  .tag-container, .suggested-tag-container{
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 10px 10px;
+    background: #ffff00;
+  }
+
+  .tag-container .tag, .suggested-tag-container .tag{
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin: 5px;
+    padding: 0px 5px;
+    display: flex;
+    align-items: center;
+    background: #f2f2f2;
+    cursor: default;
+  }
+
+  .suggested-tag-container .tag{
+    cursor: pointer;
+  }
+
+  .tag svg {
+    margin-left: 5px;
+    cursor: pointer;
+  }
+
+  .tag path {
+    pointer-events: none;
+  }
+
+  .tag-container input{
+    flex: 1;
+    padding: 5px;
+    outline: none;
+    border: 0;
+  }
+
+</style>
+
+        <label>Add tags</label>
+        <div class="tag-container">
+            <input onkeypress="return noenter()" placeholder="Type keyword, press Enter" required/>
+        </div>
+
+        <label>Suggested tags</label>
+         <div class="suggested-tag-container">
+
+        </div>
+
+        <input type="hidden" id="tag_string" name="tag_string" value="TESTVALUE">
+        <input type="hidden" id="tagsinput" data-role="tagsinput" class="form-control" name="tags">
+
+
+<script type="text/javascript">
+
+
+    //suggest tags
+    suggested_tags_original = ["ballad", "swing", "latin", "bebop", "funk"];
+    suggested_tags = suggested_tags_original.slice()
+    const suggestedTagContainer = document.querySelector('.suggested-tag-container');
+
+    function createSuggestedTag(label) {
+        const div = document.createElement('div');
+        div.setAttribute('class', 'tag');
+        const span = document.createElement('span');
+        span.innerHTML = label;
+        div.appendChild(span);
+        return div;
+    }
+
+    function updateSuggestedTags() {
+
+        stc = document.querySelectorAll('.suggested-tag-container .tag')
+        stc.forEach(function(tag){
+            tag.parentElement.removeChild(tag);
+        });
+
+        suggested_tags.forEach(function(tag){
+            const input = createSuggestedTag(tag);
+            suggestedTagContainer.appendChild(input);
+        });
+    }
+
+    updateSuggestedTags()
+
+
+    suggestedTagContainer.addEventListener('click', function(e){
+        if (e.target.tagName == 'SPAN'){
+            const value = e.target.innerHTML;
+            tags.push(value);
+            addTags();
+            updateTagString();
+            const index = suggested_tags.indexOf(value);
+            suggested_tags.splice(index,1);
+            updateSuggestedTags();
+        }
+    });
+
+
+    const tagContainer = document.querySelector('.tag-container');
+    const input = document.querySelector('.tag-container input');
+    const tagsinput = document.getElementById('tagsinput')
+    //tagsinput.type = "hidden"
+    var tags = [];
+
+    function updateTagString(){
+        ntags = []
+        tags.forEach(function(tag){
+            tag = tag.replace(/\s+/g, '_')
+            ntags.push(tag);
+        });
+        string = ntags.join(",");
+        tagsinput.value = string
+        console.log(tagsinput.value);
+    }
+
+    function createTag(label) {
+        const div = document.createElement('div');
+        div.setAttribute('class', 'tag');
+        const span = document.createElement('span');
+        span.innerHTML = label;
+        const closeBtn = document.createElement('i');
+        closeBtn.setAttribute('class', 'fas fa-times-circle');
+        closeBtn.setAttribute('data-item', label);
+        div.appendChild(span);
+        div.appendChild(closeBtn);
+        return div;
+    }
+
+    function reset() {
+        document.querySelectorAll('.tag-container .tag').forEach(function(tag){
+            tag.parentElement.removeChild(tag);
+        });
+    }
+
+    function addTags(){
+        reset();
+        tags.slice().reverse().forEach(function(tag){
+            const input = createTag(tag);
+            tagContainer.prepend(input);
+        });
+    }
+
+    input.addEventListener('keyup', function(e){
+        if (e.key == 'Enter' && input.value != ""){
+            tags.push(input.value);
+            addTags();
+            updateTagString();
+            input.value = '';
+        }
+    });
+
+    tagContainer.addEventListener('click', function(e){
+        if (e.target.tagName == 'svg'){
+            const value = e.target.getAttribute('data-item');
+            if (suggested_tags_original.indexOf(value) >= 0 && suggested_tags.indexOf(value) < 0){
+                suggested_tags.push(value);
+                updateSuggestedTags()
+            }
+            const index = tags.indexOf(value);
+            tags.splice(index,1);
+            addTags();
+            updateTagString();
+        }
+    });
+
+</script>
+
         <div class="form-submit">
             <button class="btn btn-primary btn-block btn-lg" type="submit" id="submit">Submit</button>
         </div>
+
     </form>
 
 </div>

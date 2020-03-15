@@ -2,11 +2,21 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
+from taggit.managers import TaggableManager
 
 
 class Genre(models.Model):
     name = models.CharField(
         max_length=200, help_text='Enter a genre (e.g. Jazz, Blues)')
+
+    def __str__(self):
+        return self.name
+
+
+class Tag(models.Model):
+    name = models.CharField(
+        max_length=200, help_text='Enter a keyword')
+    genres = models.ManyToManyField(Genre, related_name='genres', blank=True)
 
     def __str__(self):
         return self.name
@@ -33,6 +43,7 @@ class Lick(models.Model):
     likes = models.ManyToManyField(User, related_name='likes', blank=True)
     favorite = models.ManyToManyField(
         User, related_name='favorite', blank=True)
+    tags = TaggableManager()
 
     TS_CHOICES = [('44', '4/4'), ('34', '3/4')]
 

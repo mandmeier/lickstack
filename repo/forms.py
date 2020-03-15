@@ -12,7 +12,7 @@ class LickForm(forms.ModelForm):
 
   class Meta:
     model = Lick
-    fields = ('file', 'instrument', 'genre', 'time_signature',
+    fields = ('file', 'instrument', 'genre', 'time_signature', 'tags',
               'm1_b1', 'm1_b2', 'm1_b3', 'm1_b4',
               'm2_b1', 'm2_b2', 'm2_b3', 'm2_b4',
               'm3_b1', 'm3_b2', 'm3_b3', 'm3_b4',

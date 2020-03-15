@@ -393,6 +393,9 @@ class LickCreateView(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView
                 '-date_posted').first().counter + 1  # Lick number for each author
 
         form.instance.author = self.request.user
+
+
+
         return super().form_valid(form)
 
 
@@ -427,77 +430,3 @@ def delete_lick(request, pk):
     else:
         prev_url = 'my-licks'
     return redirect(prev_url)
-
-
-'''
-def delete_lick(request, pk):
-    template = 'repo/lick_form.html'
-    lick = get_object_or_404(Lick, pk=pk)
-    print('TEST')
-    print(request)
-
-    try:
-        if request.method == 'POST':
-            form = LickForm(request.POST, instance=lick)
-            lick.delete()
-            messages.success(request, 'Lick deleted!')
-        else:
-            form = LickForm(instance=lick)
-    except Exception as e:
-        messages.warning(
-            request, 'The post could not be deleted Error {}'.format(e))
-
-    context = {
-        'form': form,
-        'lick': lick,
-    }
-
-    return render(request, template, context)
-'''
-
-
-class LickDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
-    model = Lick
-    template_name = 'repo/lick_confirm_delete.html'
-    success_url = reverse_lazy('my-licks')
-    success_message = 'Lick has been deleted!'
-
-    def delete(self, request, *args, **kwargs):  # this replaces SuccessMessageMixin
-        messages.success(self.request, self.success_message)
-        #self.success_url = self.request.POST.get('previous_page')
-        return super(LickDeleteView, self).delete(request, *args, **kwargs)
-
-    def test_func(self):
-        lick = self.get_object()
-        if self.request.user == lick.author:
-            return True
-        return False
-
-
-# redirecting back to home
-# redirect to home and make success message appear
-
-
-# check corey 26:30
-# https://www.youtube.com/watch?v=-s7e_Fy6NRU&list=PL-osiE80TeTtoQCKZ03TU5fNfx2UY6U4p&index=10
-# https://www.youtube.com/watch?v=HSn-e2snNc8
-# trying to replace function based form with class based form to upload list
-
-
-
-# function based view that goes with lick_new.html template
-"""
-def lick_new(request):
-    if request.method == "POST":
-        form = LickForm(request.POST, request.FILES)
-        if form.is_valid():
-            lick = form.save()
-            lick.author = request.user
-            lick.date_posted = timezone.now()
-            lick.last_updated = timezone.now()
-            lick.save()
-            return redirect('home')
-    else:
-        form = LickForm()
-    return render(request, 'repo/lick_new.html', {'form': form})
-"""
