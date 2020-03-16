@@ -6,7 +6,7 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from repo.models import Lick, Genre, Instrument
+from repo.models import Lick, Instrument
 from operator import attrgetter
 from django.views import generic
 from .forms import LickForm
@@ -61,28 +61,12 @@ def home(request):
     return render(request, 'repo/home.html', {'title': 'Home'})
 
 
-"""
-def get_lick_queryset(genre_query=None, instrument_query=None):
-    queryset = []
-
-    licks = Lick.objects.filter(
-        Q(genre__name__icontains=genre_query) &
-        Q(instrument__name__icontains=instrument_query)
-    ).distinct()
-    for lick in licks:
-        queryset.append(lick)
-
-    return list(set(queryset))
-"""
-
-
 def browse_licks_view(request):
 
     # default no search parameters
     exact_search = False
     include_transposed = False
     ignore_extensions = False
-    genre_query = ""
     instrument_query = ""
     username_contains_query = ""
     chord_seq_query = ""
@@ -97,7 +81,6 @@ def browse_licks_view(request):
         include_transposed = bool(request.GET.get('include_transposed', ""))
         ignore_extensions = bool(request.GET.get('ignore_extensions', ""))
         time_signature = request.GET.get('time_signature', "")
-        genre_query = request.GET.get('genre', "")
         instrument_query = request.GET.get('instrument', "")
         username_contains_query = request.GET.get('username_contains', "")
         lick_id_query = request.GET.get('lick_id', "")
@@ -174,7 +157,6 @@ def browse_licks_view(request):
 
     licks = Lick.objects.filter(
         Q(time_signature__icontains=time_signature) &
-        Q(genre__name__icontains=genre_query) &
         Q(instrument__name__icontains=instrument_query) &
         Q(author__username__icontains=username_contains_query)
     )
@@ -237,7 +219,6 @@ def browse_licks_view(request):
     context = {}
     context["form"] = LickForm()
     context['licks'] = licks
-    context["genres"] = Genre.objects.all()
     context["instrument"] = Instrument.objects.all().order_by('name')
     context["chord_seq_query"] = chord_seq_query  # used for template tags
     context["user_liked"] = user_liked
@@ -297,17 +278,6 @@ def my_licks_view(request):
     context["display"] = display
 
     return render(request, "repo/my_licks.html", context)
-
-
-class UserLickListView(generic.ListView):
-    model = Lick
-    template_name = 'repo/user_licks.html'
-    context_object_name = 'licks'
-    paginate_by = 10
-
-    def get_queryset(self):
-        user = get_object_or_404(User, username=self.kwargs.get('username'))
-        return Lick.objects.filter(author=user).order_by('-date_posted')
 
 
 def lick_detail(request, pk):
@@ -378,25 +348,60 @@ def favorite_lick(request):
         return JsonResponse({'form': html})
 
 
+def create_lick(request):
+    form = LickForm(request.POST or None)
+    if request.method == "POST":
+        form = LickForm(request.POST, request.FILES)
+        if form.is_valid():
+            lick = form.save(commit=False)
+            lick.author = request.user
+            lick.save()
+            form.save_m2m()
+            messages.success(
+                request, f'Lick {lick.id} created successfully.')
+
+    """
+    if form.is_valid():
+        instance = form.save(commit=False)
+        print(form.cleaned_data.get("instrument"))
+        instance.save()
+    else:
+        print("form invalid")
+    """
+    # if request.method == "POST":
+    # print(request.POST.get('instrument'))
+    # print(request.POST.get('hiddenTagsInput'))
+
+    context = {
+        "form": form,
+    }
+    return render(request, 'repo/lick_form.html', context)
+
+
 class LickCreateView(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView):
     model = Lick
     form_class = LickForm
     success_url = reverse_lazy('lick-create')
     success_message = 'Lick has been created successfully, you may upload another one!'
     template_name = 'repo/lick_form.html'
+    print('TEST')
 
     def form_valid(self, form):
+        print('FORM RECEIVED')
+        """
         if Lick.objects.filter(author=self.request.user).count() == 0:
             form.instance.counter = 1
         else:
             form.instance.counter = Lick.objects.filter(author=self.request.user).order_by(
                 '-date_posted').first().counter + 1  # Lick number for each author
-
+        """
         form.instance.author = self.request.user
 
-
-
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        print(form.instance)
+        return super().form_invalid(form)
 
 
 class LickUpdateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):

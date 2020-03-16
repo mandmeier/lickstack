@@ -5,23 +5,6 @@ from django.urls import reverse
 from taggit.managers import TaggableManager
 
 
-class Genre(models.Model):
-    name = models.CharField(
-        max_length=200, help_text='Enter a genre (e.g. Jazz, Blues)')
-
-    def __str__(self):
-        return self.name
-
-
-class Tag(models.Model):
-    name = models.CharField(
-        max_length=200, help_text='Enter a keyword')
-    genres = models.ManyToManyField(Genre, related_name='genres', blank=True)
-
-    def __str__(self):
-        return self.name
-
-
 class Instrument(models.Model):
     name = models.CharField(
         max_length=200, help_text='Enter an instrument (e.g. Piano, Guitar)', default='not specified')
@@ -33,7 +16,6 @@ class Instrument(models.Model):
 class Lick(models.Model):
     # file will be uploaded to MEDIA_ROOT/lick_uploads
     file = models.FileField(upload_to='lick_uploads/')
-    genre = models.ForeignKey(Genre, on_delete=models.PROTECT, null=True)
     instrument = models.ForeignKey(
         Instrument, on_delete=models.PROTECT, null=True)
     date_posted = models.DateTimeField(default=timezone.now)
@@ -278,8 +260,9 @@ class Lick(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        name = str(self.id) + "_" + str(self.genre) + "_" + str(self.author) + \
-            "_" + str(self.date_posted)
+        tagstr = '-'.join(self.tags.names())
+        name = '#' + str(self.id) + "-" + tagstr + "-" + \
+            str(self.author) + "-" + str(self.date_posted)
         return name
 
     def get_absolute_url(self):

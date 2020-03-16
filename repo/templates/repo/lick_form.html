@@ -14,7 +14,18 @@
 
 
 <style type="text/css">
-    .chords-row {
+
+
+
+
+input[placeholder] { text-overflow: ellipsis; }
+::-moz-placeholder { text-overflow: ellipsis; } /* firefox 19+ */
+input:-moz-placeholder { text-overflow: ellipsis; }
+
+
+
+
+.chords-row {
     height: 50px;
     background-image: url("{% static 'img/staff.png' %}");
     background-size: 100% 100%;
@@ -99,6 +110,54 @@
     color: #333333;
 }
 
+.tag-section{
+    /*background: #ff0000;*/
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    margin: 10px 10px;
+}
+
+.tag-section hr{
+    margin: 0px;
+}
+.tag-container, .suggested-tag-container{
+    margin: 0px;
+    padding: 5px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tag-container .tag, .suggested-tag-container .tag{
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin: 5px;
+    padding: 0px 5px;
+    display: flex;
+    align-items: center;
+    background: #e0e0e0;
+    cursor: default;
+}
+
+.suggested-tag-container .tag{
+    cursor: pointer;
+}
+
+.tag-container input{
+    flex: 1;
+    padding: 5px;
+    outline: none;
+    border: 0;
+}
+
+.tag svg {
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.tag path {
+    pointer-events: none;
+}
+
 
 </style>
 
@@ -109,15 +168,16 @@
 <div class="container-fluid col-12">
 
 
-    <form class="lick-form" method="POST" enctype="multipart/form-data" onchange="changeLayout()">
+    <form class="lick-form" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
 
         <h2>New Lick</h2>
         <label for="inpFile" id="inpFileLabel" class="requiredField btn btn-secondary">Choose file</label>
 
-
-        <input type="file" name="file" id="inpFile" class="clearablefileinput form-control" required/>
-
+        {{ form.file|as_crispy_field }}
+        <!--
+        <input type="file" name="file" id="inpFile" class="clearablefileinput form-control" required>
+        -->
         <div id="file_upload_info">
             <p>Choose audio file of type '.mp3', '.m4a' or '.ogg'. <br> Length maximum 4 measures.</p>
         </div>
@@ -137,9 +197,14 @@
 
 
         <div class="time-signature row">
-            <div class="col-4">
+            <div class="col-6">
                 {{ form.time_signature|as_crispy_field }}
             </div>
+
+            <div class="col-lg-6">
+                {{ form.instrument|as_crispy_field }}
+            </div>
+
         </div>
 
         <button class="reset-chords-btn btn btn-secondary" id="reset_chords" onclick="resetChords()" type="button">Reset Chords</button>
@@ -174,194 +239,34 @@
         </div>
         </div>
 
-        <div class="form-input row">
-            <div class="col-lg-6">
-                {{ form.genre|as_crispy_field }}
-            </div>
-            <div class="col-lg-6">
-                {{ form.instrument|as_crispy_field }}
-            </div>
-        </div>
 
 
 <style type="text/css">
 
-    input[placeholder] { text-overflow: ellipsis; }
-    ::-moz-placeholder { text-overflow: ellipsis; } /* firefox 19+ */
-    input:-moz-placeholder { text-overflow: ellipsis; }
-
-  .tag-container, .suggested-tag-container{
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    padding: 5px;
-    display: flex;
-    flex-wrap: wrap;
-    margin: 10px 10px;
-    background: #ffff00;
-  }
-
-  .tag-container .tag, .suggested-tag-container .tag{
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    margin: 5px;
-    padding: 0px 5px;
-    display: flex;
-    align-items: center;
-    background: #f2f2f2;
-    cursor: default;
-  }
-
-  .suggested-tag-container .tag{
-    cursor: pointer;
-  }
-
-  .tag svg {
-    margin-left: 5px;
-    cursor: pointer;
-  }
-
-  .tag path {
-    pointer-events: none;
-  }
-
-  .tag-container input{
-    flex: 1;
-    padding: 5px;
-    outline: none;
-    border: 0;
-  }
-
 </style>
 
         <label>Add tags</label>
-        <div class="tag-container">
-            <input onkeypress="return noenter()" placeholder="Type keyword, press Enter" required/>
-        </div>
 
-        <label>Suggested tags</label>
-         <div class="suggested-tag-container">
+        {{ form.tags|as_crispy_field }}
+        <!--
+        <input type="text" name="tags" class="tagwidget form-control" required="" id="id_tags">
+        -->
 
+        <div class="tag-section">
+            <div class="tag-container">
+                <input onkeypress="return noenter()" placeholder="Type keyword, press Enter"/>
+            </div>
+        <hr>
+             <div class="suggested-tag-container">
+
+            </div>
         </div>
 
         <input type="hidden" id="tag_string" name="tag_string" value="TESTVALUE">
-        <input type="hidden" id="tagsinput" data-role="tagsinput" class="form-control" name="tags">
 
-
-<script type="text/javascript">
-
-
-    //suggest tags
-    suggested_tags_original = ["ballad", "swing", "latin", "bebop", "funk"];
-    suggested_tags = suggested_tags_original.slice()
-    const suggestedTagContainer = document.querySelector('.suggested-tag-container');
-
-    function createSuggestedTag(label) {
-        const div = document.createElement('div');
-        div.setAttribute('class', 'tag');
-        const span = document.createElement('span');
-        span.innerHTML = label;
-        div.appendChild(span);
-        return div;
-    }
-
-    function updateSuggestedTags() {
-
-        stc = document.querySelectorAll('.suggested-tag-container .tag')
-        stc.forEach(function(tag){
-            tag.parentElement.removeChild(tag);
-        });
-
-        suggested_tags.forEach(function(tag){
-            const input = createSuggestedTag(tag);
-            suggestedTagContainer.appendChild(input);
-        });
-    }
-
-    updateSuggestedTags()
-
-
-    suggestedTagContainer.addEventListener('click', function(e){
-        if (e.target.tagName == 'SPAN'){
-            const value = e.target.innerHTML;
-            tags.push(value);
-            addTags();
-            updateTagString();
-            const index = suggested_tags.indexOf(value);
-            suggested_tags.splice(index,1);
-            updateSuggestedTags();
-        }
-    });
-
-
-    const tagContainer = document.querySelector('.tag-container');
-    const input = document.querySelector('.tag-container input');
-    const tagsinput = document.getElementById('tagsinput')
-    //tagsinput.type = "hidden"
-    var tags = [];
-
-    function updateTagString(){
-        ntags = []
-        tags.forEach(function(tag){
-            tag = tag.replace(/\s+/g, '_')
-            ntags.push(tag);
-        });
-        string = ntags.join(",");
-        tagsinput.value = string
-        console.log(tagsinput.value);
-    }
-
-    function createTag(label) {
-        const div = document.createElement('div');
-        div.setAttribute('class', 'tag');
-        const span = document.createElement('span');
-        span.innerHTML = label;
-        const closeBtn = document.createElement('i');
-        closeBtn.setAttribute('class', 'fas fa-times-circle');
-        closeBtn.setAttribute('data-item', label);
-        div.appendChild(span);
-        div.appendChild(closeBtn);
-        return div;
-    }
-
-    function reset() {
-        document.querySelectorAll('.tag-container .tag').forEach(function(tag){
-            tag.parentElement.removeChild(tag);
-        });
-    }
-
-    function addTags(){
-        reset();
-        tags.slice().reverse().forEach(function(tag){
-            const input = createTag(tag);
-            tagContainer.prepend(input);
-        });
-    }
-
-    input.addEventListener('keyup', function(e){
-        if (e.key == 'Enter' && input.value != ""){
-            tags.push(input.value);
-            addTags();
-            updateTagString();
-            input.value = '';
-        }
-    });
-
-    tagContainer.addEventListener('click', function(e){
-        if (e.target.tagName == 'svg'){
-            const value = e.target.getAttribute('data-item');
-            if (suggested_tags_original.indexOf(value) >= 0 && suggested_tags.indexOf(value) < 0){
-                suggested_tags.push(value);
-                updateSuggestedTags()
-            }
-            const index = tags.indexOf(value);
-            tags.splice(index,1);
-            addTags();
-            updateTagString();
-        }
-    });
-
-</script>
-
+        <!--
+        <input type="hidden" id="hiddenTagsInput" data-role="hiddenTagsInput" class="form-control" name="hiddenTagsInput">
+        -->
         <div class="form-submit">
             <button class="btn btn-primary btn-block btn-lg" type="submit" id="submit">Submit</button>
         </div>
@@ -372,50 +277,28 @@
 
 
 
-<!-- preview audio
-<script type="text/javascript">
-    /* https://www.youtube.com/watch?v=VElnT8EoEEM */
-    const inpFile = document.getElementById("inpFile");
-    const previewContainer = document.getElementById("filePreview");
-    const previewAudio = previewContainer.querySelector(".file-preview__file");
-    const previewDefaultText = previewContainer.querySelector(".file-preview__default-text");
-
-    inpFile.addEventListener("change", function() {
-        const file = this.files[0];
-
-        if (file) {
-            const reader = new FileReader();
-            /* hide preview default text */
-            previewDefaultText.style.display = "none";
-            previewAudio.style.display = "block";
-
-            reader.addEventListener("load", function() {
-                previewAudio.setAttribute("src", this.result);
-                audio = new Audio(this.result);
-            });
-
-            reader.readAsDataURL(file);
-        } else {
-            previewDefaultText.style.display = null;
-            previewAudio.style.display = null;
-        }
-    });
-
-
-
-
-</script>
-
- -->
-
-
-
-
-
 <script type="text/javascript">
 
 
-//// audio preview
+//// Submit btn controls
+
+const submit_btn = document.getElementById("submit");
+const initial_submit_classname = submit_btn.className
+
+function disable_submit_btn(){
+    if (submit_btn.className == initial_submit_classname){
+        submit_btn.className += " btn-secondary disable";
+        submit_btn.type = "button";
+    }
+}
+
+function enable_submit_btn(){
+        submit_btn.className = initial_submit_classname;
+        submit_btn.type = "submit";
+}
+
+
+//// Audio preview
 
 //initial values
 lick_URL = "{{ lick.file.url }}";
@@ -491,15 +374,7 @@ function audio_reset(){
     }
 }
 
-submit_btn = document.getElementById("submit");
-initial_submit_classname = submit_btn.className
 
-function disable_submit_btn(){
-    if (submit_btn.className == initial_submit_classname){
-        submit_btn.className += " btn-secondary disable";
-        submit_btn.type = "button";
-    }
-}
 
 if (lick_URL) {
     audio = new Audio("{{ lick.file.url }}");
@@ -544,12 +419,20 @@ inpFile.addEventListener("change", function() {
         });
         reader.readAsDataURL(file);
     }
+    //inpFile.files = inpFileCustom.files
 });
 
 
 
+//// reset chords button
 
-//// change layout when select 3/4
+function resetChords() {
+    console.log("reset chords")
+}
+
+
+
+// Time Signature Controls
 
 function changeLayout() {
     if (document.getElementById("id_time_signature_1").checked){
@@ -567,17 +450,134 @@ function changeLayout() {
 };
 
 
+time_sign_input = document.getElementById('div_id_time_signature')
+time_sign_input.addEventListener("change", function(){
+ changeLayout();
+});
 
-//// reset chords button
 
-function resetChords() {
-    console.log("reset chords")
+
+
+//// Tag controls
+
+
+const suggested_tags_original = ["jazz", "ballad", "swing", "bebop", "waltz", "latin", "bossa", "salsa", "montuno", "funk", "country", "rock", "metal", "scales", "blues", "gospel", "spiritual", "turnaround", "even_eights", "shuffle"];
+var suggested_tags = suggested_tags_original.slice()
+
+const suggestedTagContainer = document.querySelector('.suggested-tag-container');
+const tagContainer = document.querySelector('.tag-container');
+const tagsInput = document.querySelector('.tag-container input');
+const hiddenTagsInput = document.getElementById('id_tags') // hidden input
+hiddenTagsInput.type = "hidden"
+
+var tags = [];
+
+function createTag(label, close="") {
+    const div = document.createElement('div');
+    div.setAttribute('class', 'tag');
+    const span = document.createElement('span');
+    span.innerHTML = label;
+    div.appendChild(span);
+    if (close){
+        const closeBtn = document.createElement('i');
+        closeBtn.setAttribute('class', 'fas fa-times-circle');
+        closeBtn.setAttribute('data-item', label);
+        div.appendChild(closeBtn);
+    }
+    return div;
 }
+
+
+function updateTags(){
+    //disable or enable button
+    if (tags.length <= 0){
+        disable_submit_btn();
+    } else {
+        enable_submit_btn();
+    }
+
+    // remove all tags (reset)
+    document.querySelectorAll('.tag-section .tag').forEach(function(tag){
+        tag.parentElement.removeChild(tag);
+    });
+
+    // update selected tags
+    tags.slice().reverse().forEach(function(tag){
+        tagContainer.prepend(createTag(tag, close="Yes"));
+    });
+
+    // update suggested tags
+    suggested_tags.forEach(function(tag){
+        suggestedTagContainer.appendChild(createTag(tag, close=""));
+    });
+    // update hidden tag field
+    hiddenTagsInput.value = tags.join(",")
+    console.log(hiddenTagsInput.value);
+}
+
+updateTags()
+
+
+// input tags
+
+function sanitizeKey(key){
+    key = key.replace(/^#+/g, '');
+    key = key.replace(/^\s+/g, '');
+    key = key.replace(/\s+$/g, '');
+    key = key.replace(/\s+/g, '_');
+    key = key.toLowerCase();
+    return key;
+}
+
+tagsInput.addEventListener('keyup', function(e){
+    let keyword = tagsInput.value
+    if (e.key == 'Enter' && keyword != ""){
+        keyword = sanitizeKey(keyword);
+        if (tags.indexOf(keyword) < 0) {
+            tags.push(keyword);
+            let st_index = suggested_tags.indexOf(keyword)
+            if (st_index >= 0){
+                    suggested_tags.splice(st_index,1);
+            }
+        }
+        updateTags();
+        tagsInput.value = '';
+    }
+});
+
+
+// delete tag from input list
+tagContainer.addEventListener('click', function(e){
+    if (e.target.tagName == 'svg'){
+        let keyword = e.target.getAttribute('data-item');
+        if (suggested_tags_original.indexOf(keyword) >= 0 && suggested_tags.indexOf(keyword) < 0){
+            suggested_tags.push(keyword);
+        }
+        let t_index = tags.indexOf(keyword);
+        tags.splice(t_index,1);
+        updateTags();
+    }
+});
+
+// select tag from suggested list
+suggestedTagContainer.addEventListener('click', function(e){
+    if (e.target.tagName == 'SPAN'){
+        let keyword = e.target.innerHTML;
+        tags.push(keyword);
+        let st_index = suggested_tags.indexOf(keyword);
+        suggested_tags.splice(st_index,1);
+        updateTags();
+    }
+});
+
 
 
 </script>
 
 
 {% endblock content %}
+
+
+
 
 

@@ -12,14 +12,24 @@ class LickForm(forms.ModelForm):
 
   class Meta:
     model = Lick
-    fields = ('file', 'instrument', 'genre', 'time_signature', 'tags',
+    fields = ('file', 'instrument', 'time_signature', 'tags',
               'm1_b1', 'm1_b2', 'm1_b3', 'm1_b4',
               'm2_b1', 'm2_b2', 'm2_b3', 'm2_b4',
               'm3_b1', 'm3_b2', 'm3_b3', 'm3_b4',
               'm4_b1', 'm4_b2', 'm4_b3', 'm4_b4',
               )
     labels = {
-        'file': ''
+        'file': '',
+        'tags': '',
+    }
+    help_texts = {
+        'file': '',
+        'tags': '',
+    }
+    error_messages = {
+        'tags': {
+            'required': 'Please enter between 1 and 5 tags.',
+        }
     }
 
   def __init__(self, *args, **kwargs):
@@ -29,7 +39,6 @@ class LickForm(forms.ModelForm):
     self.fields['m2_b4'].widget.attrs['class'] = 'ts44'
     self.fields['m3_b4'].widget.attrs['class'] = 'ts44'
     self.fields['m4_b4'].widget.attrs['class'] = 'ts44'
-    self.fields['genre'].widget.attrs['value'] = "{{ form.genre.value|default_if_none:'' }}"
 
   # validate uploaded file for extension and file size
   def clean_file(self):
