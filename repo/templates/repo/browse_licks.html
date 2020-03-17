@@ -70,15 +70,6 @@
                 <option value="34">3/4</option>
             </select>
         </div>
-        <div class="form-group col-md-4">
-            <label for="category">Genre</label>
-            <select id="genre" class="form-control" name="genre">
-                <option value="" selected>Any</option>
-                {% for gen in genres %}
-                <option value="{{ gen }}">{{ gen }}</option>
-                {% endfor %}
-            </select>
-        </div>
 
         <div class="form-group col-md-4">
             <label for="category">Instrument</label>

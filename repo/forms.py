@@ -9,6 +9,7 @@ class LickForm(forms.ModelForm):
   TS_CHOICES = [('44', '4/4'), ('34', '3/4')]
   time_signature = forms.ChoiceField(
       choices=TS_CHOICES, initial='44', widget=forms.RadioSelect)
+  other = forms.CharField(required=False, label='')
 
   class Meta:
     model = Lick
@@ -21,6 +22,7 @@ class LickForm(forms.ModelForm):
     labels = {
         'file': '',
         'tags': '',
+        'other': '',
     }
     help_texts = {
         'file': '',
@@ -34,6 +36,7 @@ class LickForm(forms.ModelForm):
 
   def __init__(self, *args, **kwargs):
     super().__init__(*args, **kwargs)
+    self.fields['other'].widget.attrs['placeholder'] = 'Please specify'
     self.fields['file'].widget.attrs['id'] = 'inpFile'
     self.fields['m1_b4'].widget.attrs['class'] = 'ts44'
     self.fields['m2_b4'].widget.attrs['class'] = 'ts44'

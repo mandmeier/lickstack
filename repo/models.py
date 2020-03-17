@@ -9,6 +9,9 @@ class Instrument(models.Model):
     name = models.CharField(
         max_length=200, help_text='Enter an instrument (e.g. Piano, Guitar)', default='not specified')
 
+    class Meta:
+        ordering = ('name',)
+
     def __str__(self):
         return self.name
 

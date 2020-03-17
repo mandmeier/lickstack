@@ -239,15 +239,9 @@ def my_licks_view(request):
     if request.GET:
         display = request.GET.get('display', "")
         if display == "mylicks":
-            print("TEST")
-            print("mylicks")
-            print("TEST")
             licks = licks.filter(author=request.user)
 
         if display == "favorites":
-            print("TEST")
-            print("favorites")
-            print("TEST")
             licks = request.user.profile.faved_licks.all()
 
     # licks = get_lick_queryset(query).order_by('-date_posted')
@@ -348,29 +342,40 @@ def favorite_lick(request):
         return JsonResponse({'form': html})
 
 
+def sanitize_instrument(i):
+    i = re.sub(r'[^A-Za-z0-9\s()]+', '', i).strip().lower()
+    return(i)
+
+
+@login_required
 def create_lick(request):
     form = LickForm(request.POST or None)
     if request.method == "POST":
         form = LickForm(request.POST, request.FILES)
         if form.is_valid():
-            lick = form.save(commit=False)
-            lick.author = request.user
-            lick.save()
+            obj = form.save(commit=False)
+            form_data = request.POST.copy()
+            obj.author = request.user
+            obj.save()
             form.save_m2m()
             messages.success(
-                request, f'Lick {lick.id} created successfully.')
+                request, f'Lick {obj.id} created successfully.')
 
-    """
-    if form.is_valid():
-        instance = form.save(commit=False)
-        print(form.cleaned_data.get("instrument"))
-        instance.save()
-    else:
-        print("form invalid")
-    """
-    # if request.method == "POST":
-    # print(request.POST.get('instrument'))
-    # print(request.POST.get('hiddenTagsInput'))
+            # 5 or whatever index of 'other' instrument
+            if form_data.get('instrument') == '5':
+                # get other instrument from 'other' form field, sanitize input
+                other_inst = sanitize_instrument(form_data.get('other'))
+                # sanitize input
+
+                # create new instrument if it does not exist yet
+                all_instr = Instrument.objects.all().values_list('name', flat=True)
+                if not other_inst in all_instr:
+                    Instrument.objects.create(name=other_inst)
+
+                # get new instument instance and assign to lick, then save
+                lick = Lick.objects.get(id=obj.id)
+                lick.instrument = Instrument.objects.get(name=other_inst)
+                lick.save(update_fields=['instrument'])
 
     context = {
         "form": form,
@@ -384,7 +389,6 @@ class LickCreateView(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView
     success_url = reverse_lazy('lick-create')
     success_message = 'Lick has been created successfully, you may upload another one!'
     template_name = 'repo/lick_form.html'
-    print('TEST')
 
     def form_valid(self, form):
         print('FORM RECEIVED')
@@ -424,8 +428,6 @@ class LickUpdateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixi
 
 def delete_lick(request, pk):
     lick = get_object_or_404(Lick, pk=pk)
-    print("TEST")
-    print("lick")
     messages.success(request, f'Lick {lick.id} deleted!')
     lick.delete()
     # redirect to previous url
