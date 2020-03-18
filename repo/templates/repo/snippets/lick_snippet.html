@@ -44,67 +44,23 @@
 
 
 
-
-    {% if lick.time_signature == '34' %}
-
-    <div class="lick-chords col-12">
-        <div class="row chords-row">
-          <div class="separator-lr"></div>
-            <div class="chord3">{% with 'img/chords/'|add:lick.m1_b1|add:'.png' as image_static %}<img id="m1_b1" src="{% static image_static %}" alt="{{ lick.m1_b1 }}"/>{% endwith %}</div>
-            <div class="chord3">{% with 'img/chords/'|add:lick.m1_b2|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m1_b2 }}"/>{% endwith %}</div>
-            <div class="chord3">{% with 'img/chords/'|add:lick.m1_b3|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m1_b3 }}"/>{% endwith %}</div>
-          <div class="separator-mid"></div>
-            <div class="chord3">{% with 'img/chords/'|add:lick.m2_b1|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m2_b1 }}"/>{% endwith %}</div>
-            <div class="chord3">{% with 'img/chords/'|add:lick.m2_b2|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m2_b2 }}"/>{% endwith %}</div>
-            <div class="chord3">{% with 'img/chords/'|add:lick.m2_b3|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m2_b3 }}"/>{% endwith %}</div>
-          <div class="separator-lr"></div>
-        </div>
-        <div class="row chords-row">
-          <div class="separator-lr"></div>
-            <div class="chord3">{% with 'img/chords/'|add:lick.m3_b1|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m3_b1 }}"/>{% endwith %}</div>
-            <div class="chord3">{% with 'img/chords/'|add:lick.m3_b2|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m3_b2 }}"/>{% endwith %}</div>
-            <div class="chord3">{% with 'img/chords/'|add:lick.m3_b3|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m3_b3 }}"/>{% endwith %}</div>
-          <div class="separator-mid"></div>
-            <div class="chord3">{% with 'img/chords/'|add:lick.m4_b1|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m4_b1 }}"/>{% endwith %}</div>
-            <div class="chord3">{% with 'img/chords/'|add:lick.m4_b2|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m4_b2 }}"/>{% endwith %}</div>
-            <div class="chord3">{% with 'img/chords/'|add:lick.m4_b3|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m4_b3 }}"/>{% endwith %}</div>
-          <div class="separator-lr"></div>
-        </div>
+    <div class="lick-display col-12">
+    <div class="row chords-row">
+        <div class="separator-lr"></div>
+            <div name="chord_1" class="chord-img"><div>
+            <div name="chord_2" class="chord-img"><div>
+            <div name="chord_3" class="chord-img"><div>
+            <div name="chord_4" class="chord-img"><div>
+        <div class="separator-mid"></div>
+            <div name="chord_1" class="chord-img"><div>
+            <div name="chord_2" class="chord-img"><div>
+            <div name="chord_3" class="chord-img"><div>
+            <div name="chord_4" class="chord-img"><div>
+        <div class="separator-lr"></div>
+    </div>
     </div>
 
 
-    {% else %}
-
-    <div class="lick-chords col-12">
-        <div class="row chords-row">
-          <div class="separator-lr"></div>
-            <div class="chord">{% with 'img/chords/'|add:lick.m1_b1|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m1_b1 }}"/>{% endwith %}</div>
-            <div class="chord">{% with 'img/chords/'|add:lick.m1_b2|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m1_b2 }}"/>{% endwith %}</div>
-            <div class="chord">{% with 'img/chords/'|add:lick.m1_b3|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m1_b3 }}"/>{% endwith %}</div>
-            <div class="chord">{% with 'img/chords/'|add:lick.m1_b4|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m1_b4 }}"/>{% endwith %}</div>
-          <div class="separator-mid"></div>
-            <div class="chord">{% with 'img/chords/'|add:lick.m2_b1|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m2_b1 }}"/>{% endwith %}</div>
-            <div class="chord">{% with 'img/chords/'|add:lick.m2_b2|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m2_b2 }}"/>{% endwith %}</div>
-            <div class="chord">{% with 'img/chords/'|add:lick.m2_b3|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m2_b3 }}"/>{% endwith %}</div>
-            <div class="chord">{% with 'img/chords/'|add:lick.m2_b4|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m2_b4 }}"/>{% endwith %}</div>
-          <div class="separator-lr"></div>
-        </div>
-        <div class="row chords-row">
-          <div class="separator-lr"></div>
-            <div class="chord">{% with 'img/chords/'|add:lick.m3_b1|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m3_b1 }}"/>{% endwith %}</div>
-            <div class="chord">{% with 'img/chords/'|add:lick.m3_b2|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m3_b2 }}"/>{% endwith %}</div>
-            <div class="chord">{% with 'img/chords/'|add:lick.m3_b3|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m3_b3 }}"/>{% endwith %}</div>
-            <div class="chord">{% with 'img/chords/'|add:lick.m3_b4|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m3_b4 }}"/>{% endwith %}</div>
-          <div class="separator-mid"></div>
-            <div class="chord">{% with 'img/chords/'|add:lick.m4_b1|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m4_b1 }}"/>{% endwith %}</div>
-            <div class="chord">{% with 'img/chords/'|add:lick.m4_b2|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m4_b2 }}"/>{% endwith %}</div>
-            <div class="chord">{% with 'img/chords/'|add:lick.m4_b3|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m4_b3 }}"/>{% endwith %}</div>
-            <div class="chord">{% with 'img/chords/'|add:lick.m4_b4|add:'.png' as image_static %}<img src="{% static image_static %}" alt="{{ lick.m4_b4 }}"/>{% endwith %}</div>
-          <div class="separator-lr"></div>
-        </div>
-    </div>
-
-    {% endif %}
 
     <div class="lick-controls col-12">
 

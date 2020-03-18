@@ -241,6 +241,28 @@ class Lick(models.Model):
     chord_seq = models.CharField(
         max_length=100, default='x.x.x.x.x.x.x.x.x.x.x.x.x.x.x.x.x')
 
+    def __str__(self):
+        tagstr = '-'.join(self.tags.names())
+        name = '#' + str(self.id) + "-" + tagstr + "-" + \
+            str(self.author) + "-" + str(self.date_posted)
+        return name
+
+    def get_absolute_url(self):
+        return reverse('lick-detail', kwargs={'pk': self.pk})
+
+    # delete audio file from file system when delete lick model instance
+    def delete(self, *args, **kwargs):
+        self.file.delete()
+        super().delete(*args, **kwargs)
+
+    def total_likes(self):
+        return self.likes.count()
+
+    def total_faves(self):
+        return self.favorite.count()
+
+
+"""
     def save(self, *args, **kwargs):
         self.chord_seq = (
             "x" + self.m1_b1 +
@@ -261,23 +283,4 @@ class Lick(models.Model):
             "x" + self.m4_b4 + "x"
         )
         super().save(*args, **kwargs)
-
-    def __str__(self):
-        tagstr = '-'.join(self.tags.names())
-        name = '#' + str(self.id) + "-" + tagstr + "-" + \
-            str(self.author) + "-" + str(self.date_posted)
-        return name
-
-    def get_absolute_url(self):
-        return reverse('lick-detail', kwargs={'pk': self.pk})
-
-    # delete audio file from file system when delete lick model instance
-    def delete(self, *args, **kwargs):
-        self.file.delete()
-        super().delete(*args, **kwargs)
-
-    def total_likes(self):
-        return self.likes.count()
-
-    def total_faves(self):
-        return self.favorite.count()
+"""

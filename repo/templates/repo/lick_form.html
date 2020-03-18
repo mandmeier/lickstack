@@ -24,6 +24,70 @@ input:-moz-placeholder { text-overflow: ellipsis; }
 
 
 
+/*  Lick Upload Form */
+
+
+.lick-form {
+    margin-top: 50px;
+    margin-bottom: 100px;
+    background: #f9f9f9;
+    width: 100%;
+    padding: 5px;
+    border: 2px solid #234444;
+    border-radius: 15px;
+}
+.chords-row .form-group {
+    width: 11.5%;
+}
+
+/* moved to lick_form.html template because of link
+.chords-row {
+    height: 50px;
+    background-image: url("{% static 'img/staff.png' %}");
+    background-size: 100% 100%;
+}
+*/
+.separator-mid{
+    width: 4%;
+}
+.separator-lr{
+    width: 2%;
+}
+
+.form-check {
+    display: inline-block;
+    margin-right: 10px;
+}
+.chords-input .form-group {
+    font-size: 0;
+    padding: 0px;
+    margin: 0px;
+    max-width: 100%;
+}
+.chords-input .form-group label{
+    position: none;
+}
+
+
+.chords-input .form-control {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #495057;
+    padding: 0rem;
+    margin: 0rem;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.form-submit {
+    margin-bottom: 10px
+}
+
+
+
 
 .chords-row {
     height: 50px;
@@ -194,37 +258,43 @@ input:-moz-placeholder { text-overflow: ellipsis; }
 
             </div>
 
-        <button class="reset-chords-btn btn btn-secondary" id="reset_chords" onclick="resetChords()" type="button">Reset Chords</button>
+        <button class="reset-chords-btn btn btn-secondary" id="reset_chords" type="button">Reset Chords</button>
+
 
 
         <div class="chords-input col-12">
         <div class="row chords-row">
                 <div class="separator-lr"></div>
-                {{ form.m1_b1|as_crispy_field }}
-                {{ form.m1_b2|as_crispy_field }}
-                {{ form.m1_b3|as_crispy_field }}
-                {{ form.m1_b4|as_crispy_field }}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
                 <div class="separator-mid"></div>
-                {{ form.m2_b1|as_crispy_field }}
-                {{ form.m2_b2|as_crispy_field }}
-                {{ form.m2_b3|as_crispy_field }}
-                {{ form.m2_b4|as_crispy_field }}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
                 <div class="separator-lr"></div>
         </div>
         <div class="row chords-row">
                 <div class="separator-lr"></div>
-                {{ form.m3_b1|as_crispy_field }}
-                {{ form.m3_b2|as_crispy_field }}
-                {{ form.m3_b3|as_crispy_field }}
-                {{ form.m3_b4|as_crispy_field }}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
                 <div class="separator-mid"></div>
-                {{ form.m4_b1|as_crispy_field }}
-                {{ form.m4_b2|as_crispy_field }}
-                {{ form.m4_b3|as_crispy_field }}
-                {{ form.m4_b4|as_crispy_field }}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
                 <div class="separator-lr"></div>
         </div>
         </div>
+
+        <div id="chord_seq_field">
+                {{ form.chord_seq|as_crispy_field }}
+        </div>
+
 
         <div class="time-signature row">
             <div class="col-6">
@@ -280,7 +350,6 @@ input:-moz-placeholder { text-overflow: ellipsis; }
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript">
-
 
 //// Submit btn controls
 
@@ -426,11 +495,55 @@ inpFile.addEventListener("change", function() {
 
 
 
+
+
+//// get chords string
+
+// number all chord select and assign ids
+
+const chord_select = document.getElementsByClassName("chord_select");
+
+var counter = 1
+for (let chord of chord_select) {
+    chord.id = "chord_"+counter.toString()
+    counter += 1
+
+}
+
+
+// hide chord seq field
+const chord_seq_field = document.getElementById("chord_seq_field");
+//chord_seq_field.style.display = "none";
+
+// update chord seq upon change of chords
+function updateChordSeq(){
+    let chord_seq = "x"
+    for (let chord of chord_select) {
+        chord_seq = chord_seq + chord.value + "x"
+    }
+    document.getElementById("id_chord_seq").value = chord_seq
+}
+
+document.querySelectorAll('.chord_select').forEach(item => {
+    item.addEventListener("change", function(){
+        updateChordSeq();
+    });
+})
+
+
+
 //// reset chords button
 
-function resetChords() {
-    console.log("reset chords")
-}
+const reset_chords_btn = document.getElementById("reset_chords")
+
+reset_chords_btn.addEventListener("click", function(){
+    for (let chord of chord_select) {
+        chord.value = "."
+    };
+    updateChordSeq();
+})
+
+
 
 
 
@@ -443,12 +556,13 @@ function changeLayout() {
     } else if (document.getElementById("id_time_signature_2").checked){
         $(".ts44").hide();
         $(".chords-row .form-group").css("width","15.33%");
-        $("#div_id_m1_b4, #div_id_m2_b4, #div_id_m3_b4, #div_id_m4_b4").css("width","0px");
-        document.getElementById("id_m1_b4").selectedIndex = "-";
-        document.getElementById("id_m2_b4").selectedIndex = "-";
-        document.getElementById("id_m3_b4").selectedIndex = "-";
-        document.getElementById("id_m4_b4").selectedIndex = "-";
+        $("#chord_4, #chord_8, #chord_12, #chord_16").css("width","0px");
+        document.getElementById("chord_4").value = ".";
+        document.getElementById("chord_8").value = ".";
+        document.getElementById("chord_12").value = ".";
+        document.getElementById("chord_16").value = ".";
     }
+    updateChordSeq();
 };
 
 
@@ -465,10 +579,6 @@ time_sign_input.addEventListener("change", function(){
 
 // make selection "other"
 const instr_select = document.getElementById("id_instrument")
-//var other_selection = document.createElement('option')
-//other_selection.value = "other"
-//other_selection.innerHTML = "other"
-//instr_select.appendChild(other_selection)
 
 //move "other" option to end
 const other_option = instr_select.querySelectorAll('[value="5"]')[0];

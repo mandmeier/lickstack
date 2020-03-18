@@ -13,16 +13,13 @@ class LickForm(forms.ModelForm):
 
   class Meta:
     model = Lick
-    fields = ('file', 'instrument', 'time_signature', 'tags',
-              'm1_b1', 'm1_b2', 'm1_b3', 'm1_b4',
-              'm2_b1', 'm2_b2', 'm2_b3', 'm2_b4',
-              'm3_b1', 'm3_b2', 'm3_b3', 'm3_b4',
-              'm4_b1', 'm4_b2', 'm4_b3', 'm4_b4',
-              )
+    fields = ('file', 'instrument', 'time_signature', 'tags', 'chord_seq')
+
     labels = {
         'file': '',
         'tags': '',
         'other': '',
+        'chord_seq': '',
     }
     help_texts = {
         'file': '',
@@ -38,10 +35,6 @@ class LickForm(forms.ModelForm):
     super().__init__(*args, **kwargs)
     self.fields['other'].widget.attrs['placeholder'] = 'Please specify'
     self.fields['file'].widget.attrs['id'] = 'inpFile'
-    self.fields['m1_b4'].widget.attrs['class'] = 'ts44'
-    self.fields['m2_b4'].widget.attrs['class'] = 'ts44'
-    self.fields['m3_b4'].widget.attrs['class'] = 'ts44'
-    self.fields['m4_b4'].widget.attrs['class'] = 'ts44'
 
   # validate uploaded file for extension and file size
   def clean_file(self):

@@ -358,6 +358,7 @@ def create_lick(request):
             obj.author = request.user
             obj.save()
             form.save_m2m()
+            print(form_data)
             messages.success(
                 request, f'Lick {obj.id} created successfully.')
 
@@ -373,7 +374,6 @@ def create_lick(request):
                     Instrument.objects.create(name=other_inst)
 
                 # get new instument instance and assign to lick, then save
-                lick = Lick.objects.get(id=obj.id)
                 lick.instrument = Instrument.objects.get(name=other_inst)
                 lick.save(update_fields=['instrument'])
 
