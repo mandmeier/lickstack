@@ -1,0 +1,252 @@
+{% load static %}
+<script type="text/javascript">
+
+
+// find chord images
+const licks = document.getElementsByClassName('lick')
+
+function updateChords(lick) {
+    let chord_fields = lick.getElementsByClassName('chord-img')
+    let chords = lick.getElementsByClassName('chord_seq')[0].getAttribute("value").split('x').slice(1,17);
+    let i
+    for (i = 0; i < 16; i++) {
+        let chord_img = chord_fields[i].getElementsByTagName('img')[0]
+        if (!chord_img.hasAttribute("name")) {
+            chord_img.name = chords[i]
+        }
+        if (chords[i] != '.'){
+            chord_img.src = chord_img.src.split('chords/')[0] + 'chords/' + chords[i] + '.png'
+        }
+    }
+
+}
+
+
+
+function make_ts34(lck){
+    let chord_fields = lck.getElementsByClassName('chord-img')
+    chord_fields[3].style.display = "none"
+    chord_fields[7].style.display = "none"
+    chord_fields[11].style.display = "none"
+    chord_fields[15].style.display = "none"
+
+    sep34 = Array.prototype.slice.call(lck.getElementsByClassName('separator-34'));
+    sep34.forEach( function(element){ element.style.width = '2.9%'; });
+
+    seplr = Array.prototype.slice.call(lck.getElementsByClassName('separator-lr'));
+    seplr.forEach( function(element){ element.style.width = '5%'; });
+
+    sepmid = Array.prototype.slice.call(lck.getElementsByClassName('separator-mid'));
+    sepmid.forEach( function(element){ element.style.width = '8.8%'; });
+}
+
+
+var i
+for (i = 0; i < licks.length; i++) {
+    updateChords(licks[i]);
+    let time_signature = licks[i].getElementsByClassName('time_signature')[0].getAttribute('value');
+    if (time_signature == 34){
+        make_ts34(licks[i]);
+    };
+}
+
+clicked_id = 'transpose_lick_82'
+current_id = clicked_id.split("_")[2];
+transpose_by = "2"
+
+// Transpose
+function transpose_lick(clicked_id) {
+    current_id = clicked_id.split("_")[2];
+    transpose_by = document.getElementById("transpose_lick_"+current_id).value;
+
+    function transpose(input,transpose_by) {
+        if (transpose_by >= 0) {
+            var chds = ["_C_", "_Db_", "_D_", "_Eb_", "_E_", "_F_", "_Gb_", "_G_", "_Ab_", "_A_", "_Bb_", "_B_"]
+        } else {
+            var chds = ["_C_", "_B_", "_Bb_", "_A_", "_Ab_", "_G_", "_Gb_", "_F_", "_E_", "_Eb_", "_D_", "_Db_"]
+        }
+        var start = chds.indexOf(input)
+        return chds[(start + Math.abs(transpose_by)) % chds.length];
+    }
+
+    var getDivId = document.getElementById("lick_"+current_id);
+    var allImages = getDivId.getElementsByTagName("img");
+
+    for (i = 0; i < allImages.length; i++) {
+        if (/(_[a-gA-g]{1,2}_)/.test(allImages[i].src)) {
+            var chd = allImages[i];
+            var input = chd.name.match(/(_[a-gA-g]{1,2}_)/)[0]; // name is always the original chord
+            chd.src = chd.src.replace(/(_[a-gA-g]{1,2}_)/, transpose(input, transpose_by))
+            chd.alt = chd.name.replace(/(_[a-gA-g]{1,2}_)/, transpose(input, transpose_by))
+        }
+    }
+}
+
+
+
+
+// default initial values
+current_id = 0
+last_id = -1
+playback_rate = 1
+audio = new Audio("{{ lick.file.url }}");
+player = new Tone.Player("{{ lick.file.url }}")
+seekBar = document.getElementById("seekbar_{{ lick.id }}");
+mouseDown = false;
+last_transpose_by = 0
+transpose_by = 0
+
+
+
+// create all tone players to choose from
+// (because can't create them in function for some reason)
+play_btns = document.getElementsByClassName('play')
+var arrayLength = play_btns.length;
+for (var i = 0; i < arrayLength; i++) {
+var keyValuePair = play_btns[i].id.split('[X]');
+this['player' + keyValuePair[0]] = new Tone.Player(keyValuePair[1])
+}
+
+
+// audio player behavior
+function update_player_controls() {
+    audio.addEventListener('play', function () {
+      playButtonIcon.className = 'ion-pause';
+    });
+
+    audio.addEventListener('pause', function () {
+      playButtonIcon.className = 'ion-play';
+    });
+
+    audio.addEventListener('timeupdate', function () {
+      if (mouseDown) return;
+        let p = audio.currentTime / audio.duration;
+        fillBar.style.width = p * 100 + "%";
+    });
+
+
+    seekBar.addEventListener('mousedown', function (e) {
+      mouseDown = true;
+      window.rect = e.target.getBoundingClientRect();
+      let x = e.clientX - rect.left;
+      let p = x / seekBar.clientWidth;
+      fillBar.style.width = p * 100 + "%";
+    });
+
+    window.addEventListener('mousemove', function (e) {
+      if (!mouseDown) return;
+        let x = e.clientX - rect.left;
+        let p = x / seekBar.clientWidth;
+        fillBar.style.width = p * 100 + "%";
+    });
+
+    window.addEventListener('mouseup', function (e) {
+      if (!mouseDown) return;
+        mouseDown = false;
+        let x = e.clientX - rect.left;
+        let p = x / seekBar.clientWidth;
+        fillBar.style.width = p * 100 + "%";
+        audio.currentTime = p * audio.duration;
+        ofs = audio.currentTime;
+      if (!audio.paused) {
+        player.start();
+        player.seek(offset = ofs);
+      }
+    });
+}
+
+
+
+// slow down audio button
+function slowdown(clicked_id) {
+    selected_tortoise = document.getElementById(clicked_id)
+    if (selected_tortoise.value == "1") {
+        selected_tortoise.src="{% static 'img/tortoise_toggled.png' %}"; // change icon to toggled version
+        selected_tortoise.value="0.5";
+    } else {
+        selected_tortoise.value="1";
+        selected_tortoise.src="{% static 'img/tortoise_default.png' %}"; // change icon to default version
+        selected_tortoise.value="1";
+    }
+    playback_rate = Number(selected_tortoise.value);
+}
+
+
+
+//set controls for first time
+
+function change_lick_id(clicked_id) {
+    current_id = clicked_id.split("[X]")[0]; // get new id
+    if (current_id != last_id) { // change variables
+
+        // reset playback in previous lick
+        if (last_id != -1) {
+            seekBar = document.getElementById("seekbar_"+last_id);
+            fillBar = seekBar.querySelector('.fill');
+            fillBar.style.width = "0%";
+            audio.pause();
+            playButtonIcon.className = 'ion-play';
+
+        }
+
+        // now update lick ID and all values
+        last_id = current_id;
+        playback_rate = Number(document.getElementById("slowdown_"+current_id).value);
+        mouseDown = false;
+        lick_URL = clicked_id.split("[X]")[1]
+        audio = new Audio(lick_URL); //this needed to get audio.currentTime and audio.duration
+        audio.volume = 0; // set this to 1 for troubleshooting
+        playButton = document.getElementById(current_id+"[X]"+lick_URL);
+        playButtonIcon = playButton.querySelector('i');
+        seekBar = document.getElementById("seekbar_"+current_id);
+        fillBar = seekBar.querySelector('.fill');
+        transpose_by = document.getElementById("transpose_lick_"+current_id).value;
+
+        // use controls for current lick
+        update_player_controls();
+
+    }
+
+    // transpose using current transpose_by value
+    if (playback_rate == 1){
+        pitchShift = new Tone.PitchShift({
+        pitch: transpose_by
+        }).toDestination();
+    } else { //if playbackrate == 0.5 add +12 to pitch to correct
+        trans = Number(transpose_by) + 12
+        trans = trans.toString()
+        pitchShift = new Tone.PitchShift({
+        pitch: trans
+      }).toDestination();
+    }
+
+    // disconnect old player (get overlay of two playsers otherwise)
+    player.disconnect();
+    // connect current player
+    player = this['player' + current_id]
+    player.connect(pitchShift);
+}
+
+
+// activate each play btn
+// play btn specified in lick_snippet.html
+
+function activatePlayBtn(){
+    if (audio.paused) {
+        ctx = new(window.AudioContext || window.webkitAudioContext)();
+        audio.playbackRate = playback_rate;
+        player.playbackRate = playback_rate;
+        audio.play();
+        ofs = audio.currentTime;
+        player.start();
+        player.seek(offset = ofs);
+    } else {
+        audio.pause();
+        player.stop(0);
+        ofs = audio.currentTime;
+    }
+}
+
+
+
+</script>

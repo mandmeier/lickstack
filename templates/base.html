@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
     {% if title %}
     <title>LickStack - {{ title }}</title>
     {% else %}
@@ -29,9 +29,9 @@
   <link rel="icon" type="img/png" href="{% static 'img/Logo.png' %}">
 
 <!-- Navigation -->
-<nav class="navbar navbar-custom navbar-expand-md navbar-light sticky-top">
+<nav class="navbar navbar-expand-md navbar-light sticky-top">
 <div class="container-fluid">
-    <a class="navbar-brand" href="#"><img src="{% static 'img/Logo.png' %}" class="img-responsive" alt="Logo"></a>
+    <a class="navbar-brand" href="#"><img src="{% static 'img/Logo.png' %}" class="navbar-logo" alt="Logo"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -75,10 +75,10 @@
 </nav>
 
 <!-- main content -->
-<div class="container-fluid">
+<main>
   <div class="row">
     <div id= "ads-left" class="col-md-0 col-lg-2 col-xl-3"></div>
-    <div id= "main_content" class="col-md-9 col-lg-8 col-xl-6">
+    <div class="main-content col-md-9 col-lg-8 col-xl-6">
 
           {% if messages %}
               {% for message in messages %}
@@ -92,7 +92,7 @@
     </div>
     <div id= "ads-right" class="col-md-3 col-lg-2 col-xl-3"></div>
   </div>
-</div>
+</main>
 
 <!-- footer -->
 <footer>

@@ -7,7 +7,10 @@
 
 <article class="lick lick-section" id="lick_{{ lick.id }}">
 
-    <div class="row">
+        <div class="chord_seq" id="chord_seq_{{ lick.id }}" value="{{ lick.chord_seq}}" style="display: none;"></div>
+        <div class="time_signature" id="time_signature_{{ lick.id }}" value="{{ lick.time_signature}}" style="display: none;"></div>
+
+
         <div class="lick-metadata">
             <div class="description">
                 {{ lick.id }}
@@ -18,20 +21,19 @@
                 {% for tag in lick.tags.names %}
                 <small class="text-muted">#{{tag}} </small>
                 {% endfor %}
+                <br>
             </div>
-        </div>
-
-        <div class="row">
-         <div class="like" id="like-section_{{ lick.id }}">
-            {% include 'repo/snippets/like_section.html' %}
-        </div>
-        <div class="favorite" id="favorite-section_{{ lick.id }}">
-            {% include 'repo/snippets/favorite_section.html' %}
-        </div>
-        </div>
 
 
-    </div>
+            <div class="like" id="like-section_{{ lick.id }}">
+                {% include 'repo/snippets/like_section.html' %}
+            </div>
+            <div class="favorite" id="favorite-section_{{ lick.id }}">
+                {% include 'repo/snippets/favorite_section.html' %}
+            </div>
+
+
+        </div>
 
     <div class="audio-player col-12">
           <button class="play" id="{{ lick.id }}[X]{{ lick.file.url }}" onclick="change_lick_id(this.id);"><i class="ion-play"></i></button>
@@ -42,20 +44,42 @@
           </div>
     </div>
 
-
+    <div class="lick-display col-12">
+    <div class="row chords-row">
+        <div class="separator-lr"></div>
+            <div name="chord_1" class="chord-img"><img src="{% static 'img/chords/..png' %}"></div>
+        <div class="separator-34"></div>
+            <div name="chord_2" class="chord-img"><img src="{% static 'img/chords/..png' %}"></div>
+        <div class="separator-34"></div>
+            <div name="chord_3" class="chord-img"><img src="{% static 'img/chords/..png' %}"></div>
+            <div name="chord_4" class="chord-img"><img src="{% static 'img/chords/..png' %}"></div>
+        <div class="separator-mid"></div>
+            <div name="chord_5" class="chord-img"><img src="{% static 'img/chords/..png' %}"></div>
+        <div class="separator-34"></div>
+            <div name="chord_6" class="chord-img"><img src="{% static 'img/chords/..png' %}"></div>
+        <div class="separator-34"></div>
+            <div name="chord_7" class="chord-img"><img src="{% static 'img/chords/..png' %}"></div>
+            <div name="chord_8" class="chord-img"><img src="{% static 'img/chords/..png' %}"></div>
+        <div class="separator-lr"></div>
+    </div>
+    </div>
 
     <div class="lick-display col-12">
     <div class="row chords-row">
         <div class="separator-lr"></div>
-            <div name="chord_1" class="chord-img"><div>
-            <div name="chord_2" class="chord-img"><div>
-            <div name="chord_3" class="chord-img"><div>
-            <div name="chord_4" class="chord-img"><div>
+            <div name="chord_9" class="chord-img"><img src="{% static 'img/chords/..png' %}"></div>
+        <div class="separator-34"></div>
+            <div name="chord_10" class="chord-img"><img src="{% static 'img/chords/..png' %}"></div>
+        <div class="separator-34"></div>
+            <div name="chord_11" class="chord-img"><img src="{% static 'img/chords/..png' %}"></div>
+            <div name="chord_12" class="chord-img"><img src="{% static 'img/chords/..png' %}"></div>
         <div class="separator-mid"></div>
-            <div name="chord_1" class="chord-img"><div>
-            <div name="chord_2" class="chord-img"><div>
-            <div name="chord_3" class="chord-img"><div>
-            <div name="chord_4" class="chord-img"><div>
+            <div name="chord_13" class="chord-img"><img src="{% static 'img/chords/..png' %}"></div>
+        <div class="separator-34"></div>
+            <div name="chord_14" class="chord-img"><img src="{% static 'img/chords/..png' %}"></div>
+        <div class="separator-34"></div>
+            <div name="chord_15" class="chord-img"><img src="{% static 'img/chords/..png' %}"></div>
+            <div name="chord_16" class="chord-img"><img src="{% static 'img/chords/..png' %}"></div>
         <div class="separator-lr"></div>
     </div>
     </div>
@@ -98,7 +122,7 @@
 
             {% if lick.author == user %}
                     <a class="edit-btn" id="edit-section_{{ lick.id }}" href="{% url 'lick-update' lick.id %}">
-                      <i class="fas fa-edit fa-lg" style="color: #007010"></i>
+                      <i class="fas fa-edit fa-lg"></i>
                     </a>
             {% endif %}
 
@@ -109,18 +133,16 @@
 
 <script type="text/javascript">
 
-// default initial values
-current_id = 0
-last_id = -1
-playback_rate = 1
-playButton = document.getElementById("{{ lick.id }}[X]{{ lick.file.url }}");
-audio = new Audio("{{ lick.file.url }}");
-player = new Tone.Player("{{ lick.file.url }}")
-seekBar = document.getElementById("seekbar_{{ lick.id }}");
-mouseDown = false;
-last_transpose_by = 0
-transpose_by = 0
 
+// make current playButton clickable
+playButton = document.getElementById("{{ lick.id }}[X]{{ lick.file.url }}");
+playButton.addEventListener('click', function () {
+    activatePlayBtn();
+});
+
+
+
+/*
 // set initial transpose value according to query
 selectElement('transpose_lick_{{ lick.id }}', {{ lick.chord_seq | chord_seq_T:chord_seq_query }})
 
@@ -129,176 +151,9 @@ function selectElement(id, valueToSelect) {
     element.value = valueToSelect;
     transpose_lick(id);
 }
+*/
 
 
-// create all tone players to choose from
-// (because can't create them in function for some reason)
-play_btns = document.getElementsByClassName('play')
-var arrayLength = play_btns.length;
-for (var i = 0; i < arrayLength; i++) {
-var keyValuePair = play_btns[i].id.split('[X]');
-this['player' + keyValuePair[0]] = new Tone.Player(keyValuePair[1])
-}
-
-// slow down audio button
-function slowdown(clicked_id) {
-    selected_tortoise = document.getElementById(clicked_id)
-    if (selected_tortoise.value == "1") {
-        selected_tortoise.src="{% static 'img/tortoise_toggled.png' %}"; // change icon to toggled version
-        selected_tortoise.value="0.5";
-    } else {
-        selected_tortoise.value="1";
-        selected_tortoise.src="{% static 'img/tortoise_default.png' %}"; // change icon to default version
-        selected_tortoise.value="1";
-    }
-    playback_rate = Number(selected_tortoise.value);
-}
-
-// audio player behavior
-function update_player_controls() {
-    audio.addEventListener('play', function () {
-      playButtonIcon.className = 'ion-pause';
-    });
-
-    audio.addEventListener('pause', function () {
-      playButtonIcon.className = 'ion-play';
-    });
-
-    audio.addEventListener('timeupdate', function () {
-      if (mouseDown) return;
-        let p = audio.currentTime / audio.duration;
-        fillBar.style.width = p * 100 + "%";
-    });
-
-
-    seekBar.addEventListener('mousedown', function (e) {
-      mouseDown = true;
-      window.rect = e.target.getBoundingClientRect();
-      let x = e.clientX - rect.left;
-      let p = x / seekBar.clientWidth;
-      fillBar.style.width = p * 100 + "%";
-    });
-
-    window.addEventListener('mousemove', function (e) {
-      if (!mouseDown) return;
-        let x = e.clientX - rect.left;
-        let p = x / seekBar.clientWidth;
-        fillBar.style.width = p * 100 + "%";
-    });
-
-    window.addEventListener('mouseup', function (e) {
-      if (!mouseDown) return;
-        mouseDown = false;
-        let x = e.clientX - rect.left;
-        let p = x / seekBar.clientWidth;
-        fillBar.style.width = p * 100 + "%";
-        audio.currentTime = p * audio.duration;
-        ofs = audio.currentTime;
-      if (!audio.paused) {
-        player.start();
-        player.seek(offset = ofs);
-      }
-    });
-}
-
-//set controls for first time
-
-function change_lick_id(clicked_id) {
-    current_id = clicked_id.split("[X]")[0]; // get new id
-    if (current_id != last_id) { // change variables
-
-        // reset playback in previous lick
-        if (last_id != -1) {
-            seekBar = document.getElementById("seekbar_"+last_id);
-            fillBar = seekBar.querySelector('.fill');
-            fillBar.style.width = "0%";
-            audio.pause();
-            playButtonIcon.className = 'ion-play';
-
-        }
-
-        // now update lick ID and all values
-        last_id = current_id;
-        playback_rate = Number(document.getElementById("slowdown_"+current_id).value);
-        mouseDown = false;
-        lick_URL = clicked_id.split("[X]")[1]
-        audio = new Audio(lick_URL); //this needed to get audio.currentTime and audio.duration
-        audio.volume = 0; // set this to 1 for troubleshooting
-        playButton = document.getElementById(current_id+"[X]"+lick_URL);
-        playButtonIcon = playButton.querySelector('i');
-        seekBar = document.getElementById("seekbar_"+current_id);
-        fillBar = seekBar.querySelector('.fill');
-        transpose_by = document.getElementById("transpose_lick_"+current_id).value;
-
-        // use controls for current lick
-        update_player_controls();
-
-    }
-
-    // transpose using current transpose_by value
-    if (playback_rate == 1){
-        pitchShift = new Tone.PitchShift({
-        pitch: transpose_by
-        }).toDestination();
-    } else { //if playbackrate == 0.5 add +12 to pitch to correct
-        trans = Number(transpose_by) + 12
-        trans = trans.toString()
-        pitchShift = new Tone.PitchShift({
-        pitch: trans
-      }).toDestination();
-    }
-
-    // disconnect old player (get overlay of two playsers otherwise)
-    player.disconnect();
-    // connect current player
-    player = this['player' + current_id]
-    player.connect(pitchShift);
-}
-
-// make current playButton clickable
-playButton.addEventListener('click', function () {
-
-    if (audio.paused) {
-        ctx = new(window.AudioContext || window.webkitAudioContext)();
-        audio.playbackRate = playback_rate;
-        player.playbackRate = playback_rate;
-        audio.play();
-        ofs = audio.currentTime;
-        player.start();
-        player.seek(offset = ofs);
-    } else {
-        audio.pause();
-        player.stop(0);
-        ofs = audio.currentTime;
-    }
-});
-
-// Transpose
-function transpose_lick(clicked_id) {
-    current_id = clicked_id.split("_")[2];
-    transpose_by = document.getElementById("transpose_lick_"+current_id).value;
-
-    function transpose(input,transpose_by) {
-        if (transpose_by >= 0) {
-            var chds = ["_C_", "_Db_", "_D_", "_Eb_", "_E_", "_F_", "_Gb_", "_G_", "_Ab_", "_A_", "_Bb_", "_B_"]
-        } else {
-            var chds = ["_C_", "_B_", "_Bb_", "_A_", "_Ab_", "_G_", "_Gb_", "_F_", "_E_", "_Eb_", "_D_", "_Db_"]
-        }
-        var start = chds.indexOf(input)
-        return chds[(start + Math.abs(transpose_by)) % chds.length];
-    }
-
-    var getDivId = document.getElementById("lick_"+current_id);
-    var allImages = getDivId.getElementsByTagName("img");
-
-    for (i = 0; i < allImages.length; i++) {
-        if (/(_[a-gA-g]{1,2}_)/.test(allImages[i].src)) {
-            var chd = allImages[i];
-            var input = chd.alt.match(/(_[a-gA-g]{1,2}_)/)[0]; // alt is always the original chord
-            chd.src = chd.src.replace(/(_[a-gA-g]{1,2}_)/, transpose(input, transpose_by))
-        }
-    }
-}
 
 
 </script>

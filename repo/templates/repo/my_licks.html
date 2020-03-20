@@ -10,29 +10,32 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
 
+<style type="text/css">
+.chords-row {
+    background-image: url("{% static 'img/staff.png' %}");
+}
+</style>
+
+{% include 'repo/snippets/my_licks_style.html' %}
 {% include 'repo/snippets/lick_snippet_style.html' %}
 
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-6">
-      <form method="GET" action=".">
+
+
+<div class="mylicks-controls row">
+      <form class="col-6" method="GET" action=".">
         <input type="hidden" name="display" value="mylicks">
         <button type="submit" class="btn btn-warning">
           <i class="fas fa-music fa-lg"></i>
           My Licks
         </button>
       </form>
-    </div>
-    <div class="col-6">
-      <form method="GET" action=".">
+      <form class="col-6" method="GET" action=".">
         <input type="hidden" name="display" value="favorites">
         <button type="submit" class="btn btn-danger">
           <i class="fas fa-star fa-lg"></i>
           Favorites
         </button>
       </form>
-     </div>
-  </div>
 </div>
 
 {% if licks.has_other_pages %}
@@ -106,6 +109,10 @@
     {% endif %}
 
 {% endif %}
+
+
+
+{% include 'repo/snippets/lick_snippet_js.html' %}
 
 
 {% endblock content %}
