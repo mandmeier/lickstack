@@ -5,7 +5,40 @@
 // find chord images
 const licks = document.getElementsByClassName('lick')
 
+
+// Transpose
+function transpose_lick(lick) {
+    current_id = lick.id.split('_')[1]
+    console.log(lick);
+    transpose_lick(lick);
+    transpose_by = document.getElementById("transpose_lick_"+current_id).value;
+    console.log(transpose_by);
+    function transpose(input,transpose_by) {
+        if (transpose_by >= 0) {
+            var chds = ["_C_", "_Db_", "_D_", "_Eb_", "_E_", "_F_", "_Gb_", "_G_", "_Ab_", "_A_", "_Bb_", "_B_"]
+        } else {
+            var chds = ["_C_", "_B_", "_Bb_", "_A_", "_Ab_", "_G_", "_Gb_", "_F_", "_E_", "_Eb_", "_D_", "_Db_"]
+        }
+        var start = chds.indexOf(input)
+        return chds[(start + Math.abs(transpose_by)) % chds.length];
+    }
+
+    var allImages = lick.getElementsByTagName("img");
+
+    for (i = 0; i < allImages.length; i++) {
+        if (/(_[a-gA-g]{1,2}_)/.test(allImages[i].src)) {
+            var chd = allImages[i];
+            var input = chd.name.match(/(_[a-gA-g]{1,2}_)/)[0]; // name is always the original chord
+            chd.src = chd.src.replace(/(_[a-gA-g]{1,2}_)/, transpose(input, transpose_by))
+            chd.alt = chd.name.replace(/(_[a-gA-g]{1,2}_)/, transpose(input, transpose_by))
+        }
+    }
+
+}
+
+
 function updateChords(lick) {
+    console.log("TADAA");
     let chord_fields = lick.getElementsByClassName('chord-img')
     let chords = lick.getElementsByClassName('chord_seq')[0].getAttribute("value").split('x').slice(1,17);
     let i
@@ -18,7 +51,7 @@ function updateChords(lick) {
             chord_img.src = chord_img.src.split('chords/')[0] + 'chords/' + chords[i] + '.png'
         }
     }
-
+    console.log("LICK");
 }
 
 
@@ -41,45 +74,23 @@ function make_ts34(lck){
 }
 
 
+
+
+
+const transpose_btns = document.getElementsByClassName('transpose-btn')
+//initial setup
 var i
 for (i = 0; i < licks.length; i++) {
-    updateChords(licks[i]);
     let time_signature = licks[i].getElementsByClassName('time_signature')[0].getAttribute('value');
     if (time_signature == 34){
         make_ts34(licks[i]);
     };
-}
 
-clicked_id = 'transpose_lick_82'
-current_id = clicked_id.split("_")[2];
-transpose_by = "2"
+    transpose_btns[i].addEventListener("change", function() {
+     updateChords(licks[i]);
+    });
 
-// Transpose
-function transpose_lick(clicked_id) {
-    current_id = clicked_id.split("_")[2];
-    transpose_by = document.getElementById("transpose_lick_"+current_id).value;
-
-    function transpose(input,transpose_by) {
-        if (transpose_by >= 0) {
-            var chds = ["_C_", "_Db_", "_D_", "_Eb_", "_E_", "_F_", "_Gb_", "_G_", "_Ab_", "_A_", "_Bb_", "_B_"]
-        } else {
-            var chds = ["_C_", "_B_", "_Bb_", "_A_", "_Ab_", "_G_", "_Gb_", "_F_", "_E_", "_Eb_", "_D_", "_Db_"]
-        }
-        var start = chds.indexOf(input)
-        return chds[(start + Math.abs(transpose_by)) % chds.length];
-    }
-
-    var getDivId = document.getElementById("lick_"+current_id);
-    var allImages = getDivId.getElementsByTagName("img");
-
-    for (i = 0; i < allImages.length; i++) {
-        if (/(_[a-gA-g]{1,2}_)/.test(allImages[i].src)) {
-            var chd = allImages[i];
-            var input = chd.name.match(/(_[a-gA-g]{1,2}_)/)[0]; // name is always the original chord
-            chd.src = chd.src.replace(/(_[a-gA-g]{1,2}_)/, transpose(input, transpose_by))
-            chd.alt = chd.name.replace(/(_[a-gA-g]{1,2}_)/, transpose(input, transpose_by))
-        }
-    }
+    updateChords(licks[i]);
 }
 
 
@@ -170,6 +181,8 @@ function slowdown(clicked_id) {
     }
     playback_rate = Number(selected_tortoise.value);
 }
+
+
 
 
 

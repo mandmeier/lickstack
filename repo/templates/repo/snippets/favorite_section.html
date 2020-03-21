@@ -36,7 +36,7 @@
 {% else %}
 
     <form action="{% url 'login' %}">
-        <button class="fav-btn" type="submit" id="like_{{ lick.id }}" name="lick_id" value="{{ lick.id }}" class="btn btn-danger">
+        <button class="fav-btn" type="submit" id="fav_{{ lick.id }}" name="lick_id" value="{{ lick.id }}" class="btn btn-danger">
             <i class="far fa-star fa-lg" style="color: #C00001;"></i>
         </button>
     </form>

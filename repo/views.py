@@ -89,29 +89,11 @@ def browse_licks_view(request):
         else:
             lick_id_query = int(lick_id_query.strip())
 
-        m1_b1 = request.GET.get('m1_b1', "")
-        m1_b2 = request.GET.get('m1_b2', "")
-        m1_b3 = request.GET.get('m1_b3', "")
-        m1_b4 = request.GET.get('m1_b4', "")
-        m2_b1 = request.GET.get('m2_b1', "")
-        m2_b2 = request.GET.get('m2_b2', "")
-        m2_b3 = request.GET.get('m2_b3', "")
-        m2_b4 = request.GET.get('m2_b4', "")
-        m3_b1 = request.GET.get('m3_b1', "")
-        m3_b2 = request.GET.get('m3_b2', "")
-        m3_b3 = request.GET.get('m3_b3', "")
-        m3_b4 = request.GET.get('m3_b4', "")
-        m4_b1 = request.GET.get('m4_b1', "")
-        m4_b2 = request.GET.get('m4_b2', "")
-        m4_b3 = request.GET.get('m4_b3', "")
-        m4_b4 = request.GET.get('m4_b4', "")
+        chord_seq = request.GET.get('chord_seq', "").split('x')[1:15]
+        tag_string = request.GET.get('tags', "")
 
-        chord_seq = [
-            m1_b1, m1_b2, m1_b3, m1_b4,
-            m2_b1, m2_b2, m2_b3, m2_b4,
-            m3_b1, m3_b2, m3_b3, m3_b4,
-            m4_b1, m4_b2, m4_b3, m4_b4,
-        ]
+        print(chord_seq)
+        print(tag_string)
 
         # make regex query seq
         def get_chord_seq_query(chord_seq, half_steps=0):
@@ -358,7 +340,6 @@ def create_lick(request):
             obj.author = request.user
             obj.save()
             form.save_m2m()
-            print(form_data)
             messages.success(
                 request, f'Lick {obj.id} created successfully.')
 
@@ -391,7 +372,6 @@ class LickCreateView(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView
     template_name = 'repo/lick_form.html'
 
     def form_valid(self, form):
-        print('FORM RECEIVED')
         """
         if Lick.objects.filter(author=self.request.user).count() == 0:
             form.instance.counter = 1
@@ -404,7 +384,6 @@ class LickCreateView(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView
         return super().form_valid(form)
 
     def form_invalid(self, form):
-        print(form.instance)
         return super().form_invalid(form)
 
 

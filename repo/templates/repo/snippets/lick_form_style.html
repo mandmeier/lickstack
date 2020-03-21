@@ -1,0 +1,217 @@
+{% load static %}
+
+<style type="text/css">
+
+
+/*avoid text overflow */
+input[placeholder] { text-overflow: ellipsis; }
+::-moz-placeholder { text-overflow: ellipsis; } /* firefox 19+ */
+input:-moz-placeholder { text-overflow: ellipsis; }
+
+
+/*  Lick Upload Form */
+
+
+.lick-form {
+    margin-top: 50px;
+    margin-bottom: 100px;
+    background: #f9f9f9;
+    width: 100%;
+    padding: 5px;
+    border: 2px solid #234444;
+    border-radius: 15px;
+}
+
+
+.form-chords-row {
+    height: 50px;
+    background-image: url("{% static 'img/staff.png' %}");
+    background-size: 100% 100%;
+}
+
+
+.form-chords-input .chord-select {
+    width: 11.5%;
+    max-width: 100%;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #495057;
+    padding: 0rem;
+    margin: 5px 0px;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.separator-mid{
+    width: 4%;
+}
+.separator-lr{
+    width: 2%;
+}
+
+
+
+
+
+/*time signature radio btns next to each other*/
+.form-check {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+
+
+
+/* moved to lick_form.html template because of link
+.chords-row {
+    height: 50px;
+    background-image: url("{% static 'img/staff.png' %}");
+    background-size: 100% 100%;
+}
+*/
+
+
+/*
+.chords-input .chord-select label{
+    position: none;
+}*/
+
+
+.form-submit {
+    margin-bottom: 10px
+}
+
+
+
+
+.audio-player {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #f9f9f9;
+    height: 40px;
+    padding: 0px 0px 0px 5px;
+}
+
+
+.audio-player button.play {
+        display: block;
+        width: 35px;
+        height: 35px;
+        border: 0;
+        background-color: #333333;
+        color: white;
+        font-size: 20px;
+        border-radius: 5px;
+        margin-right: 10px;
+        cursor: pointer;
+}
+
+
+.seek-bar {
+
+    margin-left: 10px;
+    margin-right: 5px;
+    width: 100%;
+    background-color: #cccccc;
+    display: flex;
+    align-items: center;
+    border-radius: 100000px;
+    cursor: pointer;
+}
+
+.seek-bar .fill {
+  height: 20px;
+  background-color: #666666;
+  border-radius: 100000px;
+}
+
+.seek-bar .handle {
+  width: 8px;
+  height: 20px;
+  background-color: #333333;
+  border-radius: 100000px;
+  margin-left: -5px;
+  transform: scale(2);
+  transition: all 0.1s;
+  pointer-events: none;
+}
+
+
+.preview-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #f9f9f9;
+    height: 100%;
+    width: 100%;
+    opacity: .8;
+}
+
+#inpFile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+#file_upload_info {
+    color: #333333;
+}
+
+.tag-section{
+    /*background: #ff0000;*/
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    margin: 10px 10px;
+}
+
+.tag-section hr{
+    margin: 0px;
+}
+.tag-container, .suggested-tag-container{
+    margin: 0px;
+    padding: 5px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tag-container .tag, .suggested-tag-container .tag{
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin: 5px;
+    padding: 0px 5px;
+    display: flex;
+    align-items: center;
+    background: #e0e0e0;
+    cursor: default;
+}
+
+.suggested-tag-container .tag{
+    cursor: pointer;
+}
+
+.tag-container input{
+    flex: 1;
+    padding: 5px;
+    outline: none;
+    border: 0;
+}
+
+.tag svg {
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.tag path {
+    pointer-events: none;
+}
+
+</style>
