@@ -36,7 +36,7 @@
         </div>
 
     <div class="audio-player col-12">
-          <button class="play" id="{{ lick.id }}[X]{{ lick.file.url }}" onclick="change_lick_id(this.id);"><i class="ion-play"></i></button>
+          <button class="play" id="{{ lick.id }}[X]{{ lick.file.url }}"><i class="ion-play"></i></button>
 
           <div class="seek-bar" id="seekbar_{{ lick.id }}">
               <div class="fill"></div>
@@ -47,7 +47,7 @@
     <div class="lick-display col-12">
     <div class="row chords-row">
         <div class="separator-lr"></div>
-            <div name="chord_1" class="chord-img"><img src="{% static 'img/chords/..png' %}"></div>
+            <div name="chord_1" class="chord-img"><img src="#"></div>
         <div class="separator-34"></div>
             <div name="chord_2" class="chord-img"><img src="{% static 'img/chords/..png' %}"></div>
         <div class="separator-34"></div>
@@ -89,10 +89,10 @@
     <div class="lick-controls col-12">
 
                 <button class="slowdown btn-default" id="slowdown-section_{{ lick.id }}">
-                    <input type="image" id="slowdown_{{ lick.id }}" onclick="slowdown(this.id);" value="1" src="{% static 'img/tortoise_default.png' %}" alt="slowdown">
+                    <input class="slowdown-btn" type="image" id="slowdown_{{ lick.id }}" onclick="slowdown(this.id);" value="1" src="{% static 'img/tortoise_default.png' %}" alt="slowdown">
                 </button>
 
-                  <select class="transpose-btn" id="transpose_lick_{{ lick.id }}" name="transpose">
+                  <select class="transpose-btn" id="transpose_lick_{{ lick.id }}" name="transpose" onchange="updateChords()">
                     <option value="12">+12</option>
                     <option value="11">+11</option>
                     <option value="10">+10</option>
@@ -134,26 +134,17 @@
 <script type="text/javascript">
 
 
+// set initial transpose value according to query
+
+selectElement('transpose_lick_{{ lick.id }}', {{ lick.chord_seq | chord_seq_T:chord_seq_query }})
+
+
+/*
 // make current playButton clickable
 playButton = document.getElementById("{{ lick.id }}[X]{{ lick.file.url }}");
 playButton.addEventListener('click', function () {
     activatePlayBtn();
 });
-
-
-// set initial transpose value according to query
-
-function selectElement(id, valueToSelect) {
-    let element = document.getElementById(id);
-    element.value = valueToSelect;
-}
-
-selectElement('transpose_lick_{{ lick.id }}', {{ lick.chord_seq | chord_seq_T:chord_seq_query }})
-
-console.log(selectElement('transpose_lick_{{ lick.id }}', {{ lick.chord_seq | chord_seq_T:chord_seq_query }}))
-
-
-
-
+*/
 
 </script>

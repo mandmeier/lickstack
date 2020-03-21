@@ -14,6 +14,12 @@
     function noenter() {
         return !(window.event && window.event.keyCode == 13); }
 
+
+    // used to select initial value of transpose button
+    function selectElement(id, valueToSelect) {
+    let element = document.getElementById(id);
+    element.value = valueToSelect;
+    }
 </script>
 
 
