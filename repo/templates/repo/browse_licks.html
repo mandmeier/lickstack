@@ -153,6 +153,14 @@
 <form class="lick-form" method="GET" enctype="multipart/form-data">
 
 
+    <label><h4>Chords</h4></label>
+
+    <!-- hidden field -->
+    <div id="chord_seq_field">
+            {{ form.chord_seq|as_crispy_field }}
+    </div>
+
+
     <div id="time-signature">
         <div class="form-check">
             <input type="radio" class="form-check-input" checked="checked" name="ts" id="id_time_signature_1" value="44">
@@ -196,82 +204,103 @@
     </div>
 
 
-
-    <div id="chord_seq_field">
-            {{ form.chord_seq|as_crispy_field }}
-    </div>
-
-
     <div class="time-signature row">
         <div class="form-group col-md-4">
             <input type="checkbox" id="include_transposed" name="include_transposed" value="True">
-            <label for="vehicle1"> Include transposed</label><br>
+            <label for="include_transposed"> Include transposed</label><br>
         </div>
         <div class="form-group col-md-4">
             <input type="checkbox" id="ignore_extensions" name="ignore_extensions" value="True">
-            <label for="vehicle1">Ignore extensions</label><br>
+            <label for="ignore_extensions">Ignore extensions</label><br>
         </div>
         <div class="form-group col-md-4">
             <input type="checkbox" id="exact_search" name="exact_search" value="True">
-            <label for="vehicle1">Exact search</label><br>
+            <label for="exact_search">Exact search</label><br>
         </div>
     </div>
 
     <div class="form-row">
         <div class="form-group col-md-4">
-            <label for="category">Time signature</label>
+            <label for="category"><h4>Author</h4></label>
+            <input class="form-control py-2 border-right-0 border" type="search" name="username_contains" placeholder="username contains..." value="{{ username_contains_query }}">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="category"><h4>Lick #</h4></label>
+            <input class="form-control py-2 border-right-0 border" type="search" name="lick_id" placeholder="lick ID..." value="{{ lick_id_query }}">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="category"><h4>Time sign</h4></label>
             <select id="time_signature" class="form-control" name="time_signature">
                 <option value="" selected>Any</option>
                 <option value="44">4/4</option>
                 <option value="34">3/4</option>
             </select>
         </div>
-
-        <div class="form-group col-md-4">
-            <label for="category">Instrument</label>
-            <select id="instrument" class="form-control" name="instrument">
-                <option value="" selected>Any</option>
-                {% for ins in instrument %}
-                <option value="{{ ins }}">{{ ins }}</option>
-              {% endfor %}
-            </select>
-        </div>
-    </div>
-
-    <div class="form-row">
-        <div class="form-group col-md-4">
-            <label for="category">Author</label>
-            <input class="form-control py-2 border-right-0 border" type="search" name="username_contains" placeholder="username contains..." value="{{ username_contains_query }}">
-        </div>
-        <div class="form-group col-md-4">
-            <label for="category">lick #</label>
-            <input class="form-control py-2 border-right-0 border" type="search" name="lick_id" placeholder="lick ID..." value="{{ lick_id_query }}">
-        </div>
     </div>
 
 
-    <label>Add tags</label>
+    <label><h4>Instruments</h4></label>
 
+    <!-- hidden field -->
+    <div class="form-group col-md-4" id="instr_choices" style="display:none;">>
+            {% for ins in instrument %}
+                {{ ins }},
+            {% endfor %}
+    </div>
+    <!-- hidden field -->
+    <input type="text" id="instr_seq" name="instr_seq" value="" class="textinput textInput form-control" style="display:none;">
+
+
+    <div id="instr-section" class="tag-section">
+        <div id="instr-container" class="tag-container">
+            <input id="instr-container-input" onkeypress="return noenter()" placeholder="Select or type + Enter"/>
+        </div>
+    <hr>
+         <div id="#suggested-instr-container" class="suggested-tag-container">
+
+        </div>
+    </div>
+
+
+
+    <label><h4>Keywords</h4></label>
+
+    <div class="time-signature row">
+        <div class="form-group col-md-6">
+            <input type="checkbox" id="must_contain" name="must_contain" value="True">
+            <label for="must_contain">Must contain keywords</label><br>
+        </div>
+    </div>
+
+    <!-- hidden field -->
     {{ form.tags|as_crispy_field }}
     <!--
     <input type="text" name="tags" class="tagwidget form-control" required="" id="id_tags">
     -->
 
-    <div class="tag-section">
-        <div class="tag-container">
-            <input onkeypress="return noenter()" placeholder="Type keyword, press Enter"/>
+    <div id="keyword-section" class="tag-section">
+        <div id="keyword-container" class="tag-container">
+            <input id="keyword-container-input" onkeypress="return noenter()" placeholder="Select or type + Enter"/>
         </div>
     <hr>
-         <div class="suggested-tag-container">
+         <div id="#suggested-keyword-container" class="suggested-tag-container">
 
         </div>
     </div>
 
-    <input type="hidden" id="tag_string" name="tag_string" value="TESTVALUE">
+ <!--
+    <input type="text" id="tag_string" name="tag_string" value="TESTVALUE">
 
-    <!--
+
     <input type="hidden" id="hiddenTagsInput" data-role="hiddenTagsInput" class="form-control" name="hiddenTagsInput">
-    -->
+-->
+
+
+
+
+
+
+
     <div class="form-submit">
         <button class="btn btn-primary btn-block btn-lg" type="submit" id="submit">Submit</button>
     </div>
@@ -366,7 +395,7 @@ for (let chord of chord_select) {
 
 // hide chord seq field
 const chord_seq_field = document.getElementById("chord_seq_field");
-//chord_seq_field.style.display = "none";
+chord_seq_field.style.display = "none";
 
 // update chord seq upon change of chords
 function updateChordSeq(){
@@ -431,20 +460,42 @@ time_sign_input.addEventListener("change", function(){
 
 
 
-//// Tag controls
+
+// input instruments
+function sanitizeTxt(key){
+    key = key.replace(/^\W+/g, '');
+    key = key.replace(/^gt;+/g, '');
+    key = key.replace(/^\s+/g, '');
+    key = key.replace(/\s+$/g, '');
+    key = key.toLowerCase();
+    return key;
+}
 
 
-const suggested_tags_original = ["jazz", "ballad", "swing", "bebop", "waltz", "latin", "bossa", "salsa", "montuno", "funk", "country", "rock", "metal", "scales", "blues", "gospel", "spiritual", "turnaround", "even_eights", "shuffle"];
-var suggested_tags = suggested_tags_original.slice()
+//// Instrument Choice
 
-const suggestedTagContainer = document.querySelector('.suggested-tag-container');
-const tagContainer = document.querySelector('.tag-container');
-const tagsInput = document.querySelector('.tag-container input');
-const hiddenTagsInput = document.getElementById('id_tags') // hidden input
-hiddenTagsInput.required = false;
-//hiddenTagsInput.type = "hidden"
 
-var tags = [];
+const instrument_choices = document.getElementById('instr_choices').innerHTML.split(',')
+
+suggested_instruments_original = []
+for (let i = 0; i < instrument_choices.length-1; i++) {
+    ins = sanitizeTxt(instrument_choices[i]);
+    if (ins != 'other'){
+        suggested_instruments_original.push(ins);
+    }
+}
+
+var suggested_instruments = suggested_instruments_original.slice()
+
+
+const suggestedInstrumentContainer = document.getElementById('#suggested-instr-container');
+const instrumentContainer = document.getElementById('instr-container');
+const instrumentsInput = document.getElementById('instr-container-input');
+const hiddenInstrumentsInput = document.getElementById('instr_seq') // hidden input
+hiddenInstrumentsInput.required = false;
+hiddenInstrumentsInput.type = "hidden"
+
+var instruments = [];
 
 function createTag(label, close="") {
     const div = document.createElement('div');
@@ -462,31 +513,30 @@ function createTag(label, close="") {
 }
 
 
-function updateTags(){
-    // remove all tags (reset)
-    document.querySelectorAll('.tag-section .tag').forEach(function(tag){
+function updateInstruments(){
+    // remove all instruments (reset)
+    document.querySelectorAll('#instr-section .tag').forEach(function(tag){
         tag.parentElement.removeChild(tag);
     });
 
-    // update selected tags
-    tags.slice().reverse().forEach(function(tag){
-        tagContainer.prepend(createTag(tag, close="Yes"));
+    // update selected instruments
+    instruments.slice().reverse().forEach(function(tag){
+        instrumentContainer.prepend(createTag(tag, close="Yes"));
     });
 
-    // update suggested tags
-    suggested_tags.forEach(function(tag){
-        suggestedTagContainer.appendChild(createTag(tag, close=""));
+    // update suggested instruments
+    suggested_instruments.forEach(function(tag){
+        suggestedInstrumentContainer.appendChild(createTag(tag, close=""));
     });
     // update hidden tag field
-    hiddenTagsInput.value = tags.join(",")
-    console.log(hiddenTagsInput.value);
+    hiddenInstrumentsInput.value = instruments.join(",")
+    console.log(hiddenInstrumentsInput.value);
 }
 
-updateTags()
+updateInstruments()
 
 
-// input tags
-
+// input instruments
 function sanitizeKey(key){
     key = key.replace(/^#+/g, '');
     key = key.replace(/^\s+/g, '');
@@ -496,46 +546,159 @@ function sanitizeKey(key){
     return key;
 }
 
-tagsInput.addEventListener('keyup', function(e){
-    let keyword = tagsInput.value
-    if (e.key == 'Enter' && keyword != ""){
-        keyword = sanitizeKey(keyword);
-        if (tags.indexOf(keyword) < 0) {
-            tags.push(keyword);
-            let st_index = suggested_tags.indexOf(keyword)
+
+
+instrumentsInput.addEventListener('keyup', function(e){
+    let instrument = instrumentsInput.value
+    if (e.key == 'Enter' && instrument != ""){
+        instrument = sanitizeKey(instrument);
+        if (instruments.indexOf(instrument) < 0) {
+            instruments.push(instrument);
+            let st_index = suggested_instruments.indexOf(instrument)
             if (st_index >= 0){
-                    suggested_tags.splice(st_index,1);
+                    suggested_instruments.splice(st_index,1);
             }
         }
-        updateTags();
-        tagsInput.value = '';
+        updateInstruments();
+        instrumentsInput.value = '';
     }
 });
 
 
 // delete tag from input list
-tagContainer.addEventListener('click', function(e){
+instrumentContainer.addEventListener('click', function(e){
     if (e.target.tagName == 'svg'){
-        let keyword = e.target.getAttribute('data-item');
-        if (suggested_tags_original.indexOf(keyword) >= 0 && suggested_tags.indexOf(keyword) < 0){
-            suggested_tags.push(keyword);
+        let instrument = e.target.getAttribute('data-item');
+        if (suggested_instruments_original.indexOf(instrument) >= 0 && suggested_instruments.indexOf(instrument) < 0){
+            suggested_instruments.push(instrument);
         }
-        let t_index = tags.indexOf(keyword);
-        tags.splice(t_index,1);
-        updateTags();
+        let t_index = instruments.indexOf(instrument);
+        instruments.splice(t_index,1);
+        updateInstruments();
     }
 });
 
 // select tag from suggested list
-suggestedTagContainer.addEventListener('click', function(e){
+suggestedInstrumentContainer.addEventListener('click', function(e){
     if (e.target.tagName == 'SPAN'){
-        let keyword = e.target.innerHTML;
-        tags.push(keyword);
-        let st_index = suggested_tags.indexOf(keyword);
-        suggested_tags.splice(st_index,1);
-        updateTags();
+        let instrument = e.target.innerHTML;
+        instruments.push(instrument);
+        let st_index = suggested_instruments.indexOf(instrument);
+        suggested_instruments.splice(st_index,1);
+        updateInstruments();
     }
 });
+
+
+
+
+
+
+
+
+//// Keyword chice
+
+
+const suggested_keywords_original = ["jazz", "ballad", "swing", "bebop", "waltz", "latin", "bossa", "salsa", "montuno", "funk", "country", "rock", "metal", "scales", "blues", "gospel", "spiritual", "turnaround", "even_eights", "shuffle"];
+var suggested_keywords = suggested_keywords_original.slice()
+
+const suggestedKeywordContainer = document.getElementById('#suggested-keyword-container');
+const keywordContainer = document.getElementById('keyword-container');
+const keywordsInput = document.getElementById('keyword-container-input');
+const hiddenKeywordsInput = document.getElementById('id_tags') // hidden input
+hiddenKeywordsInput.required = false;
+hiddenKeywordsInput.type = "hidden"
+
+var keywords = [];
+
+
+
+function updateKeywords(){
+    // remove all keywords (reset)
+    document.querySelectorAll('#keyword-section .tag').forEach(function(tag){
+        tag.parentElement.removeChild(tag);
+    });
+
+    // update selected keywords
+    keywords.slice().reverse().forEach(function(tag){
+        keywordContainer.prepend(createTag(tag, close="Yes"));
+    });
+
+    // update suggested keywords
+    suggested_keywords.forEach(function(tag){
+        suggestedKeywordContainer.appendChild(createTag(tag, close=""));
+    });
+    // update hidden tag field
+    hiddenKeywordsInput.value = keywords.join(",")
+    console.log(hiddenKeywordsInput.value);
+}
+
+updateKeywords()
+
+
+// input keywords
+
+keywordsInput.addEventListener('keyup', function(e){
+    let keyword = keywordsInput.value
+    if (e.key == 'Enter' && keyword != ""){
+        keyword = sanitizeKey(keyword);
+        if (keywords.indexOf(keyword) < 0) {
+            keywords.push(keyword);
+            let st_index = suggested_keywords.indexOf(keyword)
+            if (st_index >= 0){
+                    suggested_keywords.splice(st_index,1);
+            }
+        }
+        updateKeywords();
+        keywordsInput.value = '';
+    }
+});
+
+
+// delete tag from input list
+keywordContainer.addEventListener('click', function(e){
+    if (e.target.tagName == 'svg'){
+        let keyword = e.target.getAttribute('data-item');
+        if (suggested_keywords_original.indexOf(keyword) >= 0 && suggested_keywords.indexOf(keyword) < 0){
+            suggested_keywords.push(keyword);
+        }
+        let t_index = keywords.indexOf(keyword);
+        keywords.splice(t_index,1);
+        updateKeywords();
+    }
+});
+
+// select tag from suggested list
+suggestedKeywordContainer.addEventListener('click', function(e){
+    if (e.target.tagName == 'SPAN'){
+        let keyword = e.target.innerHTML;
+        keywords.push(keyword);
+        let st_index = suggested_keywords.indexOf(keyword);
+        suggested_keywords.splice(st_index,1);
+        updateKeywords();
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

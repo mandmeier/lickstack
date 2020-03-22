@@ -144,8 +144,6 @@ for (let i = 0; i < play_btns.length; i++) {
       window.rect = e.target.getBoundingClientRect();
       let x = e.clientX - rect.left;
       let p = x / seekBars[i].clientWidth;
-      console.log("clicked at " + p)
-      console.log(audios[i].currentTime)
       fillBars[i].style.width = p * 100 + "%";
     });
 
@@ -161,11 +159,8 @@ for (let i = 0; i < play_btns.length; i++) {
         mouseDown = false;
         let x = e.clientX - rect.left;
         let p = x / seekBars[i].clientWidth;
-        console.log("released at " + p)
         fillBars[i].style.width = p * 100 + "%";
-        console.log(audios[i].currentTime)
         audios[i].currentTime = p * audios[i].duration;
-        console.log(audios[i].currentTime)
         ofs = audios[i].currentTime;
       if (!audios[i].paused) {
         players[i].start();
@@ -183,7 +178,6 @@ updateChords();
 function resetAudio(num){
     for (let i = 0; i < play_btns.length; i++) {
         if (num != i){
-            console.log(i)
             audios[i].pause();
             audios[i].currentTime = 0;
             players[i].stop(0);

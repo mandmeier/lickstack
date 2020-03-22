@@ -92,7 +92,7 @@
                     <input class="slowdown-btn" type="image" id="slowdown_{{ lick.id }}" onclick="slowdown(this.id);" value="1" src="{% static 'img/tortoise_default.png' %}" alt="slowdown">
                 </button>
 
-                  <select class="transpose-btn" id="transpose_lick_{{ lick.id }}" name="transpose" onchange="updateChords()">
+                  <select class="transpose-btn" id="transpose_{{ lick.id }}" name="transpose" onchange="updateChords()">
                     <option value="12">+12</option>
                     <option value="11">+11</option>
                     <option value="10">+10</option>
@@ -136,7 +136,7 @@
 
 // set initial transpose value according to query
 
-selectElement('transpose_lick_{{ lick.id }}', {{ lick.chord_seq | chord_seq_T:chord_seq_query }})
+selectElement('transpose_{{ lick.id }}', {{ lick.chord_seq | chord_seq_T:chord_seq_query }})
 
 
 /*

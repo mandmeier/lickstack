@@ -67,6 +67,7 @@ def browse_licks_view(request):
     exact_search = False
     include_transposed = False
     ignore_extensions = False
+    must_contain_keyword = False
     instrument_query = ""
     username_contains_query = ""
     chord_seq_query = ""
@@ -74,6 +75,8 @@ def browse_licks_view(request):
     # dummy for transpose before form submit
     chord_seq_queries_T = ["" for i in range(12)]
     time_signature = ""
+    instrument_list = [""]
+    keyword_list = [""]
 
     # if search submitted get parameters from URL
     if request.GET:
@@ -90,10 +93,19 @@ def browse_licks_view(request):
             lick_id_query = int(lick_id_query.strip())
 
         chord_seq = request.GET.get('chord_seq', "").split('x')[1:15]
-        tag_string = request.GET.get('tags', "")
+        instrument_string = request.GET.get('instr_seq', "")
+        keyword_string = request.GET.get('tags', "")
+        must_contain_keyword = bool(request.GET.get('must_contain', ""))
 
-        print(chord_seq)
-        print(tag_string)
+        print('TEST')
+        print(instrument_string)
+        print(keyword_string)
+
+        instrument_list = instrument_string.split(',')
+        print(instrument_list)
+
+        keyword_list = keyword_string.split(',')
+        print(keyword_list)
 
         # make regex query seq
         def get_chord_seq_query(chord_seq, half_steps=0):
@@ -139,9 +151,21 @@ def browse_licks_view(request):
 
     licks = Lick.objects.filter(
         Q(time_signature__icontains=time_signature) &
-        Q(instrument__name__icontains=instrument_query) &
         Q(author__username__icontains=username_contains_query)
     )
+
+    instrument_search = Q()
+    for item in instrument_list:
+        instrument_search |= Q(instrument__name__icontains=item)
+
+    licks = licks.filter(instrument_search)
+
+    if keyword_list != [""]:
+        if must_contain_keyword == True:
+            for item in keyword_list:
+                licks = licks.filter(tags__slug__in=[item])
+        else:
+            licks = licks.filter(tags__slug__in=keyword_list)
 
     if include_transposed == False:
         licks = licks.filter(
