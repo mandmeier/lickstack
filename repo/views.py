@@ -379,8 +379,8 @@ def create_lick(request):
                     Instrument.objects.create(name=other_inst)
 
                 # get new instument instance and assign to lick, then save
-                lick.instrument = Instrument.objects.get(name=other_inst)
-                lick.save(update_fields=['instrument'])
+                obj.instrument = Instrument.objects.get(name=other_inst)
+                obj.save(update_fields=['instrument'])
 
     context = {
         "form": form,

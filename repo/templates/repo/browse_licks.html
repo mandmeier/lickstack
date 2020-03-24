@@ -222,11 +222,11 @@
     <div class="form-row">
         <div class="form-group col-md-4">
             <label for="category"><h4>Author</h4></label>
-            <input class="form-control py-2 border-right-0 border" type="search" name="username_contains" placeholder="username contains..." value="{{ username_contains_query }}">
+            <input id="username_contains" class="form-control py-2 border-right-0 border" type="search" name="username_contains" placeholder="username contains..." value="{{ username_contains_query }}">
         </div>
         <div class="form-group col-md-4">
             <label for="category"><h4>Lick #</h4></label>
-            <input class="form-control py-2 border-right-0 border" type="search" name="lick_id" placeholder="lick ID..." value="{{ lick_id_query }}">
+            <input id="lick_id" class="form-control py-2 border-right-0 border" type="search" name="lick_id" placeholder="lick ID..." value="{{ lick_id_query }}">
         </div>
         <div class="form-group col-md-4">
             <label for="category"><h4>Time sign</h4></label>
@@ -268,7 +268,7 @@
     <div class="time-signature row">
         <div class="form-group col-md-6">
             <input type="checkbox" id="must_contain" name="must_contain" value="True">
-            <label for="must_contain">Must contain keywords</label><br>
+            <label for="must_contain">Must contain all keywords</label><br>
         </div>
     </div>
 
@@ -302,7 +302,7 @@
 
 
     <div class="form-submit">
-        <button class="btn btn-primary btn-block btn-lg" type="submit" id="submit">Submit</button>
+        <button class="btn btn-primary btn-block btn-lg" type="submit" id="submit" onclick="storeSearchFormValues(form);">Submit</button>
     </div>
 
 </form>
@@ -530,7 +530,6 @@ function updateInstruments(){
     });
     // update hidden tag field
     hiddenInstrumentsInput.value = instruments.join(",")
-    console.log(hiddenInstrumentsInput.value);
 }
 
 updateInstruments()
@@ -548,19 +547,24 @@ function sanitizeKey(key){
 
 
 
+function addInstrument(instrument){
+    instrument = sanitizeKey(instrument);
+    if (instruments.indexOf(instrument) < 0) {
+        instruments.push(instrument);
+        let st_index = suggested_instruments.indexOf(instrument)
+        if (st_index >= 0){
+                suggested_instruments.splice(st_index,1);
+        }
+    }
+    updateInstruments();
+    instrumentsInput.value = '';
+}
+
+
 instrumentsInput.addEventListener('keyup', function(e){
     let instrument = instrumentsInput.value
     if (e.key == 'Enter' && instrument != ""){
-        instrument = sanitizeKey(instrument);
-        if (instruments.indexOf(instrument) < 0) {
-            instruments.push(instrument);
-            let st_index = suggested_instruments.indexOf(instrument)
-            if (st_index >= 0){
-                    suggested_instruments.splice(st_index,1);
-            }
-        }
-        updateInstruments();
-        instrumentsInput.value = '';
+        addInstrument(instrument)
     }
 });
 
@@ -630,7 +634,6 @@ function updateKeywords(){
     });
     // update hidden tag field
     hiddenKeywordsInput.value = keywords.join(",")
-    console.log(hiddenKeywordsInput.value);
 }
 
 updateKeywords()
@@ -638,19 +641,27 @@ updateKeywords()
 
 // input keywords
 
+
+
+function addKeyword(keyword){
+    keyword = sanitizeKey(keyword);
+    if (keywords.indexOf(keyword) < 0) {
+        keywords.push(keyword);
+        let st_index = suggested_keywords.indexOf(keyword)
+        if (st_index >= 0){
+                suggested_keywords.splice(st_index,1);
+        }
+    }
+    updateKeywords();
+    keywordsInput.value = '';
+}
+
+
+
 keywordsInput.addEventListener('keyup', function(e){
     let keyword = keywordsInput.value
     if (e.key == 'Enter' && keyword != ""){
-        keyword = sanitizeKey(keyword);
-        if (keywords.indexOf(keyword) < 0) {
-            keywords.push(keyword);
-            let st_index = suggested_keywords.indexOf(keyword)
-            if (st_index >= 0){
-                    suggested_keywords.splice(st_index,1);
-            }
-        }
-        updateKeywords();
-        keywordsInput.value = '';
+        addKeyword(keyword);
     }
 });
 
@@ -684,22 +695,132 @@ suggestedKeywordContainer.addEventListener('click', function(e){
 
 
 
+//// store form data in cookies
 
 
 
+var today = new Date();
+var expiry = new Date(today.getTime() + 1 * 24 * 60 * 60 * 1000); // plus 1 day
+
+function setCookie(name, value){
+    document.cookie=name + "=" + escape(value) + "; path=/; expires=" + expiry.toGMTString();
+}
+
+function getCookie(name){
+    var re = new RegExp(name + "=([^;]+)");
+    var value = re.exec(document.cookie);
+    return (value != null) ? unescape(value[1]) : null;
+}
+
+const form = document.forms[0]
+
+// store form values in cookies
+
+function storeSearchFormValues(form){
+    // remember chords
+    for (let i = 0; i < 16; i++){
+        let chord = 'chord_'+(i+1).toString()
+        setCookie('s_'+chord, form.elements[chord].value);
+    }
+
+    if (form.elements['id_time_signature_2'].checked){
+        setCookie("s_ts", "34");
+    } else {
+        setCookie("s_ts", "44");
+    }
+
+    if (form.elements['include_transposed'].checked) {
+        setCookie("s_include_transposed", "checked");
+    } else {
+        setCookie("s_include_transposed", "unchecked");
+    }
+
+    if (form.elements['ignore_extensions'].checked) {
+        setCookie("s_ignore_extensions", "checked");
+    } else {
+        setCookie("s_ignore_extensions", "unchecked");
+    }
+
+    if (form.elements['exact_search'].checked) {
+        setCookie("s_exact_search", "checked");
+    } else {
+        setCookie("s_exact_search", "unchecked");
+    }
+
+
+    setCookie("s_username_contains", form.elements['username_contains'].value)
+    setCookie("s_lick_id", form.elements['lick_id'].value)
+
+    setCookie("s_time_signature", form.elements['time_signature'].value)
+
+
+    // remember tags
+    setCookie("s_instruments", instruments);
+    setCookie("s_keywords", keywords);
+
+}
+
+
+function getSearchFormValues(){
+    for (let i = 0; i < 16; i++){
+        let chord = 'chord_'+(i+1).toString()
+        if (getCookie('s_'+chord) == null){
+            form.elements[chord].value = '.';
+        } else {
+            form.elements[chord].value = getCookie('s_'+chord);
+        }
+    }
+
+    if (getCookie("s_ts") == '34'){
+        form.elements['id_time_signature_2'].checked = true;
+    } else {
+        form.elements['id_time_signature_1'].checked = true;
+    }
+    changeLayout()
+
+
+    if (getCookie("s_include_transposed") == 'checked') {
+        form.elements['include_transposed'].checked = true;
+    } else {
+        form.elements['include_transposed'].checked = false;
+    }
+
+    if (getCookie("s_ignore_extensions") == 'checked') {
+        form.elements['ignore_extensions'].checked = true;
+    } else {
+        form.elements['ignore_extensions'].checked = false;
+    }
+
+    if (getCookie("s_exact_search") == 'checked') {
+        form.elements['exact_search'].checked = true;
+    } else {
+        form.elements['exact_search'].checked = false;
+    }
+
+    form.elements['username_contains'].value = getCookie("s_username_contains");
+    form.elements['lick_id'].value = getCookie("s_lick_id");
+
+
+    if (getCookie("s_time_signature") == null){
+        form.elements['time_signature'].value = '';
+    } else {
+        form.elements['time_signature'].value = getCookie("s_time_signature");
+    }
+
+
+    if (getCookie("s_instruments") != null){
+        getCookie("s_instruments").split(',').forEach(instrument => addInstrument(instrument));
+    }
+
+    if (getCookie("s_keywords") != null){
+        getCookie("s_keywords").split(',').forEach(keyword => addKeyword(keyword));
+    }
 
 
 
+}
 
-
-
-
-
-
-
-
-
-
+getSearchFormValues()
 
 
 

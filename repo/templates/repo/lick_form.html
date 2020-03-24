@@ -122,7 +122,7 @@
     <input type="hidden" id="hiddenTagsInput" data-role="hiddenTagsInput" class="form-control" name="hiddenTagsInput">
     -->
     <div class="form-submit">
-        <button class="btn btn-primary btn-block btn-lg" type="submit" id="submit">Submit</button>
+        <button class="btn btn-primary btn-block btn-lg" type="submit" id="submit" onclick="storeLickFormValues(form)">Submit</button>
     </div>
 
 </form>
@@ -392,7 +392,7 @@ jQuery('#id_instrument').on('change', function() {
 //// Tag controls
 
 
-const suggested_tags_original = ["jazz", "ballad", "swing", "bebop", "waltz", "latin", "bossa", "salsa", "montuno", "funk", "country", "rock", "metal", "scales", "blues", "gospel", "spiritual", "turnaround", "even_eights", "shuffle"];
+const suggested_tags_original = ["jazz", "ballad", "swing", "bebop", "waltz", "latin", "bossa", "salsa", "montuno", "funk", "country", "rock", "metal", "scales", "blues", "gospel", "spiritual", "turnaround", "even_eights", "shuffle", "ending"];
 var suggested_tags = suggested_tags_original.slice()
 
 const suggestedTagContainer = document.querySelector('.suggested-tag-container');
@@ -443,7 +443,6 @@ function updateTags(){
     });
     // update hidden tag field
     hiddenTagsInput.value = tags.join(",")
-    console.log(hiddenTagsInput.value);
 }
 
 updateTags()
@@ -460,9 +459,12 @@ function sanitizeKey(key){
     return key;
 }
 
-tagsInput.addEventListener('keyup', function(e){
-    let keyword = tagsInput.value
-    if (e.key == 'Enter' && keyword != ""){
+
+
+
+// add keyword
+
+function add_kw(keyword){
         keyword = sanitizeKey(keyword);
         if (tags.indexOf(keyword) < 0) {
             tags.push(keyword);
@@ -473,8 +475,17 @@ tagsInput.addEventListener('keyup', function(e){
         }
         updateTags();
         tagsInput.value = '';
+}
+
+
+tagsInput.addEventListener('keyup', function(e){
+    let keyword = tagsInput.value
+    if (e.key == 'Enter' && keyword != ""){
+        add_kw(keyword);
     }
 });
+
+
 
 
 // delete tag from input list
@@ -490,6 +501,7 @@ tagContainer.addEventListener('click', function(e){
     }
 });
 
+
 // select tag from suggested list
 suggestedTagContainer.addEventListener('click', function(e){
     if (e.target.tagName == 'SPAN'){
@@ -502,6 +514,77 @@ suggestedTagContainer.addEventListener('click', function(e){
 });
 
 
+
+
+//// store form data in cookies
+
+
+
+var today = new Date();
+var expiry = new Date(today.getTime() + 1 * 24 * 60 * 60 * 1000); // plus 1 day
+
+function setCookie(name, value){
+    document.cookie=name + "=" + escape(value) + "; path=/; expires=" + expiry.toGMTString();
+}
+
+function getCookie(name){
+    var re = new RegExp(name + "=([^;]+)");
+    var value = re.exec(document.cookie);
+    return (value != null) ? unescape(value[1]) : null;
+}
+
+const form = document.forms[0]
+
+// store form values in cookies
+
+function storeLickFormValues(form){
+    // remember chords
+    for (let i = 0; i < 16; i++){
+        let chord = 'chord_'+(i+1).toString()
+        setCookie(chord, form.elements[chord].value);
+    }
+    // only remember instrument if it is not 'other'
+    if (form.elements['id_instrument'].value != '5'){
+        setCookie("id_instrument", form.elements['id_instrument'].value);
+    } else {
+        setCookie("id_instrument", '');
+    }
+    // remember tags
+    setCookie("tags", tags);
+
+    // remember ts
+
+    if (form.elements['id_time_signature_2'].checked){
+        setCookie("newlick_ts", "34");
+    } else {
+        setCookie("newlick_ts", "44");
+    }
+
+
+}
+
+
+function getLickFormValues(){
+    for (let i = 0; i < 16; i++){
+        let chord = 'chord_'+(i+1).toString()
+        form.elements[chord].value = getCookie(chord);
+    }
+
+    form.elements['id_instrument'].value = getCookie("id_instrument");
+    getCookie("tags").split(',').forEach(keyword => add_kw(keyword));
+
+
+    if (getCookie("newlick_ts") == '34'){
+        form.elements['id_time_signature_2'].checked = true;
+    } else {
+        form.elements['id_time_signature_1'].checked = true;
+    }
+    changeLayout()
+
+
+}
+
+getLickFormValues()
 
 </script>
 
