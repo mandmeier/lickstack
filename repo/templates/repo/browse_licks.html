@@ -39,15 +39,22 @@
 
 
 
+.search-btn {
+    margin-top: 20px;
+}
+
+
+
 
 .lick-form {
-    margin-top: 50px;
-    margin-bottom: 100px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     background: #f9f9f9;
     width: 100%;
     padding: 5px;
     border: 2px solid #234444;
     border-radius: 15px;
+    box-shadow: 5px 5px 5px;
 }
 
 
@@ -146,8 +153,8 @@
 <!--data-toggle="collapse"-->
 <!--class="collapse"-->
 
-<button class="search-btn col-lg-12 btn-info btn-lg" data-target="#search">Search Licks  <i class="fas fa-search"></i></button>
-<div id="search">
+<button class="search-btn col-lg-12 btn-primary btn-lg" data-toggle="collapse" data-target="#search-form">Search Licks  <i class="fas fa-search"></i></button>
+<div id="search-form" class="collapse">
 
 
 <form class="lick-form" method="GET" enctype="multipart/form-data">
@@ -310,27 +317,27 @@
 
 </div>
 
+<div class="paginator">
 {% if licks.has_other_pages %}
-
     {% if licks.has_previous %}
-      <a class = "btn btn-outline-info mb-4" href="?{% url_replace request 'page' 1 %}">First</a>
-      <a class = "btn btn-outline-info mb-4" href="?{% url_replace request 'page' licks.previous_page_number %}">Prev</a>
+      <a class = "btn btn-outline-primary mb-4" href="?{% url_replace request 'page' 1 %}"><i class="fas fa-angle-double-left fa-lg"></i></a>
+      <a class = "btn btn-outline-primary mb-4" href="?{% url_replace request 'page' licks.previous_page_number %}"><i class="fas fa-angle-left fa-lg"></i></a>
     {% endif %}
 
     {% for num in licks.paginator.page_range %}
       {% if licks.number == num %}
-        <a class = "btn btn-info mb-4" href="?{% url_replace request 'page' num %}">{{ num }}</a>
-      {% elif num > licks.number|add:'-5' and num < licks.number|add:'5'%}
-        <a class = "btn btn-outline-info mb-4" href="?{% url_replace request 'page' num %}">{{ num }}</a>
+        <a class = "btn btn-primary mb-4" href="?{% url_replace request 'page' num %}">{{ num }}</a>
+      {% elif num > licks.number|add:'-4' and num < licks.number|add:'4'%}
+        <a class = "btn btn-outline-primary mb-4" href="?{% url_replace request 'page' num %}">{{ num }}</a>
       {% endif %}
     {% endfor %}
 
     {% if licks.has_next %}
-      <a class = "btn btn-outline-info mb-4" href="?{% url_replace request 'page' licks.next_page_number %}">Next</a>
-      <a class = "btn btn-outline-info mb-4" href="?{% url_replace request 'page' licks.paginator.num_pages %}">Last</a>
+      <a class = "btn btn-outline-primary mb-4" href="?{% url_replace request 'page' licks.next_page_number %}"><i class="fas fa-angle-right fa-lg"></i></a>
+      <a class = "btn btn-outline-primary mb-4" href="?{% url_replace request 'page' licks.paginator.num_pages %}"><i class="fas fa-angle-double-right fa-lg"></i></a>
     {% endif %}
-
 {% endif %}
+</div>
 
 
 {% if licks %}
@@ -350,25 +357,25 @@
 
 
 {% if licks.has_other_pages %}
-
+<div class="paginator">
     {% if licks.has_previous %}
-      <a class = "btn btn-outline-info mb-4" href="?{% url_replace request 'page' 1 %}">First</a>
-      <a class = "btn btn-outline-info mb-4" href="?{% url_replace request 'page' licks.previous_page_number %}">Prev</a>
+      <a class = "btn btn-outline-primary mb-4" href="?{% url_replace request 'page' 1 %}"><i class="fas fa-angle-double-left fa-lg"></i></a>
+      <a class = "btn btn-outline-primary mb-4" href="?{% url_replace request 'page' licks.previous_page_number %}"><i class="fas fa-angle-left fa-lg"></i></a>
     {% endif %}
 
     {% for num in licks.paginator.page_range %}
       {% if licks.number == num %}
-        <a class = "btn btn-info mb-4" href="?{% url_replace request 'page' num %}">{{ num }}</a>
-      {% elif num > licks.number|add:'-5' and num < licks.number|add:'5'%}
-        <a class = "btn btn-outline-info mb-4" href="?{% url_replace request 'page' num %}">{{ num }}</a>
+        <a class = "btn btn-primary mb-4" href="?{% url_replace request 'page' num %}">{{ num }}</a>
+      {% elif num > licks.number|add:'-4' and num < licks.number|add:'4'%}
+        <a class = "btn btn-outline-primary mb-4" href="?{% url_replace request 'page' num %}">{{ num }}</a>
       {% endif %}
     {% endfor %}
 
     {% if licks.has_next %}
-      <a class = "btn btn-outline-info mb-4" href="?{% url_replace request 'page' licks.next_page_number %}">Next</a>
-      <a class = "btn btn-outline-info mb-4" href="?{% url_replace request 'page' licks.paginator.num_pages %}">Last</a>
+      <a class = "btn btn-outline-primary mb-4" href="?{% url_replace request 'page' licks.next_page_number %}"><i class="fas fa-angle-right fa-lg"></i></a>
+      <a class = "btn btn-outline-primary mb-4" href="?{% url_replace request 'page' licks.paginator.num_pages %}"><i class="fas fa-angle-double-right fa-lg"></i></a>
     {% endif %}
-
+</div>
 {% endif %}
 
 
@@ -819,6 +826,7 @@ function getSearchFormValues(){
 
 
 }
+
 
 getSearchFormValues()
 

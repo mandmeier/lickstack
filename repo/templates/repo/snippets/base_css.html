@@ -1,3 +1,6 @@
+{% load static %}
+
+
 <style type="text/css">
 
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
@@ -10,7 +13,9 @@
   width: 100%;
   font-family: 'Poppins', sans-serif;
   color: #222;
-  background-color: #bcd9ea;
+  /*background-color: #bcd9ea;*/
+  background-image: url("/static/img/grey_canvas.jpg");
+  background-attachment: fixed;
 }
 
 .navbar {
@@ -33,7 +38,8 @@
 
 main{
     padding-left: 10px;
-    padding-right: 10px;
+    padding-right: 20px;
+    min-height: 100%;
 }
 
 .main-content .row {
@@ -44,6 +50,30 @@ main{
     padding-right: 0px;
 }
 
+
+.paginator {
+    margin: 20px 0px 0px 5px;
+    max-width: 100%;
+    min-height: 20px;
+    white-space: nowrap;
+}
+
+
+.paginator .btn {
+    background: #f9f9f9;
+    color: #333333;
+    font-weight: bold;
+    border: 2px solid #234444;
+}
+
+.paginator .btn-primary{
+    background: #333333;
+    color: #f9f9f9;
+}
+
+.paginator .btn:hover {
+    background: #cccccc;
+}
 
 
 

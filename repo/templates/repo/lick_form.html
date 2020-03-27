@@ -21,32 +21,72 @@
 <form class="lick-form" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
 
-    <h2>New Lick</h2>
+<section class="form-section" id="form-section-file">
+    <header class="form-header" id="form-header-file">
+        <h4>New Lick</h4>
+    </header>
+<div class="form-info" id="form-info-file">
+    <div class="info" id="file_upload_info">
+        <p>Choose audio file of type '.mp3', '.m4a' or '.ogg'. <br> Length maximum 4 measures.</p>
+    </div>
+    <div class="error" id="file_upload_error">
+
+    </div>
+</div>
+
     <label for="inpFile" id="inpFileLabel" class="requiredField btn btn-secondary">Choose file</label>
 
     {{ form.file|as_crispy_field }}
-    <!--
-    <input type="file" name="file" id="inpFile" class="clearablefileinput form-control" required>
-    -->
-    <div id="file_upload_info">
-        <p>Choose audio file of type '.mp3', '.m4a' or '.ogg'. <br> Length maximum 4 measures.</p>
+<!--
+<input type="file" name="file" id="inpFile" class="clearablefileinput form-control" required>
+-->
+
+    <div class="audio-player col-12">
+          <button class="play" id="play" type="button"><i class="ion-play"></i></button>
+
+          <div class="seek-bar" id="seekbar">
+              <div class="fill"></div>
+              <div class="handle"></div>
+          </div>
+
+          <div class="preview-overlay" id="preview"></div>
+
     </div>
 
-        <div class="audio-player col-12">
-              <button class="play" id="play" type="button"><i class="ion-play"></i></button>
+    <div class="row">
+        <div class="col-6">
+            {{ form.instrument|as_crispy_field }}
+        </div>
+        <div class="col-lg-6" id="other">
+            {{ form.other|as_crispy_field }}
+        </div>
+    </div>
 
-              <div class="seek-bar" id="seekbar">
-                  <div class="fill"></div>
-                  <div class="handle"></div>
-              </div>
+</section>
 
-              <div class="preview-overlay" id="preview"></div>
+
+<section class="form-section" id="form-section-chords">
+    <header class="form-header" id="form-header-chords">
+        <h4>Chords</h4>
+    </header>
+    <div class="form-info" id="form-info-chords">
+        <div class="info" id="chords_info">
+            <p>Enter chords <u><em>in concert key</em></u><br> Length maximum 4 measures.</p>
+        </div>
+        <div class="error" id="chords_error">
 
         </div>
+    </div>
 
-    <button class="reset-chords-btn btn btn-secondary" id="reset_chords" type="button">Reset Chords</button>
 
-
+    <div class="time-signature row">
+        <div class="col-6">
+            {{ form.time_signature|as_crispy_field }}
+        </div>
+        <div class="col-2">
+            <button class="reset-chords-btn btn btn-secondary" id="reset_chords" type="button">Reset Chords</button>
+        </div>
+    </div>
 
     <div class="form-chords-input col-12">
     <div class="row form-chords-row">
@@ -82,24 +122,22 @@
     </div>
 
 
-    <div class="time-signature row">
-        <div class="col-6">
-            {{ form.time_signature|as_crispy_field }}
+</section>
+
+
+
+<section class="form-section" id="form-section-keywords">
+    <header class="form-header" id="form-header-keywords">
+        <h4>Keywords</h4>
+    </header>
+    <div class="form-info" id="form-info-keywords">
+        <div class="info" id="keywords_info">
+            <p>Add keywords so that you and others can find your lick. <br> Be as specific as you can </p>
         </div>
-
-        <div class="col-lg-6">
-            {{ form.instrument|as_crispy_field }}
-        <div id="other">
-            {{ form.other|as_crispy_field }}
-        </div>
+        <div class="error" id="keywords_error">
 
         </div>
-
-
     </div>
-
-
-    <label>Add tags</label>
 
     {{ form.tags|as_crispy_field }}
     <!--
@@ -121,9 +159,13 @@
     <!--
     <input type="hidden" id="hiddenTagsInput" data-role="hiddenTagsInput" class="form-control" name="hiddenTagsInput">
     -->
+
+</section>
+
     <div class="form-submit">
         <button class="btn btn-primary btn-block btn-lg" type="submit" id="submit" onclick="storeLickFormValues(form)">Submit</button>
     </div>
+
 
 </form>
 
@@ -236,14 +278,14 @@ if (lick_URL) {
 // get audio file src from input field
 inpFile = document.getElementById("inpFile");
 inpFileLabel = document.getElementById("inpFileLabel")
-file_upload_info = document.getElementById("file_upload_info")
+file_upload_error = document.getElementById("file_upload_error")
 
 
 inpFile.addEventListener("change", function() {
     audio_reset();
     file = this.files[0];
     inpFileLabel.textContent=file.name;
-    //file_upload_info.innerHTML = "Choose audio file of type .mp3 .m4a or .ogg. Max size 1 MB.";
+    //file_upload_error.innerHTML = "Choose audio file of type .mp3 .m4a or .ogg. Max size 1 MB.";
     preview.style.display = "hidden";
     submit_btn.className = initial_submit_classname
     submit_btn.type = "submit";
@@ -253,17 +295,17 @@ inpFile.addEventListener("change", function() {
         preview.style.display = "block";
         disable_submit_btn()
     } else if (!(file.type.split("/")[0] == "audio")) {
-        file_upload_info.innerHTML = "Wrong file type. Please use audio, preferably '.mp3', '.m4a' or '.ogg'.";
-        file_upload_info.style.color = "#ff0000"
+        file_upload_error.innerHTML = "Wrong file type. Please use audio, preferably '.mp3', '.m4a' or '.ogg'.";
+        file_upload_error.style.color = "#ff0000"
         preview.style.display = "block";
         disable_submit_btn()
     } else if (file.size > 1048576) {
-        file_upload_info.innerHTML = "File too large (limit 1 MB). Consider shortening audio.";
-        file_upload_info.style.color = "#ff0000"
+        file_upload_error.innerHTML = "File too large (limit 1 MB). Consider shortening audio.";
+        file_upload_error.style.color = "#ff0000"
         preview.style.display = "block";
         disable_submit_btn()
     } else {
-        file_upload_info.innerHTML = "";
+        file_upload_error.innerHTML = "";
         reader = new FileReader();
         reader.addEventListener("load", function() {
             audio = new Audio(this.result);
@@ -392,7 +434,12 @@ jQuery('#id_instrument').on('change', function() {
 //// Tag controls
 
 
-const suggested_tags_original = ["jazz", "ballad", "swing", "bebop", "waltz", "latin", "bossa", "salsa", "montuno", "funk", "country", "rock", "metal", "scales", "blues", "gospel", "spiritual", "turnaround", "even_eights", "shuffle", "ending"];
+const suggested_tags_original = ["jazz", "ballad", "swing", "bebop",
+"waltz", "latin", "bossa", "salsa",
+"montuno", "funk", "country", "rock",
+"metal", "scales", "blues", "gospel",
+"spiritual", "turnaround", "even_eights", "shuffle",
+"ending", "exercise"];
 var suggested_tags = suggested_tags_original.slice()
 
 const suggestedTagContainer = document.querySelector('.suggested-tag-container');
@@ -538,11 +585,12 @@ const form = document.forms[0]
 // store form values in cookies
 
 function storeLickFormValues(form){
-    // remember chords
     for (let i = 0; i < 16; i++){
         let chord = 'chord_'+(i+1).toString()
-        setCookie(chord, form.elements[chord].value);
+        setCookie('f_'+chord, form.elements[chord].value);
     }
+
+
     // only remember instrument if it is not 'other'
     if (form.elements['id_instrument'].value != '5'){
         setCookie("id_instrument", form.elements['id_instrument'].value);
@@ -565,14 +613,25 @@ function storeLickFormValues(form){
 
 
 function getLickFormValues(){
+
     for (let i = 0; i < 16; i++){
         let chord = 'chord_'+(i+1).toString()
-        form.elements[chord].value = getCookie(chord);
+        if (getCookie('f_'+chord) == null){
+            form.elements[chord].value = '.';
+        } else {
+            form.elements[chord].value = getCookie('f_'+chord);
+        }
     }
 
-    form.elements['id_instrument'].value = getCookie("id_instrument");
-    getCookie("tags").split(',').forEach(keyword => add_kw(keyword));
+    if (getCookie("id_instrument") == null){
+        form.elements['id_instrument'].value = ""
+    } else {
+        form.elements['id_instrument'].value = getCookie("id_instrument");
+    }
 
+    if (getCookie("tags") != null){
+        getCookie("tags").split(',').forEach(keyword => add_kw(keyword));
+    }
 
     if (getCookie("newlick_ts") == '34'){
         form.elements['id_time_signature_2'].checked = true;
