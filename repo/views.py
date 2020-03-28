@@ -97,15 +97,9 @@ def browse_licks_view(request):
         keyword_string = request.GET.get('tags', "")
         must_contain_keyword = bool(request.GET.get('must_contain', ""))
 
-        print('TEST')
-        print(instrument_string)
-        print(keyword_string)
-
         instrument_list = instrument_string.split(',')
-        print(instrument_list)
 
         keyword_list = keyword_string.split(',')
-        print(keyword_list)
 
         # make regex query seq
         def get_chord_seq_query(chord_seq, half_steps=0):

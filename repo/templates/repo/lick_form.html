@@ -18,154 +18,193 @@
 
 
 
-<form class="lick-form" method="POST" enctype="multipart/form-data">
+<form class="lick-form" id="lick-form" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
 
+<h2>Create a new Lick</h2>
+
 <section class="form-section" id="form-section-file">
+
     <header class="form-header" id="form-header-file">
-        <h4>New Lick</h4>
+        <h4>Audio</h4>
+        <button class="form-info-button" data-toggle="collapse" data-target="#form-info-file"><i class="fas fa-info-circle fa-lg"></i></button>
     </header>
-<div class="form-info" id="form-info-file">
-    <div class="info" id="file_upload_info">
-        <p>Choose audio file of type '.mp3', '.m4a' or '.ogg'. <br> Length maximum 4 measures.</p>
-    </div>
-    <div class="error" id="file_upload_error">
 
-    </div>
-</div>
+    <main class="form-fields">
 
-    <label for="inpFile" id="inpFileLabel" class="requiredField btn btn-secondary">Choose file</label>
-
-    {{ form.file|as_crispy_field }}
-<!--
-<input type="file" name="file" id="inpFile" class="clearablefileinput form-control" required>
--->
-
-    <div class="audio-player col-12">
-          <button class="play" id="play" type="button"><i class="ion-play"></i></button>
-
-          <div class="seek-bar" id="seekbar">
-              <div class="fill"></div>
-              <div class="handle"></div>
-          </div>
-
-          <div class="preview-overlay" id="preview"></div>
-
-    </div>
-
-    <div class="row">
-        <div class="col-6">
-            {{ form.instrument|as_crispy_field }}
+        <div class="collapse form-info" id="form-info-file">
+            <div class="info" id="file_upload_info">
+                <p>Choose audio file of type '.mp3', '.m4a' or '.ogg'. <br> Record no more than 4 measures for each lick. </p>
+            </div>
         </div>
-        <div class="col-lg-6" id="other">
-            {{ form.other|as_crispy_field }}
+
+        <div class="error" id="file_upload_error"></div>
+
+        <label for="inpFile" id="inpFileLabel" class="requiredField btn btn-default">Choose file</label>
+
+        {{ form.file|as_crispy_field }}
+        <!--
+        <input type="file" name="file" id="inpFile" class="clearablefileinput form-control" required>
+        -->
+
+        <div class="audio-player col-12">
+              <button class="play" id="play" type="button"><i class="ion-play"></i></button>
+
+              <div class="seek-bar" id="seekbar">
+                  <div class="fill"></div>
+                  <div class="handle"></div>
+              </div>
+
+              <div class="preview-overlay" id="preview"></div>
+
         </div>
-    </div>
+    </main>
 
 </section>
 
 
+<section class="form-section" id="form-section-instrument">
+    <header class="form-header" id="form-header-instrument">
+        <h4>Instrument</h4>
+        <button class="form-info-button" data-toggle="collapse" data-target="#form-info-instrument"><i class="fas fa-info-circle fa-lg"></i></button>
+    </header>
+
+    <main class="form-fields">
+
+        <div class="collapse form-info" id="form-info-instrument">
+            <div class="info" id="instrument">
+                <p>The instrument your lick is played in. <br> Choose "other" and specify if you can't find it in the list. </p>
+            </div>
+        </div>
+
+        <div class="error" id="instrument_error"></div>
+
+        <div class="row" id="instrument-row">
+            <div class="col-6">
+                {{ form.instrument|as_crispy_field }}
+            </div>
+            <div class="col-1" ></div>
+            <div class="col-5" id="other">
+                {{ form.other|as_crispy_field }}
+            </div>
+        </div>
+
+    </main>
+
+</section>
+
+
+
+
+
+
 <section class="form-section" id="form-section-chords">
+
     <header class="form-header" id="form-header-chords">
         <h4>Chords</h4>
+        <button class="form-info-button" data-toggle="collapse" data-target="#form-info-chords"><i class="fas fa-info-circle fa-lg"></i></button>
     </header>
-    <div class="form-info" id="form-info-chords">
-        <div class="info" id="chords_info">
-            <p>Enter chords <u><em>in concert key</em></u><br> Length maximum 4 measures.</p>
+
+    <main class="form-fields">
+
+        <div class="collapse form-info" id="form-info-chords">
+            <div class="info" id="chords_info">
+                <p>Enter chords <u><em>in concert key</em></u><br> Make sure that the chords match the audio recording as closely as possible. <br> Chords don't have to be repeated on each beat if they don't change <br> e.g.   |F7 - – –| C7 - – –|</p>
+            </div>
         </div>
-        <div class="error" id="chords_error">
 
-        </div>
-    </div>
+        <div class="error" id="chords_error"></div>
 
-
-    <div class="time-signature row">
-        <div class="col-6">
+        <div id="time-signature">
             {{ form.time_signature|as_crispy_field }}
+            <button class="reset-chords-btn btn btn-secondary" id="reset_chords" type="button"><i class="fas fa-recycle fa-lg"></i></button>
         </div>
-        <div class="col-2">
-            <button class="reset-chords-btn btn btn-secondary" id="reset_chords" type="button">Reset Chords</button>
+
+        <div class="form-chords-input col-12">
+        <div class="row form-chords-row">
+                <div class="separator-lr"></div>
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                <div class="separator-mid"></div>
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                <div class="separator-lr"></div>
         </div>
-    </div>
+        <div class="row form-chords-row">
+                <div class="separator-lr"></div>
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                <div class="separator-mid"></div>
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                <div class="separator-lr"></div>
+        </div>
+        </div>
 
-    <div class="form-chords-input col-12">
-    <div class="row form-chords-row">
-            <div class="separator-lr"></div>
-            {% include 'repo/snippets/chord_select_snippet.html' %}
-            {% include 'repo/snippets/chord_select_snippet.html' %}
-            {% include 'repo/snippets/chord_select_snippet.html' %}
-            {% include 'repo/snippets/chord_select_snippet.html' %}
-            <div class="separator-mid"></div>
-            {% include 'repo/snippets/chord_select_snippet.html' %}
-            {% include 'repo/snippets/chord_select_snippet.html' %}
-            {% include 'repo/snippets/chord_select_snippet.html' %}
-            {% include 'repo/snippets/chord_select_snippet.html' %}
-            <div class="separator-lr"></div>
-    </div>
-    <div class="row form-chords-row">
-            <div class="separator-lr"></div>
-            {% include 'repo/snippets/chord_select_snippet.html' %}
-            {% include 'repo/snippets/chord_select_snippet.html' %}
-            {% include 'repo/snippets/chord_select_snippet.html' %}
-            {% include 'repo/snippets/chord_select_snippet.html' %}
-            <div class="separator-mid"></div>
-            {% include 'repo/snippets/chord_select_snippet.html' %}
-            {% include 'repo/snippets/chord_select_snippet.html' %}
-            {% include 'repo/snippets/chord_select_snippet.html' %}
-            {% include 'repo/snippets/chord_select_snippet.html' %}
-            <div class="separator-lr"></div>
-    </div>
-    </div>
-
-    <div id="chord_seq_field">
-            {{ form.chord_seq|as_crispy_field }}
-    </div>
-
+        <div id="chord_seq_field" style="display: none;">
+                {{ form.chord_seq|as_crispy_field }}
+        </div>
+    </main>
 
 </section>
 
 
 
 <section class="form-section" id="form-section-keywords">
+
     <header class="form-header" id="form-header-keywords">
         <h4>Keywords</h4>
+        <button class="form-info-button" data-toggle="collapse" data-target="#form-info-keywords"><i class="fas fa-info-circle fa-lg"></i></button>
     </header>
-    <div class="form-info" id="form-info-keywords">
-        <div class="info" id="keywords_info">
-            <p>Add keywords so that you and others can find your lick. <br> Be as specific as you can </p>
+
+    <main class="form-fields">
+
+        <div class="collapse form-info" id="form-info-keywords">
+            <div class="info" id="keywords_info">
+                <p>Add keywords so that you and others can find your lick. <br> Keywords can be a genre, style, name of the artist(s) the lick is inspired by, etc. <br> Try to be as specific as you can. </p>
+            </div>
         </div>
-        <div class="error" id="keywords_error">
 
+        <div class="error" id="keywords_error"></div>
+
+        {{ form.tags|as_crispy_field }}
+        <!--
+        <input type="text" name="tags" class="tagwidget form-control" required="" id="id_tags">
+        -->
+        <div class="tag-section">
+            <div class="tag-container">
+                <input onkeypress="return noenter()" placeholder="Type keyword, press Enter"/>
+            </div>
+        <hr>
+             <div class="suggested-tag-container">
+
+            </div>
         </div>
-    </div>
 
-    {{ form.tags|as_crispy_field }}
-    <!--
-    <input type="text" name="tags" class="tagwidget form-control" required="" id="id_tags">
-    -->
-
-    <div class="tag-section">
-        <div class="tag-container">
-            <input onkeypress="return noenter()" placeholder="Type keyword, press Enter"/>
-        </div>
-    <hr>
-         <div class="suggested-tag-container">
-
-        </div>
-    </div>
-
-    <input type="hidden" id="tag_string" name="tag_string" value="TESTVALUE">
-
-    <!--
-    <input type="hidden" id="hiddenTagsInput" data-role="hiddenTagsInput" class="form-control" name="hiddenTagsInput">
-    -->
+        <input type="hidden" id="tag_string" name="tag_string" value="TESTVALUE">
+        <!--
+        <input type="hidden" id="hiddenTagsInput" data-role="hiddenTagsInput" class="form-control" name="hiddenTagsInput">
+        -->
+    </main>
 
 </section>
 
-    <div class="form-submit">
-        <button class="btn btn-primary btn-block btn-lg" type="submit" id="submit" onclick="storeLickFormValues(form)">Submit</button>
+    <div id="check-form-btn">
+        <button class="btn btn-primary btn-block btn-lg" type="button" onclick="checkForm()">Submit</button>
     </div>
 
+    <!-- submit button hidden -->
+    <div class="form-submit" style="display: none;">
+        <button class="btn btn-primary btn-block btn-lg" type="submit" id="submit" onclick="storeLickFormValues(form)">Submit</button>
+    </div>
 
 </form>
 
@@ -173,23 +212,6 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript">
-
-//// Submit btn controls
-
-const submit_btn = document.getElementById("submit");
-const initial_submit_classname = submit_btn.className
-
-function disable_submit_btn(){
-    if (submit_btn.className == initial_submit_classname){
-        submit_btn.className += " btn-secondary disable";
-        submit_btn.type = "button";
-    }
-}
-
-function enable_submit_btn(){
-        submit_btn.className = initial_submit_classname;
-        submit_btn.type = "submit";
-}
 
 
 //// Audio preview
@@ -287,23 +309,16 @@ inpFile.addEventListener("change", function() {
     inpFileLabel.textContent=file.name;
     //file_upload_error.innerHTML = "Choose audio file of type .mp3 .m4a or .ogg. Max size 1 MB.";
     preview.style.display = "hidden";
-    submit_btn.className = initial_submit_classname
-    submit_btn.type = "submit";
 
     if (file == null) {
         inpFileLabel.textContent="Choose File";
         preview.style.display = "block";
-        disable_submit_btn()
     } else if (!(file.type.split("/")[0] == "audio")) {
         file_upload_error.innerHTML = "Wrong file type. Please use audio, preferably '.mp3', '.m4a' or '.ogg'.";
-        file_upload_error.style.color = "#ff0000"
         preview.style.display = "block";
-        disable_submit_btn()
     } else if (file.size > 1048576) {
         file_upload_error.innerHTML = "File too large (limit 1 MB). Consider shortening audio.";
-        file_upload_error.style.color = "#ff0000"
         preview.style.display = "block";
-        disable_submit_btn()
     } else {
         file_upload_error.innerHTML = "";
         reader = new FileReader();
@@ -467,12 +482,6 @@ function createTag(label, close="") {
 
 
 function updateTags(){
-    //disable or enable button
-    if (tags.length <= 0){
-        disable_submit_btn();
-    } else {
-        enable_submit_btn();
-    }
 
     // remove all tags (reset)
     document.querySelectorAll('.tag-section .tag').forEach(function(tag){
@@ -563,9 +572,73 @@ suggestedTagContainer.addEventListener('click', function(e){
 
 
 
+
+//// check form
+
+const submit_btn = document.getElementById("submit");
+const other_field = document.getElementById("id_other");
+
+function checkForm(){
+    let status_audio = "pass"
+    let status_instrument = "pass"
+    let status_chords = "pass"
+    let status_keywords = "pass"
+    let form_status = "fail"
+
+    // check audio file
+    if (typeof audio == 'undefined') {
+        file_upload_error.innerHTML = "Please select an audio file."
+        status_audio = "fail"
+    } else {
+        file_upload_error.innerHTML = ""
+        status_audio = "pass"
+    }
+
+    // check if other instrument specified
+    if (instr_select.value == ''){
+        instrument_error.innerHTML = "Please specify an instrument."
+        status_instrument = "fail"
+    } else if (instr_select.value == '5' && other_field.value == ""){
+        instrument_error.innerHTML = "Please specify an instrument."
+        status_instrument = "fail"
+    } else {
+        instrument_error.innerHTML = ""
+        status_instrument = "pass"
+    }
+
+
+    // check chords
+    if (document.getElementById("id_chord_seq").value == "x.x.x.x.x.x.x.x.x.x.x.x.x.x.x.x.x"){
+        chords_error.innerHTML = "Please enter at least one chord."
+        status_chords = "fail"
+    } else {
+        chords_error.innerHTML = ""
+        status_chords = "pass"
+    }
+
+    if (tags.length == 0){
+        keywords_error.innerHTML = "Please enter at least one keyword."
+        status_keywords = "fail"
+    } else {
+        keywords_error.innerHTML = ""
+        status_keywords = "pass"
+    }
+
+    // check if all fields correct
+    if(status_audio == "pass" && status_instrument == "pass" && status_chords == "pass" && status_keywords == "pass"){
+        form_status = "pass"
+    }
+
+    // submit form
+    if (form_status == "pass"){
+        submit_btn.click()
+    }
+
+}
+
+
+
 //// store form data in cookies
-
-
 
 var today = new Date();
 var expiry = new Date(today.getTime() + 1 * 24 * 60 * 60 * 1000); // plus 1 day

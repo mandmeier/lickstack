@@ -8,7 +8,7 @@ import os
 class LickForm(forms.ModelForm):
   TS_CHOICES = [('44', '4/4'), ('34', '3/4')]
   time_signature = forms.ChoiceField(
-      choices=TS_CHOICES, initial='44', widget=forms.RadioSelect)
+      choices=TS_CHOICES, initial='44', widget=forms.RadioSelect, label='')
   other = forms.CharField(required=False, label='')
 
   class Meta:
@@ -20,6 +20,7 @@ class LickForm(forms.ModelForm):
         'tags': '',
         'other': '',
         'chord_seq': '',
+        'instrument': '',
     }
     help_texts = {
         'file': '',

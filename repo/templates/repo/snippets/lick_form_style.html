@@ -22,13 +22,92 @@ input:-moz-placeholder { text-overflow: ellipsis; }
     border-radius: 15px;
 }
 
+.lick-form div{
+    padding: 0px;
+}
+
 .form-header{
     background: #333333;
     color: #f9f9f9;
     height: 40px;
-    padding: 5px;
-    border-radius: 10px;
+    margin-top: 40px;
+    margin-left: -5px;
+    margin-right: -5px;
+    padding: 5px 10px 5px 10px;
+    display: flex;
 }
+
+
+.form-info-button {
+    position: absolute;
+    height: 35px;
+    width: 35px;
+    right: 30px;
+    border-radius: 5px;
+    color: #f9f9f9;
+    background: #333333;
+    border: 0px solid #333333;
+}
+
+
+
+.form-fields{
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 0px;
+}
+
+.info, .error {
+    padding: 5px 20px 5px 20px;
+}
+
+.info{
+    margin-bottom: 0px;
+}
+
+.info p{
+    margin-bottom: 0px;
+    color: #006400;
+}
+
+.error {
+    color: #ff0000;
+}
+
+
+#inpFileLabel {
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border: 2px solid #234444;
+}
+
+#instrument-row {
+    margin-top: 20px;
+    margin-bottom: -30px;
+}
+
+
+#time-signature {
+    margin-top: 20px;
+    display: flex;
+}
+
+
+#reset_chords {
+    position: absolute;
+    height: 35px;
+    width: 35px;
+    right: 43px;
+    border-radius: 5px;
+    color: #333333;
+    background: #f9f9f9;
+    border: 2px solid #333333;
+    padding: 0px 0px 0px 2px;
+}
+
+
+
 
 
 .form-chords-row {
@@ -62,15 +141,17 @@ input:-moz-placeholder { text-overflow: ellipsis; }
 }
 
 
-
-
-
 /*time signature radio btns next to each other*/
 .form-check {
     display: inline-block;
-    margin-right: 10px;
+    /*margin-right: 10px;*/
+    margin: 5px 20px;
 }
 
+#check-form-btn{
+    border-radius: 5px;
+    margin-top: 40px;
+}
 
 
 
@@ -174,11 +255,15 @@ input:-moz-placeholder { text-overflow: ellipsis; }
     color: #333333;
 }
 
+#div_id_file {
+    display: none;
+}
+
 .tag-section{
     /*background: #ff0000;*/
     border: 2px solid #ccc;
     border-radius: 5px;
-    margin: 10px 10px;
+    /*margin: 10px 10px;*/
 }
 
 .tag-section hr{
