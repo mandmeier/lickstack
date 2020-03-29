@@ -29,126 +29,8 @@
 }
 </style>
 
+{% include 'repo/snippets/browse_licks_style.html' %}
 {% include 'repo/snippets/lick_snippet_style.html' %}
-
-
-
-
-
-<style type="text/css">
-
-
-
-.search-btn {
-    margin-top: 20px;
-}
-
-
-
-
-.lick-form {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    background: #f9f9f9;
-    width: 100%;
-    padding: 5px;
-    border: 2px solid #234444;
-    border-radius: 15px;
-    box-shadow: 5px 5px 5px;
-}
-
-
-.form-chords-row {
-    height: 50px;
-    background-image: url("{% static 'img/staff.png' %}");
-    background-size: 100% 100%;
-}
-
-
-.form-chords-input .chord-select {
-    width: 11.5%;
-    max-width: 100%;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    font-size: 1rem;
-    font-weight: 400;
-    color: #495057;
-    padding: 0rem;
-    margin: 5px 0px;
-    background-color: #fff;
-    border: 1px solid #ced4da;
-    border-radius: .25rem;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-}
-
-.separator-mid{
-    width: 4%;
-}
-.separator-lr{
-    width: 2%;
-}
-
-
-/*time signature radio btns next to each other*/
-.form-check {
-    display: inline-block;
-    margin-right: 10px;
-}
-
-
-
-.tag-section{
-    /*background: #ff0000;*/
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    margin: 10px 10px;
-}
-
-.tag-section hr{
-    margin: 0px;
-}
-.tag-container, .suggested-tag-container{
-    margin: 0px;
-    padding: 5px;
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.tag-container .tag, .suggested-tag-container .tag{
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    margin: 5px;
-    padding: 0px 5px;
-    display: flex;
-    align-items: center;
-    background: #e0e0e0;
-    cursor: default;
-}
-
-.suggested-tag-container .tag{
-    cursor: pointer;
-}
-
-.tag-container input{
-    flex: 1;
-    padding: 5px;
-    outline: none;
-    border: 0;
-}
-
-.tag svg {
-    margin-left: 5px;
-    cursor: pointer;
-}
-
-.tag path {
-    pointer-events: none;
-}
-
-
-</style>
-
-
 
 <!--data-toggle="collapse"-->
 <!--class="collapse"-->
@@ -160,7 +42,29 @@
 <form class="lick-form" method="GET" enctype="multipart/form-data">
 
 
-    <label><h4>Chords</h4></label>
+<section class="form-section" id="form-section-chords">
+    <header class="form-header" id="form-header-chords">
+        <h4>Chords</h4>
+        <button type="button" class="form-info-button" data-toggle="collapse" data-target="#form-info-chords"><i class="fas fa-info-circle fa-lg"></i></button>
+    </header>
+
+    <main class="form-fields">
+
+        <div class="collapse form-info" id="form-info-chords">
+            <div class="info" id="chords_info">
+                <p>Search by chords (in concert key) <br>
+                By default, the search will look for chord <em>sequences</em> anywhere in the 4 measures. Empty beats between chords are ignored.<br>
+                e.g. |Dm7 – G7 – | will also match |Dm7 - - - | G7 - - - | or |C7 - - - |Dm7 G7 – - | <br><br>
+                <strong>Include transposed:</strong> Also match chord sequences that can be transposed into what you are searching for. Licks will be transposed automatically.<br>
+                e.g. |Dm7 - G7 - | will also match |Cm7 - F7 - | or |Dbm7 - Gb7 - |<br><br>
+                <strong>Ignore extensions:</strong> Extensions like 6, 7, maj7 are ignored.<br>
+                e.g. |Dm7 - G7 - | will also match |Dm6 - Gmaj7 - | or |Dbm - Gb - |<br><br>
+                <strong>Exact search:</strong> Empty beats between chords are no longer ignored.<br>
+                e.g. |Dm7 - G7 - | will still match |C7 - - - |Dm7 - G7 – | but not |C7 - - - |Dm7 G7 – – |<br><br>
+                Entering nothing (all dashes) will return any chords.
+                </p>
+            </div>
+        </div>
 
     <!-- hidden field -->
     <div id="chord_seq_field">
@@ -177,11 +81,11 @@
             <input type="radio" class="form-check-input" name="ts" id="id_time_signature_2" value="34">
             <label for="id_time_signature_2" class="form-check-label">3/4</label>
         </div>
+        <button class="reset-chords-btn btn btn-secondary" id="reset_chords" type="button"><i class="fas fa-recycle fa-lg"></i></button>
     </div>
 
-    <button class="reset-chords-btn btn btn-secondary" id="reset_chords" type="button">Reset Chords</button>
 
-    <div class="form-chords-input col-12">
+    <div id="form-chords-input" class="form-chords-input col-12">
     <div class="row form-chords-row">
             <div class="separator-lr"></div>
             {% include 'repo/snippets/chord_select_snippet.html' %}
@@ -211,100 +115,149 @@
     </div>
 
 
-    <div class="time-signature row">
-        <div class="form-group col-md-4">
-            <input type="checkbox" id="include_transposed" name="include_transposed" value="True">
-            <label for="include_transposed"> Include transposed</label><br>
-        </div>
-        <div class="form-group col-md-4">
-            <input type="checkbox" id="ignore_extensions" name="ignore_extensions" value="True">
-            <label for="ignore_extensions">Ignore extensions</label><br>
-        </div>
-        <div class="form-group col-md-4">
-            <input type="checkbox" id="exact_search" name="exact_search" value="True">
-            <label for="exact_search">Exact search</label><br>
-        </div>
+    <div class="checkboxes">
+        <input type="checkbox" id="include_transposed" name="include_transposed" value="True">
+        <label for="include_transposed"> Include transposed</label><br>
+        <input type="checkbox" id="ignore_extensions" name="ignore_extensions" value="True">
+        <label for="ignore_extensions">Ignore extensions</label><br>
+        <input type="checkbox" id="exact_search" name="exact_search" value="True">
+        <label for="exact_search">Exact search</label><br>
     </div>
 
-    <div class="form-row">
-        <div class="form-group col-md-4">
-            <label for="category"><h4>Author</h4></label>
-            <input id="username_contains" class="form-control py-2 border-right-0 border" type="search" name="username_contains" placeholder="username contains..." value="{{ username_contains_query }}">
+    </main>
+
+</section>
+
+
+
+
+<section class="form-section" id="form-section-data">
+    <header class="form-header" id="form-header-data">
+        <h4>Data</h4>
+        <button type="button" class="form-info-button" data-toggle="collapse" data-target="#form-info-data"><i class="fas fa-info-circle fa-lg"></i></button>
+    </header>
+
+    <main class="form-fields">
+
+        <div class="collapse form-info" id="form-info-data">
+            <div class="info" id="data_info">
+                <p>Search by metadata <br><br>
+
+                <strong> Author: </strong> Enter the name or part of a name of an author. Case - insensitive. <br><br>
+
+                <strong> Lick #: </strong> Enter the lick ID number, e.g. 25 or 154. <br><br>
+
+                <strong> Time Sign: </strong>search for 4/4 or 3/4 only. (note: selecting 4/4 or 3/4 in the chords section above only affects the chord input field and has no effect on this) <br>
+                </p>
+            </div>
         </div>
-        <div class="form-group col-md-4">
-            <label for="category"><h4>Lick #</h4></label>
-            <input id="lick_id" class="form-control py-2 border-right-0 border" type="search" name="lick_id" placeholder="lick ID..." value="{{ lick_id_query }}">
+
+        <div id="lick-data" class="form-row">
+            <div class="form-group col-md-6">
+                <label for="category"><h5>Author</h5></label>
+                <input id="username_contains" class="form-control py-2 border-right-0 border" type="search" name="username_contains" placeholder="username contains..." value="{{ username_contains_query }}">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="category"><h5>Lick #</h5></label>
+                <input id="lick_id" class="form-control py-2 border-right-0 border" type="search" name="lick_id" placeholder="lick ID..." value="{{ lick_id_query }}">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="category"><h5>Time sign</h5></label>
+                <select id="time_signature" class="form-control" name="time_signature">
+                    <option value="" selected>Any</option>
+                    <option value="44">4/4</option>
+                    <option value="34">3/4</option>
+                </select>
+            </div>
         </div>
-        <div class="form-group col-md-4">
-            <label for="category"><h4>Time sign</h4></label>
-            <select id="time_signature" class="form-control" name="time_signature">
-                <option value="" selected>Any</option>
-                <option value="44">4/4</option>
-                <option value="34">3/4</option>
-            </select>
+
+    </main>
+
+</section>
+
+
+
+<section class="form-section" id="form-section-instruments">
+    <header class="form-header" id="form-header-instruments">
+        <h4>Instruments</h4>
+        <button type="button" class="form-info-button" data-toggle="collapse" data-target="#form-info-instruments"><i class="fas fa-info-circle fa-lg"></i></button>
+    </header>
+
+    <main class="form-fields">
+
+        <div class="collapse form-info" id="form-info-instruments">
+            <div class="info" id="instruments_info">
+                <p>Search by instruments.<br> Leave empty for any instruments <br></p>
+            </div>
         </div>
-    </div>
 
-
-    <label><h4>Instruments</h4></label>
-
-    <!-- hidden field -->
-    <div class="form-group col-md-4" id="instr_choices" style="display:none;">>
-            {% for ins in instrument %}
-                {{ ins }},
-            {% endfor %}
-    </div>
-    <!-- hidden field -->
-    <input type="text" id="instr_seq" name="instr_seq" value="" class="textinput textInput form-control" style="display:none;">
-
-
-    <div id="instr-section" class="tag-section">
-        <div id="instr-container" class="tag-container">
-            <input id="instr-container-input" onkeypress="return noenter()" placeholder="Select or type + Enter"/>
+        <!-- hidden field -->
+        <div class="form-group col-md-4" id="instr_choices" style="display:none;">>
+                {% for ins in instrument %}
+                    {{ ins }},
+                {% endfor %}
         </div>
-    <hr>
-         <div id="#suggested-instr-container" class="suggested-tag-container">
+        <!-- hidden field -->
+        <input type="text" id="instr_seq" name="instr_seq" value="" class="textinput textInput form-control" style="display:none;">
 
+
+        <div id="instr-section" class="tag-section">
+            <div id="instr-container" class="tag-container">
+                <input id="instr-container-input" onkeypress="return noenter()" placeholder="Select or type + Enter"/>
+            </div>
+        <hr>
+             <div id="#suggested-instr-container" class="suggested-tag-container">
+
+            </div>
         </div>
-    </div>
+
+    </main>
+</section>
 
 
 
-    <label><h4>Keywords</h4></label>
+<section class="form-section" id="form-section-keywords">
+    <header class="form-header" id="form-header-keywords">
+        <h4>Keywords</h4>
+        <button type="button" class="form-info-button" data-toggle="collapse" data-target="#form-info-keywords"><i class="fas fa-info-circle fa-lg"></i></button>
+    </header>
 
-    <div class="time-signature row">
-        <div class="form-group col-md-6">
+    <main class="form-fields">
+
+        <div class="collapse form-info" id="form-info-keywords">
+            <div class="info" id="keywords_info">
+                <p>Search by keywords.<br>
+                    Leave empty for any keywords <br><br>
+                    <strong>Must contain all keywords:</strong>
+                    Will match only licks that contain all keywords listed.
+                </p>
+            </div>
+        </div>
+
+        <div class="checkboxes">
             <input type="checkbox" id="must_contain" name="must_contain" value="True">
             <label for="must_contain">Must contain all keywords</label><br>
         </div>
-    </div>
 
-    <!-- hidden field -->
-    {{ form.tags|as_crispy_field }}
-    <!--
-    <input type="text" name="tags" class="tagwidget form-control" required="" id="id_tags">
-    -->
+        <!-- hidden field -->
+        {{ form.tags|as_crispy_field }}
+        <!--
+        <input type="text" name="tags" class="tagwidget form-control" required="" id="id_tags">
+        -->
 
-    <div id="keyword-section" class="tag-section">
-        <div id="keyword-container" class="tag-container">
-            <input id="keyword-container-input" onkeypress="return noenter()" placeholder="Select or type + Enter"/>
+        <div id="keyword-section" class="tag-section">
+            <div id="keyword-container" class="tag-container">
+                <input id="keyword-container-input" onkeypress="return noenter()" placeholder="Select or type + Enter"/>
+            </div>
+        <hr>
+             <div id="#suggested-keyword-container" class="suggested-tag-container">
+
+            </div>
         </div>
-    <hr>
-         <div id="#suggested-keyword-container" class="suggested-tag-container">
 
-        </div>
-    </div>
+    </main>
 
- <!--
-    <input type="text" id="tag_string" name="tag_string" value="TESTVALUE">
-
-
-    <input type="hidden" id="hiddenTagsInput" data-role="hiddenTagsInput" class="form-control" name="hiddenTagsInput">
--->
-
-
-
-
+</section>
 
 
 

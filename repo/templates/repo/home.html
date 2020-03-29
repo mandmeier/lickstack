@@ -1,11 +1,27 @@
 {% extends "base.html" %}
 {% load static %}
+{% load repo_extras %}
 
 {% block content %}
 
 
 <style type="text/css">
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
+
+
+
+
+.panel {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background: #f9f9f9;
+    width: 100%;
+    padding: 5px;
+    border: 2px solid #234444;
+    border-radius: 15px;
+    box-shadow: 5px 5px 5px;
+}
+
 
 .welcome {
   width: 75%;
@@ -30,18 +46,30 @@
 
 </style>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.5.35/Tone.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    // used to select initial value of transpose button
+    function selectElement(id, valueToSelect) {
+    let element = document.getElementById(id);
+    element.value = valueToSelect;
+    }
+</script>
+
+{% include 'repo/snippets/lick_snippet_style.html' %}
+
 
 <!--- Two Column Section -->
-
-<div class="container-fluid">
-<div class="row welcome text-center">
-    <div class="col-12">
-        <h1 class="display-4">Welcome to the LickStack!</h2>
+<section class="panel">
+  <div class="container-fluid">
+    <div class="row welcome text-center">
+        <div class="col-12">
+            <h1 class="display-4">Welcome to the LickStack!</h2>
+        </div>
+        <hr>
     </div>
-    <hr>
-</div>
-</div>
-
+    </div>
 
 <div class="container-fluid padding">
 <div class="row padding">
@@ -56,6 +84,49 @@
     </div>
 </div>
 </div>
+
+</section>
+
+
+<!--- Two Column Section -->
+<section class="panel">
+  <div class="container-fluid">
+    <div class="row welcome text-center">
+        <div class="col-12">
+            <h3 class="display-4">Here's how it works</h3>
+        </div>
+        <hr>
+    </div>
+    </div>
+
+<div class="container-fluid padding">
+
+<img src="{% static 'img/251.png' %}" class="img-fluid" alt="Image of lead sheet showing Gm7 - C7 - F7 progression">
+
+
+</div>
+
+</section>
+
+
+{% if licks %}
+
+    {% for lick in licks %}
+
+    {% include 'repo/snippets/lick_snippet.html' with lick=lick chord_seq_query=chord_seq_query %}
+
+    {% endfor %}
+
+{% else %}
+    <div class="alert alert-primary" role="alert">
+       No licks found... Try searching for something else.
+    </div>
+
+{% endif %}
+
+
+
+
 
 
 
@@ -134,6 +205,7 @@
 </div>
 </div>
 
+{% include 'repo/snippets/lick_snippet_js.html' %}
 
 
 {% endblock content %}

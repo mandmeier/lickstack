@@ -58,7 +58,17 @@ def is_valid_queryparam(param):
 
 
 def home(request):
-    return render(request, 'repo/home.html', {'title': 'Home'})
+
+    # id_tuple = (115, 111, 109)
+    # licks = Lick.objects.filter(id__in=id_tuple)
+
+    licks = Lick.objects.filter(id=115)
+
+    context = {}
+    context['title'] = 'Home'
+    context['licks'] = licks
+
+    return render(request, 'repo/home.html', context)
 
 
 def browse_licks_view(request):
@@ -409,6 +419,7 @@ class LickUpdateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixi
     model = Lick
     form_class = LickForm
     template_name = 'repo/lick_edit.html'
+    context_object_name = 'lick'
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -421,6 +432,12 @@ class LickUpdateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixi
         if self.request.user == lick.author:
             return True
         return False
+
+    def get_context_data(self, **kwargs):
+        lick = self.get_object()
+        ctx = super(LickUpdateView, self).get_context_data(**kwargs)
+        ctx['kw_string'] = ','.join(lick.tags.slugs())
+        return ctx
 
 
 def delete_lick(request, pk):

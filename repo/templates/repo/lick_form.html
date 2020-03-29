@@ -21,13 +21,15 @@
 <form class="lick-form" id="lick-form" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
 
-<h2>Create a new Lick</h2>
+<div class="form-head-section">
+    <h2>Create a new Lick</h2>
+</div>
 
 <section class="form-section" id="form-section-file">
 
     <header class="form-header" id="form-header-file">
         <h4>Audio</h4>
-        <button class="form-info-button" data-toggle="collapse" data-target="#form-info-file"><i class="fas fa-info-circle fa-lg"></i></button>
+        <button type="button" class="form-info-button" data-toggle="collapse" data-target="#form-info-file"><i class="fas fa-info-circle fa-lg"></i></button>
     </header>
 
     <main class="form-fields">
@@ -66,7 +68,7 @@
 <section class="form-section" id="form-section-instrument">
     <header class="form-header" id="form-header-instrument">
         <h4>Instrument</h4>
-        <button class="form-info-button" data-toggle="collapse" data-target="#form-info-instrument"><i class="fas fa-info-circle fa-lg"></i></button>
+        <button type="button" class="form-info-button" data-toggle="collapse" data-target="#form-info-instrument"><i class="fas fa-info-circle fa-lg"></i></button>
     </header>
 
     <main class="form-fields">
@@ -102,7 +104,7 @@
 
     <header class="form-header" id="form-header-chords">
         <h4>Chords</h4>
-        <button class="form-info-button" data-toggle="collapse" data-target="#form-info-chords"><i class="fas fa-info-circle fa-lg"></i></button>
+        <button type="button" class="form-info-button" data-toggle="collapse" data-target="#form-info-chords"><i class="fas fa-info-circle fa-lg"></i></button>
     </header>
 
     <main class="form-fields">
@@ -162,7 +164,7 @@
 
     <header class="form-header" id="form-header-keywords">
         <h4>Keywords</h4>
-        <button class="form-info-button" data-toggle="collapse" data-target="#form-info-keywords"><i class="fas fa-info-circle fa-lg"></i></button>
+        <button type="button" class="form-info-button" data-toggle="collapse" data-target="#form-info-keywords"><i class="fas fa-info-circle fa-lg"></i></button>
     </header>
 
     <main class="form-fields">
