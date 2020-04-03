@@ -20,6 +20,13 @@
     let element = document.getElementById(id);
     element.value = valueToSelect;
     }
+
+
+    $(document).ready(function(){
+       $(".active").removeClass("active");
+       $("#link-browselicks").addClass("active");
+    });
+
 </script>
 
 
@@ -58,7 +65,7 @@
                 <strong>Include transposed:</strong> Also match chord sequences that can be transposed into what you are searching for. Licks will be transposed automatically.<br>
                 e.g. |Dm7 - G7 - | will also match |Cm7 - F7 - | or |Dbm7 - Gb7 - |<br><br>
                 <strong>Ignore extensions:</strong> Extensions like 6, 7, maj7 are ignored.<br>
-                e.g. |Dm7 - G7 - | will also match |Dm6 - Gmaj7 - | or |Dbm - Gb - |<br><br>
+                e.g. |Dm7 - G7 - | will also match |Dm6 - Gmaj7 - | or |Dm - Gb - |<br><br>
                 <strong>Exact search:</strong> Empty beats between chords are no longer ignored.<br>
                 e.g. |Dm7 - G7 - | will still match |C7 - - - |Dm7 - G7 – | but not |C7 - - - |Dm7 G7 – – |<br><br>
                 Entering nothing (all dashes) will return any chords.

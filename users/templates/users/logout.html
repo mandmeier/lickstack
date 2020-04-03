@@ -1,12 +1,29 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>You have been logged out</h2>
-    <div class="border-top pt-3">
-        <small class="text-muted">
-        <a class ="ml-2" href="{% url 'login' %}"> Log in again</a>
-        </small>
+
+<script type="text/javascript">
+     // active nav link
+    $(document).ready(function(){
+       $(".active").removeClass("active");
+       $("#link-logout").addClass("active");
+    });
+</script>
+
+
+<section class="panel">
+    <div class="text-center">
+        <h2>You have been logged out</h2>
+        <hr>
+        <h5> See you again soon!</h5>
+
+        <hr>
+
+        <a href="{% url 'login' %}" class="btn btn-primary btn-lg" role="button"> Log in again</a>
+
+
     </div>
 
+</section>
 
 {% endblock content %}

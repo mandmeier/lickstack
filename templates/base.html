@@ -15,7 +15,10 @@
     {% endif %}
 
     <!-- add icon link -->
+
     <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
     <link rel="shortcut icon" href="{% static 'favicon/favicon.ico' %}"/>
 
 
@@ -30,31 +33,36 @@
   <link rel="icon" type="img/png" href="{% static 'img/Logo.png' %}">
 
 <!-- Navigation -->
-<nav class="navbar navbar-expand-md navbar-light sticky-top">
+<nav class="navbar navbar-expand-lg navbar-light sticky-top">
 <div class="container-fluid">
-    <a class="navbar-brand" href="#"><img src="{% static 'img/Logo.png' %}" class="navbar-logo" alt="Logo"></a>
+    <div>
+        <a class="navbar-brand" href="#"><img src="{% static 'img/Logo.png' %}" class="navbar-logo" alt="Logo"></a>
+        <a style="cursor: pointer;" onclick="document.forms['paypal_form'].submit()"><img border="0" alt="Tip Bucket. Donate to the LickStack" src="{% static 'img/tip_bucket.png' %}" width="50" height="56"></a>
+    </div>
+
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
         <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link active" href="{% url 'home' %}">Home</a>
+            <li id="link-home" class="nav-item">
+                <a class="nav-link" href="{% url 'home' %}">Home</a>
             </li>
-            <li class="nav-item">
+            <li id="link-browselicks" class="nav-item">
                 <a class="nav-link" href="{% url 'browse-licks' %}">Browse Licks</a>
             </li>
-            <li class="nav-item">
+            <li id="link-mylicks"class="nav-item">
                 <a class="nav-link" href="{% url 'my-licks' %}">My Licks</a>
             </li>
             {% if user.is_authenticated %}
-            <li class="nav-item">
+            <li id="link-newlick"class="nav-item">
                 <a class="nav-link" href="{% url 'lick-create' %}">New Lick</a>
             </li>
-            <li class="nav-item">
+            <li id="link-profile" class="nav-item">
                 <a class="nav-link" href="{% url 'profile' %}">Profile</a>
             </li>
-            <li class="nav-item">
+            <li id="link-logout" class="nav-item">
                 <a class="nav-link" href="{% url 'logout' %}">Logout</a>
             </li>
                 {% if user.is_staff %}
@@ -63,10 +71,10 @@
             </li>
                 {% endif %}
             {% else %}
-            <li class="nav-item">
+            <li id="link-login" class="nav-item">
                 <a class="nav-link" href="{% url 'login' %}">Login</a>
             </li>
-            <li class="nav-item">
+            <li id="link-register"class="nav-item">
                 <a class="nav-link" href="{% url 'register' %}">Register</a>
             </li>
             {% endif %}
@@ -99,22 +107,38 @@
 <footer>
 <div class="container-fluid padding">
 <div class="row text-center">
-    <div class="col-md-6">
-        <hr class="light">
-        <h5>Contact</h5>
-        <hr class="light">
-        <p>info@lickstack.com</p>
-    </div>
-    <div class="col-md-6 social padding">
+
+    <div class="col-md-4 social padding">
         <hr class="light">
         <h5>Follow us</h5>
         <hr class="light">
         <a href="#"><i class="fab fa-facebook"></i></a>
         <a href="#"><i class="fab fa-twitter"></i></a>
-        <a href="#"><i class="fab fa-google-plus-g"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
-        <a href="#"><i class="fab fa-youtube"></i></a>
     </div>
+
+    <div class="col-md-4">
+        <hr class="light">
+        <h5>Contact</h5>
+        <hr class="light">
+        <p>info@lickstack.com<br>feedback is welcome!</p>
+        <br>
+    </div>
+
+    <div class="col-md-4">
+        <hr class="light">
+        <h5>Contribute</h5>
+        <hr class="light">
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" id="paypal_form">
+            <input type="hidden" name="cmd" value="_donations" />
+            <input type="hidden" name="business" value="KXR7YBVA2LRWG" />
+            <input type="hidden" name="item_name" value="Support the LickStack Community" />
+            <input type="hidden" name="currency_code" value="USD" />
+            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+            <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+        </form>
+        <br>
+    </div>
+
     <div class="col-12">
         <hr class="light-100">
         <img class="footer-logo" src="{% static 'img/Logo.png' %}" alt="Logo">
@@ -132,7 +156,12 @@
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+    $(document).on( 'click', '.navbar-nav a', function (e) {
+        $(this).addClass('active').siblings().removeClass('active');
+    });
+</script>
 
 
 </body>

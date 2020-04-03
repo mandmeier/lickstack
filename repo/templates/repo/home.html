@@ -10,19 +10,6 @@
 
 
 
-
-.panel {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    background: #f9f9f9;
-    width: 100%;
-    padding: 5px;
-    border: 2px solid #234444;
-    border-radius: 15px;
-    box-shadow: 5px 5px 5px;
-}
-
-
 .welcome {
   width: 75%;
   margin: 0 auto;
@@ -44,6 +31,17 @@
     margin-top: 2rem;
 }
 
+
+
+
+
+
+</style>
+
+<style type="text/css">
+.chords-row {
+    background-image: url("{% static 'img/staff.png' %}");
+}
 </style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.5.35/Tone.js"></script>
@@ -55,56 +53,125 @@
     let element = document.getElementById(id);
     element.value = valueToSelect;
     }
+
+    // active nav link
+    $(document).ready(function(){
+       $(".active").removeClass("active");
+       $("#link-home").addClass("active");
+    });
 </script>
 
 {% include 'repo/snippets/lick_snippet_style.html' %}
 
 
-<!--- Two Column Section -->
-<section class="panel">
-  <div class="container-fluid">
-    <div class="row welcome text-center">
-        <div class="col-12">
-            <h1 class="display-4">Welcome to the LickStack!</h2>
-        </div>
-        <hr>
-    </div>
-    </div>
 
-<div class="container-fluid padding">
-<div class="row padding">
-    <div class="col-md-12 col-lg-6">
-        <p> Not sure what to play over those changes? Browse hundreds of licks and find the sound you were looking for.</p>
-        <p> Stumbled upon a great lick? Record it, add it to the LickStack and never worry about forgetting your best solos. </p>
-        <p> Professional musician or teacher? Build a public portfolio of your favorite licks and secure that next gig!</p>
-        <br>
-    </div>
-    <div class="col-lg-6">
-        <img src="{% static 'img/chimp.png' %}" class="img-fluid">
-    </div>
+<div class="display-4 welcome text-center">
+    <h1 class="display-4">Welcome to the LickStack!</h2>
+    <hr>
 </div>
+
+<section class="panel">
+
+
+<div class="text-center">
+
+<h5><em>"A lick is a stock pattern or phrase consisting of a short series of notes used in solos."</em>
+- <a href="https://en.wikipedia.org/wiki/Lick_(music)">Wikipedia</a></h5><br>
+
+    <h2>Don't know what to play over those changes?</h2>
+</div>
+
+<img src="{% static 'img/chimp.png' %}" class="img-fluid">
+
+<br>
+<br>
+<div class="text-center">
+    <h2>Join the LickStack community!</h2>
+    <br>
+</div>
+
+<h5><ul>
+<li> Browse hundreds of examples, listen and play along</li>
+<li> Share your licks with the community</li>
+<li> Build a repertoire of your favorite licks and ace your next solo</li>
+</ul></h5>
+
+<div class="center-wrapper">
+   <a href="{% url 'register' %}" class="btn btn-primary btn-lg" role="button">Sign Up Now</a>
 </div>
 
 </section>
 
 
-<!--- Two Column Section -->
+
 <section class="panel">
-  <div class="container-fluid">
-    <div class="row welcome text-center">
-        <div class="col-12">
-            <h3 class="display-4">Here's how it works</h3>
-        </div>
-        <hr>
-    </div>
-    </div>
 
-<div class="container-fluid padding">
-
-<img src="{% static 'img/251.png' %}" class="img-fluid" alt="Image of lead sheet showing Gm7 - C7 - F7 progression">
-
-
+<div class="text-center">
+    <h2>A note from the creator</h2>
+    <hr>
 </div>
+    <p><b>Dear Licksters,</b><br><br>
+
+
+    I keep asking myself:<br>
+
+    <em>"What on Earth do I play over those changes?"</em><br>
+    <em>"Why do I keep playing the same boring old stuff?"</em><br>
+    <em>"Why can't I remember that killer solo I came up with last week?"</em><br><br>
+
+    If you play Jazz, Blues, Country, Rock, Pop or any other form of music that uses lead sheets,
+    chances are you may have asked yourself the same questions.<br>
+
+    The idea behind the LickStack is to create a repository for short snippets of music to serve as a source of examples and inspiration.
+    This resource should be helpful to beginners and experts alike and bring musicians from all walks of life together.<br><br>
+
+    Happy soloing!<br>
+
+    - Michael<br>
+
+    <hr>
+    <b>This web application is currently under development:</b><br>
+    As I am neither a professional musician nor a professional web developer, my time to work on this project is limited. Nonetheless, I will do my best to keep improving the LickStack and make it as user friendly as possible as our collection grows!
+    If you encounter any catastrophic errors please contact me under info@lickstack.com.
+</p>
+
+</section>
+
+
+
+
+<div class="display-4 welcome text-center">
+    <h1 class="display-4">Here's how it works</h2>
+    <hr>
+</div>
+
+
+<section class="panel text-center">
+
+    <br>
+    <h2>1. Find a chord sequence</h2>
+    <hr>
+    <p>This may be a passage in your lead sheet that you are struggling with. By design, licks on the LickStack are short patterns up to 4 measures long.</p>
+
+    <img src="{% static 'img/251.png' %}" class="img-fluid" alt="Image of lead sheet showing Gm7 - C7 - F7 progression">
+
+    <br>
+    <br>
+    <h2>2. Search the LickStack </h2>
+    <hr>
+    <p> Find any licks that match your chord sequence using a simple search form.
+    You can also specify your favorite instrument and keyword tags to find the exact genre and style you are looking for.</p>
+
+    <div class="center-wrapper">
+        <a href="{% url 'browse-licks' %}" class="btn btn-primary btn-lg" role="button">Browse Licks</a>
+    </div>
+
+    <br>
+    <br>
+    <h2>3. Listen and learn! </h2>
+    <hr>
+    <p>Licks will be displayed in an interactive panel. Play the recording as many times as you want, in any key!
+    The examples below can be played over the above changes:</p>
 
 </section>
 
@@ -128,82 +195,155 @@
 
 
 
+<style type="text/css">
+.dummy{
+    position: relative;
+    left: 0px;
+    height: 35px;
+}
+
+#dummy_table td{
+    vertical-align: top;
+    padding-bottom: 20px;
+}
+
+</style>
 
 
 
-
-
-<!--- Meet the team -->
-<div class="container-fluid">
-<div class="row welcome text-center">
-    <div class="col-12">
-        <h1 class="display-4">Find Your Favorite Licks</h2>
+<section class="panel">
+    <br>
+    <table style="width:100%" id="dummy_table">
+    <col width="80px">
+  <tr>
+    <td>
+    <button class="like-btn dummy" type="submit" id="like_dummy" name="lick_id" class="btn btn-primary">
+        <i class="far fa-thumbs-up fa-lg" style="color: #0000BB"></i>
+    </button>
+    </td>
+    <td>
+       <p>Like lick. If you like what you hear, make sure you give the author credit!</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <button class="fav-btn dummy" type="submit" id="fav_dummy" name="lick_id" class="btn btn-danger">
+        <i class="far fa-star fa-lg" style="color: #C00001;"></i>
+    </button>
+    </td>
+    <td>
+        <p>Mark as favorite. Favorite licks will be listed under My Licks > Favorites, so that you can easily find them again.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <button class="slowdown btn-default dummy" id="slowdown_dummy">
+        <input class="slowdown-btn" type="image" id="slowdown_dummy_input"value="1" src="{% static 'img/tortoise_default.png' %}" alt="slowdown">
+    </button>
+    </td>
+    <td>
+        <p>Play lick at half speed. Makes learning easier.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <select class="transpose-btn dummy" id="transpose_dummy" name="transpose">
+        <option value="12">+12</option>
+        <option value="11">+11</option>
+        <option value="10">+10</option>
+        <option value="9">+9</option>
+        <option value="8">+8</option>
+        <option value="7">+7</option>
+        <option value="6">+6</option>
+        <option value="5">+5</option>
+        <option value="4">+4</option>
+        <option value="3">+3</option>
+        <option value="2">+2</option>
+        <option value="1">+1</option>
+        <option value="0" selected="selected">T</option>
+    </select>
+    </td>
+    <td>
+        <p>Transpose original recording (in half steps). Master your licks in every key! </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <div class="edit-btn dummy" id="edit_dummy" type="button">
+        <a><i class="fas fa-edit fa-lg"></i></a>
     </div>
+    </td>
+    <td>
+        <p>Edit your licks in case you want to add or change something </p>
+    </td>
+  </tr>
+</table>
+
+
+</section>
+
+
+
+
+
+
+<div class="display-4 welcome text-center">
+    <h1 class="display-4">Like the idea? Here's how you can help:</h2>
     <hr>
 </div>
-</div>
 
-<!--- Cards -->
-<div class="container-fluid padding">
-<div class="row padding">
-    <div class="col-md-6">
-        <div class="card">
-            <img class="card-img-top" src="img/team1.png" alt="Jazz">
-            <div class="card-body">
-                <h4 class="card-title">Jazz</h4>
-                <a href="#" class="btn btn-outline-secondary btn-lg">Browse Licks</a>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="card">
-            <img class="card-img-top" src="img/team2.png" alt="Blues">
-            <div class="card-body">
-                <h4 class="card-title">Blues</h4>
-                <a href="#" class="btn btn-outline-secondary btn-lg">Browse Licks</a>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="card">
-            <img class="card-img-top" src="img/team3.png" alt="Rock">
-            <div class="card-body">
-                <h4 class="card-title">Rock</h4>
-                <a href="#" class="btn btn-outline-secondary btn-lg">Browse Licks</a>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="card">
-            <img class="card-img-top" src="img/team3.png" alt="Country">
-            <div class="card-body">
-                <h4 class="card-title">Country</h4>
-                <a href="#" class="btn btn-outline-secondary btn-lg">Browse Licks</a>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
 
-<!--- Two Column Section -->
-<div class="container-fluid padding">
-<div class="row padding">
-    <div class="col-md-12 col-lg-6">
-        <h2>Like the idea? Here's how you can help: </h2>
-        <p>Contribute using the tip bucket over there by the bar => Any contributions will go towards server costs and improving your experience with LickStack.</p>
-        <br>
-        <p><a href="{% url 'lick-create' %}">Submit your own licks</a>. The more, the merrier!</p>
-        <br>
-        <p>Share on social media and tell your friends about the LickStack!</p>
-        <br>
-        <p>Let me know your thoughts and ideas under feedback@lickstack.com </p>
-        <br>
+
+<section class="panel">
+
+    <br>
+    <div class="text-center">
+        <h2>Join the LickStack community</h2>
+        <hr>
+        <p>Share your licks and grow our collection! We are an equal opportunity platform and do not discriminate based upon genre, instrument, style or popularity.</p>
+        <a href="{% url 'register' %}" class="btn btn-primary btn-lg" role="button">Sign Up Now</a>
     </div>
-    <div class="col-lg-6">
-        <img src="img/bootstrap2.png" class="img-fluid" alt="tip bucket">
+
+    <br>
+    <br>
+
+    <div class="text-center">
+        <h2>Spread the word</h2>
+        <hr>
+        <p>Tell your friends and neighbors about the LickStack and share this page on social media.</p>
+
+        <div class="center-wrapper">
+            <div class="fb-share-button" data-href="https://www.lickstack.com" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.lickstack.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+            <div class="twitter-share-button"><a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-text="Check out the LickStack!" data-url="https://www.lickstack.com" data-hashtags="LickStack" data-lang="en" data-show-count="false">Tweet</a></div>
+        </div>
+
     </div>
-</div>
-</div>
+
+    <br>
+    <br>
+
+    <div class="text-center">
+        <h2>Tip Bucket</h2>
+        <hr>
+        <p>If you like what you hear on the LickStack, please consider throwing in some spare change. Any contributions will go towards server costs and improving your experience.</p>
+
+        <a style="cursor: pointer;" onclick="document.forms['paypal_form'].submit()"><img border="0" alt="Tip Bucket. Donate to the LickStack" src="{% static 'img/tip_bucket.png' %}" width="90" height="100"></a>
+        <br>
+        <a href="#" style="margin-top: 5px;" class="btn btn-success btn-lg" role="button" onclick="document.forms['paypal_form'].submit()">Contribute</a>
+
+
+    </div>
+
+    <br>
+
+</section>
+
+
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v6.0"></script>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
 
 {% include 'repo/snippets/lick_snippet_js.html' %}
 

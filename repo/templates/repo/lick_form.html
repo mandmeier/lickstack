@@ -9,7 +9,13 @@
 <script type="text/javascript">
     //suppress form submit when pressing Enter
     function noenter() {
-        return !(window.event && window.event.keyCode == 13); }
+        return !(window.event && window.event.keyCode == 13);}
+
+    // active nav link
+    $(document).ready(function(){
+       $(".active").removeClass("active");
+       $("#link-newlick").addClass("active");
+    });
 </script>
 
 

@@ -23,6 +23,12 @@
     let element = document.getElementById(id);
     element.value = valueToSelect;
     }
+
+    // active nav link
+    $(document).ready(function(){
+       $(".active").removeClass("active");
+       $("#link-mylicks").addClass("active");
+    });
 </script>
 
 
@@ -35,7 +41,7 @@
 <div class="mylicks-controls row">
       <form class="col-6" method="GET" action=".">
         <input type="hidden" name="display" value="mylicks">
-        <button type="submit" class="btn btn-warning">
+        <button type="submit" class="btn btn-primary">
           <i class="fas fa-music fa-lg"></i>
           My Licks
         </button>
