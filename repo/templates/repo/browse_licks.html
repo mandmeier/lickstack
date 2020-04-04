@@ -714,6 +714,11 @@ function storeSearchFormValues(form){
         setCookie("s_exact_search", "unchecked");
     }
 
+    if (form.elements['must_contain'].checked) {
+        setCookie("s_must_contain", "checked");
+    } else {
+        setCookie("s_must_contain", "unchecked");
+    }
 
     setCookie("s_username_contains", form.elements['username_contains'].value)
     setCookie("s_lick_id", form.elements['lick_id'].value)
@@ -762,6 +767,12 @@ function getSearchFormValues(){
         form.elements['exact_search'].checked = true;
     } else {
         form.elements['exact_search'].checked = false;
+    }
+
+    if (getCookie("s_must_contain") == 'checked') {
+        form.elements['must_contain'].checked = true;
+    } else {
+        form.elements['must_contain'].checked = false;
     }
 
     form.elements['username_contains'].value = getCookie("s_username_contains");
