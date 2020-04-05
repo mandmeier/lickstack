@@ -25,7 +25,9 @@ SECRET_KEY = '7-drb0cmsro#idbs*#%v^1z+2yt-o771+r7+v@9tl5c##uoh!m'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'lickstack.herokuapp.com',
+    'lickstack.com', ]
 
 
 # Application definition
