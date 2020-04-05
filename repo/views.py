@@ -19,6 +19,14 @@ from itertools import cycle
 import re
 
 
+def get_chord_seq_search(chord_seq):
+    sharps = ['C#', 'D#', 'F#', 'G#', 'A#']
+    flats = ['Db', 'Eb', 'Gb', 'Ab', 'Bb']
+    for s, f in zip(sharps, flats):
+        chord_seq = chord_seq.replace(s, f)
+    return chord_seq
+
+
 def transpose_note(start, half_steps):
     if half_steps > 0:
         # transpose up
@@ -62,7 +70,7 @@ def home(request):
     # id_tuple = (115, 111, 109)
     # licks = Lick.objects.filter(id__in=id_tuple)
 
-    licks = Lick.objects.filter(id=115)
+    licks = Lick.objects.filter(id=125)
 
     context = {}
     context['title'] = 'Home'
@@ -102,7 +110,8 @@ def browse_licks_view(request):
         else:
             lick_id_query = int(lick_id_query.strip())
 
-        chord_seq = request.GET.get('chord_seq', "").split('x')[1:15]
+        chord_seq = get_chord_seq_search(
+            request.GET.get('chord_seq', "")).split('x')[1:15]
         instrument_string = request.GET.get('instr_seq', "")
         keyword_string = request.GET.get('tags', "")
         must_contain_keyword = bool(request.GET.get('must_contain', ""))
@@ -113,6 +122,7 @@ def browse_licks_view(request):
 
         # make regex query seq
         def get_chord_seq_query(chord_seq, half_steps=0):
+
             query = ""
             if exact_search == False:
                 for chord in chord_seq:
@@ -173,22 +183,22 @@ def browse_licks_view(request):
 
     if include_transposed == False:
         licks = licks.filter(
-            Q(chord_seq__regex=chord_seq_query)
+            Q(chord_seq_search__regex=chord_seq_query)
         )
     else:
         licks = licks.filter(
-            Q(chord_seq__regex=chord_seq_queries_T[0]) |
-            Q(chord_seq__regex=chord_seq_queries_T[1]) |
-            Q(chord_seq__regex=chord_seq_queries_T[2]) |
-            Q(chord_seq__regex=chord_seq_queries_T[3]) |
-            Q(chord_seq__regex=chord_seq_queries_T[4]) |
-            Q(chord_seq__regex=chord_seq_queries_T[5]) |
-            Q(chord_seq__regex=chord_seq_queries_T[6]) |
-            Q(chord_seq__regex=chord_seq_queries_T[7]) |
-            Q(chord_seq__regex=chord_seq_queries_T[8]) |
-            Q(chord_seq__regex=chord_seq_queries_T[9]) |
-            Q(chord_seq__regex=chord_seq_queries_T[10]) |
-            Q(chord_seq__regex=chord_seq_queries_T[11])
+            Q(chord_seq_search__regex=chord_seq_queries_T[0]) |
+            Q(chord_seq_search__regex=chord_seq_queries_T[1]) |
+            Q(chord_seq_search__regex=chord_seq_queries_T[2]) |
+            Q(chord_seq_search__regex=chord_seq_queries_T[3]) |
+            Q(chord_seq_search__regex=chord_seq_queries_T[4]) |
+            Q(chord_seq_search__regex=chord_seq_queries_T[5]) |
+            Q(chord_seq_search__regex=chord_seq_queries_T[6]) |
+            Q(chord_seq_search__regex=chord_seq_queries_T[7]) |
+            Q(chord_seq_search__regex=chord_seq_queries_T[8]) |
+            Q(chord_seq_search__regex=chord_seq_queries_T[9]) |
+            Q(chord_seq_search__regex=chord_seq_queries_T[10]) |
+            Q(chord_seq_search__regex=chord_seq_queries_T[11])
         )
 
     if lick_id_query > 0:

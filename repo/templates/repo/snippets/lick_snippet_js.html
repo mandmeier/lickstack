@@ -3,6 +3,10 @@
 
 <script type="text/javascript">
 
+//transpose_rules = []
+//for (let i = 0; i < licks.length; i++) {
+//    transpose_rules.push(licks[i].getElementsByClassName('transpose_rule')[0].getAttribute('value'))
+//}
 
 function transposeChord(input,transpose_by) {
     element = input.match(/(_[a-gA-g]{1,2}_)/)[0]
@@ -49,6 +53,7 @@ function transposePlayers(){
 function updateChords() {
     for (const lick of licks) {
         let chords = lick.getElementsByClassName('chord_seq')[0].getAttribute("value").split('x').slice(1,17);
+        let transpose_rules = lick.getElementsByClassName('transpose_rule')[0].getAttribute('value').split(',')
         let transpose = Number(lick.getElementsByClassName('transpose-btn')[0].value)
         let chord_imgs = lick.getElementsByTagName('img')
         let i
@@ -57,9 +62,9 @@ function updateChords() {
                 chord_imgs[i].name = chords[i]
             }
             if (chords[i] == '.'){
-                chord_imgs[i].src =  chords_dir + '..png'
+                chord_imgs[i].src =  chords_dir + transpose_rules[i] + '/' + '..png'
             } else {
-                chord_imgs[i].src =  chords_dir + transposeChord(chords[i], transpose) + '.png'
+                chord_imgs[i].src =  chords_dir + transpose_rules[i] + '/' + transposeChord(chords[i], transpose) + '.png'
             }
         }
     }
@@ -86,7 +91,6 @@ function make_ts34(lck){
 
 
 // initialize variables and controls for all licks
-
 const chords_dir = "{% static 'img/chords/' %}"
 const licks = document.getElementsByClassName('lick')
 const play_btns = document.getElementsByClassName('play')
