@@ -381,8 +381,8 @@ def create_lick(request):
             messages.success(
                 request, f'Lick {obj.id} created successfully.')
 
-            # 5 or whatever index of 'other' instrument
-            if form_data.get('instrument') == '5':
+            # if selected form value points to 'other' instrument
+            if Instrument.objects.get(pk=form_data.get('instrument')).name == 'other':
                 # get other instrument from 'other' form field, sanitize input
                 other_inst = sanitize_instrument(form_data.get('other'))
                 # sanitize input

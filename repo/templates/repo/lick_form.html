@@ -432,25 +432,35 @@ time_sign_input.addEventListener("change", function(){
 const instr_select = document.getElementById("id_instrument")
 
 //move "other" option to end
-const other_option = instr_select.querySelectorAll('[value="5"]')[0];
+const instr_options = instr_select.getElementsByTagName("option")
+// find element with "other" option
+for (let i = 0; i < instr_options.length; i++) {
+    if (instr_options[i].innerHTML == "other"){
+        other_option = instr_options[i]
+    }
+}
+//const other_option = instr_select.querySelectorAll('[value="5"]')[0];
 instr_select.removeChild(other_option);
 instr_select.appendChild(other_option);
 
-
-
-jQuery('#other').hide();
+// hide initial other field
+window.addEventListener('load', function () {
+    if(!(instr_options[instr_select.selectedIndex].innerHTML == "other")){
+        jQuery('#other').hide();
+    }
+})
 
 // toggle "please specify" field
 jQuery('#id_instrument').on('change', function() {
-    if (this.value == '5' ) {
+    var options = this.getElementsByTagName("option");
+    var optionHTML = options[this.selectedIndex].innerHTML;
+    if (optionHTML == 'other' ) {
         jQuery('#other').show();
     }
     else {
         jQuery('#other').hide();
     }
 });
-
-
 
 
 
