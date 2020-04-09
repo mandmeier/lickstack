@@ -428,32 +428,10 @@ time_sign_input.addEventListener("change", function(){
 
 
 
-// input instruments
-function sanitizeTxt(key){
-    key = key.replace(/^\W+/g, '');
-    key = key.replace(/^gt;+/g, '');
-    key = key.replace(/^\s+/g, '');
-    key = key.replace(/\s+$/g, '');
-    key = key.toLowerCase();
-    return key;
-}
-
-
 //// Instrument Choice
 
-
-const instrument_choices = document.getElementById('instr_choices').innerHTML.split(',')
-
-suggested_instruments_original = []
-for (let i = 0; i < instrument_choices.length-1; i++) {
-    ins = sanitizeTxt(instrument_choices[i]);
-    if (ins != 'other'){
-        suggested_instruments_original.push(ins);
-    }
-}
-
+const suggested_instruments_original = "{{ instr_selection }}".split(",")
 var suggested_instruments = suggested_instruments_original.slice()
-
 
 const suggestedInstrumentContainer = document.getElementById('#suggested-instr-container');
 const instrumentContainer = document.getElementById('instr-container');
@@ -568,7 +546,6 @@ suggestedInstrumentContainer.addEventListener('click', function(e){
 
 
 //// Keyword chice
-
 
 const suggested_keywords_original = ["jazz", "ballad", "swing", "bebop", "waltz", "latin", "bossa", "salsa", "montuno", "funk", "country", "rock", "metal", "scales", "blues", "gospel", "spiritual", "turnaround", "even_eights", "shuffle"];
 var suggested_keywords = suggested_keywords_original.slice()

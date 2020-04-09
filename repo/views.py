@@ -3,7 +3,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
-from django.db.models import Q
+from django.db.models import Q, Count, Case, When
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from repo.models import Lick, Instrument
@@ -235,6 +235,22 @@ def browse_licks_view(request):
     paginator = Paginator(licks, 6)
     licks = paginator.page(page)
 
+    # find most common instruments
+    instr_ordered = Lick.objects.values("instrument").annotate(
+        count=Count('instrument')).order_by("-count")
+    instr_ids = [sub['instrument'] for sub in instr_ordered]  # as list
+    preserved = Case(*[When(pk=pk, then=pos)
+                       for pos, pk in enumerate(instr_ids)])
+    instr_qs = Instrument.objects.filter(pk__in=instr_ids).order_by(preserved)
+
+    common_instr = []
+    for instr in instr_qs:
+        if str(instr) not in ['', ' ', 'other']:
+            common_instr.append(str(instr))
+            # print(str(instr))
+
+    instr_selection = ','.join(common_instr)
+
     # pass values to context
     context = {}
     context["form"] = LickForm()
@@ -243,6 +259,7 @@ def browse_licks_view(request):
     context["chord_seq_query"] = chord_seq_query  # used for template tags
     context["user_liked"] = user_liked
     context["user_faved"] = user_faved
+    context["instr_selection"] = instr_selection
     # remember form input
     # context["username_contains_query"] = username_contains_query
 
