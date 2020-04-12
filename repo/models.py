@@ -1,7 +1,8 @@
 from django.db import models
-from django.utils import timezone
+from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.utils import timezone
 from taggit.managers import TaggableManager
 
 import re
@@ -104,7 +105,7 @@ class Lick(models.Model):
         Instrument, on_delete=models.PROTECT, null=True)
     date_posted = models.DateTimeField(default=timezone.now)
     last_updated = models.DateTimeField(auto_now=True)
-    author = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     counter = models.IntegerField(default=1)
     likes = models.ManyToManyField(User, related_name='likes', blank=True)
     favorite = models.ManyToManyField(
@@ -147,3 +148,8 @@ class Lick(models.Model):
         self.transpose_rule = get_transpose_rule(self.chord_seq)
         self.chord_seq_search = get_chord_seq_search(self.chord_seq)
         super().save(*args, **kwargs)
+
+
+@receiver(models.signals.pre_delete, sender=Lick)
+def remove_file_from_s3(sender, instance, using, **kwargs):
+    instance.file.delete(save=False)

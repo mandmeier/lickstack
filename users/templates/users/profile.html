@@ -13,6 +13,30 @@
 
 </script>
 
+
+
+<!-- modal -->
+<div class="modal fade" id="delete" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Are you sure you want to delete your profile?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>All your licks will be permanently deleted. This cannot be undone.</p>
+      </div>
+      <div class="modal-footer">
+        <a id="delete_btn" href="{% url 'profile-delete' %}"><button type="button" class="btn btn-danger">Yes, delete my profile</button></a>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <section class="panel">
     <div class="content-section">
       <div class="media">
@@ -25,36 +49,22 @@
           {% csrf_token %}
           <fieldset class="form-group">
               <div class="text-center">
-                  <h2>Profile Info</h2>
+                  <h3>Update Profile</h3>
                   <hr>
               </div>
               {{ u_form|crispy }}
           </fieldset>
           <div class="form-group">
-              <button class="btn btn-primary" type="submit">Update</button>
+              <button class="btn btn-primary btn-lg" type="submit">Update</button>
           </div>
       </form>
+      <hr>
+      <p align="right">
+        <small><a href="{% url 'profile-delete' %}" data-toggle="modal" data-target="#delete">Delete profile</a></small>
+      </p>
     </div>
 </section>
 
-    <div class="content-section">
-      <div class="media">
-        <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
-        <div class="media-body">
-          <h2 class="account-heading">{{ user.username}}</h2>
-          <p class="text-secondary">{{ user.email }}</p>
-        </div>
-      </div>
-      <form method="POST" enctype="multipart/form-data">
-          {% csrf_token %}
-          <fieldset class="form-group">
-              <legend class="border-bottom mb-4">Profile Info</legend>
-              {{ u_form|crispy }}
-              {{ p_form|crispy }}
-          </fieldset>
-          <div class="form-group">
-              <button class="btn btn-outline-info" type="submit">Update</button>
-          </div>
-      </form>
+
     </div>
 {% endblock content %}

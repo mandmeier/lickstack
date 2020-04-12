@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 
@@ -39,3 +40,12 @@ def profile(request):
     }
 
     return render(request, 'users/profile.html', context)
+
+
+@login_required
+def delete_user(request):
+    u = request.user
+    u.delete()
+    logout(request)
+    messages.success(request, "Your profile has been deleted")
+    return render(request, 'users/logout.html')
