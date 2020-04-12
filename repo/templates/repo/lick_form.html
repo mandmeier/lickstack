@@ -442,10 +442,11 @@ for (let i = 0; i < instr_options.length; i++) {
 //const other_option = instr_select.querySelectorAll('[value="5"]')[0];
 instr_select.removeChild(other_option);
 instr_select.appendChild(other_option);
+selected_instr = instr_options[instr_select.selectedIndex].innerHTML
 
 // hide initial other field
 window.addEventListener('load', function () {
-    if(!(instr_options[instr_select.selectedIndex].innerHTML == "other")){
+    if(!(selected_instr == "other")){
         jQuery('#other').hide();
     }
 })
@@ -454,6 +455,7 @@ window.addEventListener('load', function () {
 jQuery('#id_instrument').on('change', function() {
     var options = this.getElementsByTagName("option");
     var optionHTML = options[this.selectedIndex].innerHTML;
+    selected_instr = instr_options[instr_select.selectedIndex].innerHTML
     if (optionHTML == 'other' ) {
         jQuery('#other').show();
     }
@@ -616,7 +618,7 @@ function checkForm(){
     if (instr_select.value == ''){
         instrument_error.innerHTML = "Please specify an instrument."
         status_instrument = "fail"
-    } else if (instr_select.value == '5' && other_field.value == ""){
+    } else if (selected_instr == "other" && other_field.value == ""){
         instrument_error.innerHTML = "Please specify an instrument."
         status_instrument = "fail"
     } else {

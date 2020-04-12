@@ -9,7 +9,13 @@
 <script type="text/javascript">
     //suppress form submit when pressing Enter
     function noenter() {
-        return !(window.event && window.event.keyCode == 13); }
+        return !(window.event && window.event.keyCode == 13);}
+
+    // active nav link
+    $(document).ready(function(){
+       $(".active").removeClass("active");
+       $("#link-newlick").addClass("active");
+    });
 </script>
 
 
@@ -448,25 +454,37 @@ time_sign_input.addEventListener("change", function(){
 const instr_select = document.getElementById("id_instrument")
 
 //move "other" option to end
-const other_option = instr_select.querySelectorAll('[value="5"]')[0];
+const instr_options = instr_select.getElementsByTagName("option")
+// find element with "other" option
+for (let i = 0; i < instr_options.length; i++) {
+    if (instr_options[i].innerHTML == "other"){
+        other_option = instr_options[i]
+    }
+}
+//const other_option = instr_select.querySelectorAll('[value="5"]')[0];
 instr_select.removeChild(other_option);
 instr_select.appendChild(other_option);
+selected_instr = instr_options[instr_select.selectedIndex].innerHTML
 
-
-
-jQuery('#other').hide();
+// hide initial other field
+window.addEventListener('load', function () {
+    if(!(selected_instr == "other")){
+        jQuery('#other').hide();
+    }
+})
 
 // toggle "please specify" field
 jQuery('#id_instrument').on('change', function() {
-    if (this.value == '5' ) {
+    var options = this.getElementsByTagName("option");
+    var optionHTML = options[this.selectedIndex].innerHTML;
+    selected_instr = instr_options[instr_select.selectedIndex].innerHTML
+    if (optionHTML == 'other' ) {
         jQuery('#other').show();
     }
     else {
         jQuery('#other').hide();
     }
 });
-
-
 
 
 
@@ -622,7 +640,7 @@ function checkForm(){
     if (instr_select.value == ''){
         instrument_error.innerHTML = "Please specify an instrument."
         status_instrument = "fail"
-    } else if (instr_select.value == '5' && other_field.value == ""){
+    } else if (selected_instr == "other" && other_field.value == ""){
         instrument_error.innerHTML = "Please specify an instrument."
         status_instrument = "fail"
     } else {
@@ -661,7 +679,6 @@ function checkForm(){
 }
 
 
-
 //// JS specific to EDIT lick page
 
 // remember previous page in hidden input field
@@ -683,8 +700,6 @@ for (let i = 0; i < chds.length; i++) {
 // populate keywords with data from context
 const kws = "{{ kw_string }}".split(',')
 kws.forEach(item => add_kw(item));
-
-
 
 
 
