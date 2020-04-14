@@ -14,7 +14,6 @@ from django.utils import timezone
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.template.loader import render_to_string
-
 from itertools import cycle
 import re
 
@@ -311,20 +310,7 @@ def my_licks_view(request):
     return render(request, "repo/my_licks.html", context)
 
 
-def lick_detail(request, pk):
-    lick = get_object_or_404(Lick, id=pk)
-    is_liked = False
-    if lick.likes.filter(id=request.user.id).exists():
-        is_liked = True
-
-    context = {}
-    context['lick'] = lick
-    context['is_liked'] = is_liked
-    context['total_likes'] = lick.total_likes()
-
-    return render(request, 'repo/lick_detail.html', context)
-
-
+@login_required
 def like_lick(request):
     lick = get_object_or_404(Lick, id=request.POST.get('id'))
     is_liked = False
@@ -352,6 +338,7 @@ def like_lick(request):
         return JsonResponse({'form': html})
 
 
+@login_required
 def favorite_lick(request):
     lick = get_object_or_404(Lick, id=request.POST.get('id'))
     is_faved = False
@@ -419,29 +406,6 @@ def create_lick(request):
     return render(request, 'repo/lick_form.html', context)
 
 
-class LickCreateView(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView):
-    model = Lick
-    form_class = LickForm
-    success_url = reverse_lazy('lick-create')
-    success_message = 'Lick has been created successfully, you may upload another one!'
-    template_name = 'repo/lick_form.html'
-
-    def form_valid(self, form):
-        """
-        if Lick.objects.filter(author=self.request.user).count() == 0:
-            form.instance.counter = 1
-        else:
-            form.instance.counter = Lick.objects.filter(author=self.request.user).order_by(
-                '-date_posted').first().counter + 1  # Lick number for each author
-        """
-        form.instance.author = self.request.user
-
-        return super().form_valid(form)
-
-    def form_invalid(self, form):
-        return super().form_invalid(form)
-
-
 class LickUpdateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     model = Lick
     form_class = LickForm
@@ -467,6 +431,7 @@ class LickUpdateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixi
         return ctx
 
 
+@login_required
 def delete_lick(request, pk):
     lick = get_object_or_404(Lick, pk=pk)
     messages.success(request, f'Lick {lick.id} deleted!')

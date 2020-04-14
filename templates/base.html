@@ -52,12 +52,12 @@
             <li id="link-browselicks" class="nav-item">
                 <a class="nav-link" href="{% url 'browse-licks' %}">Browse Licks</a>
             </li>
-            <li id="link-mylicks"class="nav-item">
-                <a class="nav-link" href="{% url 'my-licks' %}">My Licks</a>
-            </li>
             {% if user.is_authenticated %}
             <li id="link-newlick"class="nav-item">
                 <a class="nav-link" href="{% url 'lick-create' %}">New Lick</a>
+            </li>
+            <li id="link-mylicks"class="nav-item">
+                <a class="nav-link" href="{% url 'my-licks' %}">My Licks</a>
             </li>
             <li id="link-profile" class="nav-item">
                 <a class="nav-link" href="{% url 'profile' %}">Profile</a>
