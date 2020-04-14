@@ -300,7 +300,6 @@ input:-moz-placeholder { text-overflow: ellipsis; }
     margin: 0px;
 }
 .tag-container, .suggested-tag-container{
-    width: 100%;
     margin: 0px;
     padding: 5px;
     display: flex;
@@ -323,6 +322,7 @@ input:-moz-placeholder { text-overflow: ellipsis; }
 }
 
 .tag-container input{
+    box-sizing: border-box;
     flex: 1;
     padding: 5px;
     outline: none;
