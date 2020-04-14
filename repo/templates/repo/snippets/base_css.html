@@ -13,10 +13,15 @@
   width: 100%;
   font-family: 'Poppins', sans-serif;
   color: #222;
-  /*background-color: #bcd9ea;*/
-  background-image: url("/static/img/pk_wallpaper_dark.jpeg");
-  background-size: cover;
-  background-attachment: fixed;
+  background-color: #000040;
+}
+
+@media (min-width:1200px){
+    html, body {
+        background-image: url("/static/img/pk_wallpaper_dark.jpeg");
+        background-size: cover;
+        background-attachment: fixed;
+    }
 }
 
 .navbar {
@@ -61,10 +66,10 @@ main{
 
 
 .paginator .btn {
-    background: #f9f9f9;
+    background-color: #f9f9f9;
     color: #333333;
     font-weight: bold;
-    border: 2px solid #234444;
+    border: 2px solid #333333;
 }
 
 .paginator .btn-primary{
@@ -80,10 +85,10 @@ main{
 .panel {
     margin-top: 20px;
     margin-bottom: 20px;
-    background: #f9f9f9;
+    background-color: #f9f9f9;
     width: 100%;
     padding: 20px 20px;
-    border: 2px solid #234444;
+    border: 2px solid #333333;
     border-radius: 15px;
     box-shadow: 5px 5px 5px;
 }

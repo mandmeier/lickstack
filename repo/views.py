@@ -67,10 +67,10 @@ def is_valid_queryparam(param):
 
 def home(request):
 
-    # id_tuple = (115, 111, 109)
-    # licks = Lick.objects.filter(id__in=id_tuple)
+    id_tuple = (1, 2, 3)
+    licks = Lick.objects.filter(id__in=id_tuple)
 
-    licks = Lick.objects.filter(id=125)
+    #licks = Lick.objects.filter(id=125)
 
     context = {}
     context['title'] = 'Home'
