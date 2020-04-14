@@ -47,6 +47,8 @@ function transposePlayers(){
         players[i].connect(pitchShift);
 
     }
+    audioCtx.close();
+    audioCtx = new AudioContext();
 }
 
 
@@ -96,6 +98,7 @@ const licks = document.getElementsByClassName('lick')
 const play_btns = document.getElementsByClassName('play')
 const seekBars = document.getElementsByClassName('seek-bar')
 const fillBars = document.getElementsByClassName('fill')
+var audioCtx = new AudioContext();
 mouseDown = false;
 players = []
 audios = []
