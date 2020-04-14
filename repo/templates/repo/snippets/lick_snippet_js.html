@@ -194,11 +194,11 @@ function resetAudio(num){
 function slowdown(clicked_id) {
     selected_tortoise = document.getElementById(clicked_id)
     if (selected_tortoise.value == "1") {
-        selected_tortoise.src="{% static 'img/tortoise_toggled.png' %}"; // change icon to toggled version
+        selected_tortoise.src="{% static 'img/tortoise_hover.png' %}"; // change icon to toggled version
         selected_tortoise.value="0.5";
     } else {
         selected_tortoise.value="1";
-        selected_tortoise.src="{% static 'img/tortoise_default.png' %}"; // change icon to default version
+        selected_tortoise.src="{% static 'img/tortoise_toggled.png' %}"; // change icon to default version
         selected_tortoise.value="1";
     }
     transposePlayers();
