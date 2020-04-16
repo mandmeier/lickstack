@@ -3,11 +3,6 @@
 
 <script type="text/javascript">
 
-//transpose_rules = []
-//for (let i = 0; i < licks.length; i++) {
-//    transpose_rules.push(licks[i].getElementsByClassName('transpose_rule')[0].getAttribute('value'))
-//}
-
 function transposeChord(input,transpose_by) {
     element = input.match(/(_[a-gA-g]{1,2}_)/)[0]
     if (transpose_by >= 0) {
@@ -21,56 +16,48 @@ function transposeChord(input,transpose_by) {
 }
 
 
+function transposePlayer(l){
+    transpose_bys[l] = Number(licks[l].getElementsByClassName('transpose-btn')[0].value)
+    playback_rates[l] = licks[l].getElementsByClassName('slowdown-btn')[0].value
+    audios[l].playbackRate = playback_rates[l];
+    players[l].playbackRate = playback_rates[l];
 
-function transposePlayers(){
-    playback_rates = []
-    transpose_bys = []
-    for (let i = 0; i < play_btns.length; i++) {
-        transpose_bys.push(Number(licks[i].getElementsByClassName('transpose-btn')[0].value))
-        playback_rates.push(licks[i].getElementsByClassName('slowdown-btn')[0].value)
-        audios[i].playbackRate = playback_rates[i];
-        players[i].playbackRate = playback_rates[i];
-        // transpose using current transpose_by value
-        if (playback_rates[i] == 1){
-            pitchShift = new Tone.PitchShift({
-            pitch: transpose_bys[i].toString()
-            }).toDestination();
-        } else { //if playbackrate == 0.5 add +12 to pitch to correct
-            trans = transpose_bys[i] + 12
-            trans = trans.toString()
-            pitchShift = new Tone.PitchShift({
-            pitch: trans
-          }).toDestination();
-        }
-        // disconnect old player (get overlay of two players otherwise)
-        players[i].disconnect();
-        players[i].connect(pitchShift);
-
+    if (playback_rates[l] == 1){
+        pitchShift = new Tone.PitchShift({
+        pitch: transpose_bys[l].toString()
+        }).toDestination();
+    } else { //if playbackrate == 0.5 add +12 to pitch to correct
+        trans = transpose_bys[l] + 12
+        trans = trans.toString()
+        pitchShift = new Tone.PitchShift({
+        pitch: trans
+      }).toDestination();
     }
-    audioCtx.close();
-    audioCtx = new AudioContext();
+    // disconnect old player (get overlay of two players otherwise)
+    players[l].disconnect();
+    players[l].connect(pitchShift);
 }
 
 
-function updateChords() {
-    for (const lick of licks) {
-        let chords = lick.getElementsByClassName('chord_seq')[0].getAttribute("value").split('x').slice(1,17);
-        let transpose_rules = lick.getElementsByClassName('transpose_rule')[0].getAttribute('value').split(',')
-        let transpose = Number(lick.getElementsByClassName('transpose-btn')[0].value)
-        let chord_imgs = lick.getElementsByTagName('img')
-        let i
-        for (i = 0; i < 16; i++) {
-            if (!chord_imgs[i].hasAttribute("name")) {
-                chord_imgs[i].name = chords[i]
-            }
-            if (chords[i] == '.'){
-                chord_imgs[i].src =  chords_dir + transpose_rules[i] + '/' + '..png'
-            } else {
-                chord_imgs[i].src =  chords_dir + transpose_rules[i] + '/' + transposeChord(chords[i], transpose) + '.png'
-            }
+function updateChords(lick_id) {
+    l = lick_order.indexOf(lick_id)
+    let lick = licks[l]
+    let chords = lick.getElementsByClassName('chord_seq')[0].getAttribute("value").split('x').slice(1,17);
+    let transpose_rules = lick.getElementsByClassName('transpose_rule')[0].getAttribute('value').split(',')
+    let transpose = Number(lick.getElementsByClassName('transpose-btn')[0].value)
+    let chord_imgs = lick.getElementsByTagName('img')
+    let i
+    for (i = 0; i < 16; i++) {
+        if (!chord_imgs[i].hasAttribute("name")) {
+            chord_imgs[i].name = chords[i]
+        }
+        if (chords[i] == '.'){
+            chord_imgs[i].src =  chords_dir + transpose_rules[i] + '/' + '..png'
+        } else {
+            chord_imgs[i].src =  chords_dir + transpose_rules[i] + '/' + transposeChord(chords[i], transpose) + '.png'
         }
     }
-    transposePlayers();
+    transposePlayer(l);
 }
 
 
@@ -95,18 +82,23 @@ function make_ts34(lck){
 // initialize variables and controls for all licks
 const chords_dir = "{% static 'img/chords/' %}"
 const licks = document.getElementsByClassName('lick')
+
+const lick_order = []
+for (const lick of licks) {lick_order.push(lick.id.split('_')[1])}
+
 const play_btns = document.getElementsByClassName('play')
 const seekBars = document.getElementsByClassName('seek-bar')
 const fillBars = document.getElementsByClassName('fill')
-var audioCtx = new AudioContext();
 mouseDown = false;
 players = []
 audios = []
 playButtonIcons = []
+playback_rates = []
+transpose_bys = []
 
 for (let i = 0; i < play_btns.length; i++) {
 
-    // time signetures
+    // time signatures
     let time_signature = licks[i].getElementsByClassName('time_signature')[0].getAttribute('value');
     if (time_signature == 34){
         make_ts34(licks[i]);
@@ -118,6 +110,9 @@ for (let i = 0; i < play_btns.length; i++) {
     playButtonIcons.push(play_btns[i].querySelector('i'));
     audios[i].volume = 0;
     players[i].toDestination();
+
+    playback_rates.push(Number(licks[i].getElementsByClassName('transpose-btn')[0].value))
+    transpose_bys.push(licks[i].getElementsByClassName('slowdown-btn')[0].value)
 
     play_btns[i].addEventListener('click', function () {
         if (audios[i].paused) {
@@ -174,11 +169,8 @@ for (let i = 0; i < play_btns.length; i++) {
         players[i].seek(offset = ofs);
       }
     });
+    updateChords(lick_order[i]);
 }
-
-
-updateChords();
-
 
 
 // reset other licks
@@ -192,10 +184,10 @@ function resetAudio(num){
     }
 }
 
-
 // slow down audio button
-function slowdown(clicked_id) {
-    selected_tortoise = document.getElementById(clicked_id)
+function slowdown(lick_id) {
+    console.log(lick_id)
+    selected_tortoise = document.getElementById('slowdown_'+lick_id)
     if (selected_tortoise.value == "1") {
         selected_tortoise.src="{% static 'img/tortoise_hover.png' %}"; // change icon to toggled version
         selected_tortoise.value="0.5";
@@ -204,7 +196,7 @@ function slowdown(clicked_id) {
         selected_tortoise.src="{% static 'img/tortoise_toggled.png' %}"; // change icon to default version
         selected_tortoise.value="1";
     }
-    transposePlayers();
+    transposePlayer(lick_order.indexOf(lick_id));
 }
 
 
