@@ -34,10 +34,6 @@ function transposePlayer(l){
       }).toDestination();
     }
     // disconnect old player (get overlay of two players otherwise)
-    players[l].dispose();
-    let audio_url = play_btns[l].id.split('[X]')[1]
-    players[l] = new Tone.Player(audio_url);
-    players[l].toDestination();
     players[l].disconnect();
     players[l].connect(pitchShift);
 }
@@ -190,6 +186,7 @@ function resetAudio(num){
 
 // slow down audio button
 function slowdown(lick_id) {
+    console.log(lick_id)
     selected_tortoise = document.getElementById('slowdown_'+lick_id)
     if (selected_tortoise.value == "1") {
         selected_tortoise.src="{% static 'img/tortoise_hover.png' %}"; // change icon to toggled version
