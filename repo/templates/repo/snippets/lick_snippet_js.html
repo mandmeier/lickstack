@@ -21,21 +21,30 @@ function transposePlayer(l){
     playback_rates[l] = licks[l].getElementsByClassName('slowdown-btn')[0].value
     audios[l].playbackRate = playback_rates[l];
     players[l].playbackRate = playback_rates[l];
+    players[l].toDestination();
+
+    //reset all pitch shift nodes to clear memory
+    for (let j = 0; j < pitch_shifts.length; j++) {
+        if (pitch_shifts[j] != null) {
+            pitch_shifts[j].disconnect();
+        }
+        delete pitch_shifts[j]
+    }
 
     if (playback_rates[l] == 1){
-        pitchShift = new Tone.PitchShift({
+        pitch_shifts[l] = new Tone.PitchShift({
         pitch: transpose_bys[l].toString()
         }).toDestination();
     } else { //if playbackrate == 0.5 add +12 to pitch to correct
         trans = transpose_bys[l] + 12
         trans = trans.toString()
-        pitchShift = new Tone.PitchShift({
+        pitch_shifts[l] = new Tone.PitchShift({
         pitch: trans
       }).toDestination();
     }
     // disconnect old player (get overlay of two players otherwise)
     players[l].disconnect();
-    players[l].connect(pitchShift);
+    players[l].connect(pitch_shifts[l]);
 }
 
 
@@ -58,6 +67,7 @@ function updateChords(lick_id) {
         }
     }
     transposePlayer(l);
+
 }
 
 
@@ -95,6 +105,7 @@ audios = []
 playButtonIcons = []
 playback_rates = []
 transpose_bys = []
+pitch_shifts = []
 
 for (let i = 0; i < play_btns.length; i++) {
 
@@ -109,15 +120,18 @@ for (let i = 0; i < play_btns.length; i++) {
     audios.push(new Audio(audio_url));
     playButtonIcons.push(play_btns[i].querySelector('i'));
     audios[i].volume = 0;
-    players[i].toDestination();
 
     playback_rates.push(Number(licks[i].getElementsByClassName('transpose-btn')[0].value))
     transpose_bys.push(licks[i].getElementsByClassName('slowdown-btn')[0].value)
+    pitch_shifts.push(null)
 
     var start_time = 0
     var current_time = 0
 
     play_btns[i].addEventListener('click', function () {
+        if (pitch_shifts[i] == undefined) {
+            transposePlayer(i);
+        }
         if (audios[i].paused) {
             audios[i].play();
             ofs = audios[i].currentTime;
@@ -191,7 +205,6 @@ function resetAudio(num){
 
 // slow down audio button
 function slowdown(lick_id) {
-    console.log(lick_id)
     selected_tortoise = document.getElementById('slowdown_'+lick_id)
     if (selected_tortoise.value == "1") {
         selected_tortoise.src="{% static 'img/tortoise_hover.png' %}"; // change icon to toggled version
