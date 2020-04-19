@@ -8,10 +8,12 @@ from .views import (
     LickUpdateView,
     favorite_lick,
     delete_lick,
+    leak,
 )
 
 urlpatterns = [
     path('', home, name='home'),
+    path('leak', leak, name='leak'),
     path('licks/', browse_licks_view, name='browse-licks'),
     path('mylicks/', my_licks_view, name='my-licks'),
     path('lick/new/', create_lick, name='lick-create'),

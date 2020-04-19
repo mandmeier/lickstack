@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+
+    {% for lick in licks %}
+
+    <h5 style="color: #00ff00;">Lick {{ lick.id }}</h5>
+    <audio controls>
+      <source src="{{ lick.file.url }}">
+    </audio>
+
+    {% endfor %}
+
+
+{% endblock content %}
