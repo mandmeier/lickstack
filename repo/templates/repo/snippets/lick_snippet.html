@@ -7,6 +7,12 @@
 
 <article class="lick lick-section" id="lick_{{ lick.id }}">
 
+
+        <h5 style="color: #00ff00;">Lick {{ lick.id }}</h5>
+        <audio controls>
+          <source src="{{ lick.file.url }}">
+        </audio>
+
         <div class="chord_seq" id="chord_seq_{{ lick.id }}" value="{{ lick.chord_seq_search}}" style="display: none;"></div>
         <div class="transpose_rule" id="transpose_rule_{{ lick.id }}" value="{{ lick.transpose_rule}}" style="display: none;"></div>
         <div class="time_signature" id="time_signature_{{ lick.id }}" value="{{ lick.time_signature}}" style="display: none;"></div>
