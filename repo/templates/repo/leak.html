@@ -44,6 +44,10 @@ for (let i = 0; i < play_btns.length; i++) {
 
     slowdown_btns[i].addEventListener('click', function () {
         for (let j = 0; j < pitch_shifts.length; j++) {
+            if (pitch_shifts[j] != null) {
+                pitch_shifts[j].disconnect();
+                console.log("disposed")
+            }
             delete pitch_shifts[j]
         }
         if (players[i].playbackRate == 1) {
