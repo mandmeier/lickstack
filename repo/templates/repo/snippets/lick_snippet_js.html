@@ -114,6 +114,9 @@ for (let i = 0; i < play_btns.length; i++) {
     playback_rates.push(Number(licks[i].getElementsByClassName('transpose-btn')[0].value))
     transpose_bys.push(licks[i].getElementsByClassName('slowdown-btn')[0].value)
 
+    var start_time = 0
+    var current_time = 0
+
     play_btns[i].addEventListener('click', function () {
         if (audios[i].paused) {
             audios[i].play();
@@ -138,6 +141,7 @@ for (let i = 0; i < play_btns.length; i++) {
     audios[i].addEventListener('timeupdate', function () {
       if (mouseDown) return;
         let p = audios[i].currentTime / audios[i].duration;
+        let x =
         fillBars[i].style.width = p * 100 + "%";
     });
 
@@ -164,6 +168,7 @@ for (let i = 0; i < play_btns.length; i++) {
         fillBars[i].style.width = p * 100 + "%";
         audios[i].currentTime = p * audios[i].duration;
         ofs = audios[i].currentTime;
+
       if (!audios[i].paused) {
         players[i].start();
         players[i].seek(offset = ofs);
