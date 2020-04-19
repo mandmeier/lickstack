@@ -27,13 +27,11 @@ const slowdown_btns = document.getElementsByClassName('slowdown')
 players = []
 lick_urls = []
 pitch_shifts = []
-pitch_shifts_slow = []
 
 for (let i = 0; i < play_btns.length; i++) {
     lick_urls
     players.push(new Tone.Player(play_btns[i].name));
-    pitch_shifts.push(new Tone.PitchShift({ pitch: 0 }))
-    pitch_shifts_slow.push(new Tone.PitchShift({ pitch: 12 }))
+    pitch_shifts.push(null)
     players[i].toDestination();
 
     play_btns[i].addEventListener('click', function () {
@@ -45,19 +43,20 @@ for (let i = 0; i < play_btns.length; i++) {
     });
 
     slowdown_btns[i].addEventListener('click', function () {
+        for (let j = 0; j < pitch_shifts.length; j++) {
+            delete pitch_shifts[j]
+        }
         if (players[i].playbackRate == 1) {
             console.log("if")
             players[i].playbackRate = 0.5;
-            let pitchShiftslow = pitch_shifts_slow[i].toDestination()
-            players[i].disconnect();
-            players[i].connect(pitchShiftslow);
+            pitch_shifts[i] = new Tone.PitchShift({ pitch: 12 }).toDestination()
         } else {
             console.log("else")
             players[i].playbackRate = 1;
-            let pitchShift = pitch_shifts[i].toDestination()
-            players[i].disconnect();
-            players[i].connect(pitchShift);
+            pitch_shifts[i] = new Tone.PitchShift({ pitch: 0 }).toDestination()
         }
+        players[i].disconnect();
+        players[i].connect(pitch_shifts[i]);
     });
 }
 
