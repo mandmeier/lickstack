@@ -13,7 +13,7 @@
 
 
     <button type="button" class="play" name="{{ lick.file.url }}" id="{{ lick.id }}"> Play lick {{ lick.id }}</button>
-
+    <button type="button" class="slowdown"> slow down {{ lick.id }}</button>
 
     {% endfor %}
 
@@ -23,12 +23,17 @@
 
 
 const play_btns = document.getElementsByClassName('play')
+const slowdown_btns = document.getElementsByClassName('slowdown')
 players = []
 lick_urls = []
+pitch_shifts = []
+pitch_shifts_slow = []
 
 for (let i = 0; i < play_btns.length; i++) {
     lick_urls
     players.push(new Tone.Player(play_btns[i].name));
+    pitch_shifts.push(new Tone.PitchShift({ pitch: 0 }))
+    pitch_shifts_slow.push(new Tone.PitchShift({ pitch: 12 }))
     players[i].toDestination();
 
     play_btns[i].addEventListener('click', function () {
@@ -36,6 +41,22 @@ for (let i = 0; i < play_btns.length; i++) {
             players[i].start();
         } else {
             players[i].stop();
+        }
+    });
+
+    slowdown_btns[i].addEventListener('click', function () {
+        if (players[i].playbackRate == 1) {
+            console.log("if")
+            players[i].playbackRate = 0.5;
+            let pitchShiftslow = pitch_shifts_slow[i].toDestination()
+            players[i].disconnect();
+            players[i].connect(pitchShiftslow);
+        } else {
+            console.log("else")
+            players[i].playbackRate = 1;
+            let pitchShift = pitch_shifts[i].toDestination()
+            players[i].disconnect();
+            players[i].connect(pitchShift);
         }
     });
 }
