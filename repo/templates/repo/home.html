@@ -220,7 +220,7 @@
     <col width="80px">
   <tr>
     <td>
-    <button class="like-btn dummy" type="submit" id="like_dummy" name="lick_id" class="btn btn-primary">
+    <button class="panel-btn like-btn dummy" type="submit" id="like_dummy" name="lick_id">
         <i class="far fa-thumbs-up fa-lg" style="color: #0000BB"></i>
     </button>
     </td>
@@ -230,7 +230,7 @@
   </tr>
   <tr>
     <td>
-    <button class="fav-btn dummy" type="submit" id="fav_dummy" name="lick_id" class="btn btn-danger">
+    <button class="panel-btn fav-btn dummy" type="submit" id="fav_dummy" name="lick_id">
         <i class="far fa-star fa-lg" style="color: #C00001;"></i>
     </button>
     </td>
@@ -344,8 +344,12 @@
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 
-
-{% include 'repo/snippets/lick_snippet_js.html' %}
+<script type="text/javascript">
+const chords_dir = "{% static 'img/chords/' %}";
+const tortoise_on_url = "{% static 'img/tortoise_hover.png' %}";
+const tortoise_off_url = "{% static 'img/tortoise_toggled.png' %}";
+</script>
+<script src="{% static 'js/lick_snippet.js' %}"></script>
 
 
 {% endblock content %}

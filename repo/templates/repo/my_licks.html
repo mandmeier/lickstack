@@ -121,8 +121,12 @@
 {% endif %}
 
 
-
-{% include 'repo/snippets/lick_snippet_js.html' %}
+<script type="text/javascript">
+const chords_dir = "{% static 'img/chords/' %}";
+const tortoise_on_url = "{% static 'img/tortoise_hover.png' %}";
+const tortoise_off_url = "{% static 'img/tortoise_toggled.png' %}";
+</script>
+<script src="{% static 'js/lick_snippet.js' %}"></script>
 
 
 {% endblock content %}

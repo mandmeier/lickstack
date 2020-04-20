@@ -1,7 +1,3 @@
-{% load static %}
-{% load repo_extras %}
-
-<script type="text/javascript">
 
 function transposeChord(input,transpose_by) {
     element = input.match(/(_[a-gA-g]{1,2}_)/)[0]
@@ -90,7 +86,6 @@ function make_ts34(lck){
 
 
 // initialize variables and controls for all licks
-const chords_dir = "{% static 'img/chords/' %}"
 const licks = document.getElementsByClassName('lick')
 
 const lick_order = []
@@ -191,7 +186,6 @@ for (let i = 0; i < play_btns.length; i++) {
     updateChords(lick_order[i]);
 }
 
-
 // reset other licks
 function resetAudio(num){
     for (let i = 0; i < play_btns.length; i++) {
@@ -207,16 +201,12 @@ function resetAudio(num){
 function slowdown(lick_id) {
     selected_tortoise = document.getElementById('slowdown_'+lick_id)
     if (selected_tortoise.value == "1") {
-        selected_tortoise.src="{% static 'img/tortoise_hover.png' %}"; // change icon to toggled version
+        selected_tortoise.src=tortoise_on_url; // change icon to toggled version
         selected_tortoise.value="0.5";
     } else {
         selected_tortoise.value="1";
-        selected_tortoise.src="{% static 'img/tortoise_toggled.png' %}"; // change icon to default version
+        selected_tortoise.src=tortoise_off_url; // change icon to default version
         selected_tortoise.value="1";
     }
     transposePlayer(lick_order.indexOf(lick_id));
 }
-
-
-
-</script>
