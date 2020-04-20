@@ -443,15 +443,3 @@ def delete_lick(request, pk):
     else:
         prev_url = 'my-licks'
     return redirect(prev_url)
-
-
-def leak(request):
-
-    #id_tuple = (1, 2, 3)
-    #licks = Lick.objects.filter(id__in=id_tuple)
-    licks = Lick.objects.all()
-
-    context = {}
-    context['licks'] = licks
-
-    return render(request, 'repo/leak.html', context)

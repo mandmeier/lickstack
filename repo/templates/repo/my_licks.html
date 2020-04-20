@@ -3,12 +3,9 @@
 {% load static %}
 {% load repo_extras %}
 
-
 {% block content %}
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.5.35/Tone.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-
+<link rel="stylesheet" type="text/css" href="{% static 'css/my_licks.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/lick_snippet.css' %}">
 
 <style type="text/css">
 .chords-row {
@@ -16,6 +13,8 @@
 }
 </style>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.5.35/Tone.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
 <script type="text/javascript">
     // used to select initial value of transpose button
@@ -30,12 +29,6 @@
        $("#link-mylicks").addClass("active");
     });
 </script>
-
-
-
-{% include 'repo/snippets/my_licks_style.html' %}
-{% include 'repo/snippets/lick_snippet_style.html' %}
-
 
 
 <div class="mylicks-controls row">

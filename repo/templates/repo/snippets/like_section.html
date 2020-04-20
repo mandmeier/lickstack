@@ -5,12 +5,12 @@
         {% csrf_token %}
         <small class="text-muted">{{ lick.total_likes }} Like{{ lick.total_likes|pluralize }}</small>
         {% if lick in user_liked %}
-        <button class="like-btn" type="submit" id="like_{{ lick.id }}" name="lick_id" value="{{ lick.id }}" class="btn btn-primary">
-            <i class="fas fa-thumbs-up fa-lg" style="color: #0000BB"></i>
+        <button class="panel-btn like-btn" type="submit" id="like_{{ lick.id }}" name="lick_id" value="{{ lick.id }}">
+            <i class="fas fa-thumbs-up fa-lg"></i>
         </button>
         {% else %}
-        <button class="like-btn" type="submit" id="like_{{ lick.id }}" name="lick_id" value="{{ lick.id }}" class="btn btn-primary">
-            <i class="far fa-thumbs-up fa-lg" style="color: #0000BB"></i>
+        <button class="panel-btn like-btn" type="submit" id="like_{{ lick.id }}" name="lick_id" value="{{ lick.id }}">
+            <i class="far fa-thumbs-up fa-lg"></i>
         </button>
         {% endif %}
       </form>
@@ -37,8 +37,8 @@
 
     <form action="{% url 'login' %}" style="float:right;">
         <small class="text-muted">{{ lick.total_likes }} Like{{ lick.total_likes|pluralize }}</small>
-        <button class="like-btn" type="submit" id="like_{{ lick.id }}" name="lick_id" value="{{ lick.id }}" class="btn btn-primary">
-            <i class="far fa-thumbs-up fa-lg" style="color: #0000BB"></i>
+        <button class="panel-btn like-btn" type="submit" id="like_{{ lick.id }}" name="lick_id" value="{{ lick.id }}">
+            <i class="far fa-thumbs-up fa-lg"></i>
         </button>
     </form>
 

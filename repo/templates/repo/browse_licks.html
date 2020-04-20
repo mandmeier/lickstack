@@ -5,6 +5,9 @@
 
 
 {% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/browse_licks.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/lick_snippet.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/form_master.css' %}">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.5.35/Tone.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
@@ -31,13 +34,17 @@
 
 
 <style type="text/css">
+
+.form-chords-row {
+    height: 50px;
+    background-image: url("{% static 'img/staff.png' %}");
+    background-size: 100% 100%;
+}
+
 .chords-row {
     background-image: url("{% static 'img/staff.png' %}");
 }
 </style>
-
-{% include 'repo/snippets/browse_licks_style.html' %}
-{% include 'repo/snippets/lick_snippet_style.html' %}
 
 <!--data-toggle="collapse"-->
 <!--class="collapse"-->
@@ -46,7 +53,7 @@
 <div id="search-form" class="collapse">
 
 
-<form class="lick-form" method="GET" enctype="multipart/form-data">
+<form class="panel lick-form" method="GET" enctype="multipart/form-data">
 
 
 <section class="form-section" id="form-section-chords">
@@ -88,7 +95,7 @@
             <input type="radio" class="form-check-input" name="ts" id="id_time_signature_2" value="34">
             <label for="id_time_signature_2" class="form-check-label">3/4</label>
         </div>
-        <button class="reset-chords-btn btn btn-secondary" id="reset_chords" type="button"><i class="fas fa-recycle fa-lg"></i></button>
+        <button class="panel-btn reset-chords-btn" id="reset_chords" type="button"><i class="fas fa-recycle fa-lg"></i></button>
     </div>
 
 

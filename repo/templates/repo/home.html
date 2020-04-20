@@ -5,6 +5,7 @@
 {% block content %}
 
 
+
 <style type="text/css">
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
 
@@ -44,6 +45,9 @@
 
 </style>
 
+<link rel="stylesheet" type="text/css" href="{% static 'css/lick_snippet.css' %}">
+
+
 <style type="text/css">
 .chords-row {
     background-image: url("{% static 'img/staff.png' %}");
@@ -66,10 +70,6 @@
        $("#link-home").addClass("active");
     });
 </script>
-
-{% include 'repo/snippets/lick_snippet_style.html' %}
-
-
 
 <section class="panel">
 

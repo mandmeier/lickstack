@@ -1,14 +1,8 @@
-{% load static %}
-
-
-<style type="text/css">
-
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
 
 
-
 /*  Base  */
-  html, body {
+  html, body{
   height: 100%;
   width: 100%;
   font-family: 'Poppins', sans-serif;
@@ -17,7 +11,7 @@
 }
 
 @media (min-width:1200px){
-    html, body {
+    html, body{
         background-image: url("/static/img/pk_wallpaper_dark.jpeg");
         background-size: cover;
         background-attachment: fixed;
@@ -44,7 +38,7 @@
 
 main{
     padding-left: 10px;
-    padding-right: 20px;
+    padding-right: 10px;
     min-height: 100%;
 }
 
@@ -83,14 +77,21 @@ main{
 
 
 .panel {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    background-color: #f9f9f9;
-    width: 100%;
-    padding: 20px 20px;
-    border: 2px solid #333333;
-    border-radius: 15px;
-    box-shadow: 5px 5px 5px;
+  margin: 20px 0px;
+  background-color: #f9f9f9;
+  width: 100%;
+  padding: 20px;
+  border: 2px solid #333;
+  border-radius: 15px;
+  box-shadow: 5px 5px 5px;
+}
+
+.panel-btn{
+  width: 35px;
+  height: 35px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  border: 2px solid #333;
 }
 
 .center-wrapper {
@@ -135,6 +136,3 @@ hr.light-100 {
   margin-bottom: 10px;
 }
 
-
-
-</style>
