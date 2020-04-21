@@ -140,9 +140,6 @@
 
 </section>
 
-
-
-
 <section class="form-section" id="form-section-data">
     <header class="form-header" id="form-header-data">
         <h4>Data</h4>
@@ -187,8 +184,6 @@
 
 </section>
 
-
-
 <section class="form-section" id="form-section-instruments">
     <header class="form-header" id="form-header-instruments">
         <h4>Instruments</h4>
@@ -225,8 +220,6 @@
 
     </main>
 </section>
-
-
 
 <section class="form-section" id="form-section-keywords">
     <header class="form-header" id="form-header-keywords">
@@ -271,77 +264,27 @@
 
 </section>
 
-
-
     <div class="form-submit">
         <button class="btn btn-primary btn-block btn-lg" type="submit" id="submit" onclick="storeSearchFormValues(form);">Submit</button>
     </div>
 
 </form>
 
-
 </div>
 
-<div class="paginator">
-{% if licks.has_other_pages %}
-    {% if licks.has_previous %}
-      <a class = "btn btn-outline-primary mb-4" href="?{% url_replace request 'page' 1 %}"><i class="fas fa-angle-double-left fa-lg"></i></a>
-      <a class = "btn btn-outline-primary mb-4" href="?{% url_replace request 'page' licks.previous_page_number %}"><i class="fas fa-angle-left fa-lg"></i></a>
-    {% endif %}
-
-    {% for num in licks.paginator.page_range %}
-      {% if licks.number == num %}
-        <a class = "btn btn-primary mb-4" href="?{% url_replace request 'page' num %}">{{ num }}</a>
-      {% elif num > licks.number|add:'-4' and num < licks.number|add:'4'%}
-        <a class = "btn btn-outline-primary mb-4" href="?{% url_replace request 'page' num %}">{{ num }}</a>
-      {% endif %}
-    {% endfor %}
-
-    {% if licks.has_next %}
-      <a class = "btn btn-outline-primary mb-4" href="?{% url_replace request 'page' licks.next_page_number %}"><i class="fas fa-angle-right fa-lg"></i></a>
-      <a class = "btn btn-outline-primary mb-4" href="?{% url_replace request 'page' licks.paginator.num_pages %}"><i class="fas fa-angle-double-right fa-lg"></i></a>
-    {% endif %}
-{% endif %}
-</div>
-
+{% include 'repo/snippets/paginator_snippet.html' with licks=licks %}
 
 {% if licks %}
-
     {% for lick in licks %}
-
     {% include 'repo/snippets/lick_snippet.html' with lick=lick chord_seq_query=chord_seq_query %}
-
     {% endfor %}
-
 {% else %}
     <div class="alert alert-primary" role="alert">
        No licks found... Try searching for something else.
     </div>
-
 {% endif %}
 
-
-{% if licks.has_other_pages %}
-<div class="paginator">
-    {% if licks.has_previous %}
-      <a class = "btn btn-outline-primary mb-4" href="?{% url_replace request 'page' 1 %}"><i class="fas fa-angle-double-left fa-lg"></i></a>
-      <a class = "btn btn-outline-primary mb-4" href="?{% url_replace request 'page' licks.previous_page_number %}"><i class="fas fa-angle-left fa-lg"></i></a>
-    {% endif %}
-
-    {% for num in licks.paginator.page_range %}
-      {% if licks.number == num %}
-        <a class = "btn btn-primary mb-4" href="?{% url_replace request 'page' num %}">{{ num }}</a>
-      {% elif num > licks.number|add:'-4' and num < licks.number|add:'4'%}
-        <a class = "btn btn-outline-primary mb-4" href="?{% url_replace request 'page' num %}">{{ num }}</a>
-      {% endif %}
-    {% endfor %}
-
-    {% if licks.has_next %}
-      <a class = "btn btn-outline-primary mb-4" href="?{% url_replace request 'page' licks.next_page_number %}"><i class="fas fa-angle-right fa-lg"></i></a>
-      <a class = "btn btn-outline-primary mb-4" href="?{% url_replace request 'page' licks.paginator.num_pages %}"><i class="fas fa-angle-double-right fa-lg"></i></a>
-    {% endif %}
-</div>
-{% endif %}
+{% include 'repo/snippets/paginator_snippet.html' with licks=licks %}
 
 <script type="text/javascript">
 const suggested_instruments_original = "{{ instr_selection }}".split(",");

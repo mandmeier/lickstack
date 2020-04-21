@@ -231,7 +231,7 @@ def browse_licks_view(request):
 
     # paginate
     page = request.GET.get('page', 1)
-    paginator = Paginator(licks, 6)
+    paginator = Paginator(licks, 10)
     licks = paginator.page(page)
 
     # find most common instruments
@@ -285,7 +285,7 @@ def my_licks_view(request):
 
     # paginate
     page = request.GET.get('page', 1)
-    paginator = Paginator(licks, 6)
+    paginator = Paginator(licks, 10)
     licks = paginator.page(page)
 
     # find if user liked any of those licks

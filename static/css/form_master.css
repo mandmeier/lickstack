@@ -2,6 +2,7 @@
 
 .lick-form {
     padding: 5px;
+    position: relative;
 }
 
 .form-header, .form-info-button{
@@ -20,10 +21,8 @@
 
 .form-info-button {
     position: absolute;
-    height: 35px;
-    width: 35px;
-    right: 30px;
-    border-radius: 5px;
+    padding-top: 4px;
+    right: 10px;
     border: 0px solid #333333;
 }
 
@@ -45,13 +44,7 @@
 
 #reset_chords {
     position: absolute;
-    height: 35px;
-    width: 35px;
-    right: 45px;
-    border-radius: 5px;
-    color: #333333;
-    background: #f9f9f9;
-    border: 2px solid #333333;
+    right: 10px;
     padding: 0px 0px 0px 2px;
 }
 

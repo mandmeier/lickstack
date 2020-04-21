@@ -1,7 +1,7 @@
 {% load static %}
 
 {% if request.user.is_authenticated %}
-      <form action="{% url 'like_lick' %}" method="post" style="float: right;">
+      <form class="like" id="like-section_{{ lick.id }}" action="{% url 'like_lick' %}" method="post">
         {% csrf_token %}
         <small class="text-muted">{{ lick.total_likes }} Like{{ lick.total_likes|pluralize }}</small>
         {% if lick in user_liked %}
@@ -35,7 +35,7 @@
 
 {% else %}
 
-    <form action="{% url 'login' %}" style="float:right;">
+    <form class="like" id="like-section_{{ lick.id }}" action="{% url 'login' %}">
         <small class="text-muted">{{ lick.total_likes }} Like{{ lick.total_likes|pluralize }}</small>
         <button class="panel-btn like-btn" type="submit" id="like_{{ lick.id }}" name="lick_id" value="{{ lick.id }}">
             <i class="far fa-thumbs-up fa-lg"></i>

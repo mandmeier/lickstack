@@ -21,8 +21,8 @@ input:-moz-placeholder { text-overflow: ellipsis; }
 
 #delete-lick-btn{
     position: absolute;
-    right: 43px;
-    border: 2px solid #333333;
+    right: 10px;
+    border: 2px solid #333;
 }
 
 #div_id_file {

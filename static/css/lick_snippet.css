@@ -8,46 +8,40 @@
 /* METADATA */
 
 .lick-metadata{
-  height: 45px;
-  padding: 0px;
-  margin-bottom: 10px;
+  padding: 5px;
   font-weight: bold;
-  display: flex;
   line-height: 100%;
 }
+
+
+.metadata-row{
+  display: flex;
+}
+
+.metadata-row p{
+  width:100%;
+  margin: 0px;
+}
+
+
+#meta_id, #meta_tags{
+  float:left;
+}
+
+
+#meta_author, #meta_date{
+  float:right;
+  text-align: right;
+}
+
+
+
+
 
 .description{
   width: 66%;
   height: 100%;
 }
-
-
-/* LIKES */
-
-.like, .favorite {
-  position: absolute;
-  margin-top: 6px
-}
-
-.like {
-  right: 65px;
-  width: 100px;
-}
-
-.favorite {
-  right: 25px;
-  width: 35px;
-}
-
-.like-btn svg{
-  color: #0000BB;
-}
-
-.fav-btn svg{
-  color: #C00001;
-  margin-left: -3px;
-}
-
 
 /* AUDIO PLAYER */
 .audio-player {
@@ -55,8 +49,8 @@
     flex-direction: row;
     align-items: center;
     /*background-color: #f9f9f9;*/
-    height: 40px;
     padding: 0px 0px 0px 5px;
+    margin-bottom: 7px;
 }
 
 
@@ -101,15 +95,10 @@
   pointer-events: none;
 }
 
-
-
-/* CHORDS */
-
-
 .lick-display {
   width: 100%;
   padding: 0px;
-  margin-bottom: 5px;
+  margin-bottom: 7px;
   position: relative;
   padding-bottom: 7%;
 }
@@ -155,9 +144,11 @@
 
 .lick-controls {
   width:100%;
+  position: relative;
   height: 40px;
   margin: 5px 0px 0px 0px;
   padding: 0px 5px;
+  display: flex;
   /*background: #ff0000;*/
 }
 
@@ -184,32 +175,40 @@
 
 .transpose-btn {
     position: absolute;
-    background-color: #f9f9f9;
     left: 45px;
-    height: 35px;
     width: 55px;
     padding: 0px;
-    border: 2px solid #333333;
-    border-radius: 5px;
     cursor: pointer;
     font-weight: bold;
-    color: #333333;
 }
 
 .edit-btn {
   position: absolute;
-  /*left: 105px;*/
-  right: 5px;
-  height: 35px;
-  width: 35px;
-  border-radius: 5px;
-  border: 2px solid #333333;
-  padding: 0px;
-  margin-bottom: 10px;
+  left: 105px;
 }
 
 .edit-btn svg{
   margin-top: 4px;
   margin-left: 5px;
   color: #006400;
+}
+
+
+.like {
+  position: absolute;
+  right: 45px;
+}
+
+.favorite {
+  position: absolute;
+  right: 5px;
+}
+
+.like-btn svg{
+  color: #0000BB;
+}
+
+.fav-btn svg{
+  color: #C00001;
+  margin-left: -3px;
 }
