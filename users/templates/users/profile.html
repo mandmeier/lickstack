@@ -13,8 +13,6 @@
 
 </script>
 
-
-
 <!-- modal -->
 <div class="modal fade" id="delete" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
@@ -28,9 +26,9 @@
       <div class="modal-body">
         <p>All your licks will be permanently deleted. This cannot be undone.</p>
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer" style="justify-content: space-between;">
         <a id="delete_btn" href="{% url 'profile-delete' %}"><button type="button" class="btn btn-danger">Yes, delete my profile</button></a>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button id="cancel_btn" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
       </div>
     </div>
   </div>
@@ -43,13 +41,15 @@
         <div class="media-body">
           <h2 class="account-heading">{{ user.username}}</h2>
           <p class="text-secondary">{{ user.email }}</p>
+          <br>
+          <br>
         </div>
       </div>
       <form method="POST" enctype="multipart/form-data">
           {% csrf_token %}
           <fieldset class="form-group">
               <div class="text-center">
-                  <h3>Update Profile</h3>
+                  <h5>Update Profile</h5>
                   <hr>
               </div>
               {{ u_form|crispy }}

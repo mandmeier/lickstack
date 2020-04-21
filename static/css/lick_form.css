@@ -117,13 +117,9 @@ input:-moz-placeholder { text-overflow: ellipsis; }
 }
 
 
-
-
 #instrument-row {
-    margin-top: 20px;
-    margin-bottom: -30px;
+    margin: 20px 0px -30px 0px;
 }
-
 
 
 #div_id_time_signature {
