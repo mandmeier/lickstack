@@ -7,20 +7,20 @@
 
 <article class="panel lick lick-section" id="lick_{{ lick.id }}">
 
-        <div class="chord_seq" id="chord_seq_{{ lick.id }}" value="{{ lick.chord_seq_search}}" style="display: none;"></div>
-        <div class="transpose_rule" id="transpose_rule_{{ lick.id }}" value="{{ lick.transpose_rule}}" style="display: none;"></div>
-        <div class="time_signature" id="time_signature_{{ lick.id }}" value="{{ lick.time_signature}}" style="display: none;"></div>
+    <div class="chord_seq" id="chord_seq_{{ lick.id }}" value="{{ lick.chord_seq_search}}" style="display: none;"></div>
+    <div class="transpose_rule" id="transpose_rule_{{ lick.id }}" value="{{ lick.transpose_rule}}" style="display: none;"></div>
+    <div class="time_signature" id="time_signature_{{ lick.id }}" value="{{ lick.time_signature}}" style="display: none;"></div>
 
-        <div class="lick-metadata">
-            <div class="metadata-row">
-                <p id="meta_id">{{ lick.id }} <small class="text-muted"> – {{ lick.instrument }}</small></p>
-                <p id="meta_author"><small class="text-muted">{{ lick.author }}</small></p>
-            </div>
-            <div class="metadata-row">
-                <p id="meta_tags">{% for tag in lick.tags.names %}<small class="text-muted">#{{tag}} </small>{% endfor %}</p>
-                <p id="meta_date"><small class="text-muted">{{ lick.date_posted|date:"Y b d" }}</small></p>
-            </div>
+    <div class="lick-metadata">
+        <div class="metadata-row">
+            <p id="meta_id">{{ lick.id }} <small class="text-muted"> – {{ lick.instrument }}</small></p>
+            <p id="meta_author"><small class="text-muted">{{ lick.author }}</small></p>
         </div>
+        <div class="metadata-row">
+            <p id="meta_tags">{% for tag in lick.tags.names %}<small class="text-muted">#{{tag}} </small>{% endfor %}</p>
+            <p id="meta_date"><small class="text-muted">{{ lick.date_posted|date:"Y b d" }}</small></p>
+        </div>
+    </div>
 
     <div class="audio-player col-12">
           <button class="play" id="{{ lick.id }}[X]{{ lick.file.url }}"><i class="ion-play"></i></button>
@@ -31,7 +31,7 @@
           </div>
     </div>
 
-    <div class="lick-display col-12">
+    <div class="lick-display">
     <div class="row chords-row">
         <div class="separator-lr"></div>
             <div name="chord_1" class="chord-img"><img src="#"></div>
@@ -51,7 +51,7 @@
     </div>
     </div>
 
-    <div class="lick-display col-12">
+    <div class="lick-display">
     <div class="row chords-row">
         <div class="separator-lr"></div>
             <div name="chord_9" class="chord-img"><img src="#"></div>
@@ -71,7 +71,7 @@
     </div>
     </div>
 
-    <div class="lick-controls col-12">
+    <div class="lick-controls">
         <button class="panel-btn slowdown btn-default" id="slowdown-section_{{ lick.id }}">
             <input class="slowdown-btn" type="image" id="slowdown_{{ lick.id }}" onclick="slowdown('{{ lick.id }}');" value="1" src="{% static 'img/tortoise_toggled.png' %}" alt="slowdown">
         </button>
@@ -93,8 +93,14 @@
     {% if lick.author == user %}
         <a class="panel-btn edit-btn" id="edit-section_{{ lick.id }}" href="{% url 'lick-update' lick.id %}"><i class="fas fa-edit fa-lg"></i></a>
     {% endif %}
-        {% include 'repo/snippets/like_section.html' %}
-        {% include 'repo/snippets/favorite_section.html' %}
+
+        <div class="like" id="like-section_{{ lick.id }}">
+            {% include 'repo/snippets/like_section.html' %}
+        </div>
+        <div class="favorite" id="favorite-section_{{ lick.id }}">
+            {% include 'repo/snippets/favorite_section.html' %}
+        </div>
+
     </div>
 
 

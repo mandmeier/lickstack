@@ -64,6 +64,32 @@ def is_valid_queryparam(param):
     return param != '' and param is not None
 
 
+def get_liked_licks(request, licks):
+    if request.user.is_authenticated:
+        # find if user liked any of those licks
+        user_liked = []
+        for lick in licks:
+            if lick in request.user.profile.liked_licks.all():
+                user_liked.append(lick)
+    else:
+        user_liked = []
+
+    return(user_liked)
+
+
+def get_faved_licks(request, licks):
+    if request.user.is_authenticated:
+        # find if user faved any of those licks
+        user_faved = []
+        for lick in licks:
+            if lick in request.user.profile.faved_licks.all():
+                user_faved.append(lick)
+    else:
+        user_faved = []
+
+    return(user_faved)
+
+
 def home(request):
 
     id_tuple = (1, 2, 3)
@@ -74,6 +100,8 @@ def home(request):
     context = {}
     context['title'] = 'Home'
     context['licks'] = licks
+    context['user_liked'] = get_liked_licks(request, licks)
+    context['user_faved'] = get_faved_licks(request, licks)
 
     return render(request, 'repo/home.html', context)
 
@@ -213,22 +241,6 @@ def browse_licks_view(request):
     # licks = get_lick_queryset(query).order_by('-date_posted')
     licks = sorted(queryset, key=attrgetter('date_posted'), reverse=True)
 
-    if request.user.is_authenticated:
-        # find if user liked any of those licks
-        user_liked = []
-        for lick in licks:
-            if lick in request.user.profile.liked_licks.all():
-                user_liked.append(lick)
-
-        # find if user faved any of those licks
-        user_faved = []
-        for lick in licks:
-            if lick in request.user.profile.faved_licks.all():
-                user_faved.append(lick)
-    else:
-        user_liked = []
-        user_faved = []
-
     # paginate
     page = request.GET.get('page', 1)
     paginator = Paginator(licks, 10)
@@ -252,13 +264,13 @@ def browse_licks_view(request):
 
     # pass values to context
     context = {}
-    context["form"] = LickForm()
+    context['form'] = LickForm()
     context['licks'] = licks
-    context["instrument"] = Instrument.objects.all().order_by('name')
-    context["chord_seq_query"] = chord_seq_query  # used for template tags
-    context["user_liked"] = user_liked
-    context["user_faved"] = user_faved
-    context["instr_selection"] = instr_selection
+    context['instrument'] = Instrument.objects.all().order_by('name')
+    context['chord_seq_query'] = chord_seq_query  # used for template tags
+    context['user_liked'] = get_liked_licks(request, licks)
+    context['user_faved'] = get_faved_licks(request, licks)
+    context['instr_selection'] = instr_selection
     # remember form input
     # context["username_contains_query"] = username_contains_query
 
@@ -288,24 +300,12 @@ def my_licks_view(request):
     paginator = Paginator(licks, 10)
     licks = paginator.page(page)
 
-    # find if user liked any of those licks
-    user_liked = []
-    for lick in licks:
-        if lick in request.user.profile.liked_licks.all():
-            user_liked.append(lick)
-
-    # find if user faved any of those licks
-    user_faved = []
-    for lick in licks:
-        if lick in request.user.profile.faved_licks.all():
-            user_faved.append(lick)
-
     context = {}
     context['licks'] = licks
-    context["chord_seq_query"] = chord_seq_query  # used for template tags
-    context["user_liked"] = user_liked
-    context["user_faved"] = user_faved
-    context["display"] = display
+    context['chord_seq_query'] = chord_seq_query  # used for template tags
+    context['user_liked'] = get_liked_licks(request, licks)
+    context['user_faved'] = get_faved_licks(request, licks)
+    context['display'] = display
 
     return render(request, "repo/my_licks.html", context)
 

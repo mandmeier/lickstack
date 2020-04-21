@@ -220,26 +220,6 @@
     <col width="80px">
   <tr>
     <td>
-    <button class="panel-btn like-btn dummy" type="submit" id="like_dummy" name="lick_id">
-        <i class="far fa-thumbs-up fa-lg" style="color: #0000BB"></i>
-    </button>
-    </td>
-    <td>
-       <p>Like lick. If you like what you hear, make sure you give the author credit!</p>
-    </td>
-  </tr>
-  <tr>
-    <td>
-    <button class="panel-btn fav-btn dummy" type="submit" id="fav_dummy" name="lick_id">
-        <i class="far fa-star fa-lg" style="color: #C00001;"></i>
-    </button>
-    </td>
-    <td>
-        <p>Mark as favorite. Favorite licks will be listed under My Licks > Favorites, so that you can easily find them again.</p>
-    </td>
-  </tr>
-  <tr>
-    <td>
     <button class="slowdown btn-default dummy" id="slowdown_dummy">
         <input class="slowdown-btn" type="image" id="slowdown_dummy_input"value="1" src="{% static 'img/tortoise_toggled.png' %}" alt="slowdown">
     </button>
@@ -250,7 +230,7 @@
   </tr>
   <tr>
     <td>
-    <select class="transpose-btn dummy" id="transpose_dummy" name="transpose">
+    <select class="panel-btn transpose-btn dummy" id="transpose_dummy" name="transpose">
         <option value="12">+12</option>
         <option value="11">+11</option>
         <option value="10">+10</option>
@@ -272,12 +252,32 @@
   </tr>
   <tr>
     <td>
-    <div class="edit-btn dummy" id="edit_dummy" type="button">
+    <div class="panel-btn edit-btn dummy" id="edit_dummy" type="button">
         <a><i class="fas fa-edit fa-lg"></i></a>
     </div>
     </td>
     <td>
         <p>Edit your licks in case you want to add or change something </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <button class="panel-btn like-btn dummy" type="submit" id="like_dummy" name="lick_id">
+        <i class="far fa-thumbs-up fa-lg" style="color: #0000BB"></i>
+    </button>
+    </td>
+    <td>
+       <p>Like lick. If you like what you hear, make sure you give the author credit!</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <button class="panel-btn fav-btn dummy" type="submit" id="fav_dummy" name="lick_id">
+        <i class="far fa-star fa-lg" style="color: #C00001;"></i>
+    </button>
+    </td>
+    <td>
+        <p>Mark as favorite. Favorite licks will be listed under My Licks > Favorites, so that you can easily find them again.</p>
     </td>
   </tr>
 </table>

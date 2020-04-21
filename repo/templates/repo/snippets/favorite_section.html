@@ -2,7 +2,7 @@
 
 
 {% if request.user.is_authenticated %}
-      <form class="favorite" id="favorite-section_{{ lick.id }}" action="{% url 'favorite_lick' %}" method="post">
+      <form action="{% url 'favorite_lick' %}" method="post">
         {% csrf_token %}
         {% if lick in user_faved %}
         <button class="panel-btn fav-btn" type="submit" id="favorite_{{ lick.id }}" name="lick_id" value="{{ lick.id }}">
@@ -35,7 +35,7 @@
 
 {% else %}
 
-    <form class="favorite" id="favorite-section_{{ lick.id }}" action="{% url 'login' %}">
+    <form action="{% url 'login' %}">
         <button class="panel-btn fav-btn" type="submit" id="fav_{{ lick.id }}" name="lick_id" value="{{ lick.id }}">
             <i class="far fa-star fa-lg"></i>
         </button>
