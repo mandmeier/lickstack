@@ -37,9 +37,23 @@
 
 
 main{
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 0px;
+    padding-right: 0px;
     min-height: 100%;
+}
+
+
+
+.main-content{
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+@media (min-width:540px){
+  .main-content{
+      padding-left: 10px;
+      padding-right: 10px;
+  }
 }
 
 .main-content .row {

@@ -15,5 +15,5 @@ for (let i = 0; i < chds.length; i++) {
 }
 
 // populate keywords with data from context
-const kws = "{{ kw_string }}".split(',')
+const kws = kw_string.split(',')
 kws.forEach(item => add_kw(item));

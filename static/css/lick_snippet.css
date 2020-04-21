@@ -2,6 +2,7 @@
 
 .lick-section {
   padding: 5px;
+  margin: 5px 0px;
 }
 
 /* METADATA */
@@ -12,10 +13,12 @@
   margin-bottom: 10px;
   font-weight: bold;
   display: flex;
+  line-height: 100%;
 }
 
 .description{
   width: 66%;
+  height: 100%;
 }
 
 

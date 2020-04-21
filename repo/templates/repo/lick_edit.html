@@ -154,8 +154,9 @@
             {{ form.time_signature|as_crispy_field }}
             <button class="panel-btn reset-chords-btn" id="reset_chords" type="button"><i class="fas fa-recycle fa-lg"></i></button>
         </div>
+    </main>
 
-        <div class="form-chords-input col-12">
+        <div id="form-chords-input" class="form-chords-input col-12">
         <div class="row form-chords-row">
                 <div class="separator-lr"></div>
                 {% include 'repo/snippets/chord_select_snippet.html' %}
@@ -187,7 +188,6 @@
         <div id="chord_seq_field" style="display: none;">
                 {{ form.chord_seq|as_crispy_field }}
         </div>
-    </main>
 
 </section>
 
@@ -246,7 +246,7 @@
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script type="text/javascript">lick_URL = "{{ lick.file.url }}";</script>
+<script type="text/javascript">lick_URL = "{{ lick.file.url }}";kw_string="{{ kw_string }}";</script>
 <script src="{% static 'js/form_master.js' %}"></script>
 <script src="{% static 'js/new_edit_master.js' %}"></script>
 <script src="{% static 'js/lick_edit.js' %}"></script>

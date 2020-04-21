@@ -134,7 +134,8 @@
             <button class="panel-btn reset-chords-btn" id="reset_chords" type="button"><i class="fas fa-recycle fa-lg"></i></button>
         </div>
 
-        <div class="form-chords-input col-12">
+    </main>
+        <div id="form-chords-input" class="form-chords-input col-12">
         <div class="row form-chords-row">
                 <div class="separator-lr"></div>
                 {% include 'repo/snippets/chord_select_snippet.html' %}
@@ -166,7 +167,6 @@
         <div id="chord_seq_field" style="display: none;">
                 {{ form.chord_seq|as_crispy_field }}
         </div>
-    </main>
 
 </section>
 
