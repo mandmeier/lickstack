@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
+
+
+/*  Base  */
+  html, body{
+  height: 100%;
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+  color: #222;
+  background-color: #000040;
+}
+
+@media (min-width:1200px){
+    html, body{
+        background-image: url("/static/img/pk_wallpaper_dark.jpeg");
+        background-size: cover;
+        background-attachment: fixed;
+    }
+}
+
+
+.navbar {
+  background-color: #e5e5e5;
+  padding: .8rem;
+}
+
+.navbar-logo {
+  max-width: 100%;
+  height: 50px;
+}
+
+.navbar-nav li {
+  padding-right: 20px;
+}
+.nav-link {
+  font-size: 1.1em !important;
+}
+
+main{
+  min-height: 100%;
+}
+
+.main-content{
+  padding-left: 0px;
+  padding-right: 0px;
+}
+@media (min-width:540px){
+  .main-content{
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+@media (min-width:768px){
+  .main-content{
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+.row {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+
+.paginator {
+    margin: 20px 0px 0px 0px;
+    max-width: 100%;
+    white-space: nowrap;
+}
+
+
+.paginator .btn {
+    background-color: #f9f9f9;
+    color: #333333;
+    font-weight: bold;
+    border: 2px solid #333333;
+}
+
+.paginator .btn-primary{
+    background: #C00001;
+    color: #f9f9f9;
+}
+
+.paginator .btn:hover {
+    background: #cccccc;
+}
+
+
+.panel {
+  margin: 20px 0px;
+  background-color: #f9f9f9;
+  width: 100%;
+  padding: 20px;
+  border: 2px solid #333;
+  border-radius: 15px;
+  box-shadow: 5px 5px 5px;
+}
+
+.panel-btn{
+  width: 35px;
+  height: 35px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  border: 2px solid #333;
+}
+
+
+.center-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+
+footer {
+  background-color: #3f3f3f;
+  color: #d5d5d5;
+  padding-top: 2rem;
+}
+hr.light {
+  border-top: 1px solid #d5d5d5;
+  width: 90%;
+  margin-top: .8rem;
+  margin-bottom: 1rem;
+}
+footer a {
+  color: #d5d5d5;
+}
+hr.light-100 {
+  border-top: 1px solid #d5d5d5;
+  width: 100%;
+  margin-top: .8rem;
+  margin-bottom: 1rem;
+}
+.social a {
+    font-size: 2em;
+    padding: 0.7rem;
+  }
+.fa-facebook {
+  color: #3b5998;
+}
+.fa-twitter {
+  color: #00aced;
+}
+
+.footer-logo {
+  height: 60px;
+  margin-bottom: 10px;
+}
+

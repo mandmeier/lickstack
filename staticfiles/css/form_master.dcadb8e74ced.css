@@ -1,0 +1,172 @@
+
+
+.lick-form {
+    padding: 5px;
+    position: relative;
+}
+
+.form-header, .form-info-button{
+    background-color: #333333;
+    color: #f9f9f9;
+}
+
+.form-header{
+    height: 40px;
+    margin-top: 40px;
+    margin-left: -2px;
+    margin-right: -2px;
+    padding: 5px 10px;
+    display: flex;
+}
+
+.form-info-button {
+    position: absolute;
+    padding-top: 4px;
+    right: 10px;
+    border: 0px solid #333333;
+}
+
+
+
+.info{
+    margin-top: 10px;
+    color: #006400;
+}
+
+
+
+#time-signature {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+}
+
+
+#reset_chords {
+    position: absolute;
+    right: 10px;
+    padding: 0px 0px 0px 2px;
+}
+
+.form-chords-input .chord-select {
+    width: 11.5%;
+    max-width: 100%;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    font-size: 1rem;
+    font-size: 2.2vw;
+    font-weight: 400;
+    color: #495057;
+    margin: 5px 0px;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+
+@media (max-width:768px){
+   .form-fields{
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+}
+
+@media (min-width:768px){
+    .form-chords-input .chord-select {
+        font-size: 1.7vw;
+    }
+    #form-chords-input{
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+}
+
+@media (min-width:992px){
+    .form-chords-input .chord-select {
+        font-size: 1.5vw;
+    }
+    #form-chords-input{
+        padding-left: 25px;
+        padding-right: 25px;
+    }
+    .form-fields{
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+}
+
+@media (min-width:1200px){
+    .form-chords-input .chord-select {
+        font-size: 0.9rem;
+    }
+}
+
+
+.separator-mid{
+    width: 4%;
+}
+.separator-lr{
+    width: 2%;
+}
+
+
+/*time signature radio btns next to each other*/
+.form-check {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+
+
+
+
+.tag-section{
+    /*background: #ff0000;*/
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    margin: 10px 0px;
+}
+
+.tag-section hr{
+    margin: 0px;
+}
+.tag-container, .suggested-tag-container{
+    margin: 0px;
+    padding: 5px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tag-container .tag, .suggested-tag-container .tag{
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin: 5px;
+    padding: 0px 5px;
+    display: flex;
+    align-items: center;
+    background: #e0e0e0;
+    cursor: default;
+}
+
+.suggested-tag-container .tag{
+    cursor: pointer;
+}
+
+.tag-container input{
+    box-sizing: border-box;
+    width: 100%;
+    flex: 1;
+    padding: 5px;
+    outline: none;
+    border: 0;
+}
+
+.tag svg {
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.tag path {
+    pointer-events: none;
+}
