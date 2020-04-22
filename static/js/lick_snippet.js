@@ -57,7 +57,9 @@ function updateChords(lick_id) {
             chord_imgs[i].name = chords[i]
         }
         if (chords[i] == '.'){
-            chord_imgs[i].src =  chords_dir + transpose_rules[i] + '/' + '..png'
+            if (chord_imgs[i].src.endsWith('/#')){
+                chord_imgs[i].src =  chords_dir + transpose_rules[i] + '/' + 'dash.png'
+            }
         } else {
             chord_imgs[i].src =  chords_dir + transpose_rules[i] + '/' + transposeChord(chords[i], transpose) + '.png'
         }
