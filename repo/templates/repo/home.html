@@ -3,56 +3,15 @@
 {% load repo_extras %}
 
 {% block content %}
-
-
-
-<style type="text/css">
-@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
-
-
-
-.welcome {
-  width: 100%;
-  margin: 0 auto;
-  color: #C00001;
-}
-
-.welcome hr{
-  border-top: 2px solid #b4b4b4;
-  width: 95%;
-  margin-top: .3rem;
-  margin-bottom: 1rem;
-}
-
-.padding {
-  padding-bottom: 2rem;
-}
-
-.card {
-    margin-top: 2rem;
-}
-
-
-@media (max-width:535px){
-    .display-4 {
-        font-size: 3rem;
-    }
-
-}
-
-
-
-
-</style>
-
 <link rel="stylesheet" type="text/css" href="{% static 'css/lick_snippet.css' %}">
-
+<link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
 
 <style type="text/css">
 .chords-row {
-    background-image: url("{% static 'img/staff.webp' %}");
+    background-image: url("{% static 'img/staff.webp' %}"),url("{% static 'img/staff.png' %}");
 }
 </style>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.5.35/Tone.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
@@ -86,7 +45,10 @@
     <h2>Don't know what to play over those changes?</h2>
 </div>
 
-<img src="{% static 'img/chimp_headscratch.webp' %}" class="img-fluid">
+<picture>
+  <source type="image/webp" srcset="{% static 'img/chimp_headscratch.webp' %}" />
+  <img src="{% static 'img/chimp_headscratch.png' %}" class="img-fluid">
+</picture>
 
 <br>
 <br>
@@ -156,7 +118,10 @@
     <hr>
     <p>This may be a passage in your lead sheet that you are struggling with. By design, licks on the LickStack are short patterns up to 4 measures long.</p>
 
-    <img src="{% static 'img/chordseq.webp' %}" class="img-fluid" alt="Image of lead sheet showing Gm7 - C7 - F7 progression">
+    <picture>
+      <source type="image/webp" srcset="{% static 'img/chordseq.webp' %}" />
+      <img src="{% static 'img/chordseq.png' %}" class="img-fluid" alt="Image of lead sheet showing Gm7 - C7 - F7 progression">
+    </picture>
 
     <br>
     <br>
@@ -196,24 +161,6 @@
 
 
 
-
-
-<style type="text/css">
-.dummy{
-    position: relative;
-    left: 0px;
-    height: 35px;
-}
-
-#dummy_table td{
-    vertical-align: top;
-    padding-bottom: 20px;
-}
-
-</style>
-
-
-
 <section class="panel">
     <br>
     <table style="width:100%" id="dummy_table">
@@ -221,7 +168,10 @@
   <tr>
     <td>
     <button class="slowdown btn-default dummy" id="slowdown_dummy">
-        <input class="slowdown-btn" type="image" id="slowdown_dummy_input"value="1" src="{% static 'img/tortoise_toggled.webp' %}" alt="slowdown">
+        <picture>
+          <source type="image/webp" srcset="{% static 'img/tortoise_toggled.webp' %}" />
+          <input class="slowdown-btn" type="image" id="slowdown_dummy_input"value="1" src="{% static 'img/tortoise_toggled.png' %}" alt="slowdown">
+        </picture>
     </button>
     </td>
     <td>
@@ -327,7 +277,12 @@
         <hr>
         <p>If you like what you hear on the LickStack, please consider throwing in some spare change. Any contributions will go towards server costs and improving your experience.</p>
 
-        <a style="cursor: pointer;" onclick="document.forms['paypal_form'].submit()"><img border="0" alt="Tip Bucket. Donate to the LickStack" src="{% static 'img/tip_bucket.webp' %}" width="90" height="100"></a>
+        <a style="cursor: pointer;" onclick="document.forms['paypal_form'].submit()">
+            <picture>
+              <source type="image/webp" srcset="{% static 'img/tip_bucket.webp' %}" />
+              <img border="0" alt="Tip Bucket. Donate to the LickStack" src="{% static 'img/tip_bucket.png' %}" width="90" height="100">
+            </picture>
+        </a>
         <br>
         <a href="#" style="margin-top: 5px;" class="btn btn-success btn-lg" role="button" onclick="document.forms['paypal_form'].submit()">Contribute</a>
 

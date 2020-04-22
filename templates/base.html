@@ -32,8 +32,18 @@
 <nav class="navbar navbar-expand-lg navbar-light sticky-top">
 <div class="container-fluid">
     <div>
-        <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'img/Logo.webp' %}" class="navbar-logo" alt="Logo"></a>
-        <a style="cursor: pointer;" onclick="document.forms['paypal_form'].submit()"><img border="0" alt="Tip Bucket. Donate to the LickStack" src="{% static 'img/tip_bucket.webp' %}" width="50" height="56"></a>
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <picture>
+              <source type="image/webp" srcset="{% static 'img/Logo.webp' %}" />
+              <img src="{% static 'img/Logo.png' %}" class="navbar-logo" alt="Logo">
+            </picture>
+        </a>
+        <a style="cursor: pointer;" onclick="document.forms['paypal_form'].submit()">
+            <picture>
+              <source type="image/webp" srcset="{% static 'img/tip_bucket.webp' %}" />
+              <img border="0" alt="Tip Bucket. Donate to the LickStack" src="{% static 'img/tip_bucket.png' %}" width="50" height="56">
+            </picture>
+        </a>
     </div>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
@@ -137,7 +147,10 @@
 
     <div class="col-12">
         <hr class="light-100">
-        <img class="footer-logo" src="{% static 'img/Logo.webp' %}" alt="Logo">
+        <picture>
+          <source type="image/webp" srcset="{% static 'img/Logo.webp' %}" />
+          <img src="{% static 'img/Logo.png' %}" class="footer-logo" alt="Logo">
+        </picture>
         <br><small>artwork by <a href="https://www.instagram.com/p_ll_bi.art/?hl=en" style="color: #b2ffff">@p_ll_bi.art <i class="fab fa-instagram fa-lg"></i></a></small>
         <h5>&copy; LickStack.com</h5>
     </div>

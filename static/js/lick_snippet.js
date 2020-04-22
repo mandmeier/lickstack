@@ -1,3 +1,13 @@
+function canUseWebP() {
+    var elem = document.createElement('canvas');
+    if (!!(elem.getContext && elem.getContext('2d'))) {
+        return elem.toDataURL('image/webp').indexOf('data:image/webp') == 0;
+    }
+    return false;
+}
+function img_ext(){if(canUseWebP()){return ".webp";}return ".png";}
+
+
 
 function transposeChord(input,transpose_by) {
     element = input.match(/(_[a-gA-g]{1,2}_)/)[0]
@@ -57,11 +67,11 @@ function updateChords(lick_id) {
             chord_imgs[i].name = chords[i]
         }
         if (chords[i] == '.'){
-            if (chord_imgs[i].src.endsWith('/#')){
-                chord_imgs[i].src =  chords_dir + transpose_rules[i] + '/' + 'dash.webp'
+            if (chord_imgs[i].src.endsWith('#')){
+                chord_imgs[i].src =  chords_dir + transpose_rules[i] + '/dash' + img_ext()
             }
         } else {
-            chord_imgs[i].src =  chords_dir + transpose_rules[i] + '/' + transposeChord(chords[i], transpose) + '.webp'
+            chord_imgs[i].src =  chords_dir + transpose_rules[i] + '/' + transposeChord(chords[i], transpose) + img_ext()
         }
     }
     transposePlayer(l);

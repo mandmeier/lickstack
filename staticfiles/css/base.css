@@ -12,7 +12,7 @@
 
 @media (min-width:1200px){
     html, body{
-        background-image: url("/static/img/pk_wallpaper_dark.webp");
+        background-image: url("/static/img/pk_wallpaper_dark.jpeg");
         background-size: cover;
         background-attachment: fixed;
     }
