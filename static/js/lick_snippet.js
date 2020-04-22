@@ -58,10 +58,10 @@ function updateChords(lick_id) {
         }
         if (chords[i] == '.'){
             if (chord_imgs[i].src.endsWith('/#')){
-                chord_imgs[i].src =  chords_dir + transpose_rules[i] + '/' + 'dash.png'
+                chord_imgs[i].src =  chords_dir + transpose_rules[i] + '/' + 'dash.webp'
             }
         } else {
-            chord_imgs[i].src =  chords_dir + transpose_rules[i] + '/' + transposeChord(chords[i], transpose) + '.png'
+            chord_imgs[i].src =  chords_dir + transpose_rules[i] + '/' + transposeChord(chords[i], transpose) + '.webp'
         }
     }
     transposePlayer(l);
