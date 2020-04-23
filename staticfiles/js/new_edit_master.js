@@ -2,7 +2,7 @@
 
 //initial values
 playButton = document.getElementById("play");
-playButtonIcon = playButton.querySelector('i');
+playButtonIcon = playButton.querySelector('span');
 seekBar = document.getElementById("seekbar");
 fillBar = seekBar.querySelector('.fill');
 mouseDown = false;
@@ -23,11 +23,11 @@ function update_audio_controls() {
     preview.style.display = "none";
 
     audio.addEventListener('play', function () {
-      playButtonIcon.className = 'ion-pause';
+      playButtonIcon.className = 'icon icon-pause';
     });
 
     audio.addEventListener('pause', function () {
-      playButtonIcon.className = 'ion-play';
+      playButtonIcon.className = 'icon icon-play';
     });
 
     audio.addEventListener('timeupdate', function () {

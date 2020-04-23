@@ -67,7 +67,7 @@ function updateChords(lick_id) {
             chord_imgs[i].name = chords[i]
         }
         if (chords[i] == '.'){
-            if (chord_imgs[i].src.endsWith('/#')){
+            if (chord_imgs[i].src.endsWith('#')){
                 chord_imgs[i].src =  chords_dir + transpose_rules[i] + '/dash' + img_ext()
             }
         } else {
@@ -125,7 +125,7 @@ for (let i = 0; i < play_btns.length; i++) {
     let audio_url = play_btns[i].id.split('[X]')[1]
     players.push(new Tone.Player(audio_url));
     audios.push(new Audio(audio_url));
-    playButtonIcons.push(play_btns[i].querySelector('i'));
+    playButtonIcons.push(play_btns[i].querySelector('span'));
     audios[i].volume = 0;
 
     playback_rates.push(Number(licks[i].getElementsByClassName('transpose-btn')[0].value))
@@ -151,12 +151,12 @@ for (let i = 0; i < play_btns.length; i++) {
     });
 
     audios[i].addEventListener('play', function () {
-      playButtonIcons[i].className = 'ion-pause';
+      playButtonIcons[i].className = 'icon icon-pause';
       resetAudio(i);
     });
 
     audios[i].addEventListener('pause', function () {
-      playButtonIcons[i].className = 'ion-play';
+      playButtonIcons[i].className = 'icon icon-play';
     });
 
     audios[i].addEventListener('timeupdate', function () {

@@ -13,3 +13,9 @@
     width: 100%;
     height: 46px;
 }
+
+.mylicks-icon {
+    display:inline;
+    color: white;
+    margin-right: 10px;
+}

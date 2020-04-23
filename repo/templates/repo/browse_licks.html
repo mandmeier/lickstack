@@ -6,6 +6,7 @@
 
 {% block content %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/browse_licks.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/paginator.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/lick_snippet.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/form_master.css' %}">
 
@@ -47,7 +48,7 @@
 <!--data-toggle="collapse"-->
 <!--class="collapse"-->
 
-<button class="search-btn col-lg-12 btn-primary btn-lg" data-toggle="collapse" data-target="#search-form">Search Licks  <i class="fas fa-search"></i></button>
+<button class="search-btn col-lg-12 btn-primary btn-lg" data-toggle="collapse" data-target="#search-form">Search Licks  <span class="icon icon-search"></span></button>
 <div id="search-form" class="collapse">
 
 
@@ -57,7 +58,7 @@
 <section class="form-section" id="form-section-chords">
     <header class="form-header" id="form-header-chords">
         <h4>Chords</h4>
-        <button type="button" class="form-info-button" data-toggle="collapse" data-target="#form-info-chords"><i class="fas fa-info-circle fa-lg"></i></button>
+        <button type="button" class="form-info-button" data-toggle="collapse" data-target="#form-info-chords"><span class="icon icon-info"></span></button>
     </header>
 
     <main class="form-fields">
@@ -93,7 +94,7 @@
             <input type="radio" class="form-check-input" name="ts" id="id_time_signature_2" value="34">
             <label for="id_time_signature_2" class="form-check-label">3/4</label>
         </div>
-        <button class="panel-btn reset-chords-btn" id="reset_chords" type="button"><i class="fas fa-recycle fa-lg"></i></button>
+        <button class="panel-btn reset-chords-btn" id="reset_chords" type="button"><span class="icon icon-recycle"></span></button>
     </div>
     </main>
 
@@ -143,7 +144,7 @@
 <section class="form-section" id="form-section-data">
     <header class="form-header" id="form-header-data">
         <h4>Data</h4>
-        <button type="button" class="form-info-button" data-toggle="collapse" data-target="#form-info-data"><i class="fas fa-info-circle fa-lg"></i></button>
+        <button type="button" class="form-info-button" data-toggle="collapse" data-target="#form-info-data"><span class="icon icon-info"></span></button>
     </header>
 
     <main class="form-fields">
@@ -187,7 +188,7 @@
 <section class="form-section" id="form-section-instruments">
     <header class="form-header" id="form-header-instruments">
         <h4>Instruments</h4>
-        <button type="button" class="form-info-button" data-toggle="collapse" data-target="#form-info-instruments"><i class="fas fa-info-circle fa-lg"></i></button>
+        <button type="button" class="form-info-button" data-toggle="collapse" data-target="#form-info-instruments"><span class="icon icon-info"></span></button>
     </header>
 
     <main class="form-fields">
@@ -224,7 +225,7 @@
 <section class="form-section" id="form-section-keywords">
     <header class="form-header" id="form-header-keywords">
         <h4>Keywords</h4>
-        <button type="button" class="form-info-button" data-toggle="collapse" data-target="#form-info-keywords"><i class="fas fa-info-circle fa-lg"></i></button>
+        <button type="button" class="form-info-button" data-toggle="collapse" data-target="#form-info-keywords"><span class="icon icon-info"></span></button>
     </header>
 
     <main class="form-fields">

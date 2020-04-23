@@ -52,7 +52,7 @@
 
 <div class="form-head-section">
     <h2>Edit Lick {{ lick.id }}</h2>
-    <button id="delete-lick-btn" class="btn btn-danger btn-sm mt-1 mb-1" type="button" data-toggle="modal" data-target="#delete"><i class="fas fa-trash-alt fa-lg"></i></button>
+    <button id="delete-lick-btn" class="btn btn-danger btn-sm mt-1 mb-1" type="button" data-toggle="modal" data-target="#delete"><span class="icon icon-trash"></span></button>
 </div>
 
 
@@ -60,7 +60,7 @@
 
     <header class="form-header" id="form-header-file">
         <h4>Audio</h4>
-        <button type="button" class="form-info-button" data-toggle="collapse" data-target="#form-info-file"><i class="fas fa-info-circle fa-lg"></i></button>
+        <button type="button" class="form-info-button" data-toggle="collapse" data-target="#form-info-file"><span class="icon icon-info"></span></button>
     </header>
 
     <main class="form-fields">
@@ -81,7 +81,7 @@
         -->
 
         <div class="audio-player col-12">
-              <button class="play" id="play" type="button"><i class="ion-play"></i></button>
+              <button class="play" id="play" type="button"><span class="icon icon-play"></span></button>
 
               <div class="seek-bar" id="seekbar">
                   <div class="fill"></div>
@@ -99,7 +99,7 @@
 <section class="form-section" id="form-section-instrument">
     <header class="form-header" id="form-header-instrument">
         <h4>Instrument</h4>
-        <button type="button" class="form-info-button" data-toggle="collapse" data-target="#form-info-instrument"><i class="fas fa-info-circle fa-lg"></i></button>
+        <button type="button" class="form-info-button" data-toggle="collapse" data-target="#form-info-instrument"><span class="icon icon-info"></span></button>
     </header>
 
     <main class="form-fields">
@@ -135,7 +135,7 @@
 
     <header class="form-header" id="form-header-chords">
         <h4>Chords</h4>
-        <button type="button" class="form-info-button" data-toggle="collapse" data-target="#form-info-chords"><i class="fas fa-info-circle fa-lg"></i></button>
+        <button type="button" class="form-info-button" data-toggle="collapse" data-target="#form-info-chords"><span class="icon icon-info"></span></button>
     </header>
 
     <main class="form-fields">
@@ -150,7 +150,7 @@
 
         <div id="time-signature">
             {{ form.time_signature|as_crispy_field }}
-            <button class="panel-btn reset-chords-btn" id="reset_chords" type="button"><i class="fas fa-recycle fa-lg"></i></button>
+            <button class="panel-btn reset-chords-btn" id="reset_chords" type="button"><span class="icon icon-recycle"></span></button>
         </div>
     </main>
 
@@ -195,7 +195,7 @@
 
     <header class="form-header" id="form-header-keywords">
         <h4>Keywords</h4>
-        <button type="button" class="form-info-button" data-toggle="collapse" data-target="#form-info-keywords"><i class="fas fa-info-circle fa-lg"></i></button>
+        <button type="button" class="form-info-button" data-toggle="collapse" data-target="#form-info-keywords"><span class="icon icon-info"></span></button>
     </header>
 
     <main class="form-fields">

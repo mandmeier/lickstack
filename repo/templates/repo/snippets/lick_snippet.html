@@ -1,10 +1,6 @@
 {% load static %}
 {% load repo_extras %}
 
-
-<link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
-
-
 <article class="panel lick lick-section" id="lick_{{ lick.id }}">
 
     <div class="chord_seq" id="chord_seq_{{ lick.id }}" value="{{ lick.chord_seq_search}}" style="display: none;"></div>
@@ -23,7 +19,7 @@
     </div>
 
     <div class="audio-player col-12">
-          <button class="play" id="{{ lick.id }}[X]{{ lick.file.url }}"><i class="ion-play"></i></button>
+          <button class="play" id="{{ lick.id }}[X]{{ lick.file.url }}"><span class="icon icon-play"></span></button>
 
           <div class="seek-bar" id="seekbar_{{ lick.id }}">
               <div class="fill"></div>
@@ -91,7 +87,7 @@
             <option value="0" selected="selected">T</option>
         </select>
     {% if lick.author == user %}
-        <a class="panel-btn edit-btn" id="edit-section_{{ lick.id }}" href="{% url 'lick-update' lick.id %}"><i class="fas fa-edit fa-lg"></i></a>
+        <a class="panel-btn edit-btn" id="edit-section_{{ lick.id }}" href="{% url 'lick-update' lick.id %}"><span class="icon icon-edit"></span></a>
     {% endif %}
 
         <div class="like" id="like-section_{{ lick.id }}">

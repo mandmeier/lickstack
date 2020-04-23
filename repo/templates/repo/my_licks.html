@@ -5,6 +5,7 @@
 
 {% block content %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/my_licks.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/paginator.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/lick_snippet.css' %}">
 
 <style type="text/css">
@@ -35,14 +36,14 @@
       <form class="col-6" method="GET" action=".">
         <input type="hidden" name="display" value="mylicks">
         <button type="submit" class="btn btn-primary">
-          <i class="fas fa-music fa-lg"></i>
+          <span class="icon icon-music mylicks-icon"></span>
           My Licks
         </button>
       </form>
       <form class="col-6" method="GET" action=".">
         <input type="hidden" name="display" value="favorites">
         <button type="submit" class="btn btn-danger">
-          <i class="fas fa-star fa-lg"></i>
+          <span class="icon icon-star mylicks-icon"></span>
           Favorites
         </button>
       </form>

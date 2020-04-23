@@ -19,6 +19,57 @@
 }
 
 
+.icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+}
+
+
+.icon-play{
+  color: #f9f9f9;
+  font-size: 18px;
+}
+
+.icon-pause{
+  color: #f9f9f9;
+  font-size: 18px;
+  transform: scale(0.75,1);
+}
+
+.icon-edit{
+  font-weight: 600;
+  color: #006400;
+  font-size: 28px;
+  margin-top: 2px;
+}
+
+.icon-thumbs-o-up,  .icon-thumbs-up{
+  color: #0000BB;
+  margin-top: 2px;
+}
+
+.icon-star-o, .icon-star{
+  color: #C00001;
+  margin-top: 2px;
+}
+
+.icon-search{
+  display:inline;
+  font-size: 18px;
+  margin-left: 5px;
+}
+
+.icon-recycle{
+  margin-top: 4px;
+  margin-left: 1px;
+}
+
+.icon-trash{
+  font-size: 22px;
+}
+
 .navbar {
   background-color: #e5e5e5;
   padding: .8rem;
@@ -61,31 +112,6 @@ main{
   margin-left: 0px;
   margin-right: 0px;
 }
-
-
-.paginator {
-    margin: 20px 0px 0px 0px;
-    max-width: 100%;
-    white-space: nowrap;
-}
-
-
-.paginator .btn {
-    background-color: #f9f9f9;
-    color: #333333;
-    font-weight: bold;
-    border: 2px solid #333333;
-}
-
-.paginator .btn-primary{
-    background: #C00001;
-    color: #f9f9f9;
-}
-
-.paginator .btn:hover {
-    background: #cccccc;
-}
-
 
 .panel {
   margin: 20px 0px;
@@ -147,4 +173,5 @@ hr.light-100 {
   height: 60px;
   margin-bottom: 10px;
 }
+
 

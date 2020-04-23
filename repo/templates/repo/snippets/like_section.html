@@ -6,11 +6,11 @@
         <small class="text-muted">{{ lick.total_likes }} Like{{ lick.total_likes|pluralize }}</small>
         {% if lick in user_liked %}
         <button class="panel-btn like-btn" type="submit" id="like_{{ lick.id }}" name="lick_id" value="{{ lick.id }}">
-            <i class="fas fa-thumbs-up fa-lg"></i>
+            <span class="icon icon-thumbs-up"></span>
         </button>
         {% else %}
         <button class="panel-btn like-btn" type="submit" id="like_{{ lick.id }}" name="lick_id" value="{{ lick.id }}">
-            <i class="far fa-thumbs-up fa-lg"></i>
+            <span class="icon icon-thumbs-o-up"></span>
         </button>
         {% endif %}
       </form>
@@ -38,7 +38,7 @@
     <form action="{% url 'login' %}" style="float: right;">
         <small class="text-muted">{{ lick.total_likes }} Like{{ lick.total_likes|pluralize }}</small>
         <button class="panel-btn like-btn" type="submit" id="like_{{ lick.id }}" name="lick_id" value="{{ lick.id }}">
-            <i class="far fa-thumbs-up fa-lg"></i>
+            <span class="icon icon-thumbs-o-up"></span>
         </button>
     </form>
 

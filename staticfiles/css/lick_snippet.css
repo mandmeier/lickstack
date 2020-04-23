@@ -39,8 +39,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    /*background-color: #f9f9f9;*/
-    padding: 0px 0px 0px 5px;
+    padding-left: 5px;
     margin-bottom: 7px;
 }
 
@@ -166,11 +165,6 @@
   left: 105px;
 }
 
-.edit-btn svg{
-  margin-top: 4px;
-  margin-left: 5px;
-  color: #006400;
-}
 
 .like {
   position: absolute;
@@ -182,11 +176,3 @@
   right: 5px;
 }
 
-.like-btn svg{
-  color: #0000BB;
-}
-
-.fav-btn svg{
-  color: #C00001;
-  margin-left: -3px;
-}

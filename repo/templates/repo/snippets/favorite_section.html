@@ -6,11 +6,11 @@
         {% csrf_token %}
         {% if lick in user_faved %}
         <button class="panel-btn fav-btn" type="submit" id="favorite_{{ lick.id }}" name="lick_id" value="{{ lick.id }}">
-            <i class="fas fa-star fa-lg"></i>
+            <span class="icon icon-star"></span>
         </button>
         {% else %}
         <button class="panel-btn fav-btn" type="submit" id="favorite_{{ lick.id }}" name="lick_id" value="{{ lick.id }}">
-            <i class="far fa-star fa-lg"></i>
+            <span class="icon icon-star-o"></span>
         </button>
         {% endif %}
       </form>
@@ -37,7 +37,7 @@
 
     <form action="{% url 'login' %}">
         <button class="panel-btn fav-btn" type="submit" id="fav_{{ lick.id }}" name="lick_id" value="{{ lick.id }}">
-            <i class="far fa-star fa-lg"></i>
+            <span class="icon icon-star-o"></span>
         </button>
     </form>
 
