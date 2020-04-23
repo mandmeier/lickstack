@@ -243,7 +243,7 @@ def browse_licks_view(request):
 
     # paginate
     page = request.GET.get('page', 1)
-    paginator = Paginator(licks, 10)
+    paginator = Paginator(licks, 8)
     licks = paginator.page(page)
 
     # find most common instruments
@@ -297,7 +297,7 @@ def my_licks_view(request):
 
     # paginate
     page = request.GET.get('page', 1)
-    paginator = Paginator(licks, 10)
+    paginator = Paginator(licks, 8)
     licks = paginator.page(page)
 
     context = {}
