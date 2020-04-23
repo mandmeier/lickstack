@@ -66,15 +66,16 @@
         <div class="collapse form-info" id="form-info-chords">
             <div class="info" id="chords_info">
                 <p>Search by chords (in concert key) <br>
-                By default, the search will look for chord <em>sequences</em> anywhere in the 4 measures. Empty beats between chords are ignored.<br>
-                e.g. |Dm7 – G7 – | will also match |Dm7 - - - | G7 - - - | or |C7 - - - |Dm7 G7 – - | <br><br>
+                By default, the search will look for chord sequences anywhere in the 4 measures. Empty beats between chords are ignored.<br>
+                e.g. |Dm7 – G7 – | will also match |C7 - - - |Dm7 G7 – - | or |Dm7 - - - | G7 - - - | <br><br>
                 <strong>Include transposed:</strong> Also match chord sequences that can be transposed into what you are searching for. Licks will be transposed automatically.<br>
                 e.g. |Dm7 - G7 - | will also match |Cm7 - F7 - | or |Dbm7 - Gb7 - |<br><br>
-                <strong>Ignore extensions:</strong> Extensions like 6, 7, maj7 are ignored.<br>
-                e.g. |Dm7 - G7 - | will also match |Dm6 - Gmaj7 - | or |Dm - Gb - |<br><br>
-                <strong>Exact search:</strong> Empty beats between chords are no longer ignored.<br>
-                e.g. |Dm7 - G7 - | will still match |C7 - - - |Dm7 - G7 – | but not |C7 - - - |Dm7 G7 – – |<br><br>
-                Entering nothing (all dashes) will return any chords.
+                <strong>Ignore extensions:</strong> Extensions like 6, 7, 7b5 are ignored.<br>
+                e.g. |Dm7 - G7 - | will also match |Dm6 - G6 - | or |Dm - G - |<br><br>
+                <strong>Exact search:</strong> Search for the exact number of beats between chords.<br>
+                e.g. |Dm7 - G7 - | will no longer match |C7 - - - |Dm7 G7 – – | or |Dm7 - - - |G7 – – – |<br><br>
+                Entering nothing (all dashes) will return any chords.<br><br>
+                Choosing 4/4 or 3/4 here only affects input. To search by time signature see "Search by metadata" section below
                 </p>
             </div>
         </div>
@@ -153,11 +154,11 @@
             <div class="info" id="data_info">
                 <p>Search by metadata <br><br>
 
-                <strong> Author: </strong> Enter the name or part of a name of an author. Case - insensitive. <br><br>
+                <strong> Author: </strong> Enter the name or part of a name of an author. <br><br>
 
                 <strong> Lick #: </strong> Enter the lick ID number, e.g. 25 or 154. <br><br>
 
-                <strong> Time Sign: </strong>search for 4/4 or 3/4 only. (note: selecting 4/4 or 3/4 in the chords section above only affects the chord input field and has no effect on this) <br>
+                <strong> Time Sign: </strong>search for 4/4 or 3/4 only. <br>
                 </p>
             </div>
         </div>

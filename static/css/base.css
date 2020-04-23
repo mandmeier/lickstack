@@ -154,20 +154,13 @@ hr.light-100 {
   margin-top: .8rem;
   margin-bottom: 1rem;
 }
-.social a {
-    font-size: 2em;
-    padding: 0.7rem;
-  }
-.fa-facebook {
-  color: #3b5998;
-}
-.fa-twitter {
-  color: #00aced;
-}
 
 .footer-logo {
   height: 60px;
   margin-bottom: 10px;
 }
-
-
+.footer-icon{
+  display: inline;
+  font-size: 48px;
+  margin-right: 10px;
+}
