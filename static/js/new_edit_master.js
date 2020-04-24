@@ -172,13 +172,14 @@ function createTag(label, close="") {
     span.innerHTML = label;
     div.appendChild(span);
     if (close){
-        const closeBtn = document.createElement('i');
-        closeBtn.setAttribute('class', 'fas fa-times-circle');
+        const closeBtn = document.createElement('span');
+        closeBtn.setAttribute('class', 'icon icon-close-solid');
         closeBtn.setAttribute('data-item', label);
         div.appendChild(closeBtn);
     }
     return div;
 }
+
 
 
 function updateTags(){
@@ -246,7 +247,9 @@ tagsInput.addEventListener('keyup', function(e){
 
 // delete tag from input list
 tagContainer.addEventListener('click', function(e){
-    if (e.target.tagName == 'svg'){
+    console.log(e.target.tagName)
+    if (e.target.tagName == 'SPAN'){
+        console.log("hit span")
         let keyword = e.target.getAttribute('data-item');
         if (suggested_tags_original.indexOf(keyword) >= 0 && suggested_tags.indexOf(keyword) < 0){
             suggested_tags.push(keyword);

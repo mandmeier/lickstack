@@ -161,9 +161,11 @@
     border: 0;
 }
 
-.tag svg {
+
+.icon-close-solid {
     margin-left: 5px;
     cursor: pointer;
+    font-size: 18px;
 }
 
 .tag path {

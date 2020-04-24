@@ -17,8 +17,8 @@ function createTag(label, close="") {
     span.innerHTML = label;
     div.appendChild(span);
     if (close){
-        const closeBtn = document.createElement('i');
-        closeBtn.setAttribute('class', 'fas fa-times-circle');
+        const closeBtn = document.createElement('span');
+        closeBtn.setAttribute('class', 'icon icon-close-solid');
         closeBtn.setAttribute('data-item', label);
         div.appendChild(closeBtn);
     }
@@ -84,7 +84,7 @@ instrumentsInput.addEventListener('keyup', function(e){
 
 // delete tag from input list
 instrumentContainer.addEventListener('click', function(e){
-    if (e.target.tagName == 'svg'){
+    if (e.target.tagName == 'SPAN'){
         let instrument = e.target.getAttribute('data-item');
         if (suggested_instruments_original.indexOf(instrument) >= 0 && suggested_instruments.indexOf(instrument) < 0){
             suggested_instruments.push(instrument);
@@ -174,7 +174,7 @@ keywordsInput.addEventListener('keyup', function(e){
 
 // delete tag from input list
 keywordContainer.addEventListener('click', function(e){
-    if (e.target.tagName == 'svg'){
+    if (e.target.tagName == 'SPAN'){
         let keyword = e.target.getAttribute('data-item');
         if (suggested_keywords_original.indexOf(keyword) >= 0 && suggested_keywords.indexOf(keyword) < 0){
             suggested_keywords.push(keyword);

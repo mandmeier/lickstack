@@ -11,7 +11,7 @@ html, body{
 
 @media (min-width:1200px){
     html, body{
-        background-image: url("/static/img/pk_wallpaper_dark.jpeg");
+        background-image: url("/static/img/pk_wallpaper_dark.71b3a05e18ec.jpeg");
         background-size: cover;
         background-attachment: fixed;
     }
