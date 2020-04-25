@@ -1,0 +1,2 @@
+function selectElement(id,valueToSelect){let element=document.getElementById(id);element.value=valueToSelect;}
+$(document).ready(function(){$(".active").removeClass("active");$("#link-home").addClass("active");});;
