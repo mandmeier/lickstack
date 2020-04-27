@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'storages',
     'django_filters',
+    "compressor",
 ]
 
 MIDDLEWARE = [
@@ -163,15 +164,30 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 
+MEDIA_URL = '/media/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_HOST = env('DJANGO_STATIC_HOST', default='')
+STATIC_URL = STATIC_HOST + '/static/'
+
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder'  # Django-Compressor
+]
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-#STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+COMPRESS_STORAGE = 'compressor.storage.GzipCompressorFileStorage'
+COMPRESS_ENABLED = env.bool('COMPRESS_ENABLED', default=True)
+# Must enable this to use with Whitenoise
+COMPRESS_OFFLINE = env.bool('COMPRESS_OFFLINE', default=True)
+
+
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media_root')
 
 
@@ -212,7 +228,6 @@ GZIP_CONTENT_TYPES = [
 #AWS_S3_HOST = 's3.ca-central-1.amazonaws.com'
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 WHITENOISE_MAX_AGE = 3600
 
