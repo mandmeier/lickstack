@@ -214,6 +214,9 @@ GZIP_CONTENT_TYPES = [
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+WHITENOISE_MAX_AGE = 3600
+
+
 TAGGIT_CASE_INSENSITIVE = True
 
 
