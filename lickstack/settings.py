@@ -188,10 +188,13 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 COMPRESS_STORAGE = 'compressor.storage.GzipCompressorFileStorage'
 
-COMPRESS_ENABLED = False if not DEBUG else True
 
-# Must enable this to use with Whitenoise
-COMPRESS_OFFLINE = False if not DEBUG else True
+if DEBUG == True:
+    COMPRESS_ENABLED = False
+    COMPRESS_OFFLINE = False
+else:
+    COMPRESS_ENABLED = True
+    COMPRESS_OFFLINE = True
 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media_root')
