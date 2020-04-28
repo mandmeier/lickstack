@@ -132,8 +132,11 @@ for (let i = 0; i < play_btns.length; i++) {
     transpose_bys.push(licks[i].getElementsByClassName('slowdown-btn')[0].value)
     pitch_shifts.push(null)
 
-    var start_time = 0
-    var current_time = 0
+    updateChords(lick_order[i]);
+}
+
+
+for (let i = 0; i < play_btns.length; i++) {
 
     play_btns[i].addEventListener('click', function () {
         if (pitch_shifts[i] == undefined) {
@@ -195,8 +198,11 @@ for (let i = 0; i < play_btns.length; i++) {
         players[i].seek(offset = ofs);
       }
     });
-    updateChords(lick_order[i]);
 }
+
+
+
+
 
 // reset other licks
 function resetAudio(num){
