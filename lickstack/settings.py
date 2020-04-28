@@ -166,8 +166,12 @@ USE_TZ = True
 
 MEDIA_URL = '/media/'
 
+
+DJANGO_STATIC_HOST = os.environ.get('DJANGO_STATIC_HOST')
+
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_HOST = env('DJANGO_STATIC_HOST', default='')
+STATIC_HOST = DJANGO_STATIC_HOST if not DEBUG else ''
 STATIC_URL = STATIC_HOST + '/static/'
 
 STATICFILES_DIRS = (
