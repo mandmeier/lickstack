@@ -2,11 +2,16 @@
 {% load crispy_forms_tags %}
 {% load static %}
 {% load repo_extras %}
+{% load static compress %}
 
 {% block content %}
+
+{% compress css %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/my_licks.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/paginator.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/lick_snippet.css' %}">
+{% endcompress %}
+
 
 <style type="text/css">
 .chords-row {
@@ -84,7 +89,10 @@ const chords_dir = "{% static 'img/chords/' %}";
 const tortoise_on_url = "{% static 'img/tortoise_hover.png' %}";
 const tortoise_off_url = "{% static 'img/tortoise_toggled.png' %}";
 </script>
+
+{% compress js %}
 <script src="{% static 'js/lick_snippet.js' %}"></script>
+{% endcompress %}
 
 
 {% endblock content %}

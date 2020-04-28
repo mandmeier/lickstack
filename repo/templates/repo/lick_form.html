@@ -1,12 +1,16 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 {% load static %}
+{% load static compress %}
 
 {% block content %}
 
-<link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
+
+{% compress css %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/form_master.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/lick_form.css' %}">
+{% endcompress %}
+
 
 <style type="text/css">
     .form-chords-row {
@@ -225,9 +229,18 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript">lick_URL = "{{ lick.file.url }}";</script>
+
+
+
+{% compress js %}
 <script src="{% static 'js/form_master.js' %}"></script>
 <script src="{% static 'js/new_edit_master.js' %}"></script>
 <script src="{% static 'js/lick_form.js' %}"></script>
+{% endcompress %}
+
+
+
+
 
 
 {% endblock content %}

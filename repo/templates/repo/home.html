@@ -1,10 +1,14 @@
 {% extends "base.html" %}
 {% load static %}
 {% load repo_extras %}
+{% load static compress %}
 
 {% block content %}
+
+{% compress css %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/lick_snippet.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+{% endcompress %}
 
 <style type="text/css">
 .chords-row {
@@ -298,7 +302,9 @@ const chords_dir = "{% static 'img/chords/' %}";
 const tortoise_on_url = "{% static 'img/tortoise_hover.webp' %}";
 const tortoise_off_url = "{% static 'img/tortoise_toggled.webp' %}";
 </script>
-<script src="{% static 'js/lick_snippet.js' %}"></script>
 
+{% compress js %}
+<script src="{% static 'js/lick_snippet.js' %}"></script>
+{% endcompress %}
 
 {% endblock content %}
