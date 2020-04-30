@@ -222,6 +222,17 @@ const form = document.forms[0]
 
 // store form values in cookies
 
+
+
+var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+if (isChrome == false && getCookie("isChrome") != 'notified'){
+    setCookie('isChrome', 'notified');
+    alert("Hi there, the LickStack is under development and currently not optimized for your browser. For best experience I recommend using Google Chrome. Thanks!");
+}
+
+
+
+
 function storeSearchFormValues(form){
     // remember chords
     for (let i = 0; i < 16; i++){
