@@ -83,14 +83,13 @@ inpFile.addEventListener("change", function() {
     audio_reset();
     file = this.files[0];
     inpFileLabel.textContent=file.name;
-    //file_upload_error.innerHTML = "Choose audio file of type .mp3 .m4a or .ogg. Max size 1 MB.";
     preview.style.display = "hidden";
 
     if (file == null) {
         inpFileLabel.textContent="Choose File";
         preview.style.display = "block";
     } else if (!(file.type.split("/")[0] == "audio")) {
-        file_upload_error.innerHTML = "Wrong file type. Please use audio, preferably '.mp3', '.m4a' or '.ogg'.";
+        file_upload_error.innerHTML = "Wrong file type. Please use audio, preferably '.mp3'";
         preview.style.display = "block";
     } else if (file.size > 1048576) {
         file_upload_error.innerHTML = "File too large (limit 1 MB). Consider shortening audio.";
