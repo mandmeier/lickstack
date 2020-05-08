@@ -21,6 +21,7 @@ urlpatterns = [
     path('password-reset-complete/', auth_views.PasswordResetCompleteView.as_view(
         template_name='users/password_reset_complete.html'), name='password_reset_complete'),
     path('', include('repo.urls')),
+    path('', include('blog.urls')),
 ]
 
 if settings.DEBUG:

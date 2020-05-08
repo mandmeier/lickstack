@@ -45,6 +45,7 @@ ALLOWED_HOSTS = [
 INSTALLED_APPS = [
     'repo.apps.RepoConfig',
     'users.apps.UsersConfig',
+    'blog',
     'crispy_forms',
     'taggit',
     'django.contrib.admin',
@@ -55,7 +56,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'storages',
     'django_filters',
-    "compressor",
+    'compressor',
 ]
 
 MIDDLEWARE = [
