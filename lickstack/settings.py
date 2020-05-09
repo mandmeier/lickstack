@@ -166,6 +166,7 @@ USE_TZ = True
 
 
 MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media_root')
 
 
 DJANGO_STATIC_HOST = os.environ.get('DJANGO_STATIC_HOST')
@@ -196,9 +197,6 @@ if DEBUG == True:
 else:
     COMPRESS_ENABLED = True
     COMPRESS_OFFLINE = True
-
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media_root')
 
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
