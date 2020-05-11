@@ -7,14 +7,14 @@
 
 <h1>Articles</h1>
 
+{% for article in articles %}
 <section class="panel">
-    {% for article in articles %}
     <article>
         <h2><a href="{% url 'blog:article-detail' slug=article.slug %}">{{ article.title }}</a></h2>
-        <p><small>{{ article.date }}</small></p>
-        <p>{{ article.snippet }}</p>
+        <p>{{ article.author }} – <small>{{ article.date_published }}</small></p>
+        <p>{{ article.description }}</p>
     </article>
-    {% endfor%}
 </section>
+{% endfor%}
 
 {% endblock content %}
