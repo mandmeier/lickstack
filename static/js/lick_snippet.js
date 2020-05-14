@@ -74,7 +74,10 @@ function updateChords(lick_id) {
             chord_imgs[i].src =  chords_dir + transpose_rules[i] + '/' + transposeChord(chords[i], transpose) + img_ext()
         }
     }
-    transposePlayer(l);
+
+    if (players[l] != undefined){
+        transposePlayer(l);
+    }
 
 }
 
@@ -99,7 +102,6 @@ function make_ts34(lck){
 
 // initialize variables and controls for all licks
 const licks = document.getElementsByClassName('lick')
-
 const lick_order = []
 for (const lick of licks) {lick_order.push(lick.id.split('_')[1])}
 
@@ -122,12 +124,7 @@ for (let i = 0; i < play_btns.length; i++) {
         make_ts34(licks[i]);
     };
 
-    let audio_url = play_btns[i].id.split('[X]')[1]
-    players.push(new Tone.Player(audio_url));
-    audios.push(new Audio(audio_url));
     playButtonIcons.push(play_btns[i].querySelector('span'));
-    audios[i].volume = 0;
-
     playback_rates.push(Number(licks[i].getElementsByClassName('transpose-btn')[0].value))
     transpose_bys.push(licks[i].getElementsByClassName('slowdown-btn')[0].value)
     pitch_shifts.push(null)
@@ -136,68 +133,100 @@ for (let i = 0; i < play_btns.length; i++) {
 }
 
 
-for (let i = 0; i < play_btns.length; i++) {
 
-    play_btns[i].addEventListener('click', function () {
-        if (pitch_shifts[i] == undefined) {
-            transposePlayer(i);
-        }
-        if (audios[i].paused) {
-            audios[i].play();
-            ofs = audios[i].currentTime;
-            players[i].start();
-            players[i].seek(offset = ofs);
-        } else {
-            audios[i].pause();
-            players[i].stop(0);
-        }
-    });
-
-    audios[i].addEventListener('play', function () {
-      playButtonIcons[i].className = 'icon icon-pause';
-      resetAudio(i);
-    });
-
-    audios[i].addEventListener('pause', function () {
-      playButtonIcons[i].className = 'icon icon-play';
-    });
-
-    audios[i].addEventListener('timeupdate', function () {
-      if (mouseDown) return;
-        let p = audios[i].currentTime / audios[i].duration;
-        let x =
-        fillBars[i].style.width = p * 100 + "%";
-    });
-
-    seekBars[i].addEventListener('mousedown', function (e) {
-      mouseDown = true;
-      window.rect = e.target.getBoundingClientRect();
-      let x = e.clientX - rect.left;
-      let p = x / seekBars[i].clientWidth;
-      fillBars[i].style.width = p * 100 + "%";
-    });
-
-    licks[i].addEventListener('mousemove', function (e) {
-      if (!mouseDown) return;
-        let x = e.clientX - rect.left;
-        let p = x / seekBars[i].clientWidth;
-        fillBars[i].style.width = p * 100 + "%";
-    });
-
-    licks[i].addEventListener('mouseup', function (e) {
-      if (!mouseDown) return;
-        mouseDown = false;
-        let x = e.clientX - rect.left;
-        let p = x / seekBars[i].clientWidth;
-        fillBars[i].style.width = p * 100 + "%";
-        audios[i].currentTime = p * audios[i].duration;
+function play(i){
+    if (pitch_shifts[i] == undefined) {
+        transposePlayer(i);
+    }
+    if (audios[i].paused) {
+        audios[i].play();
         ofs = audios[i].currentTime;
-
-      if (!audios[i].paused) {
         players[i].start();
         players[i].seek(offset = ofs);
-      }
+    } else {
+        audios[i].pause();
+        players[i].stop(0);
+    }
+}
+
+
+
+for (let i = 0; i < play_btns.length; i++) {
+
+
+    play_btns[i].addEventListener('click', function () {
+
+
+        if (players[i] == undefined) {
+            let audio_url = play_btns[i].id.split('[X]')[1]
+            players[i] = new Tone.Player(audio_url);
+            audios[i] = new Audio(audio_url);
+            audios[i].volume = 0;
+            transposePlayer(i);
+
+
+            audios[i].addEventListener('play', function () {
+              playButtonIcons[i].className = 'icon icon-pause';
+              resetAudio(i);
+            });
+
+            audios[i].addEventListener('pause', function () {
+              playButtonIcons[i].className = 'icon icon-play';
+            });
+
+            audios[i].addEventListener('timeupdate', function () {
+              if (mouseDown) return;
+                let p = audios[i].currentTime / audios[i].duration;
+                let x =
+                fillBars[i].style.width = p * 100 + "%";
+            });
+
+            seekBars[i].addEventListener('mousedown', function (e) {
+              mouseDown = true;
+              window.rect = e.target.getBoundingClientRect();
+              let x = e.clientX - rect.left;
+              let p = x / seekBars[i].clientWidth;
+              fillBars[i].style.width = p * 100 + "%";
+            });
+
+            licks[i].addEventListener('mousemove', function (e) {
+              if (!mouseDown) return;
+                let x = e.clientX - rect.left;
+                let p = x / seekBars[i].clientWidth;
+                fillBars[i].style.width = p * 100 + "%";
+            });
+
+            licks[i].addEventListener('mouseup', function (e) {
+              if (!mouseDown) return;
+                mouseDown = false;
+                let x = e.clientX - rect.left;
+                let p = x / seekBars[i].clientWidth;
+                fillBars[i].style.width = p * 100 + "%";
+                audios[i].currentTime = p * audios[i].duration;
+                ofs = audios[i].currentTime;
+
+              if (!audios[i].paused) {
+                players[i].start();
+                players[i].seek(offset = ofs);
+              }
+            });
+
+
+        }
+
+        function playWhenLoaded(){
+            if(players[i].buffer.loaded){
+                play(i);
+            }
+            else{
+                setTimeout(playWhenLoaded, 200);
+            }
+        }
+        playWhenLoaded()
+
     });
+
+
 }
 
 
@@ -207,7 +236,7 @@ for (let i = 0; i < play_btns.length; i++) {
 // reset other licks
 function resetAudio(num){
     for (let i = 0; i < play_btns.length; i++) {
-        if (num != i){
+        if (players[i] != undefined && num != i){
             audios[i].pause();
             audios[i].currentTime = 0;
             players[i].stop(0);
