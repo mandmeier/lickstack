@@ -1,20 +1,35 @@
 {% extends "base.html" %}
 {% load static %}
+{% load static compress %}
+
+
+{% block head_title %}{{ block.super }} | Blog{% endblock head_title %}
+
 
 {% block content %}
 
+{% compress css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/paginator.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}">
+{% endcompress %}
+
+{% include 'repo/snippets/paginator_snippet.html' with licks=articles %}
 
 <h1>Articles</h1>
 
 {% for article in articles %}
 <section class="panel">
     <article>
-        <h2><a href="{% url 'blog:article-detail' slug=article.slug %}">{{ article.title }}</a></h2>
-        <p>{{ article.author }} – <small>{{ article.date_published }}</small></p>
+        {% if article.image %}
+        <img src="{{article.image.url}}" class='img-responsive'>
+        {% endif %}
+        <h2><a href="{% url 'blog:article-detail' id=article.id %}">{{ article.title }}</a></h2>
+        <p>{{ article.author }} – <small>{{ article.date_published|timesince }} ago</small></p>
         <p>{{ article.description }}</p>
     </article>
 </section>
 {% endfor%}
+
+{% include 'repo/snippets/paginator_snippet.html' with licks=articles %}
 
 {% endblock content %}

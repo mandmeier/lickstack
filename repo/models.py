@@ -130,8 +130,8 @@ class Lick(models.Model):
             str(self.author) + "-" + str(self.date_posted)
         return name
 
-    def get_absolute_url(self):
-        return reverse('lick-detail', kwargs={'pk': self.pk})
+    # def get_absolute_url(self):
+    #    return reverse('lick-detail', kwargs={'pk': self.pk})
 
     # delete audio file from file system when delete lick model instance
     def delete(self, *args, **kwargs):

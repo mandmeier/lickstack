@@ -135,11 +135,9 @@
     <!-- add icon link -->
     <link rel="shortcut icon" href="{% static 'favicon/favicon.ico' %}"/>
 
-    {% if title %}
-    <title>LickStack - {{ title }}</title>
-    {% else %}
-    <title>LickStack</title>
-    {% endif %}
+
+    <title>{% block head_title %}LickStack{% endblock head_title %}</title>
+
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 

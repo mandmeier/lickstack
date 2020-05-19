@@ -1,18 +1,28 @@
 {% extends "base.html" %}
 {% load static %}
 
+
+
+{% block head_title %}{{ block.super }} | {{article.title }}{% endblock head_title %}
+
+
+
 {% block content %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}">
 
-
-<section class="panel">
-    <article>
-        <img src="{{article.thumb.url}}">
-        <h2>{{ article.title }}</h2>
-        <p><small>{{ article.date }}</small></p>
+<article>
+    <section class="panel">
+        {% if article.image %}
+        <img src='{{article.image.url}}' class='img-responsive'>
+        {% endif %}
+        <h1>{{ article.title }}</h1>
+        <p><small>{{ article.author }} | {{ article.date_updated|timesince }} ago</small></p>
+        <h5>{{ article.description }}</h5>
+        <hr>
         <p>{{ article.body }}</p>
-    </article>
-</section>
+    </section>
+</article>
+
 
 {% endblock content %}

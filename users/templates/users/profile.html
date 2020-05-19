@@ -1,6 +1,9 @@
 
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
+
+{% block head_title %}{{ block.super }} | Profile{% endblock head_title %}
+
 {% block content %}
 
 <script type="text/javascript">

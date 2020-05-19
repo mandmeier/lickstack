@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load crispy_forms_tags %}
 {% load static %}
 
 {% block content %}
@@ -10,13 +9,10 @@
 <section class="panel">
 
 <h2>create a new article</h2>
-<form class="article-form" method="POST" enctype="multipart/form-data">
+<form class="article-form" action="{% url 'blog:article-create' %}" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
 
-    {{ form.title|as_crispy_field }}
-    {{ form.image|as_crispy_field }}
-    {{ form.description|as_crispy_field }}
-    {{ form.body|as_crispy_field }}
+    {{ form.as_p }}
 
 
 

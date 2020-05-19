@@ -4,6 +4,8 @@
 {% load repo_extras %}
 {% load static compress %}
 
+{% block head_title %}{{ block.super }} | Browse Licks{% endblock head_title %}
+
 {% block content %}
 
 {% compress css %}
