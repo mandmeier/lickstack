@@ -4,6 +4,7 @@ from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from blog.models import Article
 from django.http import HttpResponse, HttpResponseRedirect
+from urllib.parse import quote_plus
 from . import forms
 
 
@@ -26,10 +27,12 @@ def article_create(request):
     return render(request, 'blog/article_create.html', context)
 
 
-def article_detail(request, id=None):
-    article = get_object_or_404(Article, id=id)
+def article_detail(request, slug=None):
+    article = get_object_or_404(Article, slug=slug)
+    share_string = quote_plus(article.title)
     context = {}
     context['article'] = article
+    context['share_string'] = share_string
     return render(request, 'blog/article_detail.html', context)
 
 
@@ -46,8 +49,8 @@ def article_list(request):
     return render(request, 'blog/article_list.html', context)
 
 
-def article_update(request, id=None):
-    article = get_object_or_404(Article, id=id)
+def article_update(request, slug=None):
+    article = get_object_or_404(Article, slug=slug)
     form = forms.CreateArticle(
         request.POST or None, request.FILES or None, instance=article)
     if form.is_valid():
@@ -62,7 +65,7 @@ def article_update(request, id=None):
 
 
 def article_delete(request, id=None):
-    article = get_object_or_404(Article, id=id)
+    article = get_object_or_404(Article, slug=slug)
     article.delete()
     messages.success(request, 'Your article was successfully deleted.')
     return redirect('blog:article-list')

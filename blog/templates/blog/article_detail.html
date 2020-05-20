@@ -6,13 +6,27 @@
 {% block head_title %}{{ block.super }} | {{article.title }}{% endblock head_title %}
 
 
-
 {% block content %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}">
 
 <article>
     <section class="panel">
+
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">
+           Facebook
+        </a>
+
+        <a href="https://twitter.com/home?status={{ share_string }}%20{{ request.build_absolute_uri }}">
+           Twitter
+        </a>
+
+        <a href="http://www.reddit.com/submit?url={{ request.build_absolute_uri }}&title={{ share_string }}">
+           Reddit
+        </a>
+
+
+
         {% if article.image %}
         <img src='{{article.image.url}}' class='img-responsive'>
         {% endif %}

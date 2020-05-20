@@ -23,7 +23,7 @@
         {% if article.image %}
         <img src="{{article.image.url}}" class='img-responsive'>
         {% endif %}
-        <h2><a href="{% url 'blog:article-detail' id=article.id %}">{{ article.title }}</a></h2>
+        <h2><a href="{{ article.get_absolute_url }}">{{ article.title }}</a></h2>
         <p>{{ article.author }} – <small>{{ article.date_published|timesince }} ago</small></p>
         <p>{{ article.description }}</p>
     </article>

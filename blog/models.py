@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import pre_save, post_delete
+from django.urls import reverse
 from django.utils.text import slugify
 from django.conf import settings
 from django.dispatch import receiver
@@ -15,6 +16,7 @@ def upload_location(instance, filename):
 
 class Article(models.Model):
     title = models.CharField(max_length=50, null=False, blank=False)
+    slug = models.SlugField(unique=True)
     description = models.TextField(max_length=280, null=False, blank=False)
     body = models.TextField(max_length=5000, null=False, blank=False)
     image = models.ImageField(
@@ -32,18 +34,30 @@ class Article(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return f'/blog/article/{self.id}/'
+        return reverse("blog:article-detail", kwargs={"slug": self.slug})
 
 
+# deletes images from AWS if post is deleted
 @receiver(post_delete, sender=Article)
 def submission_delete(sender, instance, **kwargs):
     instance.image.delete(False)
 
 
-# def pre_save_blog_post_receiver(sender, instance, **kwargs):
-#     if not instance.slug:
-#         instance.slug = slugify(
-#             instance.author.username + "-" + instance.title)
+def create_slug(instance, new_slug=None):
+    slug = slugify(instance.title)
+    if new_slug is not None:
+        slug = new_slug
+    qs = Article.objects.filter(slug=slug).order_by("-id")
+    exists = qs.exists()
+    if exists:
+        new_slug = f'{slug}-{qs.first().id}'
+        return create_slug(instance, new_slug=new_slug)
+    return slug
 
 
-# pre_save.connect(pre_save_blog_post_receiver, sender=Article)
+def pre_save_blog_post_receiver(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        instance.slug = create_slug(instance)
+
+
+pre_save.connect(pre_save_blog_post_receiver, sender=Article)

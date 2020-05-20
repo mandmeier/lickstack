@@ -7,10 +7,10 @@ app_name = 'blog'
 urlpatterns = [
     path('blog/', views.article_list, name='article-list'),
     path('blog/article/create/', views.article_create, name='article-create'),
-    url(r'^blog/article/(?P<id>\d+)/$',
+    url(r'^blog/article/(?P<slug>[\w-]+)/$',
         views.article_detail, name='article-detail'),
-    url(r'^blog/article/(?P<id>\d+)/edit/$',
+    url(r'^blog/article/(?P<slug>[\w-]+)/edit/$',
         views.article_update, name='article-update'),
-    url(r'^blog/article/(?P<id>\d+)/delete/$',
+    url(r'^blog/article/(?P<slug>[\w-]+)/delete/$',
         views.article_delete, name='article-delete'),
 ]
