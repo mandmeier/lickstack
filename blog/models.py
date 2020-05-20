@@ -2,9 +2,16 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import pre_save, post_delete
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.text import slugify
 from django.conf import settings
 from django.dispatch import receiver
+
+
+class ArticleManager(models.Manager):
+    # create Article.objects.active() method
+    def active(self, *args, **kwargs):
+        return super(ArticleManager, self).filter(draft=False).filter(date_published__lte=timezone.now())
 
 
 def upload_location(instance, filename):
@@ -23,12 +30,17 @@ class Article(models.Model):
         upload_to=upload_location, blank=True, width_field="width_field", height_field="height_field")
     height_field = models.IntegerField(default=0)
     width_field = models.IntegerField(default=0)
-    date_published = models.DateTimeField(
-        auto_now=False, auto_now_add=True, verbose_name="date published")
+    draft = models.BooleanField(default=False)
+    date_published = models.DateField(
+        auto_now=False, auto_now_add=False, verbose_name="date published")
+    date_created = models.DateTimeField(
+        auto_now=False, auto_now_add=True, verbose_name="date created")
     date_updated = models.DateTimeField(
         auto_now=True, auto_now_add=False, verbose_name="date updated")
     author = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
     #thumb = models.ImageField(default='default.png', blank=True)
+
+    objects = ArticleManager()
 
     def __str__(self):
         return self.title

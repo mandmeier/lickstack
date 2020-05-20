@@ -31,7 +31,7 @@
         <img src='{{article.image.url}}' class='img-responsive'>
         {% endif %}
         <h1>{{ article.title }}</h1>
-        <p><small>{{ article.author }} | {{ article.date_updated|timesince }} ago</small></p>
+        <p><small>{{ article.author }} | {% if article.draft %}<span style="color:red;">Draft</span>{% endif %} {{ article.date_published }}</small></p>
         <h5>{{ article.description }}</h5>
         <hr>
         <p>{{ article.body }}</p>

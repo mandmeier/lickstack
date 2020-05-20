@@ -17,14 +17,21 @@
 
 <h1>Articles</h1>
 
+<form method="GET" action="">
+  <input type="text" name="q" placeholder="Search articles" value="{{ request.GET.q }}">
+  <input type="submit" value="Search">
+</form>
+
 {% for article in articles %}
 <section class="panel">
     <article>
         {% if article.image %}
         <img src="{{article.image.url}}" class='img-responsive'>
         {% endif %}
-        <h2><a href="{{ article.get_absolute_url }}">{{ article.title }}</a></h2>
-        <p>{{ article.author }} – <small>{{ article.date_published|timesince }} ago</small></p>
+        <h3><a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
+            {% if article.date_published > today %}<span style="color:red;"> (Future Post)</span>{% endif %}
+        </h3>
+        <p><small>{{ article.author }} | {% if article.draft %}<span style="color:red;">Draft</span>{% endif %} {{ article.date_published }}</small></p>
         <p>{{ article.description }}</p>
     </article>
 </section>
