@@ -45,6 +45,8 @@ ALLOWED_HOSTS = [
 INSTALLED_APPS = [
     'repo.apps.RepoConfig',
     'users.apps.UsersConfig',
+    'markdown_deux',
+    'pagedown',
     'blog',
     'crispy_forms',
     'taggit',
@@ -58,6 +60,8 @@ INSTALLED_APPS = [
     'django_filters',
     'compressor',
 ]
+
+#CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 MIDDLEWARE = [
     'django.middleware.gzip.GZipMiddleware',

@@ -34,7 +34,7 @@
         <p><small>{{ article.author }} | {% if article.draft %}<span style="color:red;">Draft</span>{% endif %} {{ article.date_published }}</small></p>
         <h5>{{ article.description }}</h5>
         <hr>
-        <p>{{ article.body }}</p>
+        <div>{{ article.get_markdown }}</div>
     </section>
 </article>
 

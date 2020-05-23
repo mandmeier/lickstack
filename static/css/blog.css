@@ -1,8 +1,14 @@
 html, body{
-  background-color: #dddddd;
+  background-color: #f9f9f9;
   background-image: none;
 }
 
 .img-responsive{
+    max-width: 100%;
+}
+
+
+
+img{
     max-width: 100%;
 }

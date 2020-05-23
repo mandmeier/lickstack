@@ -1,0 +1,8 @@
+html, body{
+  background-color: #dddddd;
+  background-image: none;
+}
+
+.img-responsive{
+    max-width: 100%;
+}

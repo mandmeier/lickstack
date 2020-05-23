@@ -3,9 +3,11 @@ from django.contrib.auth.models import User
 from django.db.models.signals import pre_save, post_delete
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 from django.conf import settings
 from django.dispatch import receiver
+from markdown_deux import markdown
 
 
 class ArticleManager(models.Manager):
@@ -48,8 +50,13 @@ class Article(models.Model):
     def get_absolute_url(self):
         return reverse("blog:article-detail", kwargs={"slug": self.slug})
 
+    def get_markdown(self):
+        content = self.body
+        return mark_safe(markdown(content))
 
 # deletes images from AWS if post is deleted
+
+
 @receiver(post_delete, sender=Article)
 def submission_delete(sender, instance, **kwargs):
     instance.image.delete(False)

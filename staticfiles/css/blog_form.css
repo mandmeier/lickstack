@@ -1,0 +1,12 @@
+#textfield_description{
+    min-width : 100%;
+    max-width : 100%;
+    min-height : 10rem;
+}
+
+
+#textfield_body{
+    min-width : 100%;
+    max-width : 100%;
+    min-height : 20rem;
+}

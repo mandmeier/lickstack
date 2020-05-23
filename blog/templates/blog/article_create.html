@@ -1,29 +1,75 @@
 {% extends "base.html" %}
-{% load crispy_forms_tags %}
 {% load static %}
+{% load crispy_forms_tags %}
+
+{% block head_extra %}
+{{ form.media }}
+
+{% endblock head_extra %}
 
 {% block content %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/blog_form.css' %}">
 
-<section class="panel">
 
 <h2>create a new article</h2>
+
+<div>
+    <h1>Preview</h1>
+    <div class="content-preview">
+        <h3 id="preview-title">TEST</h3>
+        <p id="preview-content"></p>
+    </div>
+
+</div>
+
+
+
 <form class="article-form" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
+    {{ form|crispy }}
 
-    {{ form.title|as_crispy_field }}
-    {{ form.image|as_crispy_field }}
-    {{ form.description|as_crispy_field }}
-    {{ form.body|as_crispy_field }}
-    {{ form.draft|as_crispy_field }}
-    {{ form.date_published|as_crispy_field }}
-
-
-
-    <input type="submit" value="Create">
+    <input type="submit" value="Create Article">
 </form>
-</section>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/1.1.0/marked.min.js"></script>
+<script type="text/javascript">
+
+    var titleInput = $("#id_title")
+    $("#preview-title").text(titleInput.val())
+
+    function setTitle(value) {
+        $("#preview-title").text(value)
+    }
+
+    setTitle(titleInput.val())
+
+    titleInput.keyup(function(){
+        var newTitle = $(this).val()
+        setTitle(newTitle)
+    })
+
+
+
+
+    var contentInput = $("#wmd-input-id_body")
+
+    function setContent(value){
+        var markedContent = marked(value)
+        $("#preview-content").html(markedContent)
+    }
+
+    setContent(contentInput.val())
+
+    contentInput.keyup(function(){
+        var newContent = $(this).val()
+        setContent(newContent)
+    })
+
+
+</script>
+
 
 {% endblock content %}
