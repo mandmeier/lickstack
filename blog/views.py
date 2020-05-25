@@ -1,6 +1,7 @@
 from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.contenttypes.models import ContentType
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
@@ -8,6 +9,9 @@ from blog.models import Article
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from urllib.parse import quote_plus
 from . import forms
+
+from comments.forms import CommentForm
+from comments.models import Comment
 
 
 @login_required
@@ -38,9 +42,44 @@ def article_detail(request, slug=None):
         if not request.user.is_staff or not request.user.is_superuser:
             raise Http404
     share_string = quote_plus(article.title)
+
+    initial_data = {
+        "content_type": article.get_content_type,
+        "object_id": article.id
+    }
+    form = CommentForm(request.POST or None, initial=initial_data)
+    if form.is_valid():
+        c_type = form.cleaned_data.get("content_type")
+        content_type = ContentType.objects.get(model=c_type)
+        obj_id = form.cleaned_data.get("object_id")
+        content_data = form.cleaned_data.get("content")
+        parent_obj = None
+        try:
+            parent_id = int(request.POST.get("parent_id"))
+        except:
+            parent_id = None
+
+        if parent_id:
+            parent_qs = Comment.objects.filter(id=parent_id)
+            if parent_qs.exists() and parent_qs.count() == 1:
+                parent_obj = parent_qs.first()
+
+        new_comment, created = Comment.objects.get_or_create(
+            author=request.user,
+            content_type=content_type,
+            object_id=obj_id,
+            content=content_data,
+            parent=parent_obj,
+        )
+        return HttpResponseRedirect(new_comment.content_object.get_absolute_url())
+
+    comments = article.comments
+
     context = {}
     context['article'] = article
     context['share_string'] = share_string
+    context['comments'] = comments
+    context['comment_form'] = form
     return render(request, 'blog/article_detail.html', context)
 
 

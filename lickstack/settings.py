@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'markdown_deux',
     'pagedown',
+    'comments',
     'blog',
     'crispy_forms',
     'taggit',
@@ -61,7 +62,7 @@ INSTALLED_APPS = [
     'compressor',
 ]
 
-#CRISPY_TEMPLATE_PACK = 'bootstrap3'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.gzip.GZipMiddleware',

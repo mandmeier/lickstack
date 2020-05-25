@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
 from django.db.models.signals import pre_save, post_delete
 from django.urls import reverse
 from django.utils import timezone
@@ -8,6 +9,7 @@ from django.utils.text import slugify
 from django.conf import settings
 from django.dispatch import receiver
 from markdown_deux import markdown
+from comments.models import Comment
 
 
 class ArticleManager(models.Manager):
@@ -53,6 +55,19 @@ class Article(models.Model):
     def get_markdown(self):
         content = self.body
         return mark_safe(markdown(content))
+
+    @property
+    def comments(self):
+        instance = self
+        qs = Comment.objects.filter_by_instance(instance)
+        return qs
+
+    @property
+    def get_content_type(self):
+        instance = self
+        content_type = ContentType.objects.get_for_model(
+            instance.__class__).model
+        return content_type
 
 # deletes images from AWS if post is deleted
 
