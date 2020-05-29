@@ -22,6 +22,7 @@ urlpatterns = [
         template_name='users/password_reset_complete.html'), name='password_reset_complete'),
     path('', include('repo.urls')),
     path('', include('blog.urls')),
+    path('', include('comments.urls')),
 ]
 
 if settings.DEBUG:

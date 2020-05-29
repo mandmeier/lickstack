@@ -11,7 +11,7 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}">
 
-
+<section class="panel">
         <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">
            Facebook
         </a>
@@ -34,39 +34,42 @@
         <hr>
         <div>{{ article.get_markdown }}</div>
 
-        <div>
-            <p class='lead'>Comments</p>
+</section>
+
+<section class="panel">
+    <p class='lead'>Comments</p>
+    <form method="POST" accept=".">
+        {% csrf_token %}
+        {{ comment_form|crispy }}
+        <input type="submit" value="Post comment" class="btn btn-secondary">
+    </form>
+    <hr>
+    {% for comment in comments %}
+        <blockquote>
+        <div class="comment-content">
+            <small>{{ comment.author }} | {{ comment.timestamp|timesince }} ago | {% if comment.children.count > 0 %}{{ comment.children.count}} Comment{{ comment.children.count|pluralize }} | {% endif %}</small>
+            <a class="comment-reply-btn" href="#">Reply</a> | <a href="{{ comment.get_absolute_url }}">Thread</a><br>
+            {{ comment.content }}
+            <hr>
+        </div>
+        <div class="comment-reply">
+            {% for child_comment in comment.children %}
+            <blockquote>
+                <small>{{ child_comment.author }} - {{ child_comment.timestamp|timesince }} ago: </small><br>
+                {{ child_comment.content }}
+            </blockquote>
+            {% endfor %}
+
             <form method="POST" accept=".">
                 {% csrf_token %}
                 {{ comment_form|crispy }}
-                <input type="submit" value="Post comment" class="btn btn-secondary">
+                <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                <input type="submit" value="reply" class="btn btn-secondary">
             </form>
-            <hr>
-            {% for comment in comments %}
-                <blockquote>
-                <div class="comment-content">
-                    <small>{{ comment.author }} | {{ comment.timestamp|timesince }} ago | {% if comment.children.count > 0 %}{{ comment.children.count}} Comment{{ comment.children.count|pluralize }} | {% endif %}</small><a class="comment-reply-btn" href="#">Reply</a><br>
-                    {{ comment.content }}
-                    <hr>
-                </div>
-                <div class="comment-reply">
-                    {% for child_comment in comment.children %}
-                    <blockquote>
-                        <small>{{ child_comment.author }} - {{ child_comment.timestamp|timesince }} ago: </small><br>
-                        {{ child_comment.content }}
-                    </blockquote>
-                    {% endfor %}
-
-                    <form method="POST" accept=".">
-                        {% csrf_token %}
-                        {{ comment_form|crispy }}
-                        <input type="hidden" name="parent_id" value="{{ comment.id }}">
-                        <input type="submit" value="reply" class="btn btn-secondary">
-                    </form>
-                </div>
-                </blockquote>
-            {% endfor %}
         </div>
+        </blockquote>
+    {% endfor %}
+</section>
 
 <script type="text/javascript">
  $(document).on('click', '.comment-reply-btn', function() {

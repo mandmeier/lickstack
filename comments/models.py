@@ -3,6 +3,8 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
+from django.urls import reverse
+
 
 # Create your models here.
 
@@ -39,6 +41,9 @@ class Comment(models.Model):
 
     def __str__(self):
         return str(self.author.username)
+
+    def get_absolute_url(self):
+        return reverse("comments:thread", kwargs={"id": self.id})
 
     def children(self):  # replies
         return Comment.objects.filter(parent=self)

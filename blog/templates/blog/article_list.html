@@ -15,7 +15,7 @@
 
 {% include 'repo/snippets/paginator_snippet.html' with licks=articles %}
 
-<h1>Articles</h1>
+<a href="{% url 'blog:article-create' %}" class="btn btn-success" role="button">New artice</a>
 
 <form method="GET" action="">
     <div class="input-group">
@@ -31,14 +31,22 @@
         <h2><a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
             {% if article.date_published > today %}<span style="color:red;"> (Future Post)</span>{% endif %}
         </h2>
-        <p><small>{{ article.author }} | {% if article.draft %}<span style="color:red;">Draft</span>{% endif %} {{ article.date_published }}</small></p>
-        <p>{{ article.description }}</p>
-        {% if article.image %}
-        <img src="{{article.image.url}}" class='img-responsive'>
-        {% endif %}
+        <header class="article-header">
+            <div class="article-metadata">
+                <p><small>{{ article.author }} | {% if article.draft %}<span style="color:red;">Draft</span>{% endif %} {{ article.date_published }}</small></p>
+                <p>{{ article.description }}</p>
+            </div>
+            <div class="article-image">
+                {% if article.image %}
+                <img src="{{article.image.url}}" class='img-responsive'>
+                {% endif %}
+            </div>
+        </header>
         <hr>
-        <p>{{ article.get_markdown|truncatechars_html:155 }}</p>
-        <p><a href="{{ article.get_absolute_url }}" class="btn btn-primary" role="button">View</a></p>
+        <div class="article-content-preview">
+            <p>{{ article.get_markdown|truncatechars_html:155 }}</p>
+            <p><a href="{{ article.get_absolute_url }}" class="btn btn-primary" role="button">View</a></p>
+        </div>
     </article>
 </section>
 {% endfor%}

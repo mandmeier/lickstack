@@ -7,11 +7,38 @@ html, body{
     max-width: 100%;
 }
 
-
-img{
-    max-width: 100%;
-}
-
 .comment-reply{
     display:none;
+}
+
+/*
+.article-header{
+    display: flex;
+    border: 1px solid black;
+    padding: 0px;
+}
+.article-metadata{
+    max-width: 50%;
+    border: 1px solid red;
+}
+.article-image{
+    max-width: 50%;
+    border: 1px solid green;
+}
+*/
+
+.article-header {
+  display: flex;
+  /*border: 1px solid black;*/
+}
+
+.article-metadata {
+  /*border: 1px solid red;*/
+  flex: 1;
+  padding: 1rem;
+}
+
+.article-image {
+  /*border: 1px solid green;*/
+  flex: 1;
 }

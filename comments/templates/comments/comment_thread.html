@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+
+{% block head_title %}{{ block.super }} | {{article.title }}{% endblock head_title %}
+
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}">
+
+<section class="panel">
+    <h3><a href="{{ comment.content_object.get_absolute_url }}">{{ comment.content_object.title }}</a></h3>
+    <p class='lead'>Comments</p>
+    <hr>
+        <div class="comment-content">
+            <small>{{ comment.author }} | {{ comment.timestamp|timesince }} ago | {% if comment.children.count > 0 %}{{ comment.children.count}} Comment{{ comment.children.count|pluralize }} {% endif %}</small><br>
+            {{ comment.content }}
+            <hr>
+        </div>
+        <div>
+            {% for child_comment in comment.children %}
+            <blockquote>
+                <small>{{ child_comment.author }} - {{ child_comment.timestamp|timesince }} ago: </small><br>
+                {{ child_comment.content }}
+            </blockquote>
+            {% endfor %}
+
+            <form method="POST" accept=".">
+                {% csrf_token %}
+                {{ comment_form|crispy }}
+                <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                <input type="submit" value="reply" class="btn btn-secondary">
+            </form>
+        </div>
+</section>
+
+<script type="text/javascript">
+ $(document).on('click', '.comment-reply-btn', function() {
+       event.preventDefault();
+       $(this).parent().next(".comment-reply").fadeToggle();
+   });
+</script>
+
+{% endblock content %}
