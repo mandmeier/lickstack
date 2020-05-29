@@ -158,6 +158,7 @@ for (let i = 0; i < play_btns.length; i++) {
 
 
         if (players[i] == undefined) {
+            playButtonIcons[i].className = 'icon icon-spinner8';
             let audio_url = play_btns[i].id.split('[X]')[1]
             players[i] = new Tone.Player(audio_url);
             audios[i] = new Audio(audio_url);

@@ -69,6 +69,25 @@ html, body{
   font-size: 22px;
 }
 
+.icon-spinner8 {
+    width: 19px;
+    height: 19px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    animation: loading 1s infinite linear;
+}
+
+@keyframes loading {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
 .navbar {
   background-color: #e5e5e5;
   padding: .8rem;

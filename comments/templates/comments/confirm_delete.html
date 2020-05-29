@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+
+{% block head_title %}{{ block.super }} | {{article.title }}{% endblock head_title %}
+
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}">
+
+<section class="panel">
+    <h1>Confirm Delete</h1>
+            <form method="POST" accept=".">
+                {% csrf_token %}
+                <p>Are you sure you want to delete the following comment?</p>
+                <p>"{{ comment.content }}"</p>
+                <input type="submit" value="Yes, delete" class="btn btn-danger">
+                <a href="{{ comment.get_absolute_url }}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+</section>
+
+<script type="text/javascript">
+ $(document).on('click', '.comment-reply-btn', function() {
+       event.preventDefault();
+       $(this).parent().next(".comment-reply").fadeToggle();
+   });
+</script>
+
+{% endblock content %}

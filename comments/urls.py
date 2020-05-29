@@ -7,6 +7,6 @@ app_name = 'comments'
 urlpatterns = [
     url(r'^comments/(?P<id>\d+)/$',
         views.comment_thread, name='thread'),
-    # url(r'^blog/article/(?P<slug>[\w-]+)/delete/$',
-    #     views.comment_delete, name='comment-delete'),
+    url(r'^comments/(?P<id>\d+)/delete/$',
+        views.comment_delete, name='comment-delete'),
 ]
