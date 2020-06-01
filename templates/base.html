@@ -51,8 +51,53 @@
           -moz-osx-font-smoothing: grayscale;
         }
 
+        .icon-log-out:before {
+          content: "\e905";
+        }
+        .icon-close-solid:before {
+          content: "\e901";
+        }
+        .icon-cog:before {
+          content: "\e904";
+        }
+        .icon-gear:before {
+          content: "\e904";
+        }
+        .icon-settings:before {
+          content: "\e904";
+        }
+        .icon-generate:before {
+          content: "\e904";
+        }
+        .icon-make:before {
+          content: "\e904";
+        }
+        .icon-options:before {
+          content: "\e904";
+        }
+        .icon-spinner8:before {
+          content: "\e981";
+        }
+        .icon-key:before {
+          content: "\e98d";
+        }
+        .icon-info:before {
+          content: "\ea0c";
+        }
+        .icon-share2:before {
+          content: "\ea82";
+        }
+        .icon-home:before {
+          content: "\e903";
+        }
+        .icon-arrow_drop_down:before {
+          content: "\e902";
+        }
         .icon-edit:before {
           content: "\e900";
+        }
+        .icon-plus:before {
+          content: "\f067";
         }
         .icon-music:before {
           content: "\f001";
@@ -65,6 +110,9 @@
         }
         .icon-star-o:before {
           content: "\f006";
+        }
+        .icon-user:before {
+          content: "\f007";
         }
         .icon-play:before {
           content: "\f04b";
@@ -96,6 +144,9 @@
         .icon-angle-double-right:before {
           content: "\f101";
         }
+        .icon-rocket:before {
+          content: "\f135";
+        }
         .icon-thumbs-up:before {
           content: "\f164";
         }
@@ -111,19 +162,6 @@
         .icon-commenting-o:before {
           content: "\f27b";
         }
-        .icon-share2:before {
-          content: "\ea82";
-        }
-        .icon-spinner8:before {
-          content: "\e981";
-        }
-        .icon-info:before {
-          content: "\ea0c";
-        }
-        .icon-close-solid:before {
-          content: "\e901";
-        }
-
     </style>
 
     {% block head_extra %} {% endblock head_extra %}
@@ -151,69 +189,61 @@
 
 <body>
 
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-light sticky-top">
-<div class="container-fluid">
-    <div>
-        <a class="navbar-brand" href="{% url 'home' %}">
-            <picture>
-              <source type="image/webp" srcset="{% static 'img/Logo.webp' %}" />
-              <img src="{% static 'img/Logo.png' %}" class="navbar-logo" alt="Logo">
-            </picture>
-        </a>
-        <a style="cursor: pointer;" onclick="document.forms['paypal_form'].submit()">
-            <picture>
-              <source type="image/webp" srcset="{% static 'img/tip_bucket.webp' %}" />
-              <img border="0" alt="Tip Bucket. Donate to the LickStack" src="{% static 'img/tip_bucket.png' %}" width="50" height="56">
-            </picture>
-        </a>
-    </div>
+<script type="text/javascript">
+  /* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
+function myFunction() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
+</script>
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
-        <span class="navbar-toggler-icon"></span>
+<nav class="topnav" id="myTopnav">
+  <div class="topnav-left">
+  <a class="topnav-img" href="{% url 'home' %}">
+      <picture>
+        <source type="image/webp" srcset="{% static 'img/Logo.webp' %}" />
+        <img src="{% static 'img/Logo.png' %}" class="navbar-logo" alt="Logo">
+      </picture>
+  </a>
+  <a class="topnav-img" style="cursor: pointer;" onclick="document.forms['paypal_form'].submit()">
+      <picture>
+        <source type="image/webp" srcset="{% static 'img/tip_bucket.webp' %}" />
+        <img border="0" alt="Tip Bucket. Donate to the LickStack" src="{% static 'img/tip_bucket.png' %}" width="50" height="56">
+      </picture>
+  </a>
+  </div>
+  <div class="topnav-right">
+  <a class="nav-link" id="link-home" href="{% url 'home' %}"><span class="icon-home"></span>Home</a>
+  <a class="nav-link" id="link-browselicks" href="{% url 'browse-licks' %}"><span class="icon-search"></span>Browse Licks</span></a>
+  {% if user.is_authenticated %}
+  <a class="nav-link" id="link-newlick" href="{% url 'lick-create' %}"><span class="icon-rocket"></span>New Lick</a>
+  <div class="dropdown">
+    <button class="nav-link dropbtn"><span class="icon-user"></span>{{ user.get_username }}
+      <span class="icon-arrow_drop_down"></span>
     </button>
-
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-            <li id="link-home" class="nav-item">
-                <a class="nav-link" href="{% url 'home' %}">Home</a>
-            </li>
-            <li id="link-browselicks" class="nav-item">
-                <a class="nav-link" href="{% url 'browse-licks' %}">Browse Licks</a>
-            </li>
-            {% if user.is_authenticated %}
-            <li id="link-newlick"class="nav-item">
-                <a class="nav-link" href="{% url 'lick-create' %}">New Lick</a>
-            </li>
-            <li id="link-mylicks"class="nav-item">
-                <a class="nav-link" href="{% url 'my-licks' %}">My Licks</a>
-            </li>
-            <li id="link-profile" class="nav-item">
-                <a class="nav-link" href="{% url 'profile' %}">Profile</a>
-            </li>
-            <li id="link-logout" class="nav-item">
-                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-            </li>
-                {% if user.is_staff %}
-            <li class="nav-item">
-                  <a class="nav-link" href="{% url 'blog:article-list' %}">Blog</a>
-            </li>
-            <li class="nav-item">
-                  <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
-            </li>
-                {% endif %}
-            {% else %}
-            <li id="link-login" class="nav-item">
-                <a class="nav-link" href="{% url 'login' %}">Login</a>
-            </li>
-            <li id="link-register"class="nav-item">
-                <a class="nav-link" href="{% url 'register' %}">Register</a>
-            </li>
-            {% endif %}
-        </ul>
+    <div class="dropdown-content">
+      <a class="nav-link" id="link-mylicks" href="{% url 'my-licks' %}"><span class="icon-music"></span>My Licks</a>
+      <a class="nav-link" id="link-profile" href="{% url 'profile' %}"><span class="icon-cog"></span>Settings</a>
+      <a class="nav-link" id="link-logout" href="{% url 'logout' %}"><span class="icon-log-out"></span>Logout</a>
     </div>
-</div>
+  </div>
+    {% if user.is_staff %}
+    <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
+    <a class="nav-link" href="{% url 'blog:article-list' %}">Blog</a>
+    {% endif %}
+  {% else %}
+  <a class="nav-link" id="link-login" href="{% url 'login' %}"><span class="icon-key"></span>Login</a>
+  <a class="nav-link" id="link-register" href="{% url 'register' %}"><span class="icon-plus"></span>Register</a>
+  {% endif %}
+  <a href="javascript:void(0);" class="sandwich-icon" onclick="myFunction()">&#9776;</a>
+  <div>
 </nav>
+
+
 
 <!-- main content -->
 <main>
@@ -276,7 +306,7 @@
           <source type="image/webp" srcset="{% static 'img/Logo.webp' %}" />
           <img src="{% static 'img/Logo.png' %}" class="footer-logo" alt="Logo">
         </picture>
-        <br><small>artwork by <a href="https://www.instagram.com/p_ll_bi.art/?hl=en" style="color: #b2ffff">@p_ll_bi.art <span class="icon-instagram"></span></a></small>
+        <br>
         <h5>&copy; LickStack.com</h5>
     </div>
 </div>
