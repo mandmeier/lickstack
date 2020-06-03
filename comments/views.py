@@ -1,14 +1,26 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
-from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponseRedirect, Http404, HttpResponse
+from django.shortcuts import render
 
 from .forms import CommentForm
 from .models import Comment
 
 
+@login_required
 def comment_delete(request, id):
-    obj = get_object_or_404(Comment, id=id)
+    try:
+        obj = Comment.objects.get(id=id)
+    except:
+        raise Http404
+
+    if obj.author != request.user:
+        response = HttpResponse(
+            "You do not have permission to do this. You may only delete your own comments.")
+        response.status_code = 403
+        return response
+
     if request.method == "POST":
         parent_obj_url = obj.content_object.get_absolute_url()
         obj.delete()
@@ -20,7 +32,14 @@ def comment_delete(request, id):
 
 
 def comment_thread(request, id):
-    obj = get_object_or_404(Comment, id=id)
+    try:
+        obj = Comment.objects.get(id=id)
+    except:
+        raise Http404
+
+    if not obj.is_parent:
+        obj = obj.parent
+
     content_object = obj.content_object  # article that the comment is on
     content_id = obj.content_object.id
 
@@ -30,7 +49,7 @@ def comment_thread(request, id):
     }
 
     form = CommentForm(request.POST or None, initial=initial_data)
-    if form.is_valid():
+    if form.is_valid() and request.user.is_authenticated():
         c_type = form.cleaned_data.get("content_type")
         content_type = ContentType.objects.get(model=c_type)
         obj_id = form.cleaned_data.get("object_id")

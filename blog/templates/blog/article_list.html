@@ -15,8 +15,10 @@
 
 {% include 'repo/snippets/paginator_snippet.html' with licks=articles %}
 
+{% if request.user.is_staff %}
 <a href="{% url 'blog:article-create' %}" class="btn btn-success" role="button">New article</a>
-
+{% endif %}
+<br>
 <form method="GET" action="">
     <div class="input-group">
         <input class="form-control" type="text" name="q" placeholder="Search articles" value="{{ request.GET.q }}">
