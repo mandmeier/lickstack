@@ -10,8 +10,24 @@
 {% block content %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/lick_snippet.css' %}">
 
-<section class="panel">
+<style type="text/css">
+.chords-row {
+    background-image: url("{% static 'img/staff.webp' %}"),url("{% static 'img/staff.png' %}");
+}
+</style>
+
+<script type="text/javascript">
+    // used to select initial value of transpose button
+    function selectElement(id, valueToSelect) {
+    let element = document.getElementById(id);
+    element.value = valueToSelect;
+    }
+</script>
+
+
+<section>
         <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">
            Facebook
         </a>
@@ -36,7 +52,12 @@
 
 </section>
 
-<section class="panel" id="comments_section">
+    {% for lick in licks %}
+        {% include 'repo/snippets/lick_snippet.html' with lick=lick chord_seq_query=chord_seq_query %}
+    {% endfor %}
+
+
+<section id="comments_section">
     <p class='lead' >Comments</p>
     {% if request.user.is_authenticated %}
     <form method="POST" accept=".">
@@ -78,11 +99,51 @@
     {% endfor %}
 </section>
 
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.5.35/Tone.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
 <script type="text/javascript">
- $(document).on('click', '.comment-reply-btn', function() {
-       event.preventDefault();
-       $(this).parent().next(".comment-reply").fadeToggle();
-   });
+
+    // used to select initial value of transpose button
+    function selectElement(id, valueToSelect) {
+    let element = document.getElementById(id);
+    element.value = valueToSelect;
+    }
+
+    const chords_dir = "{% static 'img/chords/' %}";
+    const tortoise_on_url = "{% static 'img/tortoise_hover.webp' %}";
+    const tortoise_off_url = "{% static 'img/tortoise_toggled.webp' %}";
+
+    $(document).on('click', '.comment-reply-btn', function() {
+        event.preventDefault();
+        $(this).parent().next(".comment-reply").fadeToggle();
+    });
+
+</script>
+
+<script src="{% static 'js/lick_snippet.js' %}"></script>
+
+<script type="text/javascript">
+
+    // transpose licks
+
+    var tstr = "{{ transpose_string }}"
+
+    tlst = tstr.split(',')
+
+    // dictionary for lick_number:transpose_value
+    var dict = {};
+    for (let i = 0; i < tlst.length; i++) {
+    dict[tlst[i].split('|')[0]] = tlst[i].split('|')[1];
+    }
+
+    // make transpose_bys from tstr
+    for (let i = 0; i < licks.length; i++) {
+        licks[i].getElementsByClassName('transpose-btn')[0].value = dict[lick_order[i]]
+        updateChords(lick_order[i])
+    }
+
 </script>
 
 {% endblock content %}

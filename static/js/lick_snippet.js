@@ -103,9 +103,11 @@ function make_ts34(lck){
 // initialize variables and controls for all licks
 const licks = document.getElementsByClassName('lick')
 const lick_order = []
-for (const lick of licks) {lick_order.push(lick.id.split('_')[1])}
+
+
 
 const play_btns = document.getElementsByClassName('play')
+const transpose_btns = document.getElementsByClassName('transpose-btn')
 const seekBars = document.getElementsByClassName('seek-bar')
 const fillBars = document.getElementsByClassName('fill')
 mouseDown = false;
@@ -118,6 +120,15 @@ pitch_shifts = []
 
 for (let i = 0; i < play_btns.length; i++) {
 
+    // assign new lick_id (thus I can show the same lick several times in different keys)
+    lick_id = i.toString()
+    licks[i].id = lick_id
+    lick_order.push(lick_id)
+    transpose_btns[i].id = "transpose_" + lick_id
+
+
+
+
     // time signatures
     let time_signature = licks[i].getElementsByClassName('time_signature')[0].getAttribute('value');
     if (time_signature == 34){
@@ -125,8 +136,8 @@ for (let i = 0; i < play_btns.length; i++) {
     };
 
     playButtonIcons.push(play_btns[i].querySelector('span'));
-    playback_rates.push(Number(licks[i].getElementsByClassName('transpose-btn')[0].value))
-    transpose_bys.push(licks[i].getElementsByClassName('slowdown-btn')[0].value)
+    playback_rates.push(Number(licks[i].getElementsByClassName('slowdown-btn')[0].value))
+    transpose_bys.push(licks[i].getElementsByClassName('transpose-btn')[0].value)
     pitch_shifts.push(null)
 
     updateChords(lick_order[i]);

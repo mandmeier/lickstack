@@ -75,11 +75,25 @@ def article_detail(request, slug=None):
 
     comments = article.comments
 
+    #licks = article.licks.all()
+
+    transpose_string = "1|5,2|3,2|4"
+
+    lick_sequence = [1, 2, 2]
+
+    licks = []
+    for id in lick_sequence:
+        lick = article.licks.get(id=id)
+        licks.append(lick)
+        print(lick)
+
     context = {}
     context['article'] = article
     context['share_string'] = share_string
     context['comments'] = comments
     context['comment_form'] = form
+    context['licks'] = licks
+    context['transpose_string'] = transpose_string
     return render(request, 'blog/article_detail.html', context)
 
 

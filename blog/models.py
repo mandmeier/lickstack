@@ -10,6 +10,7 @@ from django.conf import settings
 from django.dispatch import receiver
 from markdown_deux import markdown
 from comments.models import Comment
+from repo.models import Lick
 
 
 class ArticleManager(models.Manager):
@@ -43,6 +44,7 @@ class Article(models.Model):
         auto_now=True, auto_now_add=False, verbose_name="date updated")
     author = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
     #thumb = models.ImageField(default='default.png', blank=True)
+    licks = models.ManyToManyField(Lick, blank=True)
 
     objects = ArticleManager()
 
