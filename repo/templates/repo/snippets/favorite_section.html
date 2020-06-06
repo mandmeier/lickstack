@@ -5,17 +5,17 @@
       <form action="{% url 'favorite_lick' %}" method="post">
         {% csrf_token %}
         {% if lick in user_faved %}
-        <button class="panel-btn fav-btn" type="submit" id="favorite_{{ lick.id }}" name="lick_id" value="{{ lick.id }}">
+        <button class="panel-btn fav-btn favorite_{{ lick.id }}" type="submit" name="lick_id" value="{{ lick.id }}">
             <span class="icon icon-star"></span>
         </button>
         {% else %}
-        <button class="panel-btn fav-btn" type="submit" id="favorite_{{ lick.id }}" name="lick_id" value="{{ lick.id }}">
+        <button class="panel-btn fav-btn favorite_{{ lick.id }}" type="submit" name="lick_id" value="{{ lick.id }}">
             <span class="icon icon-star-o"></span>
         </button>
         {% endif %}
       </form>
       <script type="text/javascript">
-            $(document).on('click', '#favorite_{{ lick.id }}', function(event){
+            $(document).on('click', '.favorite_{{ lick.id }}', function(event){
                 event.preventDefault();
                 var pk = $(this).attr('value');
                 $.ajax({
@@ -24,7 +24,7 @@
                     data: {'id':pk, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
                     dataType: 'json',
                     success: function(response){
-                        $('#favorite-section_{{ lick.id }}').html(response['form'])
+                        $('.favorite-section_{{ lick.id }}').html(response['form'])
                     },
                     error: function(rs, e){
                     }
@@ -36,7 +36,7 @@
 {% else %}
 
     <form action="{% url 'login' %}">
-        <button class="panel-btn fav-btn" type="submit" id="fav_{{ lick.id }}" name="lick_id" value="{{ lick.id }}">
+        <button class="panel-btn fav-btn fav_{{ lick.id }}" type="submit" name="lick_id" value="{{ lick.id }}">
             <span class="icon icon-star-o"></span>
         </button>
     </form>

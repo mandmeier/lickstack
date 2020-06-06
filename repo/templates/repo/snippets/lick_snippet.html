@@ -1,11 +1,11 @@
 {% load static %}
 {% load repo_extras %}
 
-<article class="panel lick lick-section" id="lick_{{ lick.id }}">
+<article class="panel lick lick-section">
 
-    <div class="chord_seq" id="chord_seq_{{ lick.id }}" value="{{ lick.chord_seq_search}}" style="display: none;"></div>
-    <div class="transpose_rule" id="transpose_rule_{{ lick.id }}" value="{{ lick.transpose_rule}}" style="display: none;"></div>
-    <div class="time_signature" id="time_signature_{{ lick.id }}" value="{{ lick.time_signature}}" style="display: none;"></div>
+    <div class="chord_seq" value="{{ lick.chord_seq_search}}" style="display: none;"></div>
+    <div class="transpose_rule" value="{{ lick.transpose_rule}}" style="display: none;"></div>
+    <div class="time_signature" value="{{ lick.time_signature}}" style="display: none;"></div>
 
     <div class="lick-metadata">
         <div class="metadata-row">
@@ -87,13 +87,13 @@
             <option value="0" selected="selected">T</option>
         </select>
     {% if lick.author == user %}
-        <a class="panel-btn edit-btn" id="edit-section_{{ lick.id }}" href="{% url 'lick-update' lick.id %}"><span class="icon icon-edit"></span></a>
+        <a class="panel-btn edit-btn" href="{% url 'lick-update' lick.id %}"><span class="icon icon-edit"></span></a>
     {% endif %}
 
-        <div class="like" id="like-section_{{ lick.id }}">
+        <div class="like like-section_{{ lick.id }}">
             {% include 'repo/snippets/like_section.html' %}
         </div>
-        <div class="favorite" id="favorite-section_{{ lick.id }}">
+        <div class="favorite favorite-section_{{ lick.id }}">
             {% include 'repo/snippets/favorite_section.html' %}
         </div>
 

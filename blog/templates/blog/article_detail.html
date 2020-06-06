@@ -122,28 +122,12 @@
 
 </script>
 
-<script src="{% static 'js/lick_snippet.js' %}"></script>
 
 <script type="text/javascript">
-
-    // transpose licks
-
-    var tstr = "{{ transpose_string }}"
-
-    tlst = tstr.split(',')
-
-    // dictionary for lick_number:transpose_value
-    var dict = {};
-    for (let i = 0; i < tlst.length; i++) {
-    dict[tlst[i].split('|')[0]] = tlst[i].split('|')[1];
-    }
-
-    // make transpose_bys from tstr
-    for (let i = 0; i < licks.length; i++) {
-        licks[i].getElementsByClassName('transpose-btn')[0].value = dict[lick_order[i]]
-        updateChords(lick_order[i])
-    }
-
+    // initial transpose licks
+    var initial_transpose = "{{ transpose_string }}".split(',')
 </script>
+<script src="{% static 'js/lick_snippet.js' %}"></script>
+
 
 {% endblock content %}

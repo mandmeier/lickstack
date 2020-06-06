@@ -77,9 +77,8 @@ def article_detail(request, slug=None):
 
     #licks = article.licks.all()
 
-    transpose_string = "1|5,2|3,2|4"
-
     lick_sequence = [1, 2, 2]
+    transpose_string = "5,3,4"
 
     licks = []
     for id in lick_sequence:

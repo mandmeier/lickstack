@@ -23,6 +23,7 @@ function transposeChord(input,transpose_by) {
 
 
 function transposePlayer(l){
+    console.log(l)
     transpose_bys[l] = Number(licks[l].getElementsByClassName('transpose-btn')[0].value)
     playback_rates[l] = licks[l].getElementsByClassName('slowdown-btn')[0].value
     audios[l].playbackRate = playback_rates[l];
@@ -54,8 +55,7 @@ function transposePlayer(l){
 }
 
 
-function updateChords(lick_id) {
-    l = lick_order.indexOf(lick_id)
+function updateChords(l) {
     let lick = licks[l]
     let chords = lick.getElementsByClassName('chord_seq')[0].getAttribute("value").split('x').slice(1,17);
     let transpose_rules = lick.getElementsByClassName('transpose_rule')[0].getAttribute('value').split(',')
@@ -104,19 +104,9 @@ function make_ts34(lck){
 const licks = document.getElementsByClassName('lick')
 const lick_order = []
 
-
-
 const play_btns = document.getElementsByClassName('play')
+const slowdown_btns = document.getElementsByClassName('slowdown-btn')
 const transpose_btns = document.getElementsByClassName('transpose-btn')
-const seekBars = document.getElementsByClassName('seek-bar')
-const fillBars = document.getElementsByClassName('fill')
-mouseDown = false;
-players = []
-audios = []
-playButtonIcons = []
-playback_rates = []
-transpose_bys = []
-pitch_shifts = []
 
 for (let i = 0; i < play_btns.length; i++) {
 
@@ -124,10 +114,40 @@ for (let i = 0; i < play_btns.length; i++) {
     lick_id = i.toString()
     licks[i].id = lick_id
     lick_order.push(lick_id)
-    transpose_btns[i].id = "transpose_" + lick_id
+}
+
+for (let i = 0; i < play_btns.length; i++) {
+
+    lick_id = i.toString()
+
+    let sld = 'slowdown(' + lick_id + ')'
+    slowdown_btns[i].setAttribute('onclick', sld)
+
+    let uch = 'updateChords("' + lick_id + '")'
+    transpose_btns[i].setAttribute('onchange', uch)
+}
 
 
+const seekBars = document.getElementsByClassName('seek-bar')
+const fillBars = document.getElementsByClassName('fill')
+mouseDown = false;
+players = []
+audios = []
+playButtonIcons = []
+playback_rates = []
+pitch_shifts = []
 
+// set initial transpose values
+var transpose_bys = initial_transpose
+
+// make transpose_bys from tstr
+for (let i = 0; i < licks.length; i++) {
+    transpose_btns[i].value = initial_transpose[i]
+    updateChords(i)
+}
+
+
+for (let i = 0; i < play_btns.length; i++) {
 
     // time signatures
     let time_signature = licks[i].getElementsByClassName('time_signature')[0].getAttribute('value');
@@ -137,13 +157,11 @@ for (let i = 0; i < play_btns.length; i++) {
 
     playButtonIcons.push(play_btns[i].querySelector('span'));
     playback_rates.push(Number(licks[i].getElementsByClassName('slowdown-btn')[0].value))
-    transpose_bys.push(licks[i].getElementsByClassName('transpose-btn')[0].value)
+    //transpose_bys.push(licks[i].getElementsByClassName('transpose-btn')[0].value)
     pitch_shifts.push(null)
 
     updateChords(lick_order[i]);
 }
-
-
 
 function play(i){
     if (pitch_shifts[i] == undefined) {
@@ -257,8 +275,10 @@ function resetAudio(num){
 }
 
 // slow down audio button
-function slowdown(lick_id) {
-    selected_tortoise = document.getElementById('slowdown_'+lick_id)
+function slowdown(i) {
+    //selected_tortoise = document.getElementById('slowdown_'+lick_id)
+    selected_tortoise = slowdown_btns[i]
+
     if (selected_tortoise.value == "1") {
         selected_tortoise.src=tortoise_on_url; // change icon to toggled version
         selected_tortoise.value="0.5";
@@ -267,5 +287,5 @@ function slowdown(lick_id) {
         selected_tortoise.src=tortoise_off_url; // change icon to default version
         selected_tortoise.value="1";
     }
-    transposePlayer(lick_order.indexOf(lick_id));
+    transposePlayer(i);
 }

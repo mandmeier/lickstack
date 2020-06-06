@@ -5,17 +5,17 @@
         {% csrf_token %}
         <small class="text-muted">{{ lick.total_likes }} Like{{ lick.total_likes|pluralize }}</small>
         {% if lick in user_liked %}
-        <button class="panel-btn like-btn" type="submit" id="like_{{ lick.id }}" name="lick_id" value="{{ lick.id }}">
+        <button class="panel-btn like-btn like_{{ lick.id }}" type="submit" name="lick_id" value="{{ lick.id }}">
             <span class="icon icon-thumbs-up"></span>
         </button>
         {% else %}
-        <button class="panel-btn like-btn" type="submit" id="like_{{ lick.id }}" name="lick_id" value="{{ lick.id }}">
+        <button class="panel-btn like-btn like_{{ lick.id }}" type="submit" name="lick_id" value="{{ lick.id }}">
             <span class="icon icon-thumbs-o-up"></span>
         </button>
         {% endif %}
       </form>
       <script type="text/javascript">
-            $(document).on('click', '#like_{{ lick.id }}', function(event){
+            $(document).on('click', '.like_{{ lick.id }}', function(event){
                 event.preventDefault();
                 var pk = $(this).attr('value');
                 $.ajax({
@@ -24,7 +24,7 @@
                     data: {'id':pk, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
                     dataType: 'json',
                     success: function(response){
-                        $('#like-section_{{ lick.id }}').html(response['form'])
+                        $('.like-section_{{ lick.id }}').html(response['form'])
                     },
                     error: function(rs, e){
                     }
@@ -37,7 +37,7 @@
 
     <form action="{% url 'login' %}" style="float: right;">
         <small class="text-muted">{{ lick.total_likes }} Like{{ lick.total_likes|pluralize }}</small>
-        <button class="panel-btn like-btn" type="submit" id="like_{{ lick.id }}" name="lick_id" value="{{ lick.id }}">
+        <button class="panel-btn like-btn like_{{ lick.id }}" type="submit" name="lick_id" value="{{ lick.id }}">
             <span class="icon icon-thumbs-o-up"></span>
         </button>
     </form>
