@@ -45,6 +45,8 @@ class Article(models.Model):
     author = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
     #thumb = models.ImageField(default='default.png', blank=True)
     licks = models.ManyToManyField(Lick, blank=True)
+    lick_string = models.CharField(max_length=50, null=True, blank=True)
+    transpose_string = models.CharField(max_length=50, null=True, blank=True)
 
     objects = ArticleManager()
 

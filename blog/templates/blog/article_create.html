@@ -49,10 +49,8 @@
     titleInput.keyup(function(){
         var newTitle = $(this).val()
         setTitle(newTitle)
+
     })
-
-
-
 
     var contentInput = $("#wmd-input-id_body")
 
@@ -63,10 +61,51 @@
 
     setContent(contentInput.val())
 
+    // const regex_global = /lick\[(\d+),(\d+)\]/g;
+    // const regex_capture = /(\d+),(\d+)/;
+
+    const regex_global = /lick\[(\d+),\b([0-9]|1[0-2])\b\]/g;
+    const regex_capture = /(\d+),\b([0-9]|1[0-2])\b/;
+
+
     contentInput.keyup(function(){
         var newContent = $(this).val()
         setContent(newContent)
+
+        var licks_in_content = []
+        found_licks = newContent.match(regex_global);
+
+
+        if (found_licks != null && found_licks != licks_in_content){
+            licks_in_content = found_licks
+            console.log(licks_in_content)
+            var lick_list = []
+            var transpose_list = []
+            for (let i = 0; i < licks_in_content.length; i++) {
+                found_lick = licks_in_content[i].match(regex_capture);
+                lick_list.push(found_lick[1])
+                transpose_list.push(found_lick[2])
+             }
+             lick_string = lick_list.join(',')
+             transpose_string = transpose_list.join(',')
+
+             // copy transpose_string into hidden form field
+             lick_string_field = document.getElementById("id_lick_string")
+             lick_string_field.value = lick_string
+             transpose_string_field = document.getElementById("id_transpose_string")
+             transpose_string_field.value = transpose_string
+        }
+
+         // find licks
+
+
     })
+
+
+
+// add licks
+
+
 
 
 </script>

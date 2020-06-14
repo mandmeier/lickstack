@@ -6,6 +6,7 @@ from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from blog.models import Article
+from repo.models import Lick
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from urllib.parse import quote_plus
 from . import forms
@@ -24,6 +25,7 @@ def article_create(request):
         if form.is_valid():
             # save to db
             instance = form.save(commit=False)
+            print(instance)
             instance.author = request.user
             instance.save()
             messages.success(
@@ -77,22 +79,34 @@ def article_detail(request, slug=None):
 
     #licks = article.licks.all()
 
-    lick_sequence = [1, 2, 2]
-    transpose_string = "5,3,4"
-
-    licks = []
-    for id in lick_sequence:
-        lick = article.licks.get(id=id)
-        licks.append(lick)
-        print(lick)
-
     context = {}
     context['article'] = article
     context['share_string'] = share_string
     context['comments'] = comments
     context['comment_form'] = form
-    context['licks'] = licks
-    context['transpose_string'] = transpose_string
+
+    # find licks if article has licks
+    if article.lick_string:
+        print(article.lick_string)
+        lick_string = article.lick_string
+        transpose_string = article.transpose_string
+
+        lick_sequence = lick_string.split(',')
+        print(lick_sequence)
+
+        licks = []
+        for id in lick_sequence:
+            try:
+                lick = Lick.objects.get(id=id)
+                licks.append(lick)
+            except Lick.DoesNotExist:
+                if request.user.is_staff:
+                    messages.warning(request, f'Lick {id} not found!')
+                # placeholder?
+
+        context['transpose_string'] = transpose_string
+        context['licks'] = licks
+
     return render(request, 'blog/article_detail.html', context)
 
 

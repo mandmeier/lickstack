@@ -11,7 +11,8 @@ class CreateArticle(forms.ModelForm):
     class Meta:
         model = models.Article
         fields = ['title', 'description', 'body',
-                  'image', 'draft', 'date_published']
+                  'image', 'draft', 'date_published',
+                  'lick_string', 'transpose_string']
 
     # def __init__(self, *args, **kwargs):
     #     super().__init__(*args, **kwargs)
