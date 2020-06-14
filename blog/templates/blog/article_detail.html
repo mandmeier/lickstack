@@ -48,7 +48,7 @@
         <img src='{{article.image.url}}' class='img-responsive'>
         {% endif %}
         <hr>
-        <div>{{ article.get_markdown }}</div>
+        <div id="content">{{ article.get_markdown }}</div>
 
 </section>
 
@@ -111,6 +111,8 @@
     element.value = valueToSelect;
     }
 
+
+    const lick_placeholders_string = "{{ article.lick_placeholders_string }}"
     const chords_dir = "{% static 'img/chords/' %}";
     const tortoise_on_url = "{% static 'img/tortoise_hover.webp' %}";
     const tortoise_off_url = "{% static 'img/tortoise_toggled.webp' %}";
@@ -119,6 +121,26 @@
         event.preventDefault();
         $(this).parent().next(".comment-reply").fadeToggle();
     });
+
+
+// replace paragraphs with lick placeholder with lick panels
+
+    var lick_placeholders = lick_placeholders_string.split(';')
+    var content = document.getElementById("content")
+    var paragraphs = content.querySelectorAll("p");
+
+    var lick_elements = document.getElementsByClassName("lick-section")
+
+    for (let lck = 0; lck < lick_elements.length; lck++) {
+        for (let i = 0; i < paragraphs.length; i++) {
+            if (paragraphs[i].innerHTML == lick_placeholders[lck]){
+                //console.log(i)
+                //console.log(lck)
+                paragraphs[i].replaceWith(lick_elements[lck])
+            }
+        }
+    }
+
 
 </script>
 

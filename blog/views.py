@@ -25,7 +25,6 @@ def article_create(request):
         if form.is_valid():
             # save to db
             instance = form.save(commit=False)
-            print(instance)
             instance.author = request.user
             instance.save()
             messages.success(

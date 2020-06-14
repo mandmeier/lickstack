@@ -242,6 +242,7 @@ def browse_licks_view(request):
     licks = sorted(queryset, key=attrgetter('date_posted'), reverse=True)
 
     # paginate
+    paginator_number_pages = 8
     page = request.GET.get('page', 1)
     paginator = Paginator(licks, 8)
     licks = paginator.page(page)
@@ -262,6 +263,30 @@ def browse_licks_view(request):
 
     instr_selection = ','.join(common_instr)
 
+
+    transpose_string = ['0'] * paginator_number_pages
+    transpose_string = ','.join(transpose_string)
+
+    ## get transpose string from form
+
+    # def transpose_seq(chord_seq, half_steps):
+    #     note_regex = r'_([a-gA-g]{1,2})_'
+    #     # find all notes in chord seq
+    #     old_notes = re.findall(note_regex, chord_seq)
+    #     # transpose notes
+    #     new_notes = list(
+    #         map(lambda x: "_" + transpose_note(x, half_steps) + "_", old_notes))
+    #     # replace chord seq with transposed notes
+
+    #     def callback(match):
+    #         return next(callback.v)
+    #     callback.v = iter(new_notes)
+    #     chord_seq_T = re.sub(note_regex, callback, chord_seq)
+    #     return(chord_seq_T)
+
+
+
+
     # pass values to context
     context = {}
     context['form'] = LickForm()
@@ -271,6 +296,7 @@ def browse_licks_view(request):
     context['user_liked'] = get_liked_licks(request, licks)
     context['user_faved'] = get_faved_licks(request, licks)
     context['instr_selection'] = instr_selection
+    context['transpose_string'] = transpose_string
     # remember form input
     # context["username_contains_query"] = username_contains_query
 

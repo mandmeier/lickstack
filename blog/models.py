@@ -27,7 +27,7 @@ def upload_location(instance, filename):
 
 
 class Article(models.Model):
-    title = models.CharField(max_length=50, null=False, blank=False)
+    title = models.CharField(max_length=200, null=False, blank=False)
     slug = models.SlugField(unique=True)
     description = models.TextField(max_length=280, null=False, blank=False)
     body = models.TextField(max_length=5000, null=False, blank=False)
@@ -47,6 +47,8 @@ class Article(models.Model):
     licks = models.ManyToManyField(Lick, blank=True)
     lick_string = models.CharField(max_length=50, null=True, blank=True)
     transpose_string = models.CharField(max_length=50, null=True, blank=True)
+    lick_placeholders_string = models.CharField(
+        max_length=200, null=True, blank=True)
 
     objects = ArticleManager()
 
@@ -59,6 +61,12 @@ class Article(models.Model):
     def get_markdown(self):
         content = self.body
         return mark_safe(markdown(content))
+
+    def save(self, *args, **kwargs):
+        ids = [int(id) for id in self.lick_string.split(',')]
+        licks = Lick.objects.filter(id__in=ids).distinct()
+        super().save(*args, **kwargs)
+        self.licks.add(*licks)  # add licks to many to many field
 
     @property
     def comments(self):

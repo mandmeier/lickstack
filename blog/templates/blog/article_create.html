@@ -61,9 +61,6 @@
 
     setContent(contentInput.val())
 
-    // const regex_global = /lick\[(\d+),(\d+)\]/g;
-    // const regex_capture = /(\d+),(\d+)/;
-
     const regex_global = /lick\[(\d+),\b([0-9]|1[0-2])\b\]/g;
     const regex_capture = /(\d+),\b([0-9]|1[0-2])\b/;
 
@@ -89,11 +86,13 @@
              lick_string = lick_list.join(',')
              transpose_string = transpose_list.join(',')
 
-             // copy transpose_string into hidden form field
+             // copy into hidden form fields
              lick_string_field = document.getElementById("id_lick_string")
              lick_string_field.value = lick_string
              transpose_string_field = document.getElementById("id_transpose_string")
              transpose_string_field.value = transpose_string
+             lick_placeholders_string_field = document.getElementById("id_lick_placeholders_string")
+             lick_placeholders_string_field.value = found_licks.join(';')
         }
 
          // find licks
