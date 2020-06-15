@@ -259,33 +259,8 @@ def browse_licks_view(request):
     for instr in instr_qs:
         if str(instr) not in ['', ' ', 'other']:
             common_instr.append(str(instr))
-            # print(str(instr))
 
     instr_selection = ','.join(common_instr)
-
-
-    transpose_string = ['0'] * paginator_number_pages
-    transpose_string = ','.join(transpose_string)
-
-    ## get transpose string from form
-
-    # def transpose_seq(chord_seq, half_steps):
-    #     note_regex = r'_([a-gA-g]{1,2})_'
-    #     # find all notes in chord seq
-    #     old_notes = re.findall(note_regex, chord_seq)
-    #     # transpose notes
-    #     new_notes = list(
-    #         map(lambda x: "_" + transpose_note(x, half_steps) + "_", old_notes))
-    #     # replace chord seq with transposed notes
-
-    #     def callback(match):
-    #         return next(callback.v)
-    #     callback.v = iter(new_notes)
-    #     chord_seq_T = re.sub(note_regex, callback, chord_seq)
-    #     return(chord_seq_T)
-
-
-
 
     # pass values to context
     context = {}
@@ -296,9 +271,6 @@ def browse_licks_view(request):
     context['user_liked'] = get_liked_licks(request, licks)
     context['user_faved'] = get_faved_licks(request, licks)
     context['instr_selection'] = instr_selection
-    context['transpose_string'] = transpose_string
-    # remember form input
-    # context["username_contains_query"] = username_contains_query
 
     return render(request, "repo/browse_licks.html", context)
 

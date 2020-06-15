@@ -137,14 +137,21 @@ playButtonIcons = []
 playback_rates = []
 pitch_shifts = []
 
-// set initial transpose values
-var transpose_bys = initial_transpose
 
-// make transpose_bys from tstr
-for (let i = 0; i < licks.length; i++) {
-    transpose_btns[i].value = initial_transpose[i]
-    updateChords(i)
+// set initial transpose values for blog posts (and albums?)
+if (typeof(initial_transpose) != "undefined"){
+    var transpose_bys = initial_transpose
+
+    // make transpose_bys from tstr
+    for (let i = 0; i < licks.length; i++) {
+        transpose_btns[i].value = initial_transpose[i]
+        updateChords(i)
+    }
+} else {
+// for browse licks, my licks
+    var transpose_bys = []
 }
+
 
 
 for (let i = 0; i < play_btns.length; i++) {
@@ -157,7 +164,12 @@ for (let i = 0; i < play_btns.length; i++) {
 
     playButtonIcons.push(play_btns[i].querySelector('span'));
     playback_rates.push(Number(licks[i].getElementsByClassName('slowdown-btn')[0].value))
-    //transpose_bys.push(licks[i].getElementsByClassName('transpose-btn')[0].value)
+
+    if (typeof(initial_transpose) != "undefined"){
+        transpose_bys.push(licks[i].getElementsByClassName('transpose-btn')[0].value)
+    }
+
+
     pitch_shifts.push(null)
 
     updateChords(lick_order[i]);
