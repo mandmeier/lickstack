@@ -27,7 +27,7 @@
 </script>
 
 
-<section>
+<section id="article-section">
         <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">
            Facebook
         </a>
@@ -103,6 +103,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.5.35/Tone.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
+
+
 <script type="text/javascript">
 
     // used to select initial value of transpose button
@@ -123,12 +125,12 @@
     });
 
 
-// replace paragraphs with lick placeholder with lick panels
-
-    var lick_placeholders = lick_placeholders_string.split(';')
     var content = document.getElementById("content")
     var paragraphs = content.querySelectorAll("p");
 
+// replace paragraphs with lick placeholder with lick panels
+
+    var lick_placeholders = lick_placeholders_string.split(';')
     var lick_elements = document.getElementsByClassName("lick-section")
 
     for (let lck = 0; lck < lick_elements.length; lck++) {
@@ -140,6 +142,67 @@
             }
         }
     }
+
+// replace paragraphs with lick placeholder with lick panels
+
+
+
+    function insertFrame(parent, youtube_id) {
+        let video_url = "https://www.youtube-nocookie.com/embed/" + youtube_id
+        let ifrm = document.createElement("iframe");
+        ifrm.setAttribute("class", "video");
+        ifrm.setAttribute("src", video_url);
+        ifrm.setAttribute("frameborder", "0");
+        ifrm.setAttribute("allow", "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture");
+        ifrm.setAttribute('allowFullScreen', '');
+        parent.appendChild(ifrm);
+    }
+
+
+// find paragraphs with youtube links
+        var youtube_regex = /watch\?v=([A-Za-z0-9]+)$/
+        for (let i = 0; i < paragraphs.length; i++) {
+            if (youtube_regex.test(paragraphs[i].innerHTML)){
+                youtube_id = paragraphs[i].innerHTML.match(youtube_regex)[1]
+
+                console.log(i)
+                console.log(youtube_id)
+
+                // replace paragraph with video container
+                var video_container = document.createElement("div");
+                video_container.setAttribute("class", "video-container");
+                paragraphs[i].replaceWith(video_container)
+
+                insertFrame(video_container, youtube_id)
+
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+    // var video_placeholders = ["video[frxT2qB1POQ]"]
+
+    // //var video_placeholders = video_placeholders_string.split(';')
+    // var video_paragraphs = content.querySelectorAll("p");
+
+    // for (let vid = 0; vid < video_placeholders; vid++) {
+    //     for (let i = 0; i < paragraphs.length; i++) {
+    //         if (paragraphs[i].innerHTML == video_placeholders[vid]){
+    //             console.log(i)
+    //             console.log(vid)
+    //             //paragraphs[i].replaceWith(lick_elements[lck])
+    //         }
+    //     }
+    // }
+
 
 
 </script>

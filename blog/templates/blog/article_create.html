@@ -25,6 +25,12 @@
 </div>
 
 
+<section class="panel">
+    <h5>Help</h5>
+    <p>To insert lick, go to new line and insert lick[13,6] for lick number 13, transposed +6.</p>
+    <p>To insert youtube video go to new line and paste url of youtube video</p>
+</section>
+
 
 <form class="article-form" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
@@ -32,6 +38,7 @@
 
     <input type="submit" value="Create Article">
 </form>
+
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/1.1.0/marked.min.js"></script>
