@@ -28,18 +28,6 @@
 
 
 <section id="article-section">
-        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">
-           Facebook
-        </a>
-
-        <a href="https://twitter.com/home?status={{ share_string }}%20{{ request.build_absolute_uri }}">
-           Twitter
-        </a>
-
-        <a href="http://www.reddit.com/submit?url={{ request.build_absolute_uri }}&title={{ share_string }}">
-           Reddit
-        </a>
-
         <h1>{{ article.title }}</h1>
         <p><small>{{ article.author }} | {% if article.draft %}<span style="color:red;">Draft</span>{% endif %} {{ article.date_published }}</small></p>
         <p><b>{{ article.description }}</b></p>
@@ -48,8 +36,13 @@
         <img src='{{article.image.url}}' class='img-responsive'>
         {% endif %}
         <hr>
+        <p class="social-share">
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}"><span class="icon icon-facebook-square footer-icon" style="color: #3b5998"></span></a>
+            <a href="https://twitter.com/home?status={{ share_string }}%20{{ request.build_absolute_uri }}"><span class="icon icon-twitter-square footer-icon" style="color: #00acee"></span></a>
+            <a href="http://www.reddit.com/submit?url={{ request.build_absolute_uri }}&title={{ share_string }}"><span class="icon icon-reddit-square footer-icon" style="color: #ff4301"></span></a>
+        </p>
+        <hr>
         <div id="content">{{ article.get_markdown }}</div>
-
 </section>
 
     {% for lick in licks %}
