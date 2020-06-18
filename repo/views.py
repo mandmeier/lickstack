@@ -280,7 +280,7 @@ def my_licks_view(request):
     chord_seq_query = ""
     licks = Lick.objects.all()
     licks = licks.filter(author=request.user)  # get current user id
-    display = ""
+    display = "mylicks"
 
     if request.GET:
         display = request.GET.get('display', "")

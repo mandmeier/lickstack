@@ -1,12 +1,191 @@
 
+/* base layout */
 
-#form-chords-input {
+.area-controls{
+    max-width: 500px;
+    padding: 20px 10px 0px 10px;
+    /*background-color: #ffff00;*/
+}
+
+@media (min-width:992px){
+  .area-controls{
+    padding-top: 75px;
+  }
+}
+
+.area-list{
+    max-width: 500px;
+    padding: 0px 10px 10px 10px;
+    /*background-color: #ff00ff;*/
+}
+
+
+
+/* search form */
+
+
+.lick-form {
+    padding: 5px;
+    position: relative;
+    border: 2px solid #333;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+
+.form-section-title{
+    font-size: 20px;
+    padding-top: 3px;
+}
+
+.form-header, .form-info-button{
+    background-color: #333333;
+    color: #f9f9f9;
+}
+
+.form-header{
+    height: 40px;
+    margin-left: -2px;
+    margin-right: -2px;
+    padding: 5px 10px;
+    display: flex;
+}
+
+.form-info-button {
+    position: absolute;
+    padding-top: 4px;
+    right: 10px;
+    border: 0px solid #333333;
+}
+
+#form-info-chords{
+    margin-top: 10px;
+    color: #006400;
+}
+
+
+
+#time-signature {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+}
+/*time signature radio btns next to each other*/
+.form-check {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+
+.form-chords-input{
     padding: 0px;
 }
 
 
-#lick-data {
-    margin: 20px 0px 0px 0px;
+#reset_chords {
+    position: absolute;
+    right: 10px;
+}
+
+.form-chords-input .chord-select {
+    width: 11.5%;
+    max-width: 100%;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    font-size: 12px;
+    font-weight: 400;
+    color: #495057;
+    margin: 5px 0px;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+@media (max-width:500px){
+    .form-chords-input .chord-select {
+        font-size: 2.4vw;
+    }
+}
+
+.separator-mid{
+    width: 4%;
+}
+.separator-lr{
+    width: 2%;
+}
+
+
+
+#checkboxes-area{
+    position: relative;
+}
+
+#advanced-search-btn{
+    position: absolute;
+    right: 5px;
+    bottom: 10px;
+}
+
+#advanced-search-btn button{
+    font-size: 22px;
+}
+
+
+#advanced-search{
+    margin-bottom: 10px;
+}
+
+
+
+
+
+
+
+
+
+.tag-section{
+    /*background: #ff0000;*/
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    margin: 10px 0px;
+}
+
+.tag-section hr{
+    margin: 0px;
+}
+.tag-container, .suggested-tag-container{
+    margin: 0px;
+    padding: 5px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tag-container .tag, .suggested-tag-container .tag{
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin: 5px;
+    padding: 0px 5px;
+    display: flex;
+    align-items: center;
+    background: #e0e0e0;
+    cursor: pointer;
+}
+
+
+.tag-container input{
+    box-sizing: border-box;
+    width: 100%;
+    flex: 1;
+    padding: 5px;
+    outline: none;
+    border: 0;
+}
+
+.icon-close-solid {
+    margin-left: 5px;
+    cursor: pointer;
+    font-size: 16px;
 }
 
 .checkboxes {
@@ -14,6 +193,10 @@
 }
 
 
+
+.data-input{
+    margin: 10px 0px;
+}
 
 
 

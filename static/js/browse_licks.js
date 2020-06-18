@@ -15,6 +15,7 @@ function createTag(label, close="") {
     div.setAttribute('class', 'tag');
     const span = document.createElement('span');
     span.innerHTML = label;
+    span.setAttribute('data-item', label);
     div.appendChild(span);
     if (close){
         const closeBtn = document.createElement('span');

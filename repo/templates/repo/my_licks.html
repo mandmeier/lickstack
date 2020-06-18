@@ -36,25 +36,43 @@
        $(".active").removeClass("active");
        $("#link-mylicks").addClass("active");
     });
+
+    // get name of page
+
+    var display = "{{ display }}"
+
 </script>
 
 
-<div class="mylicks-controls row">
-      <form class="col-6" method="GET" action=".">
+
+<div class="row">
+<div class="area-controls col-md-12 col-lg-6">
+
+<div class="mylicks-controls">
+
+      <form class="col-12" method="GET" action=".">
         <input type="hidden" name="display" value="mylicks">
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" class="btn btn-light control-btn" value="mylicks">
           <span class="icon icon-music mylicks-icon"></span>
           My Licks
         </button>
       </form>
-      <form class="col-6" method="GET" action=".">
+
+      <form class="col-12" method="GET" action=".">
         <input type="hidden" name="display" value="favorites">
-        <button type="submit" class="btn btn-danger">
-          <span class="icon icon-star mylicks-icon"></span>
+        <button type="submit" class="btn btn-light control-btn" value="favorites">
+          <span class="icon icon-star mylicks-icon" id="mylicks-star"></span>
           Favorites
         </button>
       </form>
+
 </div>
+
+</div>
+
+
+
+<div class="area-list col-md-12 col-lg-6">
 
 {% include 'repo/snippets/paginator_snippet.html' with licks=licks %}
 
@@ -86,6 +104,10 @@
 
 {% include 'repo/snippets/paginator_snippet.html' with licks=licks %}
 
+</div>
+
+</div>
+
 <script type="text/javascript">
 const chords_dir = "{% static 'img/chords/' %}";
 const tortoise_on_url = "{% static 'img/tortoise_hover.png' %}";
@@ -93,6 +115,7 @@ const tortoise_off_url = "{% static 'img/tortoise_toggled.png' %}";
 </script>
 
 {% compress js %}
+<script src="{% static 'js/my_licks.js' %}"></script>
 <script src="{% static 'js/lick_snippet.js' %}"></script>
 {% endcompress %}
 
