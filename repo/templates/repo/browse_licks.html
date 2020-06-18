@@ -50,244 +50,304 @@
 <!--data-toggle="collapse"-->
 <!--class="collapse"-->
 
-<button class="search-btn col-lg-12 btn-primary btn-lg" data-toggle="collapse" data-target="#search-form">Search Licks  <span class="icon icon-search"></span></button>
-<div id="search-form" class="collapse">
+
+<style type="text/css">
+
+/*
+    .main-content{
+        display: flex;
+        flex-flow: row wrap;
+    }
 
 
-<form class="panel lick-form" method="GET" enctype="multipart/form-data">
+    .main-content > div{
+        width: 500px;
+        min-width: 400px;
+    }
+
+    .main-content > div:nth-child(odd){
+
+    }
+
+    .area-controls{
+        padding-top: 55px;
+    }
+*/
 
 
-<section class="form-section" id="form-section-chords">
-    <header class="form-header" id="form-header-chords">
-        <h4>Chords</h4>
-        <button type="button" class="form-info-button" data-toggle="collapse" data-target="#form-info-chords"><span class="icon icon-info"></span></button>
-    </header>
+    .area-controls{
+        max-width: 500px;
+        padding: 20px 10px 0px 10px;
+        /*background-color: #ffff00;*/
+    }
 
-    <main class="form-fields">
+    @media (min-width:992px){
+      .area-controls{
+        padding-top: 75px;
+      }
+    }
 
-        <div class="collapse form-info" id="form-info-chords">
-            <div class="info" id="chords_info">
-                <p>Search by chords (in concert key) <br>
-                By default, the search will look for chord sequences anywhere in the 4 measures. Empty beats between chords are ignored.<br>
-                e.g. |Dm7 – G7 – | will also match |C7 - - - |Dm7 G7 – - | or |Dm7 - - - | G7 - - - | <br><br>
-                <strong>Include transposed:</strong> Also match chord sequences that can be transposed into what you are searching for. Licks will be transposed automatically.<br>
-                e.g. |Dm7 - G7 - | will also match |Cm7 - F7 - | or |Dbm7 - Gb7 - |<br><br>
-                <strong>Ignore extensions:</strong> Extensions like 6, 7, 7b5 are ignored.<br>
-                e.g. |Dm7 - G7 - | will also match |Dm6 - G6 - | or |Dm - G - |<br><br>
-                <strong>Exact search:</strong> Search for the exact number of beats between chords.<br>
-                e.g. |Dm7 - G7 - | will no longer match |C7 - - - |Dm7 G7 – – | or |Dm7 - - - |G7 – – – |<br><br>
-                Entering nothing (all dashes) will return any chords.<br><br>
-                Choosing 4/4 or 3/4 here only affects input. To search by time signature see "Data" section below
-                </p>
+    .area-list{
+        max-width: 500px;
+        padding: 0px 10px 10px 10px;
+        /*background-color: #ff00ff;*/
+    }
+
+    .form-chords-input{
+        padding: 0px !important;
+    }
+
+    #advanced-search{
+        margin-bottom: 10px;
+    }
+
+
+    #checkboxes-area{
+        position: relative;
+    }
+
+    #advanced-search-btn{
+        position: absolute;
+        right: 5px;
+        bottom: 10px;
+    }
+
+    #advanced-search-btn button{
+        font-size: 22px;
+    }
+
+    .data-input{
+        margin: 10px 0px;
+    }
+
+    .form-section-title{
+        font-size: 20px;
+        padding-top: 3px;
+    }
+
+</style>
+
+
+
+
+<div class="row">
+<div class="content-column area-controls col-md-12 col-lg-6">
+
+    <form id="search-form"class="lick-form" method="GET" enctype="multipart/form-data">
+
+    <section class="form-section" id="form-section-chords">
+        <header class="form-header" id="form-header-chords">
+            <h2 class="form-section-title">Search Licks by Chords</h2>
+            <button type="button" class="form-info-button" data-toggle="collapse" data-target="#form-info-chords"><span class="icon icon-info"></span></button>
+        </header>
+
+        <main class="form-fields">
+
+            <div class="collapse form-info" id="form-info-chords">
+                <div class="info" id="chords_info">
+                    <p><small>Enter chords into the 4 measures below to find licks that match your chord sequence.<br>
+                    By default, licks are matched that contain the sequence of chords <em>anywhere</em> in the 4 measures (beats between chords are ignored).<br>
+                    e.g. |Dm7 – G7 – | will also match |C7 - - - |Dm7 G7 – - | or |Dm7 - - - | G7 - - - | <br><br>
+                    <strong>Include transposed:</strong> Also match chord sequences that can be transposed into what you are searching for. You will find many more licks that way.<br>
+                    e.g. |Dm7 - G7 - | will also match |Cm7 - F7 - | or |Dbm7 - Gb7 - |<br><br>
+                    <strong>Ignore extensions:</strong> Extensions like 6, 7, 7b5 are ignored.<br>
+                    e.g. |Dm7 - G7 - | will also match |Dm6 - G6 - | or |Dm - G - |<br><br>
+                    <strong>Exact search:</strong> Search for the exact number of beats between chords.<br>
+                    e.g. |Dm7 - G7 - | will no longer match |C7 - - - |Dm7 G7 – – | or |Dm7 - - - |G7 – – – |<br><br>
+                    Entering nothing (all dashes) will return any chords.<br><br>
+                    Choosing 4/4 or 3/4 here only affects input. To search by time signature see "Time Signature" section below
+                    </small></p>
+                </div>
             </div>
-        </div>
 
-    <!-- hidden field -->
-    <div id="chord_seq_field">
-            {{ form.chord_seq|as_crispy_field }}
-    </div>
-
-
-    <div id="time-signature">
-        <div class="form-check">
-            <input type="radio" class="form-check-input" checked="checked" name="ts" id="id_time_signature_1" value="44">
-            <label for="id_time_signature_1" class="form-check-label">4/4</label>
-        </div>
-         <div class="form-check">
-            <input type="radio" class="form-check-input" name="ts" id="id_time_signature_2" value="34">
-            <label for="id_time_signature_2" class="form-check-label">3/4</label>
-        </div>
-        <button class="panel-btn reset-chords-btn" id="reset_chords" type="button"><span class="icon icon-recycle"></span></button>
-    </div>
-    </main>
-
-    <div id="form-chords-input" class="form-chords-input col-12">
-    <div class="row form-chords-row">
-            <div class="separator-lr"></div>
-            {% include 'repo/snippets/chord_select_snippet.html' %}
-            {% include 'repo/snippets/chord_select_snippet.html' %}
-            {% include 'repo/snippets/chord_select_snippet.html' %}
-            {% include 'repo/snippets/chord_select_snippet.html' %}
-            <div class="separator-mid"></div>
-            {% include 'repo/snippets/chord_select_snippet.html' %}
-            {% include 'repo/snippets/chord_select_snippet.html' %}
-            {% include 'repo/snippets/chord_select_snippet.html' %}
-            {% include 'repo/snippets/chord_select_snippet.html' %}
-            <div class="separator-lr"></div>
-    </div>
-    <div class="row form-chords-row">
-            <div class="separator-lr"></div>
-            {% include 'repo/snippets/chord_select_snippet.html' %}
-            {% include 'repo/snippets/chord_select_snippet.html' %}
-            {% include 'repo/snippets/chord_select_snippet.html' %}
-            {% include 'repo/snippets/chord_select_snippet.html' %}
-            <div class="separator-mid"></div>
-            {% include 'repo/snippets/chord_select_snippet.html' %}
-            {% include 'repo/snippets/chord_select_snippet.html' %}
-            {% include 'repo/snippets/chord_select_snippet.html' %}
-            {% include 'repo/snippets/chord_select_snippet.html' %}
-            <div class="separator-lr"></div>
-    </div>
-    </div>
-
-    <main class="form-fields">
-    <div class="checkboxes">
-        <input type="checkbox" id="include_transposed" name="include_transposed" value="True">
-        <label for="include_transposed"> Include transposed</label><br>
-        <input type="checkbox" id="ignore_extensions" name="ignore_extensions" value="True">
-        <label for="ignore_extensions">Ignore extensions</label><br>
-        <input type="checkbox" id="exact_search" name="exact_search" value="True">
-        <label for="exact_search">Exact search</label><br>
-    </div>
-
-    </main>
-
-</section>
-
-<section class="form-section" id="form-section-data">
-    <header class="form-header" id="form-header-data">
-        <h4>Data</h4>
-        <button type="button" class="form-info-button" data-toggle="collapse" data-target="#form-info-data"><span class="icon icon-info"></span></button>
-    </header>
-
-    <main class="form-fields">
-
-        <div class="collapse form-info" id="form-info-data">
-            <div class="info" id="data_info">
-                <p>Search by metadata <br><br>
-
-                <strong> Author: </strong> Enter the name or part of a name of an author. <br><br>
-
-                <strong> Lick #: </strong> Enter the lick ID number, e.g. 25 or 154. <br><br>
-
-                <strong> Time Sign: </strong>search for 4/4 or 3/4 only. <br>
-                </p>
+        <div id="time-signature">
+            <div class="form-check">
+                <input type="radio" class="form-check-input" checked="checked" name="ts" id="id_time_signature_1" value="44">
+                <label for="id_time_signature_1" class="form-check-label">4/4</label>
             </div>
+             <div class="form-check">
+                <input type="radio" class="form-check-input" name="ts" id="id_time_signature_2" value="34">
+                <label for="id_time_signature_2" class="form-check-label">3/4</label>
+            </div>
+            <button class="panel-btn reset-chords-btn" id="reset_chords" type="button"><span class="icon icon-recycle"></span></button>
         </div>
-
-        <div id="lick-data" class="form-row">
-            <div class="form-group col-md-6">
-                <label for="category"><h5>Author</h5></label>
-                <input id="username_contains" class="form-control py-2 border-right-0 border" type="search" name="username_contains" placeholder="username contains..." value="{{ username_contains_query }}">
-            </div>
-            <div class="form-group col-md-6">
-                <label for="category"><h5>Lick #</h5></label>
-                <input id="lick_id" class="form-control py-2 border-right-0 border" type="search" name="lick_id" placeholder="lick ID..." value="{{ lick_id_query }}">
-            </div>
-            <div class="form-group col-md-6">
-                <label for="category"><h5>Time sign</h5></label>
-                <select id="time_signature" class="form-control" name="time_signature">
-                    <option value="" selected>Any</option>
-                    <option value="44">4/4</option>
-                    <option value="34">3/4</option>
-                </select>
-            </div>
-        </div>
-
-    </main>
-
-</section>
-
-<section class="form-section" id="form-section-instruments">
-    <header class="form-header" id="form-header-instruments">
-        <h4>Instruments</h4>
-        <button type="button" class="form-info-button" data-toggle="collapse" data-target="#form-info-instruments"><span class="icon icon-info"></span></button>
-    </header>
-
-    <main class="form-fields">
-
-        <div class="collapse form-info" id="form-info-instruments">
-            <div class="info" id="instruments_info">
-                <p>Search by instruments.<br> Leave empty for any instruments <br></p>
-            </div>
-        </div>
+        </main>
 
         <!-- hidden field -->
-        <div class="form-group col-md-4" id="instr_choices" style="display:none;">>
-                {% for ins in instrument %}
-                    {{ ins }},
-                {% endfor %}
-        </div>
-        <!-- hidden field -->
-        <input type="text" id="instr_seq" name="instr_seq" value="" class="textinput textInput form-control" style="display:none;">
-
-
-        <div id="instr-section" class="tag-section">
-            <div id="instr-container" class="tag-container">
-                <input id="instr-container-input" onkeypress="return noenter()" placeholder="Select or type + Enter"/>
-            </div>
-        <hr>
-             <div id="#suggested-instr-container" class="suggested-tag-container">
-
-            </div>
+        <div id="chord_seq_field" style="display:none;">
+                {{ form.chord_seq|as_crispy_field }}
         </div>
 
-    </main>
-</section>
 
-<section class="form-section" id="form-section-keywords">
-    <header class="form-header" id="form-header-keywords">
-        <h4>Keywords</h4>
-        <button type="button" class="form-info-button" data-toggle="collapse" data-target="#form-info-keywords"><span class="icon icon-info"></span></button>
-    </header>
-
-    <main class="form-fields">
-
-        <div class="collapse form-info" id="form-info-keywords">
-            <div class="info" id="keywords_info">
-                <p>Search by keywords.<br>
-                    Leave empty for any keywords <br><br>
-                    <strong>Must contain all keywords:</strong>
-                    Will match only licks that contain all keywords listed.
-                </p>
-            </div>
+        <div id="form-chords-input" class="form-chords-input col-12">
+        <div class="row form-chords-row">
+                <div class="separator-lr"></div>
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                <div class="separator-mid"></div>
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                <div class="separator-lr"></div>
+        </div>
+        <div class="row form-chords-row">
+                <div class="separator-lr"></div>
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                <div class="separator-mid"></div>
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                {% include 'repo/snippets/chord_select_snippet.html' %}
+                <div class="separator-lr"></div>
+        </div>
         </div>
 
+        <main class="form-fields" id="checkboxes-area">
         <div class="checkboxes">
-            <input type="checkbox" id="must_contain" name="must_contain" value="True">
-            <label for="must_contain">Must contain all keywords</label><br>
+            <input type="checkbox" id="include_transposed" name="include_transposed" value="True">
+            <label for="include_transposed"> Include transposed</label><br>
+            <input type="checkbox" id="ignore_extensions" name="ignore_extensions" value="True">
+            <label for="ignore_extensions">Ignore extensions</label><br>
+            <input type="checkbox" id="exact_search" name="exact_search" value="True">
+            <label for="exact_search">Exact search</label><br>
+
         </div>
 
-        <!-- hidden field -->
-        {{ form.tags|as_crispy_field }}
-        <!--
-        <input type="text" name="tags" class="tagwidget form-control" required="" id="id_tags">
-        -->
-
-        <div id="keyword-section" class="tag-section">
-            <div id="keyword-container" class="tag-container">
-                <input id="keyword-container-input" onkeypress="return noenter()" placeholder="Select or type + Enter"/>
-            </div>
-        <hr>
-             <div id="#suggested-keyword-container" class="suggested-tag-container">
-
-            </div>
+        <div id="advanced-search-btn">
+            <small>More options</small>
+            <button class="panel-btn" type="button" data-toggle="collapse" data-target="#advanced-search"><span class="icon-caret-down"></span></button>
         </div>
 
-    </main>
 
-</section>
+        </main>
+
+    </section>
+
+    <div id="advanced-search" class="collapse">
+
+        <section class="form-section" id="form-section-keywords">
+            <header class="form-header" id="form-header-keywords">
+                <h2 class="form-section-title">Keywords</h2>
+            </header>
+            <main class="form-fields">
+                <div class="checkboxes">
+                    <input type="checkbox" id="must_contain" name="must_contain" value="True">
+                    <label for="must_contain">Must contain all keywords</label><br>
+                </div>
+                <!-- hidden field -->
+                {{ form.tags|as_crispy_field }}
+                <!--
+                <input type="text" name="tags" class="tagwidget form-control" required="" id="id_tags">
+                -->
+                <div id="keyword-section" class="tag-section">
+                    <div id="keyword-container" class="tag-container">
+                        <input id="keyword-container-input" onkeypress="return noenter()" placeholder="Select or type + Enter"/>
+                    </div>
+                <hr>
+                     <div id="#suggested-keyword-container" class="suggested-tag-container">
+                    </div>
+                </div>
+            </main>
+        </section>
+
+        <section class="form-section" id="form-section-instruments">
+            <header class="form-header" id="form-header-instruments">
+                <h2 class="form-section-title">Instruments</h2>
+            </header>
+            <main class="form-fields">
+                <!-- hidden field -->
+                <div class="form-group col-md-4" id="instr_choices" style="display:none;">>
+                        {% for ins in instrument %}
+                            {{ ins }},
+                        {% endfor %}
+                </div>
+                <!-- hidden field -->
+                <input type="text" id="instr_seq" name="instr_seq" value="" class="textinput textInput form-control" style="display:none;">
+                <div id="instr-section" class="tag-section">
+                    <div id="instr-container" class="tag-container">
+                        <input id="instr-container-input" onkeypress="return noenter()" placeholder="Select or type + Enter"/>
+                    </div>
+                <hr>
+                     <div id="#suggested-instr-container" class="suggested-tag-container">
+                    </div>
+                </div>
+            </main>
+        </section>
+
+
+        <section class="form-section" id="form-section-data">
+                <header class="form-header" id="form-header-data">
+                    <h2 class="form-section-title">Author</h2>
+                </header>
+
+                <main class="form-fields">
+                  <input id="username_contains" class="form-control data-input" type="search" name="username_contains" placeholder="username contains..." value="{{ username_contains_query }}">
+                </main>
+        </section>
+
+
+        <section class="form-section" id="form-section-data">
+                <header class="form-header" id="form-header-data">
+                    <h2 class="form-section-title">Lick ID</h2>
+                </header>
+
+                <main class="form-fields">
+                    <input id="lick_id" class="form-control data-input" type="search" name="lick_id" placeholder="lick ID #" value="{{ lick_id_query }}">
+                </main>
+        </section>
+
+
+        <section class="form-section" id="form-section-data">
+                <header class="form-header" id="form-header-data">
+                    <h2 class="form-section-title">Time Signature</h2>
+                </header>
+
+                <main class="form-fields">
+                    <select id="time_signature" class="form-control data-input" name="time_signature">
+                        <option value="" selected>Any</option>
+                        <option value="44">4/4</option>
+                        <option value="34">3/4</option>
+                    </select>
+                </main>
+        </section>
+
+    </div>
 
     <div class="form-submit">
-        <button class="btn btn-primary btn-block btn-lg" type="submit" id="submit" onclick="storeSearchFormValues(form);">Submit</button>
+        <button class="btn btn-primary btn-block btn-lg" type="submit" id="submit" onclick="storeSearchFormValues(form);">Find Licks <span class="icon icon-search"></span></button>
     </div>
 
-</form>
+    </form>
 
 </div>
 
-{% include 'repo/snippets/paginator_snippet.html' with licks=licks %}
 
-{% if licks %}
-    {% for lick in licks %}
-    {% include 'repo/snippets/lick_snippet.html' with lick=lick chord_seq_query=chord_seq_query %}
-    {% endfor %}
-{% else %}
-    <div class="alert alert-primary" role="alert">
-       No licks found... Try searching for something else.
-    </div>
-{% endif %}
+<div class="content-column area-list col-md-12 col-lg-6">
 
+    {% include 'repo/snippets/paginator_snippet.html' with licks=licks %}
+
+    {% if licks %}
+        {% for lick in licks %}
+        {% include 'repo/snippets/lick_snippet.html' with lick=lick chord_seq_query=chord_seq_query %}
+        {% endfor %}
+    {% else %}
+        <div class="alert alert-primary" role="alert">
+           No licks found... Try searching for something else.
+        </div>
+    {% endif %}
+
+
+    {% include 'repo/snippets/paginator_snippet.html' with licks=licks %}
+
+</div>
+
+</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.5.35/Tone.js"></script>
 
 <script type="text/javascript">
@@ -306,9 +366,5 @@ const tortoise_off_url = "{% static 'img/tortoise_toggled.png' %}";
 <script src="{% static 'js/form_master.js' %}"></script>
 <script src="{% static 'js/browse_licks.js' %}"></script>
 {% endcompress %}
-
-
-{% include 'repo/snippets/paginator_snippet.html' with licks=licks %}
-
 
 {% endblock content %}

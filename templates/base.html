@@ -90,8 +90,8 @@
         .icon-home:before {
           content: "\e903";
         }
-        .icon-arrow_drop_down:before {
-          content: "\e902";
+        .icon-edit:before {
+          content: "\e900";
         }
         .icon-edit:before {
           content: "\e900";
@@ -135,6 +135,9 @@
         .icon-thumbs-o-up:before {
           content: "\f087";
         }
+        .icon-caret-down:before {
+          content: "\f0d7";
+        }
         .icon-bell:before {
           content: "\f0f3";
         }
@@ -165,6 +168,7 @@
         .icon-commenting-o:before {
           content: "\f27b";
         }
+
 
 
     </style>
@@ -228,7 +232,7 @@ function myFunction() {
   <a class="nav-link" id="link-newlick" href="{% url 'lick-create' %}"><span class="icon-rocket"></span>New Lick</a>
   <div class="dropdown">
     <button class="nav-link dropbtn"><span class="icon-user"></span>{{ user.get_username }}
-      <span class="icon-arrow_drop_down"></span>
+      <span class="icon-caret-down"></span>
     </button>
     <div class="dropdown-content">
       <a class="nav-link" id="link-mylicks" href="{% url 'my-licks' %}"><span class="icon-music"></span>My Licks</a>
@@ -251,23 +255,16 @@ function myFunction() {
 
 
 <!-- main content -->
-<main>
-    <div class="row margin">
-        <div id= "ads-left" class="col-md-0 col-lg-0 col-xl-3"></div>
-        <div class="main-content col-md-9 col-lg-8 col-xl-6">
+<main class="container main-content">
+  {% if messages %}
+      {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}">
+              {{ message}}
+          </div>
+      {% endfor %}
+  {% endif %}
 
-              {% if messages %}
-                  {% for message in messages %}
-                      <div class="alert alert-{{ message.tags }}">
-                          {{ message}}
-                      </div>
-                  {% endfor %}
-              {% endif %}
-
-              {% block content %}{% endblock content %}
-        </div>
-        <div id= "ads-right" class="col-md-3 col-lg-4 col-xl-3"></div>
-    </div>
+  {% block content %}{% endblock content %}
 </main>
 
 <!-- footer -->

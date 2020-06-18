@@ -1,7 +1,7 @@
 {% load repo_extras %}
 
-{% if licks.has_other_pages %}
 <div class="paginator">
+    {% if licks.has_other_pages %}
     {% if licks.has_previous %}
       <a class = "paginator-btn btn btn-outline-primary mb-4" href="?{% url_replace request 'page' 1 %}"><span class="icon icon-angle-double-left"></span></a>
       <a class = "paginator-btn btn btn-outline-primary mb-4" href="?{% url_replace request 'page' licks.previous_page_number %}"><span class="icon icon-chevron-left"></span></a>
@@ -19,5 +19,5 @@
       <a class = "paginator-btn btn btn-outline-primary mb-4" href="?{% url_replace request 'page' licks.next_page_number %}"><span class="icon icon-chevron-right"></span></a>
       <a class = "paginator-btn btn btn-outline-primary mb-4" href="?{% url_replace request 'page' licks.paginator.num_pages %}"><span class="icon icon-angle-double-right"></span></a>
     {% endif %}
+    {% endif %}
 </div>
-{% endif %}

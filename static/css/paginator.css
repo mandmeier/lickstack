@@ -2,6 +2,7 @@
     margin: 20px 0px;
     max-width: 100%;
     white-space: nowrap;
+    height: 35px;
 }
 
 .paginator-btn {
