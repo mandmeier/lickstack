@@ -52,7 +52,7 @@
     <div class="main-content col-md-9 col-lg-8 col-xl-6">
 
 
-<form class="lick-form" id="lick-form" method="POST" enctype="multipart/form-data">
+<form class="panel lick-form" id="lick-form" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
 
 <input type="hidden" id="previous_page" name="previous_page" value="TESTVALUE">
@@ -253,10 +253,8 @@
 </div>
 
 
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript">lick_URL = "{{ lick.file.url }}";kw_string="{{ kw_string }}";</script>
-<script type="text/javascript">if(lick_URL){audio = new Audio("{{ lick.file.url }}");update_audio_controls();}</script>
 
 
 {% compress js %}
@@ -264,6 +262,10 @@
 <script src="{% static 'js/new_edit_master.js' %}"></script>
 <script src="{% static 'js/lick_edit.js' %}"></script>
 {% endcompress %}
+
+
+<script type="text/javascript">if(lick_URL){audio = new Audio("{{ lick.file.url }}");update_audio_controls();}</script>
+
 
 
 {% endblock content %}

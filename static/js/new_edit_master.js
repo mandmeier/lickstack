@@ -69,7 +69,7 @@ function audio_reset(){
     if (typeof audio != 'undefined') {
         audio.pause();
         audio.currentTime = 0;
-        playButtonIcon.className = 'ion-play';
+        playButtonIcon.className = 'icon-play';
     }
 }
 

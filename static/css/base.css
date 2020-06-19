@@ -274,10 +274,11 @@ main{
   background-color: #f9f9f9;
   width: 100%;
   padding: 20px;
-  border: 2px solid #333;
+  border: 2px solid #222;
   border-radius: 15px;
-  box-shadow: 5px 5px 5px;
+  max-width: 500px;
 }
+
 
 .panel-btn{
   width: 35px;
