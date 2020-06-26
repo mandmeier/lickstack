@@ -1,4 +1,16 @@
 
+.header-row{
+  margin-top: 0px !important;
+}
+
+.quote-social{
+  height: 180px;
+  text-align: center;
+}
+
+.quote-social h1{
+  font-size: 24px;
+}
 
 .welcome {
   max-width: 500px;
@@ -11,21 +23,14 @@
 }
 
 
-.main-panel{
-    padding: 50px 0px;
-}
-
 .page-col{
-    width: 100%;
-    max-width: 500px;
-}
-
-.page-section{
-    margin-bottom: 50px;
+  margin-top: 50px;
+  width: 100%;
+  max-width: 500px;
 }
 
 @media screen and (min-width: 1200px) {
-    .page-col-licks{
+    .page-col-right{
         margin-left: 50px;
     }
 }
@@ -50,7 +55,7 @@
 
 .bullet-points li{
     position: relative;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .bullet-points li:before{
@@ -178,5 +183,9 @@
 
 .blog-panel p {
     text-align: justify;
+}
+
+.bottom-row {
+  margin-bottom: 50px;
 }
 

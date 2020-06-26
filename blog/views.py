@@ -75,6 +75,8 @@ def article_detail(request, slug=None):
         if not request.user.is_staff or not request.user.is_superuser:
             raise Http404
     share_string = quote_plus(article.title)
+    print("TEST")
+    print(share_string)
 
     initial_data = {
         "content_type": article.get_content_type,

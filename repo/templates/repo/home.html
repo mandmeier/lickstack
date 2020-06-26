@@ -38,16 +38,69 @@
 </script>
 
 
-{% if not user.is_authenticated %}
-<div class="row main-panel">
+<div class="row header-row">
 <div class="page-col col-md-12 col-lg-6">
 
-<section class="page-section">
+    <div class="title-img">
+    <picture>
+      <img src="{% static 'img/logo_lg.png' %}" class="img-fluid">
+    </picture>
+    </div>
+
+
+</div>
+
+
+<div class="page-col page-col-right col-md-12 col-lg-6">
+
+<section class="quote-social">
+<h1><em>"A lick is a stock pattern or phrase consisting of a short series of notes used in solos."</em></h1>
+<div class="social-share">
+<hr>
+    <a href="https://www.facebook.com/sharer/sharer.php?u={% url 'home' %}"><span class="icon icon-facebook-square footer-icon" style="color: #3b5998"></span></a>
+    <a href="https://twitter.com/home?status=Join+the+LickStack+and+take+your+solos+to+the+next+level%20{% url 'home' %}"><span class="icon icon-twitter-square footer-icon" style="color: #00acee"></span></a>
+    <a href="http://www.reddit.com/submit?url={% url 'home' %}&title=Join+the+LickStack+and+take+your+solos+to+the+next+level"><span class="icon icon-reddit-square footer-icon" style="color: #ff4301"></span></a>
+<hr>
+</div>
+</section>
+
+
+
+</div>
+
+</div>
+
+
+<div class="row">
+
+<div class="page-col col-md-12 col-lg-6">
 
     <div class="display-4 welcome text-center">
-        <h1 class="display-4">Join Us</h1>
+        <h1 class="display-4">Get Started Here</h1>
         <hr>
     </div>
+
+    {% for article in latest_articles %}
+    <a href="{{ article.get_absolute_url }}" class="blog-panel">
+            <header class="article-header">
+                <div class="article-image">
+                    {% if article.image %}
+                    <img src="{{article.image.url}}" class='img-responsive'>
+                    {% endif %}
+                </div>
+                <div class="article-metadata">
+                    <h2 class="blog-panel-title"><b>{{ article.title }}</b></h2>
+                    <small class="blog-author-time">
+                        <div class="blog-author"><span class="blog-panel-icon icon-user"></span>{{ article.author }}</div>
+                        <div><span class="blog-panel-icon icon-calendar"></span>{{ article.date_published }}</div>
+                    </small>
+               </div>
+            </header>
+    </a>
+    {% endfor%}
+</div>
+
+<div class="page-col page-col-right col-md-12 col-lg-6">
 
     <section class="panel signup-panel">
 
@@ -73,44 +126,17 @@
 
     <a href="{% url 'register' %}" class="btn btn-primary btn-lg center-button" role="button">Sign Up Now</a>
 
-</section>
+</div>
+
+
 
 </div>
+
+
+
+<div class="row bottom-row">
+
 <div class="page-col col-md-12 col-lg-6">
-<section class="page-section">
-
-    <div class="display-4 welcome text-center">
-        <h1 class="display-4">Get Started Here</h1>
-        <hr>
-    </div>
-
-    {% for article in latest_articles %}
-    <a href="{{ article.get_absolute_url }}" class="blog-panel">
-            <header class="article-header">
-                <div class="article-image">
-                    {% if article.image %}
-                    <img src="{{article.image.url}}" class='img-responsive'>
-                    {% endif %}
-                </div>
-                <div class="article-metadata">
-                    <h2 class="blog-panel-title"><b>{{ article.title }}</b></h2>
-                    <small class="blog-author-time">
-                        <div class="blog-author"><span class="blog-panel-icon icon-user"></span>{{ article.author }}</div>
-                        <div><span class="blog-panel-icon icon-calendar"></span>{{ article.date_published }}</div>
-                    </small>
-               </div>
-            </header>
-    </a>
-    {% endfor%}
-</section>
-</div>
-</div>
-{% endif %}
-
-
-
-<div class="row main-panel">
-<section class="page-section">
 
     <div class="display-4 welcome text-center">
         <h1 class="display-4">Featured Articles</h1>
@@ -159,12 +185,10 @@
 
     <a href="{% url 'blog:article-list' %}" class="btn btn-primary btn-lg center-button" role="button">More Articles</a>
 
-</section>
+</div>
 
 
-<div class="page-col page-col-licks col-md-12 col-lg-6">
-
-<section class="page-section">
+<div class="page-col page-col-right col-md-12 col-lg-6">
 
     <div class="display-4 welcome text-center">
         <h1 class="display-4">Latest Licks</h1>
@@ -188,11 +212,10 @@
 
     <a href="{% url 'browse-licks' %}" class="btn btn-primary btn-lg center-button" role="button">More Licks</a>
 
-</section>
-
 </div>
 
 </div>
+
 
 
 
