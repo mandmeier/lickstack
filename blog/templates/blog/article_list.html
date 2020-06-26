@@ -11,15 +11,16 @@
 {% compress css %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/paginator.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/article_list.css' %}">
 {% endcompress %}
 
-{% include 'repo/snippets/paginator_snippet.html' with licks=articles %}
 
-{% if request.user.is_staff %}
-<a href="{% url 'blog:article-create' %}" class="btn btn-success" role="button">New article</a>
-{% endif %}
-<br>
-<form method="GET" action="">
+<div class="row margin">
+    <div id= "ads-left" class="col-md-0 col-lg-0 col-xl-2"></div>
+    <div class="main-content-column col-md-9 col-lg-8 col-xl-8">
+
+
+<form class="search-article" method="GET" action="">
     <div class="input-group">
         <input class="form-control" type="text" name="q" placeholder="Search articles" value="{{ request.GET.q }}">
         <button class="btn btn-secondary" type="submit">Search <span class="icon icon-search"></span></button>
@@ -27,16 +28,18 @@
 
 </form>
 
+{% include 'repo/snippets/paginator_snippet.html' with licks=articles %}
+
 {% for article in articles %}
-<section class="panel">
+<section class="blog-panel">
     <article>
-        <h2><a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
-            {% if article.date_published > today %}<span style="color:red;"> (Future Post)</span>{% endif %}
-        </h2>
         <header class="article-header">
             <div class="article-metadata">
-                <p><small>{{ article.author }} | {% if article.draft %}<span style="color:red;">Draft</span>{% endif %} {{ article.date_published }}</small></p>
-                <p>{{ article.description }}</p>
+                <h2 class="blog-panel-title">{{ article.title }}</h2>
+                <p><small>{{ article.author }} |
+                {% if article.draft %}<span style="color:red;">Draft</span>{% endif %}
+                {{ article.date_published }}
+                {% if article.date_published > today %}<span style="color:red;"> Future</span>{% endif %}</small></p>
             </div>
             <div class="article-image">
                 {% if article.image %}
@@ -45,14 +48,18 @@
             </div>
         </header>
         <hr>
-        <div class="article-content-preview">
-            <p>{{ article.get_markdown|truncatechars_html:155 }}</p>
-            <p><a href="{{ article.get_absolute_url }}" class="btn btn-primary" role="button">View</a></p>
-        </div>
+        <p>{{ article.description }}</p>
+        <p><a href="{{ article.get_absolute_url }}" class="btn btn-primary" role="button">View</a></p>
     </article>
 </section>
 {% endfor%}
 
 {% include 'repo/snippets/paginator_snippet.html' with licks=articles %}
+
+    </div>
+    <div id= "ads-right" class="col-md-3 col-lg-4 col-xl-2"></div>
+</div>
+
+
 
 {% endblock content %}

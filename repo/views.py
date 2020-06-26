@@ -7,6 +7,7 @@ from django.db.models import Q, Count, Case, When
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from repo.models import Lick, Instrument
+from blog.models import Article
 from operator import attrgetter
 from django.views import generic
 from .forms import LickForm
@@ -92,8 +93,16 @@ def get_faved_licks(request, licks):
 
 def home(request):
 
-    id_tuple = (1, 2, 3)
-    licks = Lick.objects.filter(id__in=id_tuple)
+    #id_tuple = (1, 2, 3)
+    #licks = Lick.objects.filter(id__in=id_tuple)
+
+    licks = Lick.objects.all().order_by('-id')[:5]
+
+    today = timezone.now().date()
+    articles = Article.objects.all().order_by('pk').filter(
+        draft=False).filter(date_published__lt=today)
+
+    latest_articles = articles[:3]
 
     #licks = Lick.objects.filter(id=125)
 
@@ -102,6 +111,7 @@ def home(request):
     context['licks'] = licks
     context['user_liked'] = get_liked_licks(request, licks)
     context['user_faved'] = get_faved_licks(request, licks)
+    context['latest_articles'] = latest_articles
 
     return render(request, 'repo/home.html', context)
 

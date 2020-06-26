@@ -15,6 +15,38 @@ from comments.forms import CommentForm
 from comments.models import Comment
 
 
+''' Function '''
+
+
+def get_next_or_prev(models, item, direction):
+    '''
+    Returns the next or previous item of
+    a query-set for 'item'.
+
+    'models' is a query-set containing all
+    items of which 'item' is a part of.
+
+    direction is 'next' or 'prev'
+
+    '''
+    getit = False
+    if direction == 'prev':
+        models = models.reverse()
+    # print("models")
+    # print(models)
+    # print(reversed(list(models)))
+    for m in models:
+        if getit:
+            return m
+        if item == m:
+            getit = True
+    if getit:
+        # This would happen when the last
+        # item made getit True
+        return models[0]
+    return False
+
+
 @login_required
 def article_create(request):
     if not request.user.is_staff or not request.user.is_superuser:
@@ -72,20 +104,38 @@ def article_detail(request, slug=None):
             content=content_data,
             parent=parent_obj,
         )
-        return HttpResponseRedirect(new_comment.content_object.get_absolute_url())
+        parent_url = new_comment.content_object.get_absolute_url()
+        redirect_url = f'{parent_url}#comments_section'
+        print("TEST")
+        print(parent_url)
+        return HttpResponseRedirect(redirect_url)
 
     comments = article.comments
 
-    #licks = article.licks.all()
+    # get next object among published articles
+    today = timezone.now().date()
+    articles = Article.objects.all().order_by('pk').filter(
+        draft=False).filter(date_published__lt=today)
+
+    next_article = get_next_or_prev(
+        articles, article, 'next')
+    prev_article = get_next_or_prev(
+        articles, article, 'prev')
+    # If there is a next item
+    print("TEST")
+    print(next_article)
+    print(prev_article)
 
     context = {}
     context['article'] = article
     context['share_string'] = share_string
     context['comments'] = comments
     context['comment_form'] = form
+    context['next_article'] = next_article
+    context['prev_article'] = prev_article
 
     # find licks if article has licks
-    if article.lick_string:
+    if article.lick_string and article.lick_string != '':
         print(article.lick_string)
         lick_string = article.lick_string
         transpose_string = article.transpose_string
@@ -129,7 +179,7 @@ def article_list(request):
 
     # paginate
     page = request.GET.get('page', 1)
-    paginator = Paginator(articles, 10)
+    paginator = Paginator(articles, 2)
     articles = paginator.page(page)
 
     context = {}

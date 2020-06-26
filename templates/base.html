@@ -75,6 +75,9 @@
         .icon-options:before {
           content: "\e904";
         }
+        .icon-calendar:before {
+          content: "\e953";
+        }
         .icon-spinner8:before {
           content: "\e981";
         }
@@ -89,9 +92,6 @@
         }
         .icon-home:before {
           content: "\e903";
-        }
-        .icon-edit:before {
-          content: "\e900";
         }
         .icon-edit:before {
           content: "\e900";
@@ -169,8 +169,6 @@
           content: "\f27b";
         }
 
-
-
     </style>
 
     {% block head_extra %} {% endblock head_extra %}
@@ -237,13 +235,14 @@ function myFunction() {
     <div class="dropdown-content">
       <a class="nav-link" id="link-mylicks" href="{% url 'my-licks' %}"><span class="icon-music"></span>My Licks</a>
       <a class="nav-link" id="link-profile" href="{% url 'profile' %}"><span class="icon-cog"></span>Settings</a>
+      {% if user.is_staff %}
+      <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
+      <a class="nav-link" href="{% url 'blog:article-list' %}">Blog</a>
+      <a class="nav-link" href="{% url 'blog:article-create' %}">New article</a>
+      {% endif %}
       <a class="nav-link" id="link-logout" href="{% url 'logout' %}"><span class="icon-log-out"></span>Logout</a>
     </div>
   </div>
-    {% if user.is_staff %}
-    <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
-    <a class="nav-link" href="{% url 'blog:article-list' %}">Blog</a>
-    {% endif %}
   {% else %}
   <a class="nav-link" id="link-login" href="{% url 'login' %}"><span class="icon-key"></span>Login</a>
   <a class="nav-link" id="link-register" href="{% url 'register' %}"><span class="icon-plus"></span>Register</a>

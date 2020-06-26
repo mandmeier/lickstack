@@ -26,6 +26,11 @@
     }
 </script>
 
+<div class="row margin">
+    <div id= "ads-left" class="col-md-0 col-lg-0 col-xl-2"></div>
+    <div class="main-content-column col-md-9 col-lg-8 col-xl-8">
+
+
 
 <section id="article-section">
         <h1>{{ article.title }}</h1>
@@ -36,21 +41,52 @@
         <img src='{{article.image.url}}' class='img-responsive'>
         {% endif %}
         <hr>
-        <p class="social-share">
+        <div class="social-share">
             <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}"><span class="icon icon-facebook-square footer-icon" style="color: #3b5998"></span></a>
             <a href="https://twitter.com/home?status={{ share_string }}%20{{ request.build_absolute_uri }}"><span class="icon icon-twitter-square footer-icon" style="color: #00acee"></span></a>
             <a href="http://www.reddit.com/submit?url={{ request.build_absolute_uri }}&title={{ share_string }}"><span class="icon icon-reddit-square footer-icon" style="color: #ff4301"></span></a>
-        </p>
+        </div>
         <hr>
         <div id="content">{{ article.get_markdown }}</div>
+
+        <br>
 </section>
 
     {% for lick in licks %}
         {% include 'repo/snippets/lick_snippet.html' with lick=lick chord_seq_query=chord_seq_query %}
     {% endfor %}
 
+<hr>
+<p> If you found this article helpful and/or interesting, please consider sharing it with fellow musicians!</p>
 
-<section id="comments_section">
+<div class="social-share">
+    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}"><span class="icon icon-facebook-square footer-icon" style="color: #3b5998"></span></a>
+    <a href="https://twitter.com/home?status={{ share_string }}%20{{ request.build_absolute_uri }}"><span class="icon icon-twitter-square footer-icon" style="color: #00acee"></span></a>
+    <a href="http://www.reddit.com/submit?url={{ request.build_absolute_uri }}&title={{ share_string }}"><span class="icon icon-reddit-square footer-icon" style="color: #ff4301"></span></a>
+</div>
+<hr>
+
+<section id="read_on">
+    {% if next_article %}
+    <div class="read_on_link" style="text-align: right; justify-content: flex-end;">
+        <div class="read_on_title">{{ next_article.title }}</div>
+        <a href="{{ next_article.get_absolute_url }}" class="btn btn-primary read_on_btn" role="button">NEXT <span class="icon-chevron-right"></span></a>
+    </div>
+    {% endif %}
+    <br>
+    {% if prev_article %}
+    <div class="read_on_link">
+        <a href="{{ prev_article.get_absolute_url }}" class="btn btn-primary read_on_btn" role="button"><span class="icon-chevron-left"></span> PREV</a>
+        <div class="read_on_title">{{ prev_article.title }}</div>
+    </div>
+    {% endif %}
+
+    <hr>
+    <br>
+</section>
+
+
+<section name="comments_section" id="comments_section">
     <p class='lead' >Comments</p>
     {% if request.user.is_authenticated %}
     <form method="POST" accept=".">
@@ -65,8 +101,8 @@
     {% for comment in comments %}
         <blockquote>
         <div class="comment-content">
-            <small>{{ comment.author }} | {{ comment.timestamp|timesince }} ago | {% if comment.children.count > 0 %}{{ comment.children.count}} Comment{{ comment.children.count|pluralize }} | {% endif %}</small>
-            <a class="comment-reply-btn" href="#">Reply</a> | <a href="{{ comment.get_absolute_url }}">Thread</a><br>
+            <small>{{ comment.author }} | {{ comment.timestamp|timesince }} ago | {% if comment.children.count > 0 %}{{ comment.children.count}} response{{ comment.children.count|pluralize }} | {% endif %}</small>
+            <a class="comment-reply-btn" href="#">Reply</a><br>
             {{ comment.content }}
             <hr>
         </div>
@@ -91,6 +127,11 @@
         </blockquote>
     {% endfor %}
 </section>
+
+
+    </div>
+    <div id= "ads-right" class="col-md-3 col-lg-4 col-xl-2"></div>
+</div>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.5.35/Tone.js"></script>

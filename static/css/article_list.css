@@ -1,0 +1,42 @@
+
+
+.search-article{
+  max-width: 500px;
+  margin-top: 20px;
+}
+
+.blog-panel {
+  margin: 20px 0px;
+  background-color: #f9f9f9;
+  width: 100%;
+  padding: 30px 30px 5px 30px;
+  border: 2px solid #222;
+  border-radius: 15px;
+  max-width: 500px;
+  font-size: 1.125rem;
+}
+
+.blog-panel p {
+    text-align: justify;
+}
+
+.blog-panel-title{
+    font-size: 30px;
+    margin: 0px;
+}
+
+
+/*
+.article-header {
+  display: flex;
+}
+
+.article-metadata {
+  flex: 1;
+
+}
+
+.article-image {
+  flex: 1;
+}
+*/

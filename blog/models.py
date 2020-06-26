@@ -30,7 +30,7 @@ class Article(models.Model):
     title = models.CharField(max_length=200, null=False, blank=False)
     slug = models.SlugField(unique=True)
     description = models.TextField(max_length=280, null=False, blank=False)
-    body = models.TextField(max_length=5000, null=False, blank=False)
+    body = models.TextField(max_length=50000, null=False, blank=False)
     image = models.ImageField(
         upload_to=upload_location, blank=True, width_field="width_field", height_field="height_field")
     height_field = models.IntegerField(default=0)
@@ -63,10 +63,12 @@ class Article(models.Model):
         return mark_safe(markdown(content))
 
     def save(self, *args, **kwargs):
-        ids = [int(id) for id in self.lick_string.split(',')]
-        licks = Lick.objects.filter(id__in=ids).distinct()
+        if not self.lick_string == None:
+            ids = [int(id) for id in self.lick_string.split(',')]
+            licks = Lick.objects.filter(id__in=ids).distinct()
+            super().save(*args, **kwargs)
+            self.licks.add(*licks)  # add licks to many to many field
         super().save(*args, **kwargs)
-        self.licks.add(*licks)  # add licks to many to many field
 
     @property
     def comments(self):
