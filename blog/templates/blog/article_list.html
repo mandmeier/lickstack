@@ -3,14 +3,19 @@
 {% load static compress %}
 
 
-{% block head_title %}{{ block.super }} | Blog{% endblock head_title %}
+{% block head_title %}{{ block.super }} | All articles{% endblock head_title %}
+
+{% block meta_description %}
+    <meta property="og:url" content="{% url 'blog:article-list' %}"/>
+    <meta property="og:title" content="LickStack | All articles" />
+    <meta property="og:description" content="Browse a comprehensive list of all articles on the LickStack." />
+{% endblock meta_description %}
 
 
 {% block content %}
 
 {% compress css %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/paginator.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/article_list.css' %}">
 {% endcompress %}
 
@@ -29,6 +34,31 @@
 </form>
 
 {% include 'repo/snippets/paginator_snippet.html' with licks=articles %}
+
+
+{% for article in articles %}
+<a href="{{ article.get_absolute_url }}" class="blog-panel feat-blog-panel">
+    <h2 class="feat-blog-panel-title">{{ article.title }}</h2>
+    <small class="blog-author-time-feat">
+        <div class="blog-author"><span class="blog-panel-icon icon-user"></span>{{ article.author }}{% if article.draft %}<span style="color:red;"> Draft</span>{% endif %}</div>
+        <div><span class="blog-panel-icon icon-calendar"></span>{{ article.date_published }}{% if article.date_published > today %}<span style="color:red;"> Future</span>{% endif %}</div>
+    </small>
+    <div class="feat-article-image">
+    {% if article.image %}
+    <img src="{{article.image.url}}" class="feat-article-image">
+    {% endif %}
+    </div>
+    <hr>
+    <p>{{ article.description }}</p>
+</a>
+{% endfor%}
+
+
+
+
+
+
+<!--
 
 {% for article in articles %}
 <section class="blog-panel">
@@ -53,6 +83,8 @@
     </article>
 </section>
 {% endfor%}
+-->
+
 
 {% include 'repo/snippets/paginator_snippet.html' with licks=articles %}
 

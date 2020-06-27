@@ -5,6 +5,19 @@
 
 {% block head_title %}{{ block.super }} | Home{% endblock head_title %}
 
+{% block meta_description %}
+
+    <meta property="og:url" content="{% url 'home' %}"/>
+    <meta property="og:title" content="Lickstack | Home" />
+    <meta property="og:description" content="Share your favorite licks, listen, learn and take your solos to the next level." />
+
+{% endblock meta_description %}
+
+
+
+
+
+
 {% block content %}
 
 {% compress css %}

@@ -20,10 +20,23 @@
     <meta property="og:image:width" content="1114">
     <meta property="og:image:height" content="822">
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.lickstack.com/"/>
-    <meta property="og:title" content="LickStack" />
-    <meta property="og:description" content="Share your favorite licks, listen, learn and take your solos to the next level." />
+    {% block meta_description %} {% endblock meta_description %}
+
+
+
     <style type="text/css">
+
+        @font-face {
+          font-family: "MuseJazzText";
+          src: url("{% static 'fonts/MuseJazzText/fonts/MuseJazzText.eot' %}"); /* IE9 Compat Modes */
+          src: url("{% static 'fonts/MuseJazzText/fonts/MuseJazzText.eot?#iefix' %}") format("embedded-opentype"), /* IE6-IE8 */
+            url("{% static 'fonts/MuseJazzText/fonts/MuseJazzText.svg' %}") format("svg"), /* Legacy iOS */
+            url("{% static 'fonts/MuseJazzText/fonts/MuseJazzText.ttf' %}") format("truetype"), /* Safari, Android, iOS */
+            url("{% static 'fonts/MuseJazzText/fonts/MuseJazzText.woff' %}") format("woff"); /* Modern Browsers */
+          font-weight: normal;
+          font-style: normal;
+        }
+
         @font-face {
           font-family: 'icomoon';
           src:  url("{% static 'fonts/icomoon.eot?rye1ly' %}");

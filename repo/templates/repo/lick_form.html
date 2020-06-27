@@ -4,9 +4,17 @@
 {% load static compress %}
 
 {% block head_title %}{{ block.super }} | Create Lick{% endblock head_title %}
+{% block meta_description %}
+    <meta property="og:url" content="{% url 'lick-create' %}"/>
+    <meta property="og:title" content="LickStack | Create Lick" />
+    <meta property="og:description" content="Share your favorite licks with the community." />
+{% endblock meta_description %}
+
+
+
+
 
 {% block content %}
-
 
 {% compress css %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/form_master.css' %}">

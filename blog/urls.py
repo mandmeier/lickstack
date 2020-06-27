@@ -5,12 +5,12 @@ from . import views
 app_name = 'blog'
 
 urlpatterns = [
-    path('blog/', views.article_list, name='article-list'),
-    path('blog/article/create/', views.article_create, name='article-create'),
-    url(r'^blog/article/(?P<slug>[\w-]+)/$',
+    path('all-articles/', views.article_list, name='article-list'),
+    path('article/create/', views.article_create, name='article-create'),
+    url(r'^article/(?P<slug>[\w-]+)/$',
         views.article_detail, name='article-detail'),
-    url(r'^blog/article/(?P<slug>[\w-]+)/edit/$',
+    url(r'^article/(?P<slug>[\w-]+)/edit/$',
         views.article_update, name='article-update'),
-    url(r'^blog/article/(?P<slug>[\w-]+)/delete/$',
+    url(r'^article/(?P<slug>[\w-]+)/delete/$',
         views.article_delete, name='article-delete'),
 ]
