@@ -11,14 +11,46 @@ html, body{
   background-color: #f9f9f9;
 }
 
+
+
 /*
-@media (min-width:1200px){
-    html, body{
-        background-image: url("/static/img/pk_wallpaper_dark.jpeg");
-        background-size: cover;
-        background-attachment: fixed;
-    }
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 0px !important;
+    background: #ddddf9;
+    border: none;
+    border-radius: 3px;
+    padding: 1em 2em 1em 1em;
+    font-size: 1em;
+    font-family: "MuseJazzText";
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+.select-container {position:relative; display: inline;}
+.select-container:after {content:""; width:0; height:0; position:absolute; pointer-events: none;}
+.select-container:after {
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    top: .3em;
+    right: .75em;
+    border-top: 8px solid black;
+    opacity: 0.5;
+}
+select::-ms-expand {
+    display: none;
 }*/
+
+
+
+
+
+
+
 
 
 .icon{
@@ -124,7 +156,7 @@ html, body{
 }
 
 /* Add an active class to highlight the current page */
-.active {
+.topnav .active {
   background-color: #C00001;
   color: white !important;
 }

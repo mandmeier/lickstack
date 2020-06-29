@@ -23,19 +23,6 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/lick_snippet.css' %}">
 {% endcompress %}
 
-<style type="text/css">
-
-.form-chords-row {
-    height: 50px;
-    background-image: url("{% static 'img/staff.webp' %}"),url("{% static 'img/staff.png' %}");
-    background-size: 100% 100%;
-}
-
-.chords-row {
-    background-image: url("{% static 'img/staff.webp' %}"),url("{% static 'img/staff.png' %}");
-}
-</style>
-
 <script type="text/javascript" async>
     //suppress form submit when pressing Enter
     function noenter() {
@@ -114,30 +101,30 @@
 
         <div id="form-chords-input" class="form-chords-input col-12">
         <div class="row form-chords-row">
-                <div class="separator-lr"></div>
+                <div class="separator-lr">&#124;</div>
                 {% include 'repo/snippets/chord_select_snippet.html' %}
                 {% include 'repo/snippets/chord_select_snippet.html' %}
                 {% include 'repo/snippets/chord_select_snippet.html' %}
                 {% include 'repo/snippets/chord_select_snippet.html' %}
-                <div class="separator-mid"></div>
+                <div class="separator-mid">&#124;</div>
                 {% include 'repo/snippets/chord_select_snippet.html' %}
                 {% include 'repo/snippets/chord_select_snippet.html' %}
                 {% include 'repo/snippets/chord_select_snippet.html' %}
                 {% include 'repo/snippets/chord_select_snippet.html' %}
-                <div class="separator-lr"></div>
+                <div class="separator-lr">&#124;</div>
         </div>
         <div class="row form-chords-row">
-                <div class="separator-lr"></div>
+                <div class="separator-lr">&#124;</div>
                 {% include 'repo/snippets/chord_select_snippet.html' %}
                 {% include 'repo/snippets/chord_select_snippet.html' %}
                 {% include 'repo/snippets/chord_select_snippet.html' %}
                 {% include 'repo/snippets/chord_select_snippet.html' %}
-                <div class="separator-mid"></div>
+                <div class="separator-mid">&#124;</div>
                 {% include 'repo/snippets/chord_select_snippet.html' %}
                 {% include 'repo/snippets/chord_select_snippet.html' %}
                 {% include 'repo/snippets/chord_select_snippet.html' %}
                 {% include 'repo/snippets/chord_select_snippet.html' %}
-                <div class="separator-lr"></div>
+                <div class="separator-lr">&#124;</div>
         </div>
         </div>
 

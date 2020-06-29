@@ -3,7 +3,7 @@
 .lick-section {
   font-family: 'Poppins', sans-serif;
   padding: 5px;
-  margin: 5px 0px;
+  margin: 10px 0px;
   box-shadow: 5px 5px 5px;
   font-size: 1.125rem;
   /*max-width: 500px;*/
@@ -38,14 +38,14 @@
   text-align: right;
 }
 
-/* AUDIO PLAYER */
+
 .audio-player {
     display: flex;
     flex-direction: row;
     align-items: center;
     padding-left: 5px;
     padding-right: 0px;
-    margin-bottom: 7px;
+    /*margin-bottom: 7px;*/
 }
 
 
@@ -92,12 +92,14 @@
 
 
 .lick-display {
-  margin-bottom: 7px;
+  /*margin-bottom: 7px;*/
   position: relative;
   padding-bottom: 7%;
 }
 
 .chords-row {
+  font-family: "MuseJazzText";
+  font-size: 20px;
   position: absolute;
   background-size: 100% 100%;
   top: 0;
@@ -122,9 +124,19 @@
 }
 
 .separator-mid{
+    display: flex;
+    justify-content: center; /* align horizontal */
+    align-items: center; /* align vertical */
+    font-size: 30px;
+    height: 100%;
     width: 3%;
 }
 .separator-lr{
+    display: flex;
+    justify-content: center; /* align horizontal */
+    align-items: center; /* align vertical */
+    font-size: 30px;
+    height: 100%;
     width: 2.1%;
 }
 

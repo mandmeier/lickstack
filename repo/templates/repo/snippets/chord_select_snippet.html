@@ -1,191 +1,667 @@
+<div class="options-container" style="display: none;">
+    <div class="option">
+        <input type="radio" class="radio" id="." name="dash">
+        <label for="." data-value=".">&nbsp;&nbsp;&#45;</label>
+    </div>
 
-<select class="chord-select" id="chord_1">
-  <optgroup label="B">
-    <option value="_B_">B</option>
-    <option value="_B_m">Bm</option>
-    <option value="_B_7">B7</option>
-    <option value="_B_m7">Bm7</option>
-    <option value="_B_maj7">BΔ</option>
-    <option value="_B_6">B6</option>
-    <option value="_B_m7b5">Bm7b5</option>
-    <option value="_B_dim">Bo</option>
-    <option value="_B_sus4">Bsus4</option>
-  </optgroup>
-  <optgroup label="Bb">
-    <option value="_Bb_">Bb</option>
-    <option value="_Bb_m">Bbm</option>
-    <option value="_Bb_7">Bb7</option>
-    <option value="_Bb_m7">Bbm7</option>
-    <option value="_Bb_maj7">BbΔ</option>
-    <option value="_Bb_6">Bb6</option>
-    <option value="_Bb_m7b5">Bbm7b5</option>
-    <option value="_Bb_dim">Bbo</option>
-    <option value="_Bb_sus4">Bbsus4</option>
-  </optgroup>
-  <optgroup label="A#">
-    <option value="_A#_">A#</option>
-    <option value="_A#_m">A#m</option>
-    <option value="_A#_7">A#7</option>
-    <option value="_A#_m7">A#m7</option>
-    <option value="_A#_maj7">A#Δ</option>
-    <option value="_A#_6">A#6</option>
-    <option value="_A#_m7b5">A#m7b5</option>
-    <option value="_A#_dim">A#o</option>
-    <option value="_A#_sus4">A#sus4</option>
-  </optgroup>
-  <optgroup label="A">
-    <option value="_A_">A</option>
-    <option value="_A_m">Am</option>
-    <option value="_A_7">A7</option>
-    <option value="_A_m7">Am7</option>
-    <option value="_A_maj7">AΔ</option>
-    <option value="_A_6">A6</option>
-    <option value="_A_m7b5">Am7b5</option>
-    <option value="_A_dim">Ao</option>
-    <option value="_A_sus4">Asus4</option>
-  </optgroup>
-  <optgroup label="Ab">
-    <option value="_Ab_">Ab</option>
-    <option value="_Ab_m">Abm</option>
-    <option value="_Ab_7">Ab7</option>
-    <option value="_Ab_m7">Abm7</option>
-    <option value="_Ab_maj7">AbΔ</option>
-    <option value="_Ab_6">Ab6</option>
-    <option value="_Ab_m7b5">Abm7b5</option>
-    <option value="_Ab_dim">Abo</option>
-    <option value="_Ab_sus4">Absus4</option>
-  </optgroup>
-  <optgroup label="G#">
-    <option value="_G#_">G#</option>
-    <option value="_G#_m">G#m</option>
-    <option value="_G#_7">G#7</option>
-    <option value="_G#_m7">G#m7</option>
-    <option value="_G#_maj7">G#Δ</option>
-    <option value="_G#_6">G#6</option>
-    <option value="_G#_m7b5">G#m7b5</option>
-    <option value="_G#_dim">G#o</option>
-    <option value="_G#_sus4">G#sus4</option>
-  </optgroup>
-  <optgroup label="G">
-    <option value="_G_">G</option>
-    <option value="_G_m">Gm</option>
-    <option value="_G_7">G7</option>
-    <option value="_G_m7">Gm7</option>
-    <option value="_G_maj7">GΔ</option>
-    <option value="_G_6">G6</option>
-    <option value="_G_m7b5">Gm7b5</option>
-    <option value="_G_dim">Go</option>
-    <option value="_G_sus4">Gsus4</option>
-  </optgroup>
-  <optgroup label="Gb">
-    <option value="_Gb_">Gb</option>
-    <option value="_Gb_m">Gbm</option>
-    <option value="_Gb_7">Gb7</option>
-    <option value="_Gb_m7">Gbm7</option>
-    <option value="_Gb_maj7">GbΔ</option>
-    <option value="_Gb_6">Gb6</option>
-    <option value="_Gb_m7b5">Gbm7b5</option>
-    <option value="_Gb_dim">Gbo</option>
-    <option value="_Gb_sus4">Gbsus4</option>
-  </optgroup>
-  <optgroup label="F#">
-    <option value="_F#_">F#</option>
-    <option value="_F#_m">F#m</option>
-    <option value="_F#_7">F#7</option>
-    <option value="_F#_m7">F#m7</option>
-    <option value="_F#_maj7">F#Δ</option>
-    <option value="_F#_6">F#6</option>
-    <option value="_F#_m7b5">F#m7b5</option>
-    <option value="_F#_dim">F#o</option>
-    <option value="_F#_sus4">F#sus4</option>
-  </optgroup>
-  <optgroup label="F">
-    <option value="_F_">F</option>
-    <option value="_F_m">Fm</option>
-    <option value="_F_7">F7</option>
-    <option value="_F_m7">Fm7</option>
-    <option value="_F_maj7">FΔ</option>
-    <option value="_F_6">F6</option>
-    <option value="_F_m7b5">Fm7b5</option>
-    <option value="_F_dim">Fo</option>
-    <option value="_F_sus4">Fsus4</option>
-  </optgroup>
-  <optgroup label="E">
-    <option value="_E_">E</option>
-    <option value="_E_m">Em</option>
-    <option value="_E_7">E7</option>
-    <option value="_E_m7">Em7</option>
-    <option value="_E_maj7">EΔ</option>
-    <option value="_E_6">E6</option>
-    <option value="_E_m7b5">Em7b5</option>
-    <option value="_E_dim">Eo</option>
-    <option value="_E_sus4">Esus4</option>
-  </optgroup>
-  <optgroup label="Eb">
-    <option value="_Eb_">Eb</option>
-    <option value="_Eb_m">Ebm</option>
-    <option value="_Eb_7">Eb7</option>
-    <option value="_Eb_m7">Ebm7</option>
-    <option value="_Eb_maj7">EbΔ</option>
-    <option value="_Eb_6">Eb6</option>
-    <option value="_Eb_m7b5">Ebm7b5</option>
-    <option value="_Eb_dim">Ebo</option>
-    <option value="_Eb_sus4">Ebsus4</option>
-  </optgroup>
-  <optgroup label="D#">
-    <option value="_D#_">D#</option>
-    <option value="_D#_m">D#m</option>
-    <option value="_D#_7">D#7</option>
-    <option value="_D#_m7">D#m7</option>
-    <option value="_D#_maj7">D#Δ</option>
-    <option value="_D#_6">D#6</option>
-    <option value="_D#_m7b5">D#m7b5</option>
-    <option value="_D#_dim">D#o</option>
-    <option value="_D#_sus4">D#sus4</option>
-  </optgroup>
-  <optgroup label="D">
-    <option value="_D_">D</option>
-    <option value="_D_m">Dm</option>
-    <option value="_D_7">D7</option>
-    <option value="_D_m7">Dm7</option>
-    <option value="_D_maj7">DΔ</option>
-    <option value="_D_6">D6</option>
-    <option value="_D_m7b5">Dm7b5</option>
-    <option value="_D_dim">Do</option>
-    <option value="_D_sus4">Dsus4</option>
-  </optgroup>
-  <optgroup label="Db">
-    <option value="_Db_">Db</option>
-    <option value="_Db_m">Dbm</option>
-    <option value="_Db_7">Db7</option>
-    <option value="_Db_m7">Dbm7</option>
-    <option value="_Db_maj7">DbΔ</option>
-    <option value="_Db_6">Db6</option>
-    <option value="_Db_m7b5">Dbm7b5</option>
-    <option value="_Db_dim">Dbo</option>
-    <option value="_Db_sus4">Dbsus4</option>
-  </optgroup>
-  <optgroup label="C#">
-    <option value="_C#_">C#</option>
-    <option value="_C#_m">C#m</option>
-    <option value="_C#_7">C#7</option>
-    <option value="_C#_m7">C#m7</option>
-    <option value="_C#_maj7">C#Δ</option>
-    <option value="_C#_6">C#6</option>
-    <option value="_C#_m7b5">C#m7b5</option>
-    <option value="_C#_dim">C#o</option>
-    <option value="_C#_sus4">C#sus4</option>
-  </optgroup>
-  <optgroup label="C">
-    <option value="_C_">C</option>
-    <option value="_C_m">Cm</option>
-    <option value="_C_7">C7</option>
-    <option value="_C_m7">Cm7</option>
-    <option value="_C_maj7">CΔ</option>
-    <option value="_C_6">C6</option>
-    <option value="_C_m7b5">Cm7b5</option>
-    <option value="_C_dim">Co</option>
-    <option value="_C_sus4">Csus4</option>
-  </optgroup>
-    <option value=".">-</option>
-</select>
+    <div class="option">
+        <input type="radio" class="radio" id="_B_" name="B">
+        <label for="_B_">B</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_B_m" name="B minor">
+        <label for="_B_m">Bm</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_B_7" name="B seven">
+        <label for="_B_7">B&#57751;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_B_m7" name="B minor seven">
+        <label for="_B_m7">Bm&#57751;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_B_maj7" name="B major seven">
+        <label for="_B_maj7">B&#57738;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_B_6" name="B six">
+        <label for="_B_6">B&#57750;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_B_m7b5" name="B minor seven flat five">
+        <label for="_B_m7b5">Bm&#57751;&#57736;&#57749;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_B_dim" name="B diminished">
+        <label for="_B_dim">B&#57744;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_B_sus4" name="B sus four">
+        <label for="_B_sus4">B&#57741;</label>
+    </div>
+
+
+    <div class="option">
+        <input type="radio" class="radio" id="_Bb_" name="B flat">
+        <label for="_Bb_">B&#9837;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_Bb_m" name="B flat minor">
+        <label for="_Bb_m">B&#9837;m</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_Bb_7" name="B flat seven">
+        <label for="_Bb_7">B&#9837;&#57751;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_Bb_m7" name="B flat minor seven">
+        <label for="_Bb_m7">B&#9837;m&#57751;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_Bb_maj7" name="B flat major seven">
+        <label for="_Bb_maj7">B&#9837;&#57738;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_Bb_6" name="B flat six">
+        <label for="_Bb_6">B&#9837;&#57750;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_Bb_m7b5" name="B flat minor seven flat five">
+        <label for="_Bb_m7b5">B&#9837;m&#57751;&#57736;&#57749;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_Bb_dim" name="B flat diminished">
+        <label for="_Bb_dim">B&#9837;&#57744;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_Bb_sus4" name="B flat sus four">
+        <label for="_Bb_sus4">B&#9837;&#57741;</label>
+    </div>
+
+
+    <div class="option">
+        <input type="radio" class="radio" id="_A#_" name="A sharp">
+        <label for="_A#_">A&#9839;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_A#_m" name="A sharp minor">
+        <label for="_A#_m">A&#9839;m</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_A#_7" name="A sharp seven">
+        <label for="_A#_7">A&#9839;&#57751;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_A#_m7" name="A sharp minor seven">
+        <label for="_A#_m7">A&#9839;m&#57751;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_A#_maj7" name="A sharp major seven">
+        <label for="_A#_maj7">A&#9839;&#57738;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_A#_6" name="A sharp six">
+        <label for="_A#_6">A&#9839;&#57750;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_A#_m7b5" name="A sharp minor seven flat five">
+        <label for="_A#_m7b5">A&#9839;m&#57751;&#57736;&#57749;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_A#_dim" name="A sharp diminished">
+        <label for="_A#_dim">A&#9839;&#57744;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_A#_sus4" name="A sharp sus four">
+        <label for="_A#_sus4">A&#9839;&#57741;</label>
+    </div>
+
+
+    <div class="option">
+        <input type="radio" class="radio" id="_A_" name="A">
+        <label for="_A_">A</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_A_m" name="A minor">
+        <label for="_A_m">Am</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_A_7" name="A seven">
+        <label for="_A_7">A&#57751;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_A_m7" name="A minor seven">
+        <label for="_A_m7">Am&#57751;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_A_maj7" name="A major seven">
+        <label for="_A_maj7">A&#57738;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_A_6" name="A six">
+        <label for="_A_6">A&#57750;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_A_m7b5" name="A minor seven flat five">
+        <label for="_A_m7b5">Am&#57751;&#57736;&#57749;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_A_dim" name="A diminished">
+        <label for="_A_dim">A&#57744;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_A_sus4" name="A sus four">
+        <label for="_A_sus4">A&#57741;</label>
+    </div>
+
+
+
+    <div class="option">
+        <input type="radio" class="radio" id="_Ab_" name="A flat">
+        <label for="_Ab_">A&#9837;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_Ab_m" name="A flat minor">
+        <label for="_Ab_m">A&#9837;m</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_Ab_7" name="A flat seven">
+        <label for="_Ab_7">A&#9837;&#57751;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_Ab_m7" name="A flat minor seven">
+        <label for="_Ab_m7">A&#9837;m&#57751;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_Ab_maj7" name="A flat major seven">
+        <label for="_Ab_maj7">A&#9837;&#57738;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_Ab_6" name="A flat six">
+        <label for="_Ab_6">A&#9837;&#57750;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_Ab_m7b5" name="A flat minor seven flat five">
+        <label for="_Ab_m7b5">A&#9837;m&#57751;&#57736;&#57749;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_Ab_dim" name="A flat diminished">
+        <label for="_Ab_dim">A&#9837;&#57744;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_Ab_sus4" name="A flat sus four">
+        <label for="_Ab_sus4">A&#9837;&#57741;</label>
+    </div>
+
+
+    <div class="option">
+        <input type="radio" class="radio" id="_G#_" name="G sharp">
+        <label for="_G#_">G&#9839;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_G#_m" name="G sharp minor">
+        <label for="_G#_m">G&#9839;m</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_G#_7" name="G sharp seven">
+        <label for="_G#_7">G&#9839;&#57751;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_G#_m7" name="G sharp minor seven">
+        <label for="_G#_m7">G&#9839;m&#57751;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_G#_maj7" name="G sharp major seven">
+        <label for="_G#_maj7">G&#9839;&#57738;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_G#_6" name="G sharp six">
+        <label for="_G#_6">G&#9839;&#57750;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_G#_m7b5" name="G sharp minor seven flat five">
+        <label for="_G#_m7b5">G&#9839;m&#57751;&#57736;&#57749;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_G#_dim" name="G sharp diminished">
+        <label for="_G#_dim">G&#9839;&#57744;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_G#_sus4" name="G sharp sus four">
+        <label for="_G#_sus4">G&#9839;&#57741;</label>
+    </div>
+
+
+    <div class="option">
+        <input type="radio" class="radio" id="_G_" name="G">
+        <label for="_G_">G</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_G_m" name="G minor">
+        <label for="_G_m">Gm</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_G_7" name="G seven">
+        <label for="_G_7">G&#57751;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_G_m7" name="G minor seven">
+        <label for="_G_m7">Gm&#57751;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_G_maj7" name="G major seven">
+        <label for="_G_maj7">G&#57738;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_G_6" name="G six">
+        <label for="_G_6">G&#57750;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_G_m7b5" name="G minor seven flat five">
+        <label for="_G_m7b5">Gm&#57751;&#57736;&#57749;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_G_dim" name="G diminished">
+        <label for="_G_dim">G&#57744;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_G_sus4" name="G sus four">
+        <label for="_G_sus4">G&#57741;</label>
+    </div>
+
+
+   <div class="option">
+        <input type="radio" class="radio" id="_Gb_" name="G flat">
+        <label for="_Gb_">G&#9837;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_Gb_m" name="G flat minor">
+        <label for="_Gb_m">G&#9837;m</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_Gb_7" name="G flat seven">
+        <label for="_Gb_7">G&#9837;&#57751;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_Gb_m7" name="G flat minor seven">
+        <label for="_Gb_m7">G&#9837;m&#57751;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_Gb_maj7" name="G flat major seven">
+        <label for="_Gb_maj7">G&#9837;&#57738;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_Gb_6" name="G flat six">
+        <label for="_Gb_6">G&#9837;&#57750;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_Gb_m7b5" name="G flat minor seven flat five">
+        <label for="_Gb_m7b5">G&#9837;m&#57751;&#57736;&#57749;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_Gb_dim" name="G flat diminished">
+        <label for="_Gb_dim">G&#9837;&#57744;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_Gb_sus4" name="G flat sus four">
+        <label for="_Gb_sus4">G&#9837;&#57741;</label>
+    </div>
+
+
+    <div class="option">
+        <input type="radio" class="radio" id="_F#_" name="F sharp">
+        <label for="_F#_">F&#9839;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_F#_m" name="F sharp minor">
+        <label for="_F#_m">F&#9839;m</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_F#_7" name="F sharp seven">
+        <label for="_F#_7">F&#9839;&#57751;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_F#_m7" name="F sharp minor seven">
+        <label for="_F#_m7">F&#9839;m&#57751;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_F#_maj7" name="F sharp major seven">
+        <label for="_F#_maj7">F&#9839;&#57738;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_F#_6" name="F sharp six">
+        <label for="_F#_6">F&#9839;&#57750;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_F#_m7b5" name="F sharp minor seven flat five">
+        <label for="_F#_m7b5">F&#9839;m&#57751;&#57736;&#57749;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_F#_dim" name="F sharp diminished">
+        <label for="_F#_dim">F&#9839;&#57744;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_F#_sus4" name="F sharp sus four">
+        <label for="_F#_sus4">F&#9839;&#57741;</label>
+    </div>
+
+
+
+    <div class="option">
+        <input type="radio" class="radio" id="_F_" name="F">
+        <label for="_F_">F</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_F_m" name="F minor">
+        <label for="_F_m">Fm</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_F_7" name="F seven">
+        <label for="_F_7">F&#57751;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_F_m7" name="F minor seven">
+        <label for="_F_m7">Fm&#57751;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_F_maj7" name="F major seven">
+        <label for="_F_maj7">F&#57738;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_F_6" name="F six">
+        <label for="_F_6">F&#57750;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_F_m7b5" name="F minor seven flat five">
+        <label for="_F_m7b5">Fm&#57751;&#57736;&#57749;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_F_dim" name="F diminished">
+        <label for="_F_dim">F&#57744;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_F_sus4" name="F sus four">
+        <label for="_F_sus4">F&#57741;</label>
+    </div>
+
+
+
+    <div class="option">
+        <input type="radio" class="radio" id="_E_" name="E">
+        <label for="_E_">E</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_E_m" name="E minor">
+        <label for="_E_m">Em</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_E_7" name="E seven">
+        <label for="_E_7">E&#57751;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_E_m7" name="E minor seven">
+        <label for="_E_m7">Em&#57751;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_E_maj7" name="E major seven">
+        <label for="_E_maj7">E&#57738;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_E_6" name="E six">
+        <label for="_E_6">E&#57750;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_E_m7b5" name="E minor seven flat five">
+        <label for="_E_m7b5">Em&#57751;&#57736;&#57749;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_E_dim" name="E diminished">
+        <label for="_E_dim">E&#57744;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_E_sus4" name="E sus four">
+        <label for="_E_sus4">E&#57741;</label>
+    </div>
+
+
+
+    <div class="option">
+        <input type="radio" class="radio" id="_Eb_" name="E flat">
+        <label for="_Eb_">E&#9837;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_Eb_m" name="E flat minor">
+        <label for="_Eb_m">E&#9837;m</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_Eb_7" name="E flat seven">
+        <label for="_Eb_7">E&#9837;&#57751;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_Eb_m7" name="E flat minor seven">
+        <label for="_Eb_m7">E&#9837;m&#57751;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_Eb_maj7" name="E flat major seven">
+        <label for="_Eb_maj7">E&#9837;&#57738;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_Eb_6" name="E flat six">
+        <label for="_Eb_6">E&#9837;&#57750;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_Eb_m7b5" name="E flat minor seven flat five">
+        <label for="_Eb_m7b5">E&#9837;m&#57751;&#57736;&#57749;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_Eb_dim" name="E flat diminished">
+        <label for="_Eb_dim">E&#9837;&#57744;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_Eb_sus4" name="E flat sus four">
+        <label for="_Eb_sus4">E&#9837;&#57741;</label>
+    </div>
+
+
+
+    <div class="option">
+        <input type="radio" class="radio" id="_D#_" name="D sharp">
+        <label for="_D#_">D&#9839;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_D#_m" name="D sharp minor">
+        <label for="_D#_m">D&#9839;m</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_D#_7" name="D sharp seven">
+        <label for="_D#_7">D&#9839;&#57751;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_D#_m7" name="D sharp minor seven">
+        <label for="_D#_m7">D&#9839;m&#57751;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_D#_maj7" name="D sharp major seven">
+        <label for="_D#_maj7">D&#9839;&#57738;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_D#_6" name="D sharp six">
+        <label for="_D#_6">D&#9839;&#57750;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_D#_m7b5" name="D sharp minor seven flat five">
+        <label for="_D#_m7b5">D&#9839;m&#57751;&#57736;&#57749;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_D#_dim" name="D sharp diminished">
+        <label for="_D#_dim">D&#9839;&#57744;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_D#_sus4" name="D sharp sus four">
+        <label for="_D#_sus4">D&#9839;&#57741;</label>
+    </div>
+
+
+    <div class="option">
+        <input type="radio" class="radio" id="_D_" name="D">
+        <label for="_D_">D</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_D_m" name="D minor">
+        <label for="_D_m">Dm</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_D_7" name="D seven">
+        <label for="_D_7">D&#57751;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_D_m7" name="D minor seven">
+        <label for="_D_m7">Dm&#57751;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_D_maj7" name="D major seven">
+        <label for="_D_maj7">D&#57738;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_D_6" name="D six">
+        <label for="_D_6">D&#57750;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_D_m7b5" name="D minor seven flat five">
+        <label for="_D_m7b5">Dm&#57751;&#57736;&#57749;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_D_dim" name="D diminished">
+        <label for="_D_dim">D&#57744;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_D_sus4" name="D sus four">
+        <label for="_D_sus4">D&#57741;</label>
+    </div>
+
+
+    <div class="option">
+        <input type="radio" class="radio" id="_Db_" name="D flat">
+        <label for="_Db_">D&#9837;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_Db_m" name="D flat minor">
+        <label for="_Db_m">D&#9837;m</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_Db_7" name="D flat seven">
+        <label for="_Db_7">D&#9837;&#57751;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_Db_m7" name="D flat minor seven">
+        <label for="_Db_m7">D&#9837;m&#57751;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_Db_maj7" name="D flat major seven">
+        <label for="_Db_maj7">D&#9837;&#57738;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_Db_6" name="D flat six">
+        <label for="_Db_6">D&#9837;&#57750;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_Db_m7b5" name="D flat minor seven flat five">
+        <label for="_Db_m7b5">D&#9837;m&#57751;&#57736;&#57749;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_Db_dim" name="D flat diminished">
+        <label for="_Db_dim">D&#9837;&#57744;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_Db_sus4" name="D flat sus four">
+        <label for="_Db_sus4">D&#9837;&#57741;</label>
+    </div>
+
+
+    <div class="option">
+        <input type="radio" class="radio" id="_C#_" name="C sharp">
+        <label for="_C#_">C&#9839;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_C#_m" name="C sharp minor">
+        <label for="_C#_m">C&#9839;m</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_C#_7" name="C sharp seven">
+        <label for="_C#_7">C&#9839;&#57751;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_C#_m7" name="C sharp minor seven">
+        <label for="_C#_m7">C&#9839;m&#57751;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_C#_maj7" name="C sharp major seven">
+        <label for="_C#_maj7">C&#9839;&#57738;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_C#_6" name="C sharp six">
+        <label for="_C#_6">C&#9839;&#57750;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_C#_m7b5" name="C sharp minor seven flat five">
+        <label for="_C#_m7b5">C&#9839;m&#57751;&#57736;&#57749;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_C#_dim" name="C sharp diminished">
+        <label for="_C#_dim">C&#9839;&#57744;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_C#_sus4" name="C sharp sus four">
+        <label for="_C#_sus4">C&#9839;&#57741;</label>
+    </div>
+
+
+
+    <div class="option">
+        <input type="radio" class="radio" id="_C_" name="C">
+        <label for="_C_">C</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_C_m" name="C minor">
+        <label for="_C_m">Cm</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_C_7" name="C seven">
+        <label for="_C_7">C&#57751;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_C_m7" name="C minor seven">
+        <label for="_C_m7">Cm&#57751;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_C_maj7" name="C major seven">
+        <label for="_C_maj7">C&#57738;</label>
+    </div>
+     <div class="option">
+        <input type="radio" class="radio" id="_C_6" name="C six">
+        <label for="_C_6">C&#57750;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_C_m7b5" name="C minor seven flat five">
+        <label for="_C_m7b5">Cm&#57751;&#57736;&#57749;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_C_dim" name="C diminished">
+        <label for="_C_dim">C&#57744;</label>
+    </div>
+    <div class="option">
+        <input type="radio" class="radio" id="_C_sus4" name="C sus four">
+        <label for="_C_sus4">C&#57741;</label>
+    </div>
+
+    <div class="option">
+        <input type="radio" class="radio" id="." name="dash">
+        <label for="." data-value=".">&nbsp;&nbsp;&#45;</label>
+    </div>
+
+
+</div>
+
+
+

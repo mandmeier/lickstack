@@ -138,3 +138,19 @@ input:-moz-placeholder { text-overflow: ellipsis; }
     margin-top: 40px;
 }
 
+.separator-mid{
+    display: flex;
+    justify-content: center; /* align horizontal */
+    align-items: center; /* align vertical */
+    font-size: 30px;
+    height: 100%;
+    width: 3%;
+}
+.separator-lr{
+    display: flex;
+    justify-content: center; /* align horizontal */
+    align-items: center; /* align vertical */
+    font-size: 30px;
+    height: 100%;
+    width: 2.1%;
+}

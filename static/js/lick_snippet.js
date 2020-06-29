@@ -1,13 +1,3 @@
-function canUseWebP() {
-    var elem = document.createElement('canvas');
-    if (!!(elem.getContext && elem.getContext('2d'))) {
-        return elem.toDataURL('image/webp').indexOf('data:image/webp') == 0;
-    }
-    return false;
-}
-function img_ext(){if(canUseWebP()){return ".webp";}return ".png";}
-
-
 
 function transposeChord(input,transpose_by) {
     element = input.match(/(_[a-gA-g]{1,2}_)/)[0]
@@ -55,23 +45,61 @@ function transposePlayer(l){
 }
 
 
+// var chdStr = '_Cb_m7';
+
+// newStr = chdStr.replace(/b_/g, "&#9837;");
+
+// function strReplace(regex, pattern){
+//     var myStr = 'quick_brown_fox';
+//     var newStr = myStr.replace(/_/g, "-");
+
+//     // Insert modified string in paragraph
+//     document.getElementById("myText").innerHTML = newStr;
+// }
+
+
+function toMuseJazz(chd, transpose_rule){
+    var chd = chd.replace(/^_/g, "");
+    chd = chd.replace(/maj7/g, "Maj");
+     chd = chd.replace(/7/g, "&#57751;");
+     chd = chd.replace(/6/g, "&#57750;");
+    if (transpose_rule == "h") {
+        chd = chd.replace(/Db_/g, "C&#9839;_");
+        chd = chd.replace(/Eb_/g, "D&#9839;_");
+        chd = chd.replace(/Gb_/g, "F&#9839;_");
+        chd = chd.replace(/Ab_/g, "G&#9839;_");
+        chd = chd.replace(/Bb_/g, "A&#9839;_");
+    } else {
+        chd = chd.replace(/b_/g, "&#9837;");
+    }
+    chd = chd.replace(/_/g, "");
+    chd = chd.replace(/Maj/g, "&#57738;");
+    chd = chd.replace(/dim/g, "&#57744;");
+    chd = chd.replace(/sus4/g, "&#57741;");
+    chd = chd.replace(/b5/g, "&#57736;&#57749;");
+    return chd
+}
+
+
+
+
 function updateChords(l) {
     let lick = licks[l]
     let chords = lick.getElementsByClassName('chord_seq')[0].getAttribute("value").split('x').slice(1,17);
     let transpose_rules = lick.getElementsByClassName('transpose_rule')[0].getAttribute('value').split(',')
     let transpose = Number(lick.getElementsByClassName('transpose-btn')[0].value)
-    let chord_imgs = lick.getElementsByTagName('img')
-    let i
-    for (i = 0; i < 16; i++) {
-        if (!chord_imgs[i].hasAttribute("name")) {
-            chord_imgs[i].name = chords[i]
-        }
-        if (chords[i] == '.'){
-            if (chord_imgs[i].src.endsWith('#')){
-                chord_imgs[i].src =  chords_dir + transpose_rules[i] + '/dash' + img_ext()
-            }
+    let chord_imgs = lick.getElementsByClassName('chord-img')
+
+
+
+    for (let i = 0; i < 16; i++) {
+
+        if (chords[i] == '.') {
+            chord_imgs[i].innerHTML = "&nbsp;&nbsp;&#45;"
         } else {
-            chord_imgs[i].src =  chords_dir + transpose_rules[i] + '/' + transposeChord(chords[i], transpose) + img_ext()
+            let chord_transposed = transposeChord(chords[i], transpose)
+            chord_imgs[i].name = chord_transposed
+            chord_imgs[i].innerHTML = toMuseJazz(chord_transposed, transpose_rules[i])
         }
     }
 

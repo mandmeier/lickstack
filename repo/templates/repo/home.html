@@ -25,13 +25,6 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
 {% endcompress %}
 
-<style type="text/css">
-.chords-row {
-    background-image: url("{% static 'img/staff.webp' %}"),url("{% static 'img/staff.png' %}");
-}
-</style>
-
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.5.35/Tone.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
@@ -86,8 +79,9 @@
 
 <div class="row">
 
-<div class="page-col col-md-12 col-lg-6">
 
+<div class="page-col col-md-12 col-lg-6">
+{% if user.is_staff %}
     <div class="display-4 welcome text-center">
         <h1 class="display-4">Get Started Here</h1>
         <hr>
@@ -111,7 +105,18 @@
             </header>
     </a>
     {% endfor%}
+{% else %}
+
+    <div class="display-4 welcome text-center">
+        <h1 class="display-4">Get Started Here</h1>
+        <hr>
+    </div>
+
+    <p class="display-4" style="text-align: center; font-size: 24px; ">[coming soon]</p>
+
+{% endif %}
 </div>
+
 
 <div class="page-col page-col-right col-md-12 col-lg-6">
 
@@ -130,7 +135,7 @@
         <h1>Join the LickStack community!</h1>
         <br>
     <ul class="bullet-points">
-    <li> Browse hundreds of licks that match your chord sequence</li>
+    <li> Browse hundreds of licks that match your chord progressions</li>
     <li> Listen and play along in any key</li>
     <li> Share your licks with the community</li>
     </ul>
@@ -149,8 +154,10 @@
 
 <div class="row bottom-row">
 
-<div class="page-col col-md-12 col-lg-6">
 
+
+<div class="page-col col-md-12 col-lg-6">
+{% if user.is_staff %}
     <div class="display-4 welcome text-center">
         <h1 class="display-4">Featured Articles</h1>
         <hr>
@@ -197,8 +204,9 @@
     {% endfor%}
 
     <a href="{% url 'blog:article-list' %}" class="btn btn-primary btn-lg center-button" role="button">More Articles</a>
-
+{% endif %}
 </div>
+
 
 
 <div class="page-col page-col-right col-md-12 col-lg-6">
