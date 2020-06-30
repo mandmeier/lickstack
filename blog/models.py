@@ -11,6 +11,7 @@ from django.dispatch import receiver
 from markdown_deux import markdown
 from comments.models import Comment
 from repo.models import Lick
+from taggit.managers import TaggableManager
 
 
 class ArticleManager(models.Manager):
@@ -26,6 +27,17 @@ def upload_location(instance, filename):
     return file_path
 
 
+class Category(models.Model):
+    name = models.CharField(
+        max_length=200, help_text='Enter a blog post category', blank=True)
+
+    class Meta:
+        ordering = ('name',)
+
+    def __str__(self):
+        return self.name
+
+
 class Article(models.Model):
     title = models.CharField(max_length=200, null=False, blank=False)
     slug = models.SlugField(unique=True)
@@ -33,6 +45,8 @@ class Article(models.Model):
     body = models.TextField(max_length=50000, null=False, blank=False)
     image = models.ImageField(
         upload_to=upload_location, blank=True, width_field="width_field", height_field="height_field")
+    category = models.ForeignKey(
+        Category, on_delete=models.PROTECT, blank=True, default='', null=True)
     height_field = models.IntegerField(default=0)
     width_field = models.IntegerField(default=0)
     draft = models.BooleanField(default=False)
@@ -49,6 +63,7 @@ class Article(models.Model):
     transpose_string = models.CharField(max_length=50, null=True, blank=True)
     lick_placeholders_string = models.CharField(
         max_length=200, null=True, blank=True)
+    tags = TaggableManager()
 
     objects = ArticleManager()
 

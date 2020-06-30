@@ -238,7 +238,7 @@ function myFunction() {
   </div>
   <div class="topnav-right">
   <a class="nav-link" id="link-home" href="{% url 'home' %}"><span class="icon-home"></span>Home</a>
-  <a class="nav-link" id="link-browselicks" href="{% url 'browse-licks' %}"><span class="icon-search"></span>Browse Licks</span></a>
+  <a class="nav-link" id="link-browselicks" href="{% url 'browse-licks' %}"><span class="icon-search"></span>Find Licks</span></a>
   {% if user.is_authenticated %}
   <a class="nav-link" id="link-newlick" href="{% url 'lick-create' %}"><span class="icon-rocket"></span>New Lick</a>
   <div class="dropdown">
