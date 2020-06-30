@@ -237,16 +237,17 @@ if (isChrome == false && getCookie("isChrome") != 'notified'){
 
 
 function storeSearchFormValues(form){
-    // remember chords
-    for (let i = 0; i < 16; i++){
-        let chord = 'chord_'+(i+1).toString()
-        setCookie('s_'+chord, form.elements[chord].value);
-    }
 
-    if (form.elements['id_time_signature_2'].checked){
-        setCookie("s_ts", "34");
+     // remember chord seq
+    setCookie("s_chord_seq", form.elements["chord_seq"].value);
+    console.log("cookies set")
+
+    if (form.elements['id_time_signature_1'].checked){
+        setCookie("s_time_signature", "44");
+    } else if (form.elements['id_time_signature_2'].checked){
+        setCookie("s_time_signature", "34");
     } else {
-        setCookie("s_ts", "44");
+        setCookie("s_time_signature", "");
     }
 
     if (form.elements['include_transposed'].checked) {
@@ -276,9 +277,6 @@ function storeSearchFormValues(form){
     setCookie("s_username_contains", form.elements['username_contains'].value)
     setCookie("s_lick_id", form.elements['lick_id'].value)
 
-    setCookie("s_time_signature", form.elements['time_signature'].value)
-
-
     // remember tags
     setCookie("s_instruments", instruments);
     setCookie("s_keywords", keywords);
@@ -287,19 +285,17 @@ function storeSearchFormValues(form){
 
 
 function getSearchFormValues(){
-    for (let i = 0; i < 16; i++){
-        let chord = 'chord_'+(i+1).toString()
-        if (getCookie('s_'+chord) == null){
-            form.elements[chord].value = '.';
-        } else {
-            form.elements[chord].value = getCookie('s_'+chord);
-        }
-    }
 
-    if (getCookie("s_ts") == '34'){
-        form.elements['id_time_signature_2'].checked = true;
-    } else {
+    // populate chords
+    const chds = getCookie("s_chord_seq").split('x').slice(1,17)
+    populateChords(chds)
+
+    if (getCookie("s_time_signature") == '44'){
         form.elements['id_time_signature_1'].checked = true;
+    } else if (getCookie("s_time_signature") == '34'){
+        form.elements['id_time_signature_2'].checked = true;
+    } else{
+        form.elements['id_time_signature_3'].checked = true;
     }
     changeLayout()
 
@@ -330,13 +326,6 @@ function getSearchFormValues(){
 
     form.elements['username_contains'].value = getCookie("s_username_contains");
     form.elements['lick_id'].value = getCookie("s_lick_id");
-
-
-    if (getCookie("s_time_signature") == null){
-        form.elements['time_signature'].value = '';
-    } else {
-        form.elements['time_signature'].value = getCookie("s_time_signature");
-    }
 
 
     if (getCookie("s_instruments") != null){

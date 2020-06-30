@@ -4,6 +4,24 @@ var optionsList = optionsContainer.querySelectorAll(".option")
 
 
 // update chord seq upon change of chords
+
+
+function populateChords(chds){
+    for (let i = 0; i < chds.length; i++) {
+        selectedList[i].dataset["value"] = chds[i]
+
+        if(chds[i] == "."){
+            selectedList[i].innerHTML = "&nbsp;&nbsp;&#45;"
+        } else{
+            search_str = "[for=" + chds[i] + "]"
+            search_str = search_str.replace(/#/g, '\\#')
+            selectedList[i].innerHTML = optionsContainer.querySelectorAll(search_str)[0].innerHTML
+        }
+
+    }
+}
+
+
 function updateChordSeq(){
     let chord_seq = "x"
     for (let chord of selectedList) {
@@ -11,6 +29,21 @@ function updateChordSeq(){
     }
     document.getElementById("id_chord_seq").value = chord_seq
 }
+
+
+function hide_34(){
+if (document.getElementById("id_time_signature_2").checked){
+        $(".4th").hide();
+        $(".form-chords-row .chord-select-box").css("width","15.33%");
+        $(".4th").each(function( index ) {
+             $(this).find('.selected').attr('data-value', '.')
+             $(this).find('.selected').html('&nbsp;&nbsp;&#45;');
+         });
+    }
+}
+
+hide_34()
+
 
 
 
@@ -40,7 +73,6 @@ for (let i = 0; i < selectedList.length; i++) {
 
 
 $('body').click(function(evt){
-        console.log(evt.target)
         if(evt.target.className == "form-chords-row")
             return;
         if($(evt.target).closest('.form-chords-row').length)
@@ -48,11 +80,6 @@ $('body').click(function(evt){
         optionsContainer.style.display = 'none';
 });
 
-
-
-// // hide chord seq field
-// const chord_seq_field = document.getElementById("chord_seq_field");
-// chord_seq_field.style.display = "none";
 
 //// reset chords button
 const reset_chords_btn = document.getElementById("reset_chords")
@@ -67,22 +94,21 @@ reset_chords_btn.addEventListener("click", function(){
 
 // Time Signature Controls
 function changeLayout() {
-    if (document.getElementById("id_time_signature_1").checked){
+    if (document.getElementById("id_time_signature_1").checked || document.getElementById("id_time_signature_3").checked){
         $(".4th").show();
         $(".form-chords-row .chord-select-box").css("width","11.5%");
-    } else if (document.getElementById("id_time_signature_2").checked){
-        $(".4th").hide();
-        $(".form-chords-row .chord-select-box").css("width","15.33%");
-        $(".4th").each(function( index ) {
-            $(this).find('.selected').attr('data-value', '.')
-            $(this).find('.selected').html('&nbsp;&nbsp;&#45;');
-        });
+    } else {
+        hide_34();
     }
     updateChordSeq();
 };
+
 
 time_sign_input = document.getElementById('time-signature')
 time_sign_input.addEventListener("change", function(){
  changeLayout();
 });
 
+// window.onload = function() { // this will be run when the whole page is loaded
+//     changeLayout();
+// };

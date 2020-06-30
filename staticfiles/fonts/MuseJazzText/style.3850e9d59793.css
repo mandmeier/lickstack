@@ -1,0 +1,11 @@
+/* font converted using font-converter.net. thank you! */
+@font-face {
+  font-family: "MuseJazzText";
+  src: url("./fonts/MuseJazzText.33ae6d5b00fc.eot"); /* IE9 Compat Modes */
+  src: url("./fonts/MuseJazzText.33ae6d5b00fc.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+    url("./fonts/MuseJazzText.27424620afd2.svg") format("svg"), /* Legacy iOS */
+    url("./fonts/MuseJazzText.953c4e237ece.ttf") format("truetype"), /* Safari, Android, iOS */
+    url("./fonts/MuseJazzText.954321ea7d98.woff") format("woff"); /* Modern Browsers */
+  font-weight: normal;
+  font-style: normal;
+}

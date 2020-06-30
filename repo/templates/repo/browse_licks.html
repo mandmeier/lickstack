@@ -66,27 +66,33 @@
         <main class="form-fields">
 
             <div class="collapse form-info" id="form-info-chords">
-                    <p><small>Enter chords into the 4 measures below to find licks that match your chord sequence.<br>
-                    By default, licks are matched that contain the sequence of chords <em>anywhere</em> in the 4 measures (beats between chords are ignored).<br>
-                    e.g. |Dm7 – G7 – | will also match |C7 - - - |Dm7 G7 – - | or |Dm7 - - - | G7 - - - | <br><br>
+                    <p><small>
+                    Enter chords into the 4 measures below to find licks that match your chord sequence.<br><br>
+                    <strong>Select 4/4 or 3/4</strong> to find licks with specified time signature.<br>
+                    Choosing "Any" will find patterns in either time signature.<br>
+                    e.g. |Dm7 – G7 – | will match both |Dm7 – G7 – | and |Dm7 – G7|<br><br>
                     <strong>Include transposed:</strong> Also match chord sequences that can be transposed into what you are searching for. You will find many more licks that way.<br>
                     e.g. |Dm7 - G7 - | will also match |Cm7 - F7 - | or |Dbm7 - Gb7 - |<br><br>
                     <strong>Ignore extensions:</strong> Extensions like 6, 7, 7b5 are ignored.<br>
                     e.g. |Dm7 - G7 - | will also match |Dm6 - G6 - | or |Dm - G - |<br><br>
                     <strong>Exact search:</strong> Search for the exact number of beats between chords.<br>
-                    e.g. |Dm7 - G7 - | will no longer match |C7 - - - |Dm7 G7 – – | or |Dm7 - - - |G7 – – – |<br><br>
+                    If unchecked, beats between chords are not considered.<br>
+                    e.g. |Dm7 - G7 - | will also match |Dm7 G7 – – | or |Dm7 - - - |G7 – – – |<br><br>
                     Entering nothing (all dashes) will return any chords.<br><br>
-                    Choosing 4/4 or 3/4 here only affects input. To search by time signature see "Time Signature" section below
                     </small></p>
             </div>
 
         <div id="time-signature">
             <div class="form-check">
-                <input type="radio" class="form-check-input" checked="checked" name="ts" id="id_time_signature_1" value="44">
+                <input type="radio" class="form-check-input" name="time_signature" id="id_time_signature_3" value="">
+                <label for="id_time_signature_3" class="form-check-label">Any</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" class="form-check-input" checked="checked" name="time_signature" id="id_time_signature_1" value="44">
                 <label for="id_time_signature_1" class="form-check-label">4/4</label>
             </div>
              <div class="form-check">
-                <input type="radio" class="form-check-input" name="ts" id="id_time_signature_2" value="34">
+                <input type="radio" class="form-check-input" name="time_signature" id="id_time_signature_2" value="34">
                 <label for="id_time_signature_2" class="form-check-label">3/4</label>
             </div>
             <button class="panel-btn reset-chords-btn" id="reset_chords" type="button"><span class="icon icon-recycle"></span></button>
@@ -102,28 +108,62 @@
         <div id="form-chords-input" class="form-chords-input col-12">
         <div class="row form-chords-row">
                 <div class="separator-lr">&#124;</div>
-                {% include 'repo/snippets/chord_select_snippet.html' %}
-                {% include 'repo/snippets/chord_select_snippet.html' %}
-                {% include 'repo/snippets/chord_select_snippet.html' %}
-                {% include 'repo/snippets/chord_select_snippet.html' %}
+                <div class="chord-select-box">
+                    <div class="selected" data-value=".">&nbsp;&nbsp;&#45;</div>
+                    {% include 'repo/snippets/chord_select_snippet.html' %}
+                </div>
+                <div class="chord-select-box">
+                    <div class="selected" data-value=".">&nbsp;&nbsp;&#45;</div>
+                </div>
+                <div class="chord-select-box">
+                    <div class="selected" data-value=".">&nbsp;&nbsp;&#45;</div>
+                </div>
+                <div class="chord-select-box 4th">
+                    <div class="selected" data-value=".">&nbsp;&nbsp;&#45;</div>
+                </div>
                 <div class="separator-mid">&#124;</div>
-                {% include 'repo/snippets/chord_select_snippet.html' %}
-                {% include 'repo/snippets/chord_select_snippet.html' %}
-                {% include 'repo/snippets/chord_select_snippet.html' %}
-                {% include 'repo/snippets/chord_select_snippet.html' %}
+                <div class="chord-select-box">
+                    <div class="selected" data-value=".">&nbsp;&nbsp;&#45;</div>
+                </div>
+                <div class="chord-select-box">
+                    <div class="selected" data-value=".">&nbsp;&nbsp;&#45;</div>
+                </div>
+                <div class="chord-select-box">
+                    <div class="selected" data-value=".">&nbsp;&nbsp;&#45;</div>
+                </div>
+                <div class="chord-select-box 4th">
+                    <div class="selected" data-value=".">&nbsp;&nbsp;&#45;</div>
+                </div>
                 <div class="separator-lr">&#124;</div>
         </div>
+
         <div class="row form-chords-row">
                 <div class="separator-lr">&#124;</div>
-                {% include 'repo/snippets/chord_select_snippet.html' %}
-                {% include 'repo/snippets/chord_select_snippet.html' %}
-                {% include 'repo/snippets/chord_select_snippet.html' %}
-                {% include 'repo/snippets/chord_select_snippet.html' %}
+                <div class="chord-select-box">
+                    <div class="selected" data-value=".">&nbsp;&nbsp;&#45;</div>
+                </div>
+                <div class="chord-select-box">
+                    <div class="selected" data-value=".">&nbsp;&nbsp;&#45;</div>
+                </div>
+                <div class="chord-select-box">
+                    <div class="selected" data-value=".">&nbsp;&nbsp;&#45;</div>
+                </div>
+                <div class="chord-select-box 4th">
+                    <div class="selected" data-value=".">&nbsp;&nbsp;&#45;</div>
+                </div>
                 <div class="separator-mid">&#124;</div>
-                {% include 'repo/snippets/chord_select_snippet.html' %}
-                {% include 'repo/snippets/chord_select_snippet.html' %}
-                {% include 'repo/snippets/chord_select_snippet.html' %}
-                {% include 'repo/snippets/chord_select_snippet.html' %}
+                <div class="chord-select-box">
+                    <div class="selected" data-value=".">&nbsp;&nbsp;&#45;</div>
+                </div>
+                <div class="chord-select-box">
+                    <div class="selected" data-value=".">&nbsp;&nbsp;&#45;</div>
+                </div>
+                <div class="chord-select-box">
+                    <div class="selected" data-value=".">&nbsp;&nbsp;&#45;</div>
+                </div>
+                <div class="chord-select-box 4th">
+                    <div class="selected" data-value=".">&nbsp;&nbsp;&#45;</div>
+                </div>
                 <div class="separator-lr">&#124;</div>
         </div>
         </div>
@@ -222,7 +262,7 @@
                 </main>
         </section>
 
-
+<!--
         <section class="form-section" id="form-section-data">
                 <header class="form-header" id="form-header-data">
                     <h2 class="form-section-title">Time Signature</h2>
@@ -236,7 +276,7 @@
                     </select>
                 </main>
         </section>
-
+-->
     </div>
 
     <div class="form-submit">

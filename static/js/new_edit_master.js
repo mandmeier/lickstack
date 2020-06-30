@@ -123,14 +123,14 @@ for (let i = 0; i < instr_options.length; i++) {
 //const other_option = instr_select.querySelectorAll('[value="5"]')[0];
 instr_select.removeChild(other_option);
 instr_select.appendChild(other_option);
-selected_instr = instr_options[instr_select.selectedIndex].innerHTML
+var selected_instr = instr_options[instr_select.selectedIndex].innerHTML
 
-// hide initial other field
-window.addEventListener('load', function () {
-    if(!(selected_instr == "other")){
-        jQuery('#other').hide();
-    }
-})
+// // hide initial other field
+// window.addEventListener('load', function () {
+//     if(!(selected_instr == "other")){
+//         jQuery('#other').hide();
+//     }
+// })
 
 // toggle "please specify" field
 jQuery('#id_instrument').on('change', function() {
@@ -142,6 +142,7 @@ jQuery('#id_instrument').on('change', function() {
     }
     else {
         jQuery('#other').hide();
+        jQuery('#id_other')[0].value = "";
     }
 });
 

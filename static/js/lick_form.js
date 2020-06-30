@@ -18,14 +18,13 @@ const form = document.forms[0]
 // store form values in cookies
 
 function storeLickFormValues(form){
-    for (let i = 0; i < 16; i++){
-        let chord = 'chord_'+(i+1).toString()
-        setCookie('f_'+chord, form.elements[chord].value);
-    }
+
+    // remember chord seq
+    setCookie("f_chord_seq", form.elements["chord_seq"].value);
 
 
     // only remember instrument if it is not 'other'
-    if (form.elements['id_instrument'].value != '5'){
+    if (selected_instr != 'other'){
         setCookie("id_instrument", form.elements['id_instrument'].value);
     } else {
         setCookie("id_instrument", '');
@@ -45,19 +44,25 @@ function storeLickFormValues(form){
 }
 
 
+
+
+
+
+
+
+
+
 function getLickFormValues(){
 
-    for (let i = 0; i < 16; i++){
-        let chord = 'chord_'+(i+1).toString()
-        if (getCookie('f_'+chord) == null){
-            form.elements[chord].value = '.';
-        } else {
-            form.elements[chord].value = getCookie('f_'+chord);
-        }
-    }
+
+    // populate chords
+    const chds = getCookie("f_chord_seq").split('x').slice(1,17)
+    populateChords(chds)
+
 
     if (getCookie("id_instrument") == null){
         form.elements['id_instrument'].value = ""
+        jQuery('#id_other')[0].value = "";
     } else {
         form.elements['id_instrument'].value = getCookie("id_instrument");
     }

@@ -148,7 +148,7 @@ def browse_licks_view(request):
             lick_id_query = int(lick_id_query.strip())
 
         chord_seq = get_chord_seq_search(
-            request.GET.get('chord_seq', "")).split('x')[1:15]
+            request.GET.get('chord_seq', "")).split('x')[1:17]
         instrument_string = request.GET.get('instr_seq', "")
         keyword_string = request.GET.get('tags', "")
         must_contain_keyword = bool(request.GET.get('must_contain', ""))
@@ -161,6 +161,10 @@ def browse_licks_view(request):
         def get_chord_seq_query(chord_seq, half_steps=0):
 
             query = ""
+
+            if chord_seq == ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.']:
+                return query
+
             if exact_search == False:
                 for chord in chord_seq:
                     if chord != ".":
@@ -188,6 +192,9 @@ def browse_licks_view(request):
                     r'((_maj7)|(_7)|(_6)|(_dim)|(_sus4)|(_(?=[\[x])))', notm, query)
 
             return query
+
+        print("TEST")
+        print(chord_seq)
 
         chord_seq_query = get_chord_seq_query(chord_seq, 0)
 
