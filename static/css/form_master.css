@@ -53,6 +53,7 @@
 
 
 .chord-select-box{
+    padding-top: 5px !important;
     font-family: "MuseJazzText";
     font-size: 20px;
     display: flex;
@@ -62,6 +63,35 @@
     position: relative;
 
 }
+
+
+.separator-mid{
+    height: 35px;
+    font-size: 24px;
+    width: 4%;
+}
+.separator-lr{
+    height: 35px;
+    width: 2%;
+    font-size: 24px;
+}
+
+
+@media screen and (max-width: 500px) {
+    .chord-select-box{
+        padding-top: 7px !important;
+        font-size: 16px;
+        font-size: 4vw;
+    }
+    .separator-mid{
+        font-size: 24px;
+    }
+    .separator-lr{
+        font-size: 24px;
+    }
+}
+
+
 
 .chord-select-box .selected{
     width: 100%;
@@ -124,14 +154,7 @@
     position: absolute;
     right: 10px;
 }
-.separator-mid{
-    height: 35px !important;
-    width: 4%;
-}
-.separator-lr{
-    height: 35px !important;
-    width: 2%;
-}
+
 
 
 /*time signature radio btns next to each other*/

@@ -2,7 +2,7 @@
 /* base layout */
 .area-controls{
     max-width: 500px;
-    padding: 20px 5px 0px 5px;
+    padding: 20px 0px 0px 0px;
 }
 
 @media (min-width:992px){
@@ -13,12 +13,18 @@
 
 .area-list{
     max-width: 500px;
-    padding: 0px 5px 10px 5px;
+    padding: 0px 0px 10px 0px;
+}
+
+@media (min-width:992px){
+  .area-list{
+    padding: 0px 0px 10px 20px;
+  }
 }
 
 @media (min-width:1200px){
   .area-list{
-    margin-left: 50px;
+    margin-left: 30px;
   }
 }
 
@@ -87,6 +93,7 @@
 
 
 .chord-select-box{
+    padding-top: 5px;
     font-family: "MuseJazzText";
     font-size: 20px;
     display: flex;
@@ -96,6 +103,28 @@
     position: relative;
 
 }
+
+
+
+@media screen and (max-width: 500px) {
+    .chord-select-box{
+        padding-top: 7px;
+        font-size: 16px;
+        font-size: 3.8vw;
+    }
+    .separator-mid{
+        font-size: 24px;
+    }
+    .separator-lr{
+        font-size: 24px;
+    }
+}
+
+
+
+
+
+
 
 .chord-select-box .selected{
     width: 100%;
@@ -147,20 +176,6 @@
 
 
 
-
-
-
-
-
-
-
-#reset_chords {
-    position: absolute;
-    right: 10px;
-}
-
-
-
 .separator-mid{
     width: 4%;
 }
@@ -168,6 +183,11 @@
     width: 2%;
 }
 
+
+#reset_chords {
+    position: absolute;
+    right: 10px;
+}
 
 
 #checkboxes-area{

@@ -45,7 +45,7 @@
     align-items: center;
     padding-left: 5px;
     padding-right: 0px;
-    /*margin-bottom: 7px;*/
+    margin-bottom: 7px;
 }
 
 
@@ -92,14 +92,14 @@
 
 
 .lick-display {
-  /*margin-bottom: 7px;*/
+  margin-bottom: 5px;
   position: relative;
   padding-bottom: 7%;
 }
 
 .chords-row {
+  padding-top: 1%;
   font-family: "MuseJazzText";
-  font-size:  20px;
   position: absolute;
   background-size: 100% 100%;
   top: 0;
@@ -144,6 +144,7 @@
 
 @media screen and (max-width: 500px) {
     .chords-row{
+        padding-top: 7px;
         font-size: 16px;
         font-size: 3.8vw;
     }
@@ -154,11 +155,6 @@
         font-size: 24px;
     }
 }
-
-
-
-
-
 
 
 .lick-controls {

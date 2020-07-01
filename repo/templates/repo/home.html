@@ -86,7 +86,7 @@
     </div>
 
     {% for article in latest_articles %}
-    <a href="{{ article.get_absolute_url }}" class="blog-panel">
+    <a href="{{ article.get_absolute_url }}" class="blog-panel blog-panel-sm">
             <header class="article-header">
                 <div class="article-image">
                     {% if article.image %}
@@ -97,7 +97,7 @@
                     <h2 class="blog-panel-title"><b>{{ article.title }}</b></h2>
                     <small class="blog-author-time">
                         <div class="blog-author"><span class="blog-panel-icon icon-user"></span>{{ article.author }}</div>
-                        <div><span class="blog-panel-icon icon-calendar"></span>{{ article.date_published }}</div>
+                        <div class="blog-time"><span class="blog-panel-icon icon-calendar"></span>{{ article.date_published }}</div>
                     </small>
                </div>
             </header>
@@ -183,7 +183,7 @@
 
 
     {% for article in latest_articles %}
-    <a href="{{ article.get_absolute_url }}" class="blog-panel">
+    <a href="{{ article.get_absolute_url }}" class="blog-panel blog-panel-sm">
             <header class="article-header">
                 <div class="article-image">
                     {% if article.image %}
@@ -194,7 +194,7 @@
                     <h2 class="blog-panel-title"><b>{{ article.title }}</b></h2>
                     <small class="blog-author-time">
                         <div class="blog-author"><span class="blog-panel-icon icon-user"></span>{{ article.author }}</div>
-                        <div><span class="blog-panel-icon icon-calendar"></span>{{ article.date_published }}</div>
+                        <div class="blog-time"><span class="blog-panel-icon icon-calendar"></span>{{ article.date_published }}</div>
                     </small>
                </div>
             </header>
