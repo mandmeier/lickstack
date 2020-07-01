@@ -144,7 +144,8 @@
 
 @media screen and (max-width: 500px) {
     .chords-row{
-        font-size: 18px;
+        font-size: 16px;
+        font-size: 3.8vw;
     }
     .separator-mid{
         font-size: 24px;
@@ -153,6 +154,7 @@
         font-size: 24px;
     }
 }
+
 
 
 
