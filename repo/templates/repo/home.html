@@ -47,12 +47,10 @@
 <div class="row header-row">
 <div class="page-col col-md-12 col-lg-6">
 
-    <div class="title-img">
-    <picture>
-      <img src="{% static 'img/Logo_lg.png' %}" class="img-fluid">
-    </picture>
-    </div>
-
+<picture class="title-img">
+    <source type="image/webp" srcset="{% static 'img/Logo_lg.webp' %}" />
+    <img src="{% static 'img/Logo_lg.png' %}" class="img-fluid" alt="Logo">
+</picture>
 
 </div>
 

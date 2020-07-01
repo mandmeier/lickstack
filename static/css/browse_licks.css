@@ -1,10 +1,8 @@
 
 /* base layout */
-
 .area-controls{
     max-width: 500px;
-    padding: 20px 10px 0px 10px;
-    /*background-color: #ffff00;*/
+    padding: 20px 5px 0px 5px;
 }
 
 @media (min-width:992px){
@@ -15,15 +13,16 @@
 
 .area-list{
     max-width: 500px;
-    padding: 0px 10px 10px 10px;
-    /*background-color: #ff00ff;*/
+    padding: 0px 5px 10px 5px;
 }
 
-
+@media (min-width:1200px){
+  .area-list{
+    margin-left: 50px;
+  }
+}
 
 /* search form */
-
-
 .lick-form {
     padding: 5px;
     position: relative;
