@@ -85,7 +85,7 @@
         <hr>
     </div>
 
-    {% for article in latest_articles %}
+    {% for article in howto_articles|slice:"2:3" %}
     <a href="{{ article.get_absolute_url }}" class="blog-panel blog-panel-sm">
             <header class="article-header">
                 <div class="article-image">

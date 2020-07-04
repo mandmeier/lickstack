@@ -40,7 +40,7 @@ class Category(models.Model):
 
 class Article(models.Model):
     title = models.CharField(max_length=200, null=False, blank=False)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, max_length=255)
     description = models.TextField(max_length=280, null=False, blank=False)
     body = models.TextField(max_length=50000, null=False, blank=False)
     image = models.ImageField(
@@ -63,7 +63,7 @@ class Article(models.Model):
     transpose_string = models.CharField(max_length=50, null=True, blank=True)
     lick_placeholders_string = models.CharField(
         max_length=200, null=True, blank=True)
-    tags = TaggableManager()
+    tags = TaggableManager(blank=True)
 
     objects = ArticleManager()
 

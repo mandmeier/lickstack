@@ -162,7 +162,40 @@
     var content = document.getElementById("content")
     var paragraphs = content.querySelectorAll("p");
 
-// replace paragraphs with lick placeholder with lick panels
+
+    // replace images
+
+    function create_img_element(url) {
+        src = document.createElement("source");
+        src.setAttribute("type", "image/webp");
+        src.setAttribute("srcset", url + ".webp");
+
+        img = document.createElement("img");
+        img.setAttribute("src", url + ".png");
+        img.setAttribute("class", "img-fluid");
+
+        pctr = document.createElement("picture");
+        pctr.setAttribute("class", "blog-img");
+        pctr.appendChild(src);
+        pctr.appendChild(img);
+
+        return pctr
+    }
+
+
+    img_regex = /image\[(.+)\]/
+
+    for (let i = 0; i < paragraphs.length; i++) {
+        if (img_regex.test(paragraphs[i].innerHTML)){
+            img_url = paragraphs[i].innerHTML.match(img_regex)[1]
+            console.log(i)
+            console.log(img_url)
+            paragraphs[i].replaceWith(create_img_element(img_url))
+        }
+    }
+
+
+    // replace paragraphs with lick placeholder with lick panels
 
     var lick_placeholders = lick_placeholders_string.split(';')
     var lick_elements = document.getElementsByClassName("lick-section")
@@ -177,7 +210,7 @@
         }
     }
 
-// replace paragraphs with lick placeholder with lick panels
+    // replace paragraphs with lick placeholder with lick panels
 
 
 

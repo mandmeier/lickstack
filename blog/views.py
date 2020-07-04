@@ -49,7 +49,7 @@ def get_next_or_prev(models, item, direction):
 
 @login_required
 def article_create(request):
-    if not request.user.is_staff or not request.user.is_superuser:
+    if not request.user.is_staff:
         raise Http404
 
     if request.method == 'POST':

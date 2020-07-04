@@ -82,7 +82,7 @@
     max-width: 500px;
     height: 135px;
     border: 2px solid #222;
-    border-radius: 5px;
+    border-radius: 10px;
     display: block;
     text-decoration: none;
     color: #222;
@@ -146,19 +146,16 @@
 }
 
 
-@media screen and (max-width: 500px) {
+
+@media screen and (max-width: 450px) {
     .blog-panel-sm{
         font-size: 3vw;
     }
-}
-
-
-@media screen and (max-width: 400px) {
     .blog-author-time{
         display: block;
     }
     .blog-panel-title{
-        font-size: 5vw;
+        font-size: 4vw;
     }
 }
 

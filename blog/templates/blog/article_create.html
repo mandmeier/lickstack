@@ -27,8 +27,10 @@
 
 <section class="panel">
     <h5>Help</h5>
+    <p>To insert image, go to new line and insert image[/static/img/blog_img/yourimage] (don't include .png, will be added automatically)</p>
     <p>To insert lick, go to new line and insert lick[13,6] for lick number 13, transposed +6.</p>
     <p>To insert youtube video go to new line and paste url of youtube video</p>
+
 </section>
 
 
@@ -71,7 +73,6 @@
     const regex_global = /lick\[(\d+),\b([0-9]|1[0-2])\b\]/g;
     const regex_capture = /(\d+),\b([0-9]|1[0-2])\b/;
 
-
     contentInput.keyup(function(){
         var newContent = $(this).val()
         setContent(newContent)
@@ -79,10 +80,9 @@
         var licks_in_content = []
         found_licks = newContent.match(regex_global);
 
-
+        // find licks
         if (found_licks != null && found_licks != licks_in_content){
             licks_in_content = found_licks
-            console.log(licks_in_content)
             var lick_list = []
             var transpose_list = []
             for (let i = 0; i < licks_in_content.length; i++) {
@@ -100,10 +100,9 @@
              transpose_string_field.value = transpose_string
              lick_placeholders_string_field = document.getElementById("id_lick_placeholders_string")
              lick_placeholders_string_field.value = found_licks.join(';')
+
+
         }
-
-         // find licks
-
 
     })
 

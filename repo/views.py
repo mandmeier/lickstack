@@ -104,6 +104,10 @@ def home(request):
 
     latest_articles = articles[:3]
 
+    howto_articles = articles[:3]
+
+    print(howto_articles)
+
     #licks = Lick.objects.filter(id=125)
 
     context = {}
@@ -112,6 +116,7 @@ def home(request):
     context['user_liked'] = get_liked_licks(request, licks)
     context['user_faved'] = get_faved_licks(request, licks)
     context['latest_articles'] = latest_articles
+    context['howto_articles'] = howto_articles
 
     return render(request, 'repo/home.html', context)
 
