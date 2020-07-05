@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
+{% load static %}
 
 {% block head_title %}{{ block.super }} | Register{% endblock head_title %}
 
@@ -25,6 +26,10 @@
         <fieldset class="form-group">
             <div class="text-center">
                 <h2>Join the LickStack community!</h2>
+            <picture class="title-img">
+                <source type="image/webp" srcset="{% static 'img/Logo_lg.webp' %}" />
+                <img src="{% static 'img/Logo_lg.png' %}" class="img-fluid" alt="Logo">
+            </picture>
                 <hr>
             </div>
             {{ form|crispy }}

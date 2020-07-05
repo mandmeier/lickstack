@@ -123,6 +123,10 @@ def home(request):
 
 def browse_licks_view(request):
 
+    if request.user.is_authenticated:
+        instr_transpose_shift = int(request.user.profile.instr_transpose_shift)
+    else:
+        instr_transpose_shift = 0
     # default no search parameters
     exact_search = False
     include_transposed = False
@@ -162,8 +166,13 @@ def browse_licks_view(request):
 
         keyword_list = keyword_string.split(',')
 
+        print("TEST2")
+        print(chord_seq)
+
         # make regex query seq
         def get_chord_seq_query(chord_seq, half_steps=0):
+
+            half_steps = half_steps - instr_transpose_shift
 
             query = ""
 
@@ -197,9 +206,6 @@ def browse_licks_view(request):
                     r'((_maj7)|(_7)|(_6)|(_dim)|(_sus4)|(_(?=[\[x])))', notm, query)
 
             return query
-
-        print("TEST")
-        print(chord_seq)
 
         chord_seq_query = get_chord_seq_query(chord_seq, 0)
 
@@ -393,6 +399,7 @@ def sanitize_instrument(i):
 
 @login_required
 def create_lick(request):
+    # print(instr_transpose_shift)
     form = LickForm(request.POST or None)
     if request.method == "POST":
         form = LickForm(request.POST, request.FILES)
@@ -400,10 +407,62 @@ def create_lick(request):
             obj = form.save(commit=False)
             form_data = request.POST.copy()
             obj.author = request.user
+
+            # transpose 3 up for Eb instruments
+            instr_transpose_shift = int(
+                request.user.profile.instr_transpose_shift)
+            chord_seq = transpose_seq(form_data.get(
+                'chord_seq'), -instr_transpose_shift)
+            obj.chord_seq = chord_seq
+
             obj.save()
             form.save_m2m()
             messages.success(
                 request, f'Lick {obj.id} created successfully.')
+
+            # if selected form value points to 'other' instrument
+            if Instrument.objects.get(pk=form_data.get('instrument')).name == 'other':
+                # get other instrument from 'other' form field, sanitize input
+                other_inst = sanitize_instrument(form_data.get('other'))
+                # sanitize input
+
+                # create new instrument if it does not exist yet
+                all_instr = Instrument.objects.all().values_list('name', flat=True)
+                if not other_inst in all_instr:
+                    Instrument.objects.create(name=other_inst)
+
+                # get new instument instance and assign to lick, then save
+                obj.instrument = Instrument.objects.get(name=other_inst)
+                obj.save(update_fields=['instrument'])
+
+    context = {
+        "form": form,
+    }
+    return render(request, 'repo/lick_form.html', context)
+
+
+@login_required
+def update_lick(request):
+    # print(instr_transpose_shift)
+    form = LickForm(request.POST or None)
+    if request.method == "POST":
+        form = LickForm(request.POST, request.FILES)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            form_data = request.POST.copy()
+            obj.author = request.user
+
+            # transpose 3 up for Eb instruments
+            instr_transpose_shift = int(
+                request.user.profile.instr_transpose_shift)
+            chord_seq = transpose_seq(form_data.get(
+                'chord_seq'), -instr_transpose_shift)
+            obj.chord_seq = chord_seq
+
+            obj.save()
+            form.save_m2m()
+            messages.success(
+                request, f'Lick {obj.id} updated successfully.')
 
             # if selected form value points to 'other' instrument
             if Instrument.objects.get(pk=form_data.get('instrument')).name == 'other':

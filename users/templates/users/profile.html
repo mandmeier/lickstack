@@ -58,10 +58,17 @@
           {% csrf_token %}
           <fieldset class="form-group">
               <div class="text-center">
-                  <h5>Update Profile</h5>
+                  <h5>Profile</h5>
                   <hr>
               </div>
               {{ u_form|crispy }}
+              <br>
+              <div class="text-center">
+                  <h5>Key preference</h5>
+                  <hr>
+              </div>
+              {{ p_form.instr_transpose_shift|as_crispy_field }}
+              <hr>
           </fieldset>
           <div class="form-group">
               <button class="btn btn-primary btn-lg" type="submit">Update</button>

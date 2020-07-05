@@ -21,6 +21,10 @@ class UserUpdateForm(forms.ModelForm):
 
 
 class ProfileUpdateForm(forms.ModelForm):
+    TS_CHOICES = [('0', 'concert key'), ('-3', 'Eb'), ('2', 'Bb')]
+    instr_transpose_shift = forms.ChoiceField(
+        choices=TS_CHOICES, initial='0', widget=forms.RadioSelect, label="Display and enter chords in")
+
     class Meta:
         model = Profile
-        fields = ['image']
+        fields = ['instr_transpose_shift']

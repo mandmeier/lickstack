@@ -15,6 +15,11 @@ class Profile(models.Model):
     # current city?
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 
+    TS_CHOICES = [('0', 'concert'), ('-3', 'Eb'), ('2', 'Bb')]
+
+    instr_transpose_shift = models.CharField(
+        max_length=10, choices=TS_CHOICES, default='concert')
+
     def __str__(self):
         return f'{self.user.username} Profile'
 
