@@ -17,6 +17,8 @@
     function noenter() {
         return !(window.event && window.event.keyCode == 13);}
 
+    const instr_transpose_shift = Number("{{ user.profile.instr_transpose_shift }}")
+
 </script>
 
 <!-- modal -->
@@ -115,7 +117,7 @@
                 {{ form.instrument|as_crispy_field }}
             </div>
             <div class="col-1" ></div>
-            <div class="col-5" id="other">
+            <div class="col-5" id="other" style="display: none;">
                 {{ form.other|as_crispy_field }}
             </div>
         </div>

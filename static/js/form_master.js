@@ -5,32 +5,6 @@ var optionsList = optionsContainer.querySelectorAll(".option")
 
 // update chord seq upon change of chords
 
-
-function populateChords(chds){
-    for (let i = 0; i < chds.length; i++) {
-        selectedList[i].dataset["value"] = chds[i]
-
-        if(chds[i] == "."){
-            selectedList[i].innerHTML = "&nbsp;&nbsp;&#45;"
-        } else{
-            search_str = "[for=" + chds[i] + "]"
-            search_str = search_str.replace(/#/g, '\\#')
-            selectedList[i].innerHTML = optionsContainer.querySelectorAll(search_str)[0].innerHTML
-        }
-
-    }
-}
-
-
-function updateChordSeq(){
-    let chord_seq = "x"
-    for (let chord of selectedList) {
-        chord_seq = chord_seq + chord.dataset["value"] + "x"
-    }
-    document.getElementById("id_chord_seq").value = chord_seq
-}
-
-
 function hide_34(){
 if (document.getElementById("id_time_signature_2").checked){
         $(".4th").hide();

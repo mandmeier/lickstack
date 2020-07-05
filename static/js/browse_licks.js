@@ -240,7 +240,6 @@ function storeSearchFormValues(form){
 
      // remember chord seq
     setCookie("s_chord_seq", form.elements["chord_seq"].value);
-    console.log("cookies set")
 
     if (form.elements['id_time_signature_1'].checked){
         setCookie("s_time_signature", "44");
@@ -281,6 +280,31 @@ function storeSearchFormValues(form){
     setCookie("s_instruments", instruments);
     setCookie("s_keywords", keywords);
 
+}
+
+
+function populateChords(chds){
+    for (let i = 0; i < chds.length; i++) {
+        selectedList[i].dataset["value"] = chds[i]
+
+        if(chds[i] == "."){
+            selectedList[i].innerHTML = "&nbsp;&nbsp;&#45;"
+        } else{
+            search_str = "[for=" + chds[i] + "]"
+            search_str = search_str.replace(/#/g, '\\#')
+            selectedList[i].innerHTML = optionsContainer.querySelectorAll(search_str)[0].innerHTML
+        }
+
+    }
+}
+
+
+function updateChordSeq(){
+    let chord_seq = "x"
+    for (let chord of selectedList) {
+        chord_seq = chord_seq + chord.dataset["value"] + "x"
+    }
+    document.getElementById("id_chord_seq").value = chord_seq
 }
 
 
