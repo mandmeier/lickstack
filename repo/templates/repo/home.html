@@ -120,7 +120,7 @@
         <hr>
     </div>
 
-    {% for article in howto_articles|slice:"2:3" %}
+    {% for article in howto_articles|slice:":3" %}
     <a href="{{ article.get_absolute_url }}" class="blog-panel blog-panel-sm">
             <header class="article-header">
                 <div class="article-image">
@@ -158,7 +158,7 @@
     </div>
 
 
-    {% for article in latest_articles|slice:"1:2" %}
+    {% for article in latest_articles|slice:":1" %}
     <a href="{{ article.get_absolute_url }}" class="blog-panel feat-blog-panel">
         <h2 class="feat-blog-panel-title">{{ article.title }}</h2>
         <small class="blog-author-time-feat">
@@ -178,7 +178,7 @@
 
 
 
-    {% for article in latest_articles %}
+    {% for article in latest_articles|slice:"1:3" %}
     <a href="{{ article.get_absolute_url }}" class="blog-panel blog-panel-sm">
             <header class="article-header">
                 <div class="article-image">

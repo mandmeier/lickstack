@@ -102,9 +102,9 @@ def home(request):
     articles = Article.objects.all().order_by('pk').filter(
         draft=False).filter(date_published__lt=today)
 
-    latest_articles = articles[:3]
+    latest_articles = articles.order_by('-date_published')[:3]
 
-    howto_articles = articles[:3]
+    howto_articles = articles.order_by('date_published')[:3]
 
     print(howto_articles)
 
