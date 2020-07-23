@@ -233,10 +233,11 @@ main{
 
 .main-content{
   padding-left: 5px;
-  padding-right: 0px;
+  padding-right: 5px;
 }
 
 
+/*
 @media (min-width:992px){
   .main-content{
     padding-left: 5px;
@@ -245,7 +246,7 @@ main{
 }
 
 
-/*
+
 
 @media (min-width:540px){
   .main-content{

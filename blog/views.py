@@ -181,7 +181,7 @@ def article_list(request):
 
     # paginate
     page = request.GET.get('page', 1)
-    paginator = Paginator(articles, 2)
+    paginator = Paginator(articles, 6)
     articles = paginator.page(page)
 
     context = {}

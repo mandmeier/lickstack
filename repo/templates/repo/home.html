@@ -49,39 +49,71 @@
 
 <div class="row header-row">
 <div class="page-col col-md-12 col-lg-6">
+<br>
+<section class="quote-social">
+    <h1><em>"A lick is a stock pattern or phrase consisting of a short series of notes used in solos."</em></h1>
+    <div class="social-share">
+    <hr>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.lickstack.com"><span class="icon icon-facebook-square footer-icon" style="color: #3b5998"></span></a>
+        <a href="https://twitter.com/home?status=Join+the+LickStack+and+take+your+solos+to+the+next+level%20https%3A%2F%2Fwww.lickstack.com"><span class="icon icon-twitter-square footer-icon" style="color: #00acee"></span></a>
+        <a href="http://www.reddit.com/submit?url=https%3A%2F%2Fwww.lickstack.com&title=Join+the+LickStack+and+take+your+solos+to+the+next+level"><span class="icon icon-reddit-square footer-icon" style="color: #ff4301"></span></a>
+    <hr>
+    </div>
+</section>
+<br>
+<br>
+<br>
 
 <picture class="title-img">
-    <source type="image/webp" srcset="{% static 'img/Logo_lg.webp' %}" />
-    <img src="{% static 'img/Logo_lg.png' %}" class="img-fluid" alt="Logo">
+    <source type="image/webp" srcset="{% static 'img/Logo_lg_light.webp' %}" />
+    <img src="{% static 'img/Logo_lg_light.png' %}" class="img-fluid" alt="Logo">
 </picture>
+
 
 </div>
 
 
 <div class="page-col page-col-right col-md-12 col-lg-6">
 
-<section class="quote-social">
-<h1><em>"A lick is a stock pattern or phrase consisting of a short series of notes used in solos."</em></h1>
-<div class="social-share">
-<hr>
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.lickstack.com"><span class="icon icon-facebook-square footer-icon" style="color: #3b5998"></span></a>
-    <a href="https://twitter.com/home?status=Join+the+LickStack+and+take+your+solos+to+the+next+level%20https%3A%2F%2Fwww.lickstack.com"><span class="icon icon-twitter-square footer-icon" style="color: #00acee"></span></a>
-    <a href="http://www.reddit.com/submit?url=https%3A%2F%2Fwww.lickstack.com&title=Join+the+LickStack+and+take+your+solos+to+the+next+level"><span class="icon icon-reddit-square footer-icon" style="color: #ff4301"></span></a>
-<hr>
+
+    <section class="panel signup-panel">
+
+    <h1>Don't know what to play over those changes?</h1>
+
+
+    <picture>
+      <source type="image/webp" srcset="{% static 'img/chimp_headscratch.webp' %}" />
+      <img src="{% static 'img/chimp_headscratch.png' %}" class="img-fluid">
+    </picture>
+
+    <br>
+    <br>
+        <h1>Join the LickStack community!</h1>
+        <br>
+    <ul class="bullet-points">
+    <li> Browse hundreds of licks that match your chord progressions</li>
+    <li> Listen and play along in any key</li>
+    <li> Share your licks with the community</li>
+    </ul>
+
+    </section>
+
+    <a href="{% url 'register' %}" class="btn btn-primary btn-lg center-button" role="button">Sign Up Now</a>
+
+
+
+
 </div>
-</section>
-
-
-
-</div>
 
 </div>
 
 
-<div class="row">
 
+
+<div class="row bottom-row">
 
 <div class="page-col col-md-12 col-lg-6">
+
 {% if user.is_staff %}
     <div class="display-4 welcome text-center">
         <h1 class="display-4">Get Started Here</h1>
@@ -116,48 +148,9 @@
     <p class="display-4" style="text-align: center; font-size: 24px; ">[coming soon]</p>
 
 {% endif %}
-</div>
-
-
-<div class="page-col page-col-right col-md-12 col-lg-6">
-
-    <section class="panel signup-panel">
-
-    <h1>Don't know what to play over those changes?</h1>
-
-
-    <picture>
-      <source type="image/webp" srcset="{% static 'img/chimp_headscratch.webp' %}" />
-      <img src="{% static 'img/chimp_headscratch.png' %}" class="img-fluid">
-    </picture>
-
-    <br>
-    <br>
-        <h1>Join the LickStack community!</h1>
-        <br>
-    <ul class="bullet-points">
-    <li> Browse hundreds of licks that match your chord progressions</li>
-    <li> Listen and play along in any key</li>
-    <li> Share your licks with the community</li>
-    </ul>
-
-    </section>
-
-    <a href="{% url 'register' %}" class="btn btn-primary btn-lg center-button" role="button">Sign Up Now</a>
-
-</div>
 
 
 
-</div>
-
-
-
-<div class="row bottom-row">
-
-
-
-<div class="page-col col-md-12 col-lg-6">
 {% if user.is_staff %}
     <div class="display-4 welcome text-center">
         <h1 class="display-4">Featured Articles</h1>
