@@ -6,6 +6,32 @@
 
 {% block content %}
 
+
+
+<style type="text/css">
+
+.welcome {
+  font-family: "MuseJazzText";
+  max-width: 500px;
+  color: #C00001;
+}
+.welcome hr{
+  border-top: 2px solid #b4b4b4;
+  width: 95%;
+  margin-top: .3rem;
+}
+
+.panel{
+    border: none;
+}
+
+
+
+
+</style>
+
+
+
 <script type="text/javascript">
      // active nav link
     $(document).ready(function(){
@@ -19,18 +45,23 @@
     <div id= "ads-left" class="col-md-0 col-lg-0 col-xl-3"></div>
     <div class="main-content col-md-9 col-lg-8 col-xl-6">
 
+    <br>
+    <div class="display-4 welcome text-center">
+        <h1 class="display-4">Join the LickStack community</h1>
+        <hr>
+    </div>
 
 <section class="panel">
     <form method="POST">
         {% csrf_token %}
         <fieldset class="form-group">
             <div class="text-center">
-                <h2>Join the LickStack community!</h2>
             <picture class="title-img">
-                <source type="image/webp" srcset="{% static 'img/Logo_lg.webp' %}" />
-                <img src="{% static 'img/Logo_lg.png' %}" class="img-fluid" alt="Logo">
+                <source type="image/webp" srcset="{% static 'img/Logo_lg_light.webp' %}" />
+                <img src="{% static 'img/Logo_lg_light.png' %}" class="img-fluid" alt="Logo">
             </picture>
-                <hr>
+                <br>
+                <br>
             </div>
             {{ form|crispy }}
         </fieldset>
@@ -42,8 +73,8 @@
         <small class="text-muted">
         Already have an account? <a class ="ml-2" href="{% url 'login' %}"> Sign In</a>
         </small>
-
 </section>
+
 
     </div>
     <div id= "ads-right" class="col-md-3 col-lg-4 col-xl-3"></div>

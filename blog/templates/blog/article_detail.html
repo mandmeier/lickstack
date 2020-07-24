@@ -36,7 +36,12 @@
 
 <section id="article-section">
         <h1>{{ article.title }}</h1>
-        <p><small>{{ article.author }} | {% if article.draft %}<span style="color:red;">Draft</span>{% endif %} {{ article.date_published }}</small></p>
+
+        <small class="blog-author-time-feat">
+            <div class="blog-author"><span class="blog-panel-icon icon-user"></span>{{ article.author }}{% if article.draft %}<span style="color:red;"> Draft</span>{% endif %}</div>
+            <div><span class="blog-panel-icon icon-calendar"></span>{{ article.date_published }}{% if article.date_published > today %}<span style="color:red;"> Future</span>{% endif %}</div>
+        </small>
+
         <p><b>{{ article.description }}</b></p>
 
         {% if article.image %}

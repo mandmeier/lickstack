@@ -133,6 +133,22 @@ blockquote p {
 }
 
 
+.blog-author-time-feat{
+    display: flex;
+    margin-bottom: 5px;
+    margin-left: 20px;
+}
+
+.blog-author{
+    margin-right: 15px;
+}
+
+.blog-panel-icon{
+    margin-right: 5px;
+}
+
+
+
 .social-share {
     padding-left: 20px;
 }
