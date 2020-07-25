@@ -7,7 +7,7 @@
 {% block head_title %}{{ block.super }} | {{article.title }}{% endblock head_title %}
 
 {% block meta_description %}
-
+    <meta property="og:image" content="{{article.image.url}}" />
     <meta property="og:image:url" content="{{article.image.url}}" />
     <meta property="og:image:secure_url" content="{{article.image.url}}" />
     <meta property="og:image:type" content="image/png">
