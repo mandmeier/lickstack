@@ -253,7 +253,7 @@
 
 
 // find paragraphs with youtube links
-        var youtube_regex = /watch\?v=([A-Za-z0-9]+)$/
+        var youtube_regex = /watch\?v=(.*)$/
         for (let i = 0; i < paragraphs.length; i++) {
             if (youtube_regex.test(paragraphs[i].innerHTML)){
                 youtube_id = paragraphs[i].innerHTML.match(youtube_regex)[1]
