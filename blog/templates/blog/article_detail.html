@@ -7,6 +7,7 @@
 {% block head_title %}{{ block.super }} | {{article.title }}{% endblock head_title %}
 
 {% block meta_description %}
+    <meta property="og:image" content="{{article.image.url}}" />
     <meta property="og:url" content="{{ request.build_absolute_uri }}"/>
     <meta property="og:title" content="LickStack | {{article.title }}" />
     <meta property="og:description" content="{{ article.description }}" />
@@ -63,6 +64,8 @@
         {% include 'repo/snippets/lick_snippet.html' with lick=lick chord_seq_query=chord_seq_query %}
     {% endfor %}
 
+<section class="support">
+
 <hr>
 <p style="padding-left: 20px;"><em>If you found this article helpful and/or interesting, please consider sharing it with fellow musicians!</em></p>
 
@@ -72,6 +75,22 @@
     <a href="http://www.reddit.com/submit?url={{ request.build_absolute_uri }}&title={{ share_string }}"><span class="icon icon-reddit-square footer-icon" style="color: #ff4301"></span></a>
 </div>
 <hr>
+
+<p style="padding-left: 20px;"><em>Please consider supporting our mission and community too. Any donations will go towards server costs and improving your experience.</em></p>
+
+<a style="cursor: pointer;" onclick="document.forms['paypal_form'].submit()">
+    <picture>
+      <source type="image/webp" srcset="{% static 'img/tip_bucket.webp' %}" />
+      <img border="0" alt="Tip Bucket. Donate to the LickStack" src="{% static 'img/tip_bucket.png' %}" width="60" height="70">
+    </picture>
+</a>
+<br>
+<a href="#" style="margin-top: 5px;" class="btn btn-success btn-lg" role="button" onclick="document.forms['paypal_form'].submit()">Contribute</a>
+
+<hr>
+
+</section>
+
 
 <section id="read_on">
     {% if next_article %}

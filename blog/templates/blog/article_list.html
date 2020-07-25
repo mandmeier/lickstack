@@ -6,6 +6,7 @@
 {% block head_title %}{{ block.super }} | All articles{% endblock head_title %}
 
 {% block meta_description %}
+    <meta property="og:image" content="https://www.lickstack.com/static/img/Logo_lg_light.png" />
     <meta property="og:url" content="{% url 'blog:article-list' %}"/>
     <meta property="og:title" content="LickStack | All articles" />
     <meta property="og:description" content="Browse a comprehensive list of all articles on the LickStack." />
