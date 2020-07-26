@@ -7,12 +7,12 @@
 {% block head_title %}{{ block.super }} | {{article.title }}{% endblock head_title %}
 
 {% block meta_description %}
-    <meta property="og:image" content="{{article.image.url}}" />
-    <meta property="og:image:url" content="{{article.image.url}}" />
-    <meta property="og:image:secure_url" content="{{article.image.url}}" />
+    <meta property="og:image" content="{{article.thumb.url}}" />
+    <meta property="og:image:url" content="{{article.thumb.url}}" />
+    <meta property="og:image:secure_url" content="{{article.thumb.url}}" />
     <meta property="og:image:type" content="image/png">
-    <meta property="og:image:width" content="640">
-    <meta property="og:image:height" content="395">
+    <meta property="og:image:width" content="300">
+    <meta property="og:image:height" content="300">
     <meta property="og:url" content="{{ request.build_absolute_uri }}"/>
     <meta property="og:title" content="LickStack | {{article.title }}" />
     <meta property="og:description" content="{{ article.description }}" />

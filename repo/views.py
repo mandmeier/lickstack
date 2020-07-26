@@ -106,7 +106,7 @@ def home(request):
 
     howto_articles = articles.order_by('date_published')[:3]
 
-    print(howto_articles)
+    #print(howto_articles)
 
     #licks = Lick.objects.filter(id=125)
 

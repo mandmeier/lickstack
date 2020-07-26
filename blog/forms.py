@@ -11,7 +11,7 @@ class CreateArticle(forms.ModelForm):
     class Meta:
         model = models.Article
         fields = ['title', 'description', 'body',
-                  'image', 'draft', 'date_published',
+                  'image', 'thumb', 'draft', 'date_published',
                   'lick_string', 'transpose_string', 'lick_placeholders_string']
 
         # hide form fields
