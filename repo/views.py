@@ -100,13 +100,13 @@ def home(request):
 
     today = timezone.now().date()
     articles = Article.objects.all().order_by('pk').filter(
-        draft=False).filter(date_published__lt=today)
+        draft=False).filter(date_published__lte=today)
 
     latest_articles = articles.order_by('-date_published')[:3]
 
     howto_articles = articles.order_by('date_published')[:3]
 
-    #print(howto_articles)
+    # print(howto_articles)
 
     #licks = Lick.objects.filter(id=125)
 

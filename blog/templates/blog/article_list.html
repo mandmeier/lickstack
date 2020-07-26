@@ -25,6 +25,14 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/article_list.css' %}">
 {% endcompress %}
 
+<script type="text/javascript">
+     // active nav link
+    $(document).ready(function(){
+       $(".active").removeClass("active");
+       $("#link-blog").addClass("active");
+    });
+</script>
+
 
 <div class="row margin">
     <div id= "ads-left" class="col-md-0 col-lg-0 col-xl-2"></div>
