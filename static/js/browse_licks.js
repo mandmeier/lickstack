@@ -227,11 +227,11 @@ const form = document.forms[0]
 
 
 
-var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-if (isChrome == false && getCookie("isChrome") != 'notified'){
-    setCookie('isChrome', 'notified');
-    alert("Hi there, the LickStack is under development and currently not optimized for your browser. For best experience I recommend using Google Chrome. Thanks!");
-}
+// var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+// if (isChrome == false && getCookie("isChrome") != 'notified'){
+//     setCookie('isChrome', 'notified');
+//     alert("Hi there, the LickStack is under development and currently not optimized for your browser. For best experience I recommend using Google Chrome. Thanks!");
+// }
 
 
 
