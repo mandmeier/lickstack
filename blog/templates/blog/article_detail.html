@@ -71,8 +71,9 @@
 
 <section class="support">
 
+
 <hr>
-<p style="padding-left: 20px;"><em>If you found this article helpful and/or interesting, please consider sharing it with fellow musicians!</em></p>
+<p><em>If you found this article helpful and/or interesting, please consider sharing it with fellow musicians!</em></p>
 
 <div class="social-share">
     <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}"><span class="icon icon-facebook-square footer-icon" style="color: #3b5998"></span></a>
@@ -80,9 +81,8 @@
     <a href="http://www.reddit.com/submit?url={{ request.build_absolute_uri }}&title={{ share_string }}"><span class="icon icon-reddit-square footer-icon" style="color: #ff4301"></span></a>
 </div>
 <hr>
-
-<p style="padding-left: 20px;"><em>Please consider supporting our mission and community too. Any donations will go towards server costs and improving your experience.</em></p>
-
+{% if user.is_authenticated %}
+<p><em>Please consider supporting our mission and community too. Any donations will go towards server costs and improving your experience.</em></p>
 <a style="cursor: pointer;" onclick="document.forms['paypal_form'].submit()">
     <picture>
       <source type="image/webp" srcset="{% static 'img/tip_bucket.webp' %}" />
@@ -90,24 +90,27 @@
     </picture>
 </a>
 <br>
-<a href="#" style="margin-top: 5px;" class="btn btn-success btn-lg" role="button" onclick="document.forms['paypal_form'].submit()">Contribute</a>
-
-<hr>
-
+<a href="#" style="margin-top: 5px;" class="btn btn-primary btn-lg" role="button" onclick="document.forms['paypal_form'].submit()">Contribute</a>
+<br>
+{% else %}
+<p><em>If you wish to <b>stay up to date about the newest articles and licks</b>, consider joining the LickStack community and start your very own collection of licks!</em></p>
+<a href="{% url 'register' %}" class="btn btn-primary btn-lg center-button" role="button">Sign Up Now</a>
+{% endif %}
 </section>
 
 
 <section id="read_on">
+    <hr>
     {% if next_article %}
     <div class="read_on_link" style="text-align: right; justify-content: flex-end;">
         <div class="read_on_title">{{ next_article.title }}</div>
-        <a href="{{ next_article.get_absolute_url }}" class="btn btn-primary read_on_btn" role="button">NEXT <span class="icon-chevron-right"></span></a>
+        <a href="{{ next_article.get_absolute_url }}" class="btn btn-success read_on_btn" role="button">NEXT <span class="icon-chevron-right"></span></a>
     </div>
     {% endif %}
     <br>
     {% if prev_article %}
     <div class="read_on_link">
-        <a href="{{ prev_article.get_absolute_url }}" class="btn btn-primary read_on_btn" role="button"><span class="icon-chevron-left"></span> PREV</a>
+        <a href="{{ prev_article.get_absolute_url }}" class="btn btn-success read_on_btn" role="button"><span class="icon-chevron-left"></span> PREV</a>
         <div class="read_on_title">{{ prev_article.title }}</div>
     </div>
     {% endif %}

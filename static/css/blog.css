@@ -38,22 +38,6 @@
     display:none;
 }
 
-/*
-.article-header{
-    display: flex;
-    border: 1px solid black;
-    padding: 0px;
-}
-.article-metadata{
-    max-width: 50%;
-    border: 1px solid red;
-}
-.article-image{
-    max-width: 50%;
-    border: 1px solid green;
-}
-*/
-
 
 
 .video-container {
@@ -148,10 +132,6 @@ blockquote p {
 
 
 
-.social-share {
-    padding-left: 20px;
-}
-
 
 #content a:not(.panel-btn) {
   display: inline-block;
@@ -187,3 +167,4 @@ h3 {
 .support {
   text-align: center;
 }
+

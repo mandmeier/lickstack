@@ -32,9 +32,6 @@ def get_next_or_prev(models, item, direction):
     getit = False
     if direction == 'prev':
         models = models.reverse()
-    # print("models")
-    # print(models)
-    # print(reversed(list(models)))
     for m in models:
         if getit:
             return m
@@ -75,8 +72,6 @@ def article_detail(request, slug=None):
         if not request.user.is_staff or not request.user.is_superuser:
             raise Http404
     share_string = quote_plus(article.title)
-    print("TEST")
-    print(share_string)
 
     initial_data = {
         "content_type": article.get_content_type,
@@ -108,8 +103,6 @@ def article_detail(request, slug=None):
         )
         parent_url = new_comment.content_object.get_absolute_url()
         redirect_url = f'{parent_url}#comments_section'
-        print("TEST")
-        print(parent_url)
         return HttpResponseRedirect(redirect_url)
 
     comments = article.comments
@@ -124,9 +117,6 @@ def article_detail(request, slug=None):
     prev_article = get_next_or_prev(
         articles, article, 'prev')
     # If there is a next item
-    print("TEST")
-    print(next_article)
-    print(prev_article)
 
     context = {}
     context['article'] = article
@@ -138,12 +128,10 @@ def article_detail(request, slug=None):
 
     # find licks if article has licks
     if article.lick_string and article.lick_string != '':
-        print(article.lick_string)
         lick_string = article.lick_string
         transpose_string = article.transpose_string
 
         lick_sequence = lick_string.split(',')
-        print(lick_sequence)
 
         licks = []
         for id in lick_sequence:
