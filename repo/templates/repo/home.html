@@ -171,7 +171,7 @@
     {% endfor%}
 
 
-
+{% if user.is_staff %}
     {% for article in latest_articles|slice:"1:3" %}
     <a href="{{ article.get_absolute_url }}" class="blog-panel blog-panel-sm">
             <header class="article-header">
@@ -190,8 +190,9 @@
             </header>
     </a>
     {% endfor%}
-
+{% endif %}
     <a href="{% url 'blog:article-list' %}" class="btn btn-primary btn-lg center-button" role="button">More Articles</a>
+
 </div>
 
 
