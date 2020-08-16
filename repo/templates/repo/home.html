@@ -146,8 +146,6 @@
 
 
 
-
-{% if user.is_staff %}
     <div class="display-4 welcome text-center">
         <h1 class="display-4">Featured Articles</h1>
         <hr>
@@ -194,7 +192,6 @@
     {% endfor%}
 
     <a href="{% url 'blog:article-list' %}" class="btn btn-primary btn-lg center-button" role="button">More Articles</a>
-{% endif %}
 </div>
 
 
