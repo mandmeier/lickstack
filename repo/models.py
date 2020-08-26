@@ -111,6 +111,8 @@ class Lick(models.Model):
     favorite = models.ManyToManyField(
         User, related_name='favorite', blank=True)
     tags = TaggableManager()
+    description = models.TextField(
+        max_length=500, null=True, blank=True, default="")
 
     TS_CHOICES = [('44', '4/4'), ('34', '3/4')]
 

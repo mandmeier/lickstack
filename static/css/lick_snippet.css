@@ -193,9 +193,14 @@
     cursor: pointer;
 }
 
-.edit-btn {
+.description-btn {
   position: absolute;
   left: 105px;
+}
+
+.edit-btn {
+  position: absolute;
+  left: 145px;
 }
 
 
@@ -209,3 +214,10 @@
   right: 5px;
 }
 
+.lick_description {
+  font-size: 0.8em;
+}
+
+.lick_description > p {
+  margin-bottom: 0.8em;
+}

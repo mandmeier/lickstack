@@ -126,9 +126,12 @@ html, body{
 
 /* Hide the link that should open and close the topnav on small screens */
 .topnav .sandwich-icon {
-  padding: 0px 16px;
+  color: #f9f9f9;
+  padding: 0px;
+  padding-left: 5px;
+  margin-right: 10px;
   font-size: 37px;
-  height: 43px;
+  height: 55px;
   display: none;
 }
 

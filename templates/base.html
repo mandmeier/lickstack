@@ -95,6 +95,9 @@
         .icon-key:before {
           content: "\e98d";
         }
+        .icon-menu:before {
+          content: "\e9bd";
+        }
         .icon-info:before {
           content: "\ea0c";
         }
@@ -260,7 +263,7 @@ function myFunction() {
   <a class="nav-link" id="link-login" href="{% url 'login' %}"><span class="icon-key"></span>Login</a>
   <a class="nav-link" id="link-register" href="{% url 'register' %}"><span class="icon-plus"></span>Register</a>
   {% endif %}
-  <a href="javascript:void(0);" class="sandwich-icon" onclick="myFunction()">&#9776;</a>
+  <a href="javascript:void(0);" class="sandwich-icon" onclick="myFunction()"><span class="icon-menu"></span></a>
   <div>
 </nav>
 

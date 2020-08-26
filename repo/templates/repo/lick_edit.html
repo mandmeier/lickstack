@@ -266,6 +266,32 @@
         -->
     </main>
 
+
+
+<section class="form-section" id="form-section-description">
+
+    <header class="form-header" id="form-header-description">
+        <h4>Description</h4>
+        <button type="button" class="form-info-button" data-toggle="collapse" data-target="#form-info-description"><span class="icon icon-info"></span></button>
+    </header>
+
+    <main class="form-fields">
+
+        <div class="collapse form-info" id="form-info-description">
+            <div class="info" id="description_info">
+                <p>Add an (optional) description to your lick. <br> If you have any links to external resources, add them here! </p>
+            </div>
+        </div>
+
+        {{ form.description|as_crispy_field }}
+
+    </main>
+
+</section>
+
+
+
+
 </section>
 
     <div id="check-form-btn">

@@ -86,9 +86,15 @@
             <option value="1">+1</option>
             <option value="0" selected="selected">T</option>
         </select>
+
+    {% if lick.description %}
+        <button type="button" class="panel-btn description-btn" data-toggle="collapse" data-target="#description_{{ lick.id }}"><span class="icon icon-info"></span></button>
+    {% endif %}
+
     {% if lick.author == user %}
         <a class="panel-btn edit-btn" href="{% url 'lick-update' lick.id %}"><span class="icon icon-edit"></span></a>
     {% endif %}
+
 
         <div class="like like-section_{{ lick.id }}">
             {% include 'repo/snippets/like_section.html' %}
@@ -97,6 +103,12 @@
             {% include 'repo/snippets/favorite_section.html' %}
         </div>
 
+    </div>
+
+
+    <div class="collapse form-info lick_description" id="description_{{ lick.id }}">
+        <hr>
+        {{ lick.description|linebreaks|urlize }}
     </div>
 
 

@@ -13,7 +13,8 @@ class LickForm(forms.ModelForm):
 
   class Meta:
     model = Lick
-    fields = ('file', 'instrument', 'time_signature', 'tags', 'chord_seq')
+    fields = ('file', 'instrument', 'time_signature',
+              'tags', 'chord_seq', 'description')
 
     labels = {
         'file': '',
@@ -21,6 +22,7 @@ class LickForm(forms.ModelForm):
         'other': '',
         'chord_seq': '',
         'instrument': '',
+        'description': '',
     }
     help_texts = {
         'file': '',

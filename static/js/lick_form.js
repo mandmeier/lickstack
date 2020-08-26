@@ -40,6 +40,8 @@ function storeLickFormValues(form){
         setCookie("newlick_ts", "44");
     }
 
+    // description
+    setCookie("description", form.elements["description"].value);
 
 }
 
@@ -96,6 +98,12 @@ function getLickFormValues(){
         form.elements['id_time_signature_1'].checked = true;
     }
     changeLayout()
+
+    if (getCookie("description") == null){
+        form.elements["description"].value = ""
+    } else {
+        form.elements["description"].value = getCookie("description");
+    }
 
 
 }
