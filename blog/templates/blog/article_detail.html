@@ -135,8 +135,8 @@
     {% for comment in comments %}
         <blockquote>
         <div class="comment-content">
-            <small>{{ comment.author }} | {{ comment.timestamp|timesince }} ago | {% if comment.children.count > 0 %}{{ comment.children.count}} response{{ comment.children.count|pluralize }} | {% endif %}</small>
-            <a class="comment-reply-btn" href="#">Reply</a><br>
+            <small>{{ comment.author }} | {{ comment.timestamp|timesince }} ago {% if comment.children.count > 0 %} | <a class="comment-reply-btn" href="#">{{ comment.children.count}} response{{ comment.children.count|pluralize }}</a>{% endif %}</small>
+            <br>
             {{ comment.content }}
             <hr>
         </div>
