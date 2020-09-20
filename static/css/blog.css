@@ -15,6 +15,10 @@
   margin: 20px;
 }
 
+.social-share-top {
+  margin-left: 20px;
+}
+
 
 #content > p{
   margin: 20px;
@@ -163,3 +167,6 @@ h3 {
   text-align: center;
 }
 
+.video-container {
+  margin-bottom: 10px;
+}

@@ -21,6 +21,7 @@
     <p>To insert image, go to new line and insert image[/static/img/blog_img/yourimage] (don't include .png, will be added automatically)</p>
     <p>To insert lick, go to new line and insert lick[13,6] for lick number 13, transposed +6.</p>
     <p>To insert youtube video go to new line and paste url of youtube video</p>
+    <p>Youtube from_to https://www.youtube.com/watch?v=6PyYcnXQZJY?start=194&end=206</p>
     <p>Thumb image 180x180, max 300kb.</p>
     <p>https://tinypng.com/</p>
     <p>https://resizeimage.net/</p>
@@ -33,8 +34,10 @@
     {% csrf_token %}
     {{ form|crispy }}
 
-    <input type="submit" value="Create Article">
+    <input type="submit" value="Save Article">
+    <br>
 </form>
+
 
 
 
