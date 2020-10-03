@@ -15,35 +15,6 @@ from comments.forms import CommentForm
 from comments.models import Comment
 
 
-''' Function '''
-
-
-def get_next_or_prev(models, item, direction):
-    '''
-    Returns the next or previous item of
-    a query-set for 'item'.
-
-    'models' is a query-set containing all
-    items of which 'item' is a part of.
-
-    direction is 'next' or 'prev'
-
-    '''
-    getit = False
-    if direction == 'prev':
-        models = models.reverse()
-    for m in models:
-        if getit:
-            return m
-        if item == m:
-            getit = True
-    if getit:
-        # This would happen when the last
-        # item made getit True
-        return models[0]
-    return False
-
-
 @login_required
 def article_create(request):
     if not request.user.is_staff:
@@ -110,21 +81,30 @@ def article_detail(request, slug=None):
     # get next object among published articles
     today = timezone.now().date()
     articles = Article.objects.all().order_by('pk').filter(
-        draft=False).filter(date_published__lt=today)
+        draft=False).filter(date_published__lte=today)
 
-    next_article = get_next_or_prev(
-        articles, article, 'next')
-    prev_article = get_next_or_prev(
-        articles, article, 'prev')
-    # If there is a next item
+    # get next 3 articles for preview
+    def get_next_3(article):
+        for index, art in enumerate(articles):
+            if art == article:
+                next_3 = articles[index+1:index+4]
+        if len(next_3) == 2:
+            next_3 = next_3 + [articles[0]]
+        if len(next_3) == 1:
+            next_3 = next_3 + articles[0:2]
+        if len(next_3) == 0:
+            next_3 = next_3 + articles[0:3]
+        return next_3
+
+    next_articles = get_next_3(article)
+
 
     context = {}
     context['article'] = article
     context['share_string'] = share_string
     context['comments'] = comments
     context['comment_form'] = form
-    context['next_article'] = next_article
-    context['prev_article'] = prev_article
+    context['next_articles'] = next_articles
 
     # find licks if article has licks
     if article.lick_string and article.lick_string != '':

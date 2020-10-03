@@ -96,32 +96,56 @@
 <p><em>If you wish to <b>stay up to date about the newest articles and licks</b>, consider joining the LickStack community and start your very own collection of licks!</em></p>
 <a href="{% url 'register' %}" class="btn btn-primary btn-lg center-button" role="button">Sign Up Now</a>
 {% endif %}
+<hr>
+<br>
+<p><em>You are invited to explore our <b>collection of crowdsourced licks</b>:</em></p>
+
+<a href="{% url 'browse-licks' %}" class="btn btn-secondary btn-lg center-button" role="button">Browse Licks</a>
+
 </section>
 
 
-<section id="read_on">
-    <hr>
-    {% if next_article %}
-    <div class="read_on_link" style="text-align: right; justify-content: flex-end;">
-        <div class="read_on_title">{{ next_article.title }}</div>
-        <a href="{{ next_article.get_absolute_url }}" class="btn btn-success read_on_btn" role="button">NEXT <span class="icon-chevron-right"></span></a>
+   <div class="display-4 welcome text-center">
+        <h3 class="display-4">Read On</h3>
+        <hr>
     </div>
-    {% endif %}
-    <br>
-    {% if prev_article %}
-    <div class="read_on_link">
-        <a href="{{ prev_article.get_absolute_url }}" class="btn btn-success read_on_btn" role="button"><span class="icon-chevron-left"></span> PREV</a>
-        <div class="read_on_title">{{ prev_article.title }}</div>
+
+    {% if next_articles %}
+    <div class="next-articles">
+        {% for article in next_articles %}
+        <a href="{{ article.get_absolute_url }}" class="blog-panel blog-panel-sm">
+                <header class="article-header">
+                    <div class="article-image">
+                        {% if article.thumb %}
+                        <img src="{{article.thumb.url}}" class='img-responsive'>
+                        {% endif %}
+                    </div>
+                    <div class="article-metadata">
+                        <h2 class="blog-panel-title"><b>{{ article.title }}</b></h2>
+                        <small class="blog-author-time">
+                            <div class="blog-author"><span class="blog-panel-icon icon-user"></span>{{ article.author }}</div>
+                            <div class="blog-time"><span class="blog-panel-icon icon-calendar"></span>{{ article.date_published }}</div>
+                        </small>
+                   </div>
+                </header>
+        </a>
+        {% endfor%}
     </div>
     {% endif %}
 
-    <hr>
-    <br>
-</section>
+
+
+
+
+
+
+   <div class="display-4 welcome text-center">
+        <h3 class="display-4">Comments</h3>
+        <hr>
+    </div>
 
 
 <section name="comments_section" id="comments_section">
-    <p class='lead' >Comments</p>
     {% if request.user.is_authenticated %}
     <form method="POST" accept=".">
         {% csrf_token %}
