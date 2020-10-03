@@ -93,18 +93,19 @@ def get_faved_licks(request, licks):
 
 def home(request):
 
-    #id_tuple = (1, 2, 3)
+
     #licks = Lick.objects.filter(id__in=id_tuple)
 
-    licks = Lick.objects.all().order_by('-id')[:5]
+    licks = Lick.objects.all().order_by('-id')[:10]
 
     today = timezone.now().date()
     articles = Article.objects.all().order_by('pk').filter(
         draft=False).filter(date_published__lte=today)
 
-    latest_articles = articles.order_by('-date_published')[:3]
+    latest_articles = articles.order_by('-date_published')
 
-    howto_articles = articles.order_by('date_published')[:3]
+
+    featured_articles = latest_articles.filter(id__in=(7,4,0))
 
     # print(howto_articles)
 
@@ -116,7 +117,7 @@ def home(request):
     context['user_liked'] = get_liked_licks(request, licks)
     context['user_faved'] = get_faved_licks(request, licks)
     context['latest_articles'] = latest_articles
-    context['howto_articles'] = howto_articles
+    context['featured_articles'] = featured_articles
 
     return render(request, 'repo/home.html', context)
 
