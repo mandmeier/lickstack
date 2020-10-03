@@ -105,7 +105,7 @@ def home(request):
     latest_articles = articles.order_by('-date_published')
 
 
-    featured_articles = latest_articles.filter(id__in=(7,4,0))
+    featured_articles = latest_articles.filter(id__in=(8,5,1))
 
     # print(howto_articles)
 
