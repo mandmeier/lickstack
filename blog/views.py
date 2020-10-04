@@ -93,7 +93,7 @@ def article_detail(request, slug=None):
         if len(next_3) == 1:
             next_3 = next_3 + articles[0:2]
         if len(next_3) == 0:
-            next_3 = next_3 + articles[0:3]
+            next_3 = articles[0:2] + [articles[7]]
         return next_3
 
     next_articles = get_next_3(article)
