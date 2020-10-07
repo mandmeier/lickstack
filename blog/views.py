@@ -87,17 +87,19 @@ def article_detail(request, slug=None):
     def get_next_3(article):
         for index, art in enumerate(articles):
             if art == article:
-                next_3 = articles[index+1:index+4]
-        if len(next_3) == 2:
-            next_3 = next_3 + [articles[0]]
-        if len(next_3) == 1:
-            next_3 = next_3 + articles[0:2]
-        if len(next_3) == 0:
+                next_3 = articles[index + 1:index + 4]
+        if next_3:
+            if len(next_3) == 2:
+                next_3 = next_3 + [articles[0]]
+            if len(next_3) == 1:
+                next_3 = next_3 + articles[0:2]
+            if len(next_3) == 0:
+                next_3 = articles[0:2] + [articles[7]]
+        else:
             next_3 = articles[0:2] + [articles[7]]
         return next_3
 
     next_articles = get_next_3(article)
-
 
     context = {}
     context['article'] = article
