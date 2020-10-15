@@ -58,6 +58,9 @@
             <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}"><span class="icon icon-facebook-square footer-icon" style="color: #3b5998"></span></a>
             <a href="https://twitter.com/home?status={{ share_string }}%20{{ request.build_absolute_uri }}"><span class="icon icon-twitter-square footer-icon" style="color: #00acee"></span></a>
             <a href="http://www.reddit.com/submit?url={{ request.build_absolute_uri }}&title={{ share_string }}"><span class="icon icon-reddit-square footer-icon" style="color: #ff4301"></span></a>
+            {% if user.is_staff %}
+            <a href="{{ article.get_absolute_url }}edit"><span class="icon icon-edit footer-icon" style="color: #008000; margin-left: 20px;"></span></a>
+            {% endif %}
         </div>
         <hr>
         <div id="content">{{ article.get_markdown }}</div>
@@ -223,7 +226,7 @@
 
     // replace images
 
-    function create_img_element(url) {
+    function create_img_element(url, alt) {
         src = document.createElement("source");
         src.setAttribute("type", "image/webp");
         src.setAttribute("srcset", url + ".webp");
@@ -231,6 +234,7 @@
         img = document.createElement("img");
         img.setAttribute("src", url + ".png");
         img.setAttribute("class", "img-fluid");
+        img.setAttribute("alt", alt);
 
         pctr = document.createElement("picture");
         pctr.setAttribute("class", "blog-img");
@@ -241,14 +245,16 @@
     }
 
 
-    img_regex = /image\[(.+)\]/
+    img_regex = /image\[(.+),(.+)\]/
 
     for (let i = 0; i < paragraphs.length; i++) {
         if (img_regex.test(paragraphs[i].innerHTML)){
-            img_url = paragraphs[i].innerHTML.match(img_regex)[1]
+            img_url = "https://lickstack-data.s3-eu-west-1.amazonaws.com/blog_img/" + paragraphs[i].innerHTML.match(img_regex)[1]
+            alt_text = paragraphs[i].innerHTML.match(img_regex)[2]
             console.log(i)
             console.log(img_url)
-            paragraphs[i].replaceWith(create_img_element(img_url))
+            console.log(alt_text)
+            paragraphs[i].replaceWith(create_img_element(img_url, alt_text))
         }
     }
 
@@ -302,31 +308,6 @@
 
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-    // var video_placeholders = ["video[frxT2qB1POQ]"]
-
-    // //var video_placeholders = video_placeholders_string.split(';')
-    // var video_paragraphs = content.querySelectorAll("p");
-
-    // for (let vid = 0; vid < video_placeholders; vid++) {
-    //     for (let i = 0; i < paragraphs.length; i++) {
-    //         if (paragraphs[i].innerHTML == video_placeholders[vid]){
-    //             console.log(i)
-    //             console.log(vid)
-    //             //paragraphs[i].replaceWith(lick_elements[lck])
-    //         }
-    //     }
-    // }
 
 
 
