@@ -18,7 +18,7 @@ class Profile(models.Model):
     TS_CHOICES = [('0', 'concert'), ('-3', 'Eb'), ('2', 'Bb')]
 
     instr_transpose_shift = models.CharField(
-        max_length=10, choices=TS_CHOICES, default='concert')
+        max_length=10, choices=TS_CHOICES, default='0')
 
     def __str__(self):
         return f'{self.user.username} Profile'
