@@ -7,9 +7,6 @@ This section lists things to do, ordered by category and priority
 
 ### Safari Mobile: licks don't load, just endless load wheel spinning
 
-### When manually typing keywords on mobile, there is no way to press "enter"
-Maybe confirm with space after typing keyword?
-
 ### check uploaded files for audio filetype instead of just file extension
 So that files for upload don't need extension
 

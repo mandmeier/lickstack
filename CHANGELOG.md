@@ -6,10 +6,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Whenever you make a notable change, add it to the [Unreleased] section first
 
+
 ## [Unreleased]
 ### Added
 ### Changed
 ### Fixed
+
+
+
+## [1.3.1] - 2020-28-15
+### Changed
+- instruments must now be one word (any spaces replaced with bar)
+
+### Fixed
+- on mobile, manually entering keyword and confirm with space bar now working
 
 
 ## [1.3.0] - 2020-28-15

@@ -79,8 +79,10 @@ function addInstrument(instrument){
 
 instrumentsInput.addEventListener('keyup', function(e){
     let instrument = instrumentsInput.value
-    if (e.key == 'Enter' && instrument != ""){
-        addInstrument(instrument)
+    if (e.key == 'Enter' && instrument != "" || e.keyCode == 32 && instrument != ""){
+        if(!(/^\s+$/.test(instrument))){
+            addInstrument(instrument);
+        }
     }
 });
 
@@ -169,8 +171,10 @@ function addKeyword(keyword){
 
 keywordsInput.addEventListener('keyup', function(e){
     let keyword = keywordsInput.value
-    if (e.key == 'Enter' && keyword != ""){
-        addKeyword(keyword);
+    if (e.key == 'Enter' && keyword != "" || e.keyCode == 32 && keyword != ""){
+        if(!(/^\s+$/.test(keyword))){
+            addKeyword(keyword);
+        }
     }
 });
 

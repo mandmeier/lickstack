@@ -394,8 +394,12 @@ def favorite_lick(request):
 
 
 def sanitize_instrument(i):
-    i = re.sub(r'[^A-Za-z0-9\s()]+', '', i).strip().lower()
+    i = re.sub(r'[^A-Za-z0-9\s()]+', '', i)
+    i = re.sub(r'^[\s]+', '', i)
+    i = re.sub(r'[\s]+$', '', i)
+    i = re.sub(r'[\s]+', '_', i).lower()
     return(i)
+
 
 
 @login_required

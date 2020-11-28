@@ -120,17 +120,10 @@ for (let i = 0; i < instr_options.length; i++) {
         other_option = instr_options[i]
     }
 }
-//const other_option = instr_select.querySelectorAll('[value="5"]')[0];
+
 instr_select.removeChild(other_option);
 instr_select.appendChild(other_option);
 var selected_instr = instr_options[instr_select.selectedIndex].innerHTML
-
-// // hide initial other field
-// window.addEventListener('load', function () {
-//     if(!(selected_instr == "other")){
-//         jQuery('#other').hide();
-//     }
-// })
 
 // toggle "please specify" field
 jQuery('#id_instrument').on('change', function() {
@@ -218,8 +211,6 @@ function sanitizeKey(key){
 }
 
 
-
-
 // add keyword
 
 function add_kw(keyword){
@@ -238,8 +229,11 @@ function add_kw(keyword){
 
 tagsInput.addEventListener('keyup', function(e){
     let keyword = tagsInput.value
-    if (e.key == 'Enter' && keyword != ""){
-        add_kw(keyword);
+    //if (e.key == 'Enter' && keyword != "" || e.keyCode == 32 && keyword != ""){
+    if (e.key == 'Enter' && keyword != "" || e.keyCode == 32 && keyword != ""){
+        if(!(/^\s+$/.test(keyword))){
+            add_kw(keyword);
+        }
     }
 });
 
