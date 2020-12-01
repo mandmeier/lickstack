@@ -11,6 +11,10 @@ This section lists things to do, ordered by category and priority
 So that files for upload don't need extension
 
 
+### manual keyword input and confirm with space bar still not working for android chrome
+issue with keyCode. space bar not recognized
+https://stackoverflow.com/questions/17139039/keycode-is-always-zero-in-chrome-for-android
+
 
 ## New Features
 

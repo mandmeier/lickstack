@@ -14,6 +14,7 @@ from .forms import LickForm
 from django.utils import timezone
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.template.loader import render_to_string
 from itertools import cycle
 import re
@@ -93,7 +94,6 @@ def get_faved_licks(request, licks):
 
 def home(request):
 
-
     #licks = Lick.objects.filter(id__in=id_tuple)
 
     licks = Lick.objects.all().order_by('-id')[:10]
@@ -104,8 +104,7 @@ def home(request):
 
     latest_articles = articles.order_by('-date_published')
 
-
-    featured_articles = latest_articles.filter(id__in=(8,5,1))
+    featured_articles = latest_articles.filter(id__in=(8, 5, 1))
 
     # print(howto_articles)
 
@@ -401,7 +400,6 @@ def sanitize_instrument(i):
     return(i)
 
 
-
 @login_required
 def create_lick(request):
     # print(instr_transpose_shift)
@@ -527,3 +525,41 @@ def delete_lick(request, pk):
     else:
         prev_url = 'my-licks'
     return redirect(prev_url)
+
+
+import json
+from django.core.serializers.json import DjangoJSONEncoder
+
+
+@staff_member_required
+def lick_detail(request, pk):
+
+    album = [pk]
+
+    licks = Lick.objects.filter(id__in=album).order_by('id')
+    lick_info = licks.values(
+        'id',
+        'time_signature',
+        'transpose_rule',
+    )
+
+    lick_info = list(lick_info)
+
+    # add tags to lick info dict
+    tags = [list(lick.tags.names()) for lick in licks]
+    for i in range(0, len(lick_info)):
+        lick_info[i]['tags'] = tags[i]
+
+    # convert to json
+    licks_json = json.dumps(lick_info, cls=DjangoJSONEncoder)
+
+    print("TEST")
+    print(licks_json)
+    print(pk)
+
+    context = {}
+    context['licks'] = licks
+    context['licks_json'] = licks_json
+    context['pk'] = pk
+
+    return render(request, 'repo/lick_detail.html', context)

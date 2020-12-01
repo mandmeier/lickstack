@@ -69,9 +69,9 @@
 
     <div class="lick-controls">
         <button class="panel-btn slowdown btn-default" id="slowdown-section_{{ lick.id }}">
-            <input class="slowdown-btn" type="image" id="slowdown_{{ lick.id }}" onclick="slowdown('{{ lick.id }}');" value="1" src="{% static 'img/tortoise_toggled.png' %}" alt="slowdown">
+            <input class="slowdown-btn" type="image" src="{% static 'img/tortoise_toggled.png' %}" alt="slowdown">
         </button>
-        <select class="panel-btn transpose-btn" id="transpose_{{ lick.id }}" name="transpose" onchange="updateChords('{{ lick.id }}')">
+        <select class="panel-btn transpose-btn" name="transpose">
             <option value="12">+12</option>
             <option value="11">+11</option>
             <option value="10">+10</option>
