@@ -106,7 +106,6 @@ def home(request):
 
     featured_articles = latest_articles.filter(id__in=(8, 5, 1))
 
-    # print(howto_articles)
 
     #licks = Lick.objects.filter(id=125)
 
@@ -165,9 +164,6 @@ def browse_licks_view(request):
         instrument_list = instrument_string.split(',')
 
         keyword_list = keyword_string.split(',')
-
-        print("TEST2")
-        print(chord_seq)
 
         # make regex query seq
         def get_chord_seq_query(chord_seq, half_steps=0):
@@ -358,6 +354,10 @@ def like_lick(request):
     context['total_likes'] = lick.total_likes()
     context["user_liked"] = user_liked
 
+    print("TEST")
+    print(request)
+    print(request.is_ajax())
+
     if request.is_ajax():
         html = render_to_string(
             'repo/snippets/like_section.html', context, request=request)
@@ -402,7 +402,6 @@ def sanitize_instrument(i):
 
 @login_required
 def create_lick(request):
-    # print(instr_transpose_shift)
     form = LickForm(request.POST or None)
     if request.method == "POST":
         form = LickForm(request.POST, request.FILES)
@@ -446,7 +445,6 @@ def create_lick(request):
 
 @login_required
 def update_lick(request):
-    # print(instr_transpose_shift)
     form = LickForm(request.POST or None)
     if request.method == "POST":
         form = LickForm(request.POST, request.FILES)
@@ -534,32 +532,36 @@ from django.core.serializers.json import DjangoJSONEncoder
 @staff_member_required
 def lick_detail(request, pk):
 
-    album = [pk]
+    album = [1,4,7,32,41]
 
     licks = Lick.objects.filter(id__in=album).order_by('id')
+
+    # lick data for js variables
     lick_info = licks.values(
         'id',
+        'chord_seq_search',
         'time_signature',
         'transpose_rule',
     )
 
     lick_info = list(lick_info)
 
-    # add tags to lick info dict
-    tags = [list(lick.tags.names()) for lick in licks]
+    # add audio filenames to lick info dict
+    audio_urls = [lick.file.url for lick in licks]
     for i in range(0, len(lick_info)):
-        lick_info[i]['tags'] = tags[i]
+        lick_info[i]['audio_url'] = audio_urls[i]
+
+
+    # add user liked
+
 
     # convert to json
     licks_json = json.dumps(lick_info, cls=DjangoJSONEncoder)
-
-    print("TEST")
-    print(licks_json)
-    print(pk)
 
     context = {}
     context['licks'] = licks
     context['licks_json'] = licks_json
     context['pk'] = pk
-
+    context['user_liked'] = ",".join([str(lick.id) for lick in get_liked_licks(request, licks)])
+    context['user_faved'] = ",".join([str(lick.id) for lick in get_faved_licks(request, licks)])
     return render(request, 'repo/lick_detail.html', context)

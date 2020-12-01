@@ -3,10 +3,6 @@
 
 <article class="panel lick lick-section">
 
-    <div class="chord_seq" value="{{ lick.chord_seq_search}}" style="display: none;"></div>
-    <div class="transpose_rule" value="{{ lick.transpose_rule}}" style="display: none;"></div>
-    <div class="time_signature" value="{{ lick.time_signature}}" style="display: none;"></div>
-
     <div class="lick-metadata">
         <div class="metadata-row">
             <p id="meta_id">{{ lick.id }} <small class="text-muted"> – {{ lick.instrument }}</small></p>
@@ -19,9 +15,9 @@
     </div>
 
     <div class="audio-player col-12">
-          <button class="play" id="{{ lick.id }}[X]{{ lick.file.url }}"><span class="icon icon-play"></span></button>
+          <button class="play"><span class="icon icon-play"></span></button>
 
-          <div class="seek-bar" id="seekbar_{{ lick.id }}">
+          <div class="seek-bar">
               <div class="fill"></div>
               <div class="handle"></div>
           </div>
@@ -30,19 +26,19 @@
     <div class="lick-display">
     <div class="row chords-row">
         <div class="separator-lr">&#124;</div>
-            <div name="chord_1" class="chord-img"></div>
+            <div class="chord-img"></div>
         <div class="separator-34"></div>
-            <div name="chord_2" class="chord-img"></div>
+            <div class="chord-img"></div>
         <div class="separator-34"></div>
-            <div name="chord_3" class="chord-img"></div>
-            <div name="chord_4" class="chord-img"></div>
+            <div class="chord-img"></div>
+            <div class="chord-img"></div>
         <div class="separator-mid">&#124;</div>
-            <div name="chord_5" class="chord-img"></div>
+            <div class="chord-img"></div>
         <div class="separator-34"></div>
-            <div name="chord_6" class="chord-img"></div>
+            <div class="chord-img"></div>
         <div class="separator-34"></div>
-            <div name="chord_7" class="chord-img"></div>
-            <div name="chord_8" class="chord-img"></div>
+            <div class="chord-img"></div>
+            <div class="chord-img"></div>
         <div class="separator-lr">&#124;</div>
     </div>
     </div>
@@ -50,25 +46,25 @@
     <div class="lick-display">
     <div class="row chords-row">
         <div class="separator-lr">&#124;</div>
-            <div name="chord_9" class="chord-img"></div>
+            <div class="chord-img"></div>
         <div class="separator-34"></div>
-            <div name="chord_10" class="chord-img"></div>
+            <div class="chord-img"></div>
         <div class="separator-34"></div>
-            <div name="chord_11" class="chord-img"></div>
-            <div name="chord_12" class="chord-img"></div>
+            <div class="chord-img"></div>
+            <div class="chord-img"></div>
         <div class="separator-mid">&#124;</div>
-            <div name="chord_13" class="chord-img"></div>
+            <div class="chord-img"></div>
         <div class="separator-34"></div>
-            <div name="chord_14" class="chord-img"></div>
+            <div class="chord-img"></div>
         <div class="separator-34"></div>
-            <div name="chord_15" class="chord-img"></div>
-            <div name="chord_16" class="chord-img"></div>
+            <div class="chord-img"></div>
+            <div class="chord-img"></div>
         <div class="separator-lr">&#124;</div>
     </div>
     </div>
 
     <div class="lick-controls">
-        <button class="panel-btn slowdown btn-default" id="slowdown-section_{{ lick.id }}">
+        <button class="panel-btn slowdown btn-default">
             <input class="slowdown-btn" type="image" src="{% static 'img/tortoise_toggled.png' %}" alt="slowdown">
         </button>
         <select class="panel-btn transpose-btn" name="transpose">

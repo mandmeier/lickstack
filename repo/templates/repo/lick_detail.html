@@ -17,6 +17,10 @@
 <script type="text/javascript">
     const instr_transpose_shift = Number("{{ user.profile.instr_transpose_shift }}")
     const lck_json = "{{ licks_json }}";
+    const user_liked = "{{ user_liked }}".split(",")
+    const user_faved = "{{ user_faved }}".split(",")
+    const tortoise_on_url = "{% static 'img/tortoise_hover.png' %}";
+    const tortoise_off_url = "{% static 'img/tortoise_toggled.png' %}";
 </script>
 
 
@@ -43,18 +47,16 @@
 
     <div class="alert alert-primary" role="alert">
        This lick does not exist...
+       <br>
+       <div>
+       <a href="{% url 'browse-licks' %}" class="btn btn-info" role="button">Browse Licks</a>
+       <a href="{% url 'lick-create' %}" class="btn btn-info" role="button">Create Lick</a>
+       </div>
     </div>
 
 {% endif %}
 
 </div>
-
-
-
-<script type="text/javascript">
-const tortoise_on_url = "{% static 'img/tortoise_hover.png' %}";
-const tortoise_off_url = "{% static 'img/tortoise_toggled.png' %}";
-</script>
 
 {% compress js %}
 <script src="{% static 'js/lick_panel.js' %}"></script>

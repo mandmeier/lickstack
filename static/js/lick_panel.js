@@ -2,6 +2,7 @@
 
 const licks = document.getElementsByClassName('lick')
 var mouseDown = false;
+var liked_licks = [1,4]
 
 
 function transposeChord(input,transpose_by) {
@@ -45,11 +46,11 @@ function toMuseJazz(chd, transpose_rule){
 
 function Lick(lick_dat, i){
 
+    this.id = lick_dat.id
     this.time_signature = lick_dat.time_signature
 
     this.panel = licks[i]
-
-    this.chords = this.panel.getElementsByClassName('chord_seq')[0].getAttribute("value").split('x').slice(1,17);
+    this.chords = lick_dat.chord_seq_search.split('x').slice(1,17);
     this.chord_imgs = this.panel.getElementsByClassName('chord-img')
 
     // audio player controls
@@ -57,7 +58,7 @@ function Lick(lick_dat, i){
     this.play_btn_icon = this.play_btn.querySelector('span')
     this.seekBar = this.panel.getElementsByClassName('seek-bar')[0]
     this.fillBar = this.panel.getElementsByClassName('fill')[0]
-    this.audio_url = this.play_btn.id.split('[X]')[1]
+    this.audio_url = lick_dat.audio_url
     this.playback_rate = 1;
 
 
@@ -67,6 +68,10 @@ function Lick(lick_dat, i){
     this.transpose_btn = this.panel.getElementsByClassName('transpose-btn')[0]
     this.transpose_by = 0 //get from album data
     this.transpose_rules = lick_dat.transpose_rule.split(',')
+
+
+    this.like_btn = this.panel.getElementsByClassName('like-btn')[0]
+    this.fav_btn = this.panel.getElementsByClassName('fav-btn')[0]
 
 
     this.reset_other_players = function(){
@@ -277,6 +282,16 @@ function Lick(lick_dat, i){
             this.player.connect(this.pitch_shift);
         }
     }
+
+
+    // mark liked and fav
+    if (user_liked.includes(String(this.id))){
+        this.like_btn.getElementsByClassName('icon')[0].className = "icon icon-thumbs-up"
+    }
+    if (user_faved.includes(String(this.id))){
+        this.fav_btn.getElementsByClassName('icon')[0].className = "icon icon-star"
+    }
+
 
 }
 
