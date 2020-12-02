@@ -266,12 +266,13 @@ function Lick(lick_dat, i){
             this.audio.playbackRate = this.playback_rate;
             this.player.toDestination();
 
-            // delete old pitch shift to prevent memory leak
-            if (this.pitch_shift != null) {
-                this.pitch_shift.disconnect();
+            //remove ALL pitch shift nodes to prevent memory leak
+            for (let i = 0; i < lick_objects.length; i++) {
+                if (lick_objects[i].pitch_shift != null) {
+                    lick_objects[i].pitch_shift.disconnect();
+                }
+                delete lick_objects[i].pitch_shift
             }
-            delete this.pitch_shift
-
 
             if (this.playback_rate == 1){
                 this.pitch_shift = new Tone.PitchShift({
