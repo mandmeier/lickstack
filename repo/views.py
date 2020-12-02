@@ -323,7 +323,7 @@ def browse_licks_view(request):
 
     # lick data for js variables
     displayed_lick_ids = [lick.id for lick in licks]
-    displayed_licks = Lick.objects.filter(pk__in=displayed_lick_ids)
+    displayed_licks = Lick.objects.filter(pk__in=displayed_lick_ids).order_by('-id')
 
     lick_info = displayed_licks.values(
         'id',
@@ -337,6 +337,13 @@ def browse_licks_view(request):
     # add audio filenames to lick info dict
     audio_urls = [lick.file.url for lick in displayed_licks]
     transpose_bys = [chord_seq_T(lick.chord_seq_search,chord_seq_query) for lick in displayed_licks]
+
+    print("TEST")
+    print(lick_info)
+
+    print("DISP_LICKS")
+    print(displayed_licks)
+
 
     for i in range(0, len(lick_info)):
         lick_info[i]['audio_url'] = audio_urls[i]
@@ -617,7 +624,7 @@ def lick_detail(request, pk):
 
     album = [1,4,7,32,41]
 
-    licks = Lick.objects.filter(id__in=album).order_by('id')
+    licks = Lick.objects.filter(id__in=album).order_by('-id')
 
     # lick data for js variables
     lick_info = licks.values(

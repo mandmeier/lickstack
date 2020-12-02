@@ -137,9 +137,6 @@ def article_detail(request, slug=None):
             lick_dict['transpose_rule'] = lick.transpose_rule
             lick_info.append(lick_dict)
 
-        print("TEST")
-        print(lick_info)
-
         # add audio filenames to lick info dict
         audio_urls = [lick.file.url for lick in licks]
 
