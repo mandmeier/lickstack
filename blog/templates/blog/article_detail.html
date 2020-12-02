@@ -32,6 +32,11 @@
     }
 
     const instr_transpose_shift = Number("{{ user.profile.instr_transpose_shift }}")
+    const lck_json = "{{ licks_json }}";
+    const user_liked = "{{ user_liked }}".split(",")
+    const user_faved = "{{ user_faved }}".split(",")
+    const tortoise_on_url = "{% static 'img/tortoise_hover.png' %}";
+    const tortoise_off_url = "{% static 'img/tortoise_toggled.png' %}";
 </script>
 
 <div class="row margin">
@@ -202,17 +207,9 @@
 
 <script type="text/javascript">
 
-    // used to select initial value of transpose button
-    function selectElement(id, valueToSelect) {
-    let element = document.getElementById(id);
-    element.value = valueToSelect;
-    }
-
 
     const lick_placeholders_string = "{{ article.lick_placeholders_string }}"
-    const chords_dir = "{% static 'img/chords/' %}";
-    const tortoise_on_url = "{% static 'img/tortoise_hover.webp' %}";
-    const tortoise_off_url = "{% static 'img/tortoise_toggled.webp' %}";
+
 
     $(document).on('click', '.comment-reply-btn', function() {
         event.preventDefault();
@@ -318,7 +315,7 @@
     // initial transpose licks
     var initial_transpose = "{{ transpose_string }}".split(',')
 </script>
-<script src="{% static 'js/lick_snippet.js' %}"></script>
+<script src="{% static 'js/lick_panel.js' %}"></script>
 
 
 {% endblock content %}

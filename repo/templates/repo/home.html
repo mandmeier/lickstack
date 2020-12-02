@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% load static %}
-{% load repo_extras %}
 {% load static compress %}
 
 {% block head_title %}{{ block.super }} | Home{% endblock head_title %}
@@ -48,6 +47,11 @@
     });
 
     const instr_transpose_shift = Number("{{ user.profile.instr_transpose_shift }}")
+    const lck_json = "{{ licks_json }}";
+    const user_liked = "{{ user_liked }}".split(",")
+    const user_faved = "{{ user_faved }}".split(",")
+    const tortoise_on_url = "{% static 'img/tortoise_hover.png' %}";
+    const tortoise_off_url = "{% static 'img/tortoise_toggled.png' %}";
 
 </script>
 
@@ -197,14 +201,8 @@
 </div>
 
 
-<script type="text/javascript">
-const chords_dir = "{% static 'img/chords/' %}";
-const tortoise_on_url = "{% static 'img/tortoise_hover.webp' %}";
-const tortoise_off_url = "{% static 'img/tortoise_toggled.webp' %}";
-</script>
-
 {% compress js %}
-<script src="{% static 'js/lick_snippet.js' %}"></script>
+<script src="{% static 'js/lick_panel.js' %}"></script>
 {% endcompress %}
 
 {% endblock content %}

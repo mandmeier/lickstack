@@ -120,9 +120,9 @@ class Lick(models.Model):
         max_length=5, choices=TS_CHOICES, default='4/4')
 
     chord_seq = models.CharField(
-        max_length=150, default='x.x.x.x.x.x.x.x.x.x.x.x.x.x.x.x.x')
+        max_length=150, default='x.x.x.x.x.x.x.x.x.x.x.x.x.x.x.x.x') # flats or sharps
     chord_seq_search = models.CharField(
-        max_length=150, default='x.x.x.x.x.x.x.x.x.x.x.x.x.x.x.x.x')
+        max_length=150, default='x.x.x.x.x.x.x.x.x.x.x.x.x.x.x.x.x') # only flats for search
     transpose_rule = models.CharField(
         max_length=100, default='b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b')
 

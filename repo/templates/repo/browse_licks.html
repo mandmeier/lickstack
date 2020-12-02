@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 {% load static %}
-{% load repo_extras %}
 {% load static compress %}
 
 {% block head_title %}{{ block.super }} | Browse Licks{% endblock head_title %}
@@ -46,8 +45,12 @@
     });
 
     const instr_transpose_shift = Number("{{ user.profile.instr_transpose_shift }}")
-
-
+    const lck_json = "{{ licks_json }}";
+    const user_liked = "{{ user_liked }}".split(",")
+    const user_faved = "{{ user_faved }}".split(",")
+    const tortoise_on_url = "{% static 'img/tortoise_hover.png' %}";
+    const tortoise_off_url = "{% static 'img/tortoise_toggled.png' %}";
+    const suggested_instruments_original = "{{ instr_selection }}".split(",");
 </script>
 
 
@@ -320,16 +323,10 @@
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.5.35/Tone.js"></script>
 
-<script type="text/javascript">
-const suggested_instruments_original = "{{ instr_selection }}".split(",");
-const chords_dir = "{% static 'img/chords/' %}";
-const tortoise_on_url = "{% static 'img/tortoise_hover.png' %}";
-const tortoise_off_url = "{% static 'img/tortoise_toggled.png' %}";
-</script>
 
 
 {% compress js %}
-<script src="{% static 'js/lick_snippet.js' %}"></script>
+<script src="{% static 'js/lick_panel.js' %}"></script>
 <script src="{% static 'js/form_master.js' %}"></script>
 <script src="{% static 'js/browse_licks.js' %}"></script>
 {% endcompress %}

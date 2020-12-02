@@ -1,13 +1,14 @@
 
 function transposeChord(input,transpose_by) {
     element = input.match(/(_[a-gA-g]{1,2}_)/)[0]
-    if (transpose_by >= 0) {
+    let tr = transpose_by + instr_transpose_shift
+    if (tr >= 0) {
         var chds = ["_C_", "_Db_", "_D_", "_Eb_", "_E_", "_F_", "_Gb_", "_G_", "_Ab_", "_A_", "_Bb_", "_B_"]
     } else {
         var chds = ["_C_", "_B_", "_Bb_", "_A_", "_Ab_", "_G_", "_Gb_", "_F_", "_E_", "_Eb_", "_D_", "_Db_"]
     }
     var start = chds.indexOf(element)
-    element_transposed =  chds[(start + Math.abs(transpose_by)) % chds.length];
+    element_transposed =  chds[(start + Math.abs(tr)) % chds.length];
     return input.replace(/(_[a-gA-g]{1,2}_)/, element_transposed);
 }
 

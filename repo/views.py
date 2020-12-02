@@ -18,6 +18,9 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.template.loader import render_to_string
 from itertools import cycle
 import re
+import json
+from django.core.serializers.json import DjangoJSONEncoder
+
 
 
 def get_chord_seq_search(chord_seq):
@@ -62,6 +65,17 @@ def transpose_seq(chord_seq, half_steps):
     return(chord_seq_T)
 
 
+def chord_seq_T(chord_seq, chord_seq_query="test"):
+    # calculates interval between the lick and query from search form
+    # transpose lick t half steps up to match chords in query
+    query = chord_seq_query
+    chords = chord_seq
+    for t in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]:
+        tr = transpose_seq(chords, t)
+        if bool(re.search(query, tr)):
+            return(t)
+
+
 def is_valid_queryparam(param):
     return param != '' and param is not None
 
@@ -92,9 +106,8 @@ def get_faved_licks(request, licks):
     return(user_faved)
 
 
-def home(request):
 
-    #licks = Lick.objects.filter(id__in=id_tuple)
+def home(request):
 
     licks = Lick.objects.all().order_by('-id')[:10]
 
@@ -107,7 +120,24 @@ def home(request):
     featured_articles = latest_articles.filter(id__in=(8, 5, 1))
 
 
-    #licks = Lick.objects.filter(id=125)
+    lick_info = licks.values(
+        'id',
+        'chord_seq_search',
+        'time_signature',
+        'transpose_rule',
+    )
+
+    lick_info = list(lick_info)
+
+    # add audio filenames to lick info dict
+    audio_urls = [lick.file.url for lick in licks]
+
+    for i in range(0, len(lick_info)):
+        lick_info[i]['audio_url'] = audio_urls[i]
+
+
+    # convert to json
+    licks_json = json.dumps(lick_info, cls=DjangoJSONEncoder)
 
     context = {}
     context['title'] = 'Home'
@@ -116,6 +146,7 @@ def home(request):
     context['user_faved'] = get_faved_licks(request, licks)
     context['latest_articles'] = latest_articles
     context['featured_articles'] = featured_articles
+    context['licks_json'] = licks_json
 
     return render(request, 'repo/home.html', context)
 
@@ -205,11 +236,14 @@ def browse_licks_view(request):
 
         chord_seq_query = get_chord_seq_query(chord_seq, 0)
 
+
         if include_transposed == True:
             chord_seq_queries_T = []
             for half_step in range(0, 12):
                 chord_seq_queries_T.append(
                     get_chord_seq_query(chord_seq, half_step))
+
+
 
     # filter queryset with search parameters
     queryset = []
@@ -260,10 +294,10 @@ def browse_licks_view(request):
     for lick in licks:
         queryset.append(lick)
 
-    queryset = list(set(queryset))
 
-    # licks = get_lick_queryset(query).order_by('-date_posted')
-    licks = sorted(queryset, key=attrgetter('date_posted'), reverse=True)
+
+
+    licks = sorted(list(set(queryset)), key=attrgetter('date_posted'), reverse=True)
 
     # paginate
     paginator_number_pages = 10
@@ -286,6 +320,33 @@ def browse_licks_view(request):
 
     instr_selection = ','.join(common_instr)
 
+
+    # lick data for js variables
+    displayed_lick_ids = [lick.id for lick in licks]
+    displayed_licks = Lick.objects.filter(pk__in=displayed_lick_ids)
+
+    lick_info = displayed_licks.values(
+        'id',
+        'chord_seq_search',
+        'time_signature',
+        'transpose_rule',
+    )
+
+    lick_info = list(lick_info)
+
+    # add audio filenames to lick info dict
+    audio_urls = [lick.file.url for lick in displayed_licks]
+    transpose_bys = [chord_seq_T(lick.chord_seq_search,chord_seq_query) for lick in displayed_licks]
+
+    for i in range(0, len(lick_info)):
+        lick_info[i]['audio_url'] = audio_urls[i]
+        lick_info[i]['transpose_by'] = transpose_bys[i]
+
+
+    # convert to json
+    licks_json = json.dumps(lick_info, cls=DjangoJSONEncoder)
+
+
     # pass values to context
     context = {}
     context['form'] = LickForm()
@@ -295,6 +356,8 @@ def browse_licks_view(request):
     context['user_liked'] = get_liked_licks(request, licks)
     context['user_faved'] = get_faved_licks(request, licks)
     context['instr_selection'] = instr_selection
+    context['licks_json'] = licks_json
+
 
     return render(request, "repo/browse_licks.html", context)
 
@@ -322,12 +385,36 @@ def my_licks_view(request):
     paginator = Paginator(licks, 10)
     licks = paginator.page(page)
 
+    # lick data for js variables
+    displayed_lick_ids = [lick.id for lick in licks]
+    displayed_licks = Lick.objects.filter(pk__in=displayed_lick_ids)
+
+    lick_info = displayed_licks.values(
+        'id',
+        'chord_seq_search',
+        'time_signature',
+        'transpose_rule',
+    )
+
+    lick_info = list(lick_info)
+
+    # add audio filenames to lick info dict
+    audio_urls = [lick.file.url for lick in displayed_licks]
+
+    for i in range(0, len(lick_info)):
+        lick_info[i]['audio_url'] = audio_urls[i]
+
+
+    # convert to json
+    licks_json = json.dumps(lick_info, cls=DjangoJSONEncoder)
+
     context = {}
     context['licks'] = licks
     context['chord_seq_query'] = chord_seq_query  # used for template tags
     context['user_liked'] = get_liked_licks(request, licks)
     context['user_faved'] = get_faved_licks(request, licks)
     context['display'] = display
+    context['licks_json'] = licks_json
 
     return render(request, "repo/my_licks.html", context)
 
@@ -525,10 +612,6 @@ def delete_lick(request, pk):
     return redirect(prev_url)
 
 
-import json
-from django.core.serializers.json import DjangoJSONEncoder
-
-
 @staff_member_required
 def lick_detail(request, pk):
 
@@ -550,10 +633,6 @@ def lick_detail(request, pk):
     audio_urls = [lick.file.url for lick in licks]
     for i in range(0, len(lick_info)):
         lick_info[i]['audio_url'] = audio_urls[i]
-
-
-    # add user liked
-
 
     # convert to json
     licks_json = json.dumps(lick_info, cls=DjangoJSONEncoder)

@@ -22,9 +22,11 @@ https://stackoverflow.com/questions/17139039/keycode-is-always-zero-in-chrome-fo
 bundle up to 20(?) licks in album. Album will show licks in sequence in the selected key.
 Show album on separate page so that the url to the album can be shared
 
-### individual page for licks
+### individual page for licks (started)
 so that the url to the lick can be shared
 this could be the same as an album page, but just show one lick?
+
+### Share button on lick panel to share lick page
 
 ### option to add comments to licks for discussion
 as dropdown underneath licks, like the info dropdown?
@@ -34,8 +36,6 @@ as dropdown underneath licks, like the info dropdown?
 
 
 ## Performance/security improvements
-
-### redo lick panel using JS object
 
 ### convert tone.js object into web audio
 Currently, each lick downloads each audio file twice, once for Tone.js and once for web audio. Not ideal.

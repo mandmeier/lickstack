@@ -79,8 +79,10 @@ function addInstrument(instrument){
 
 instrumentsInput.addEventListener('keyup', function(e){
     let instrument = instrumentsInput.value
-    if (e.key == 'Enter' && instrument != ""){
-        addInstrument(instrument)
+    if (e.key == 'Enter' && instrument != "" || e.keyCode == 32 && instrument != ""){
+        if(!(/^\s+$/.test(instrument))){
+            addInstrument(instrument);
+        }
     }
 });
 
@@ -169,8 +171,10 @@ function addKeyword(keyword){
 
 keywordsInput.addEventListener('keyup', function(e){
     let keyword = keywordsInput.value
-    if (e.key == 'Enter' && keyword != ""){
-        addKeyword(keyword);
+    if (e.key == 'Enter' && keyword != "" || e.keyCode == 32 && keyword != ""){
+        if(!(/^\s+$/.test(keyword))){
+            addKeyword(keyword);
+        }
     }
 });
 
@@ -227,11 +231,11 @@ const form = document.forms[0]
 
 
 
-var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-if (isChrome == false && getCookie("isChrome") != 'notified'){
-    setCookie('isChrome', 'notified');
-    alert("Hi there, the LickStack is under development and currently not optimized for your browser. For best experience I recommend using Google Chrome. Thanks!");
-}
+// var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+// if (isChrome == false && getCookie("isChrome") != 'notified'){
+//     setCookie('isChrome', 'notified');
+//     alert("Hi there, the LickStack is under development and currently not optimized for your browser. For best experience I recommend using Google Chrome. Thanks!");
+// }
 
 
 
@@ -240,7 +244,6 @@ function storeSearchFormValues(form){
 
      // remember chord seq
     setCookie("s_chord_seq", form.elements["chord_seq"].value);
-    console.log("cookies set")
 
     if (form.elements['id_time_signature_1'].checked){
         setCookie("s_time_signature", "44");
@@ -284,11 +287,39 @@ function storeSearchFormValues(form){
 }
 
 
+function populateChords(chds){
+    for (let i = 0; i < chds.length; i++) {
+        selectedList[i].dataset["value"] = chds[i]
+
+        if(chds[i] == "."){
+            selectedList[i].innerHTML = "&nbsp;&nbsp;&#45;"
+        } else{
+            search_str = "[for=" + chds[i] + "]"
+            search_str = search_str.replace(/#/g, '\\#')
+            selectedList[i].innerHTML = optionsContainer.querySelectorAll(search_str)[0].innerHTML
+        }
+
+    }
+}
+
+
+function updateChordSeq(){
+    let chord_seq = "x"
+    for (let chord of selectedList) {
+        chord_seq = chord_seq + chord.dataset["value"] + "x"
+    }
+    document.getElementById("id_chord_seq").value = chord_seq
+}
+
+
 function getSearchFormValues(){
 
     // populate chords
-    const chds = getCookie("s_chord_seq").split('x').slice(1,17)
-    populateChords(chds)
+    var chds = getCookie("s_chord_seq")
+    if (chds != undefined){
+        chds = chds.split('x').slice(1,17)
+        populateChords(chds)
+    }
 
     if (getCookie("s_time_signature") == '44'){
         form.elements['id_time_signature_1'].checked = true;

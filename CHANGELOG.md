@@ -9,12 +9,17 @@ Whenever you make a notable change, add it to the [Unreleased] section first
 
 ## [Unreleased]
 ### Added
+- lick detail view
 ### Changed
 ### Fixed
 
 
+## [1.4.0] - 2020-12-03
+### Fixed
+- overhaul of lick mechanics, various performance improvements
 
-## [1.3.1] - 2020-28-15
+
+## [1.3.1] - 2020-11-15
 ### Changed
 - instruments must now be one word (any spaces replaced with bar)
 
@@ -22,7 +27,7 @@ Whenever you make a notable change, add it to the [Unreleased] section first
 - on mobile, manually entering keyword and confirm with space bar now working
 
 
-## [1.3.0] - 2020-28-15
+## [1.3.0] - 2020-11-15
 ### Added
 - changelog markdown file to track changes (this file here)
 

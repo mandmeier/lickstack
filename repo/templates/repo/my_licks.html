@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 {% load static %}
-{% load repo_extras %}
 {% load static compress %}
 
 {% block head_title %}{{ block.super }} | My Licks{% endblock head_title %}
@@ -34,6 +33,11 @@
     var display = "{{ display }}"
 
     const instr_transpose_shift = Number("{{ user.profile.instr_transpose_shift }}")
+    const lck_json = "{{ licks_json }}";
+    const user_liked = "{{ user_liked }}".split(",")
+    const user_faved = "{{ user_faved }}".split(",")
+    const tortoise_on_url = "{% static 'img/tortoise_hover.png' %}";
+    const tortoise_off_url = "{% static 'img/tortoise_toggled.png' %}";
 </script>
 
 
@@ -101,15 +105,9 @@
 
 </div>
 
-<script type="text/javascript">
-const chords_dir = "{% static 'img/chords/' %}";
-const tortoise_on_url = "{% static 'img/tortoise_hover.png' %}";
-const tortoise_off_url = "{% static 'img/tortoise_toggled.png' %}";
-</script>
-
 {% compress js %}
 <script src="{% static 'js/my_licks.js' %}"></script>
-<script src="{% static 'js/lick_snippet.js' %}"></script>
+<script src="{% static 'js/lick_panel.js' %}"></script>
 {% endcompress %}
 
 

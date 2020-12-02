@@ -14,6 +14,9 @@ from . import forms
 from comments.forms import CommentForm
 from comments.models import Comment
 
+import json
+from django.core.serializers.json import DjangoJSONEncoder
+
 
 @login_required
 def article_create(request):
@@ -109,7 +112,7 @@ def article_detail(request, slug=None):
     # find licks if article has licks
     if article.lick_string and article.lick_string != '':
         lick_string = article.lick_string
-        transpose_string = article.transpose_string
+        transpose_bys = article.transpose_string.split(',')
 
         lick_sequence = lick_string.split(',')
 
@@ -123,8 +126,32 @@ def article_detail(request, slug=None):
                     messages.warning(request, f'Lick {id} not found!')
                 # placeholder?
 
-        context['transpose_string'] = transpose_string
+        #licks = Lick.objects.filter(id__in=lick_sequence)
+
+        lick_info = []
+        for lick in licks:
+            lick_dict = {}
+            lick_dict['id'] = lick.id
+            lick_dict['chord_seq_search'] = lick.chord_seq_search
+            lick_dict['time_signature'] = lick.time_signature
+            lick_dict['transpose_rule'] = lick.transpose_rule
+            lick_info.append(lick_dict)
+
+        print("TEST")
+        print(lick_info)
+
+        # add audio filenames to lick info dict
+        audio_urls = [lick.file.url for lick in licks]
+
+        for i in range(0, len(lick_info)):
+            lick_info[i]['audio_url'] = audio_urls[i]
+            lick_info[i]['transpose_by'] = transpose_bys[i]
+
+        # convert to json
+        licks_json = json.dumps(lick_info, cls=DjangoJSONEncoder)
+
         context['licks'] = licks
+        context['licks_json'] = licks_json
 
     return render(request, 'blog/article_detail.html', context)
 
